@@ -299,7 +299,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_add_page_sections.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_verification_flow.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_verification_methods.dart,C,-,done,0,-
-04_financial,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_methods_page_common.dart,D,-,done,0,-
 04_financial,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_methods_page_sections.dart,D,-,done,0,-
 04_financial,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_2fa_settings_page_common.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_2fa_settings_page_sections.dart,D,-,done,0,-
@@ -370,7 +369,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_input_sections.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_payment_sections.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_result_sections.dart,E,-,done,0,-
-04_financial,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_dust_converter_confirm.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_dust_converter_hero.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_dust_converter_targets.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/history/transaction_detail_page_sections.dart,C,-,done,0,-
@@ -674,7 +672,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 05_growth,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_contract_page.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_detail_page.dart,D,-,done,0,-
-05_growth,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_confirm.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_hero.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_quick_compare.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_route_list.dart,E,-,done,0,-

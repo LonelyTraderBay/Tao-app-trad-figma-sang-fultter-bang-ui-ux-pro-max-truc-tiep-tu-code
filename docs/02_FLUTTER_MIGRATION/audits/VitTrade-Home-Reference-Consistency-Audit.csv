@@ -664,7 +664,6 @@ launchpad,root_page,flutter_app/lib/features/launchpad/presentation/widgets/tool
 launchpad,root_page,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_notif_sound_footer.dart,0,0,0,0,0,0,0,0,no,-
 launchpad,feature_widget,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_allocation.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 launchpad,root_page,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_calculations.dart,0,0,0,0,0,0,0,0,no,-
-launchpad,root_page,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_confirm_sheet.dart,0,0,0,0,0,0,0,0,no,-
 launchpad,feature_widget,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_deviation.dart,0,0,0,0,0,0,0,0,no,-
 launchpad,root_page,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_hero.dart,0,0,0,0,0,0,0,0,no,-
 launchpad,feature_widget,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_strategy.dart,0,0,0,0,0,0,0,0,no,-

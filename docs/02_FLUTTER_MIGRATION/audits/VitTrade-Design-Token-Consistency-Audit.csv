@@ -776,8 +776,6 @@ feature_widget,flutter_app/lib/features/launchpad/presentation/pages/tools/launc
 feature_widget,,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_allocation.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 feature_widget,,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_calculations.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_calculations.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_confirm_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_confirm_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_deviation.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_hero.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_hero.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2751,6 +2749,7 @@ root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/saving
 root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart,5 files,warn,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart,5 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_event_log_page.dart,5 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart,5 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_risk_analytics_page.dart,5 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart,5 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
 root_page_bundle_summary,flutter_app/lib/features/markets/presentation/pages/research/social_sentiment_page.dart,5 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2780,7 +2779,6 @@ root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/stakin
 root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart,6 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart,6 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_page.dart,6 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart,6 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart,6 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart,6 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_guide_page.dart,6 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
