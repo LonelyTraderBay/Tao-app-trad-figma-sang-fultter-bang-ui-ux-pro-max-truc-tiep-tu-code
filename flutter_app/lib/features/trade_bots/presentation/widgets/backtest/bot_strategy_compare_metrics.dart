@@ -67,11 +67,13 @@ class _MetricsTable extends StatelessWidget {
         '',
         _BestMode.highest,
       ),
+      // Drawdown values are signed (-8.4 .. -28.7), so the drawdown closest
+      // to zero is numerically the HIGHEST: -8.4% > -28.7%.
       const _MetricRowData(
         'Sụt giảm vốn tối đa',
         'maxDrawdown',
         '%',
-        _BestMode.lowest,
+        _BestMode.highest,
       ),
       const _MetricRowData('Tỷ lệ thắng', 'winRate', '%', _BestMode.highest),
       const _MetricRowData(
