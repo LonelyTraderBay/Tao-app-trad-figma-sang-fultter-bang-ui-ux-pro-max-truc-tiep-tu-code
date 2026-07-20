@@ -7,7 +7,6 @@ import 'package:vit_trade_flutter/app/providers/trade_terminal_controller_provid
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_common.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_overview.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart';
@@ -48,16 +47,12 @@ class _ExecutionQualityDemoPageState
   /// null trước đó (loading/error), lazily gán trong `data:` branch bên dưới
   /// thay vì initState() (getExecutionQuality() giờ là `Future<T>`).
   TradeSlippageSettings? _settings;
-  String? _successMessage;
 
   @override
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeExecutionQualitySnapshotProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
+    return VitTradeHubScaffold(
           title: 'Chất lượng khớp lệnh',
           subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
           semanticLabel: 'Chất lượng khớp lệnh',
@@ -118,18 +113,6 @@ class _ExecutionQualityDemoPageState
               ];
             },
           ),
-        ),
-        if (_successMessage != null)
-          Positioned(
-            left: AppSpacing.contentPad,
-            right: AppSpacing.contentPad,
-            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
-            child: ExecutionQualitySuccessToast(
-              message: _successMessage!,
-              onClose: () => setState(() => _successMessage = null),
-            ),
-          ),
-      ],
     );
   }
 
@@ -162,11 +145,14 @@ class _ExecutionQualityDemoPageState
         .read(tradeReadModelControllerProvider)
         .updateSlippageSettings(updated);
     if (!mounted) return;
-    setState(() {
-      _settings = saved;
-      _successMessage =
-          'Slippage tolerance updated to ${saved.tolerancePct.toStringAsFixed(1)}%';
-    });
+    setState(() => _settings = saved);
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Đã lưu cài đặt',
+      message: 'Ngưỡng trượt giá: ${saved.tolerancePct.toStringAsFixed(1)}%',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    ));
   }
 
   Future<void> _openExecutionSheet() async {
@@ -206,6 +192,12 @@ class _ExecutionQualityDemoPageState
           ),
         );
     if (!mounted) return;
-    setState(() => _successMessage = 'Order Modified · ${result.orderId}');
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sửa lệnh thành công',
+      message: 'Đã sửa lệnh ${result.orderId}',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    ));
   }
 }

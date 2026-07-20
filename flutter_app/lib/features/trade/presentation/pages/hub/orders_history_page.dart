@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -41,97 +41,80 @@ class OrdersHistoryPage extends ConsumerStatefulWidget {
 class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
   String _activeTab = 'open';
   String _filter = 'all';
-  String? _cancelledOrderId;
 
   @override
   Widget build(BuildContext context) {
     final controllerAsync = ref.watch(tradeOrdersHistoryControllerProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
-          title: 'Lịch sử lệnh',
-          subtitle: 'Lệnh · Trade',
-          semanticLabel: 'Lịch sử lệnh giao dịch',
-          semanticIdentifier: 'SC-050',
-          shellRenderMode: widget.shellRenderMode,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.trade,
-            mode: BackNavigationMode.historyThenFallback,
+    return VitTradeHubScaffold(
+      title: 'Lịch sử lệnh',
+      subtitle: 'Lệnh · Trade',
+      semanticLabel: 'Lịch sử lệnh giao dịch',
+      semanticIdentifier: 'SC-050',
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      showProductTabs: true,
+      navigationBuilder: buildTradeProductNavigation,
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được lịch sử lệnh',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeOrdersHistoryControllerProvider),
           ),
-          showProductTabs: true,
-          navigationBuilder: buildTradeProductNavigation,
-          children: controllerAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được lịch sử lệnh',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () =>
-                    ref.invalidate(tradeOrdersHistoryControllerProvider),
-              ),
-            ],
-            data: (controller) {
-              final snapshot = controller.state.snapshot;
-              final orders = _visibleOrders(snapshot);
-              return [
-                _OrderTopTabs(
-                  active: _activeTab,
-                  openCount: snapshot.openOrders.length,
-                  historyCount: snapshot.historyOrders.length,
-                  onChanged: (tab) => setState(() => _activeTab = tab),
-                ),
-                _FilterRow(
-                  active: _filter,
-                  onChanged: (filter) => setState(() => _filter = filter),
-                ),
-                if (orders.isEmpty)
-                  _EmptyState(activeTab: _activeTab)
-                else
-                  VitCard(
-                    clip: true,
-                    radius: VitCardRadius.tight,
-                    child: Column(
-                      children: [
-                        for (var i = 0; i < orders.length; i++) ...[
-                          _OrderHistoryTile(
-                            key: OrdersHistoryPage.orderKey(orders[i].id),
-                            order: orders[i],
-                            grouped: true,
-                            actionKey: i == 0
-                                ? OrdersHistoryPage.cancelFirstOrderKey
-                                : null,
-                            onCancel: () => _cancelOrder(orders[i].id),
-                          ),
-                          if (i < orders.length - 1)
-                            const Divider(
-                              height: AppSpacing.dividerHairline,
-                              thickness: AppSpacing.dividerHairline,
-                              color: AppColors.divider,
-                            ),
-                        ],
-                      ],
-                    ),
-                  ),
-              ];
-            },
-          ),
-        ),
-        if (_cancelledOrderId != null)
-          Positioned(
-            left: AppSpacing.contentPad,
-            right: AppSpacing.contentPad,
-            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
-            child: VitBanner(
-              variant: VitBannerVariant.success,
-              message: 'Đã hủy $_cancelledOrderId',
-              onDismiss: () => setState(() => _cancelledOrderId = null),
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          final orders = _visibleOrders(snapshot);
+          return [
+            _OrderTopTabs(
+              active: _activeTab,
+              openCount: snapshot.openOrders.length,
+              historyCount: snapshot.historyOrders.length,
+              onChanged: (tab) => setState(() => _activeTab = tab),
             ),
-          ),
-      ],
+            _FilterRow(
+              active: _filter,
+              onChanged: (filter) => setState(() => _filter = filter),
+            ),
+            if (orders.isEmpty)
+              _EmptyState(activeTab: _activeTab)
+            else
+              VitCard(
+                clip: true,
+                radius: VitCardRadius.tight,
+                child: Column(
+                  children: [
+                    for (var i = 0; i < orders.length; i++) ...[
+                      _OrderHistoryTile(
+                        key: OrdersHistoryPage.orderKey(orders[i].id),
+                        order: orders[i],
+                        grouped: true,
+                        actionKey: i == 0
+                            ? OrdersHistoryPage.cancelFirstOrderKey
+                            : null,
+                        onCancel: () => _cancelOrder(orders[i].id),
+                      ),
+                      if (i < orders.length - 1)
+                        const Divider(
+                          height: AppSpacing.dividerHairline,
+                          thickness: AppSpacing.dividerHairline,
+                          color: AppColors.divider,
+                        ),
+                    ],
+                  ],
+                ),
+              ),
+          ];
+        },
+      ),
     );
   }
 
@@ -157,6 +140,12 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
     if (controller == null) return;
     final result = await controller.cancelOrder(orderId);
     if (!mounted) return;
-    setState(() => _cancelledOrderId = result.orderId);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã hủy lệnh',
+      message: 'Đã hủy ${result.orderId}',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 }

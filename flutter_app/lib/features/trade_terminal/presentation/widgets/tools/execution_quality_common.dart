@@ -129,56 +129,6 @@ class ExecutionQualityStatusPill extends StatelessWidget {
   }
 }
 
-class ExecutionQualitySuccessToast extends StatelessWidget {
-  const ExecutionQualitySuccessToast({
-    required this.message,
-    required this.onClose,
-    super.key,
-  });
-
-  final String message;
-  final VoidCallback onClose;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: VitCard(
-        padding: TradeSpacingTokens.tradeToolToastPadding,
-        variant: VitCardVariant.inner,
-        radius: VitCardRadius.tight,
-        borderColor: AppColors.buy.withValues(alpha: .38),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.check_circle_rounded,
-              color: AppColors.buy,
-              size: TradeSpacingTokens.tradeToolBodyIcon,
-            ),
-            const SizedBox(width: TradeSpacingTokens.tradeToolIconGap),
-            Expanded(
-              child: Text(
-                message,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-            VitIconButton(
-              icon: Icons.close_rounded,
-              tooltip: 'Close success message',
-              onPressed: onClose,
-              variant: VitIconButtonVariant.transparent,
-              size: VitIconButtonSize.sm,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 VitCtaButtonVariant _executionCtaVariantFor(List<Color> colors) {
   final first = colors.first;
   if (first == AppColors.buy) return VitCtaButtonVariant.success;

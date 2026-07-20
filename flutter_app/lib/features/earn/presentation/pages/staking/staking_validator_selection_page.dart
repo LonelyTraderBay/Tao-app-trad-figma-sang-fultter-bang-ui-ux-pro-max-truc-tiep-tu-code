@@ -22,8 +22,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/sta
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_validator_selection_list.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_validator_selection_summary.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class StakingValidatorSelectionPage extends ConsumerStatefulWidget {
   const StakingValidatorSelectionPage({super.key, this.shellRenderMode});
@@ -231,9 +230,11 @@ class _StakingValidatorSelectionPageState
   void _confirmSelection(StakingValidatorDraft validator) {
     unawaited(HapticFeedback.mediumImpact());
     setState(() => _selected = null);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Đã chọn ${validator.name} làm validator')),
-    );
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Đã xác nhận',
+      message: 'Đã chọn ${validator.name} làm validator',
+    ));
   }
 
   void _clearFilters() {

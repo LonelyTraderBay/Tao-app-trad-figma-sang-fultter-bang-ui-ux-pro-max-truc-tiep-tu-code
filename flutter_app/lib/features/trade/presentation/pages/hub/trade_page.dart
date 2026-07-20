@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_high_risk_status_ui.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/order_receipt_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_simple_shell.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_simple_hero.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_simple_order_form.dart';

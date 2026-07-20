@@ -79,9 +79,11 @@ class _PredictionDataIntegrationPageState
 
   void _showComingSoon(String message) {
     unawaited(HapticFeedback.selectionClick());
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: message,
+    ));
   }
 
   @override

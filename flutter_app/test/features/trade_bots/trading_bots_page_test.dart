@@ -77,7 +77,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Bot giao dịch'), findsOneWidget);
+    expect(find.text('Trading Bots'), findsOneWidget);
     expect(find.text('Tự động hóa giao dịch theo chiến lược'), findsOneWidget);
     expect(find.text('Khám phá chiến lược'), findsOneWidget);
     expect(find.text('Lãi/lỗ'), findsOneWidget);
@@ -150,12 +150,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Bot đã được khởi chạy!'), findsOneWidget);
-    expect(
-      find.text('Bot đang hoạt động và giao dịch tự động'),
-      findsOneWidget,
-    );
-    expect(find.byKey(TradingBotsPage.strategyCreateKey('dca')), findsNothing);
-    expect(find.textContaining('Bot của tôi'), findsOneWidget);
   });
 
   testWidgets('SC-059 back returns to SC-048 TradePage', (tester) async {

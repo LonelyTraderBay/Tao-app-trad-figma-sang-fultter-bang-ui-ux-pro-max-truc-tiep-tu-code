@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
@@ -169,12 +170,11 @@ class _WalletTokenApprovalPageState
   }
 
   void _showScanRiskNotice() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          '\u0110\u00e3 qu\u00e9t l\u1ea1i danh s\u00e1ch approval r\u1ee7i ro',
-        ),
-        duration: Duration(milliseconds: 900),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Quét rủi ro',
+        message: 'Đã quét lại danh sách approval rủi ro',
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
 
 const addressAddBackground = AppColors.bg;
 const addressAddPanel = AppColors.surface;
@@ -160,14 +163,13 @@ class AddressWalletInput extends StatelessWidget {
           AddressIconCircleButton(
             semanticLabel: 'Quét mã QR địa chỉ ví',
             icon: Icons.qr_code_scanner_rounded,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Quét QR sẽ mở khi trình quét ví được kết nối'),
-                  duration: Duration(milliseconds: 900),
-                ),
-              );
-            },
+            onTap: () => unawaited(
+              showVitNoticeSheet(
+                context: context,
+                title: 'Sắp ra mắt',
+                message: 'Quét QR sẽ mở khi trình quét ví được kết nối',
+              ),
+            ),
           ),
         ],
       ),

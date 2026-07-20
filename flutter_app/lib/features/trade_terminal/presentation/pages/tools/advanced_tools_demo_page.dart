@@ -53,130 +53,113 @@ class AdvancedToolsDemoPage extends ConsumerStatefulWidget {
 
 class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
   _ToolsTab _tab = _ToolsTab.ladder;
-  String? _successMessage;
 
   @override
   Widget build(BuildContext context) {
     final controllerAsync = ref.watch(tradeAdvancedToolsControllerProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
-          title: 'Công cụ nâng cao',
-          subtitle: 'Thang giá · Hàng loạt · Phím tắt',
-          semanticLabel: 'Công cụ nâng cao',
-          semanticIdentifier: 'SC-062',
-          contentKey: AdvancedToolsDemoPage.contentKey,
-          shellRenderMode: widget.shellRenderMode,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.trade,
-            mode: BackNavigationMode.historyThenFallback,
+    return VitTradeHubScaffold(
+      title: 'Công cụ nâng cao',
+      subtitle: 'Thang giá · Hàng loạt · Phím tắt',
+      semanticLabel: 'Công cụ nâng cao',
+      semanticIdentifier: 'SC-062',
+      contentKey: AdvancedToolsDemoPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      showProductTabs: true,
+      navigationBuilder: buildTradeProductNavigation,
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được công cụ nâng cao',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeAdvancedToolsSnapshotProvider),
           ),
-          showProductTabs: true,
-          navigationBuilder: buildTradeProductNavigation,
-          children: controllerAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được công cụ nâng cao',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () =>
-                    ref.invalidate(tradeAdvancedToolsSnapshotProvider),
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          return [
+            const _IntroCard(),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              density: VitDensity.tool,
+              radius: VitCardRadius.tight,
+              padding: AppSpacing.cardPaddingCompact,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Xem lại công cụ lệnh nâng cao',
+                    message:
+                        'Thang giá, hủy hàng loạt và phím tắt giữ xem trước lệnh, xác nhận, số lệnh bị ảnh hưởng và bước tiếp theo trước khi thực thi.',
+                    contractId: 'advanced-tools-review',
+                    density: VitDensity.tool,
+                  ),
+                  SizedBox(height: _toolsSpace),
+                  VitStatusPill(
+                    label: 'Xem trước khi gửi lệnh',
+                    status: VitStatusPillStatus.info,
+                    size: VitStatusPillSize.sm,
+                  ),
+                ],
               ),
-            ],
-            data: (controller) {
-              final snapshot = controller.state.snapshot;
-              return [
-                const _IntroCard(),
-                const VitCard(
-                  variant: VitCardVariant.inner,
-                  density: VitDensity.tool,
-                  radius: VitCardRadius.tight,
-                  padding: AppSpacing.cardPaddingCompact,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Xem lại công cụ lệnh nâng cao',
-                        message:
-                            'Thang giá, hủy hàng loạt và phím tắt giữ xem trước lệnh, xác nhận, số lệnh bị ảnh hưởng và bước tiếp theo trước khi thực thi.',
-                        contractId: 'advanced-tools-review',
-                        density: VitDensity.tool,
-                      ),
-                      SizedBox(height: _toolsSpace),
-                      VitStatusPill(
-                        label: 'Xem trước khi gửi lệnh',
-                        status: VitStatusPillStatus.info,
-                        size: VitStatusPillSize.sm,
-                      ),
-                    ],
-                  ),
-                ),
-                for (final feature in snapshot.features)
-                  _FeatureCard(
-                    feature: feature,
-                    onTap: () => _onFeatureTap(feature),
-                  ),
-                const _SpeedCard(),
-                const _BenefitsCard(),
-                _ProgressCard(items: snapshot.statusItems),
-                _ToolsTabs(
-                  active: _tab,
-                  onChanged: (tab) => setState(() => _tab = tab),
-                ),
-                if (_tab == _ToolsTab.ladder)
-                  _ActionTab(
-                    description:
-                        'Click any price level on the order book to place instant orders',
-                    buttonKey: AdvancedToolsDemoPage.ladderButtonKey,
-                    label: 'Open Ladder Trading',
-                    icon: Icons.track_changes_rounded,
-                    colors: const [AppColors.buy, AppColors.buyDark],
-                    onOpen: _openLadderSheet,
-                  )
-                else if (_tab == _ToolsTab.bulk)
-                  _ActionTab(
-                    description:
-                        'Select multiple orders and perform batch actions',
-                    buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
-                    label: 'Open Bulk Operations',
-                    icon: Icons.check_box_rounded,
-                    colors: const [
-                      AppColors.caution,
-                      AppColors.medalBronzeMuted,
-                    ],
-                    onOpen: _openBulkSheet,
-                  )
-                else
-                  _ActionTab(
-                    description:
-                        'View all keyboard shortcuts and customize key bindings',
-                    buttonKey: AdvancedToolsDemoPage.shortcutsButtonKey,
-                    label: 'View Shortcuts Reference',
-                    icon: Icons.keyboard_rounded,
-                    colors: const [AppColors.accent, AppColors.accentDark],
-                    onOpen: _openShortcutsSheet,
-                  ),
-              ];
-            },
-          ),
-        ),
-        if (_successMessage != null)
-          Positioned(
-            left: AppSpacing.contentPad,
-            right: AppSpacing.contentPad,
-            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
-            child: VitBanner(
-              variant: VitBannerVariant.success,
-              message: _successMessage!,
-              onDismiss: () => setState(() => _successMessage = null),
             ),
-          ),
-      ],
+            for (final feature in snapshot.features)
+              _FeatureCard(
+                feature: feature,
+                onTap: () => _onFeatureTap(feature),
+              ),
+            const _SpeedCard(),
+            const _BenefitsCard(),
+            _ProgressCard(items: snapshot.statusItems),
+            _ToolsTabs(
+              active: _tab,
+              onChanged: (tab) => setState(() => _tab = tab),
+            ),
+            if (_tab == _ToolsTab.ladder)
+              _ActionTab(
+                description:
+                    'Click any price level on the order book to place instant orders',
+                buttonKey: AdvancedToolsDemoPage.ladderButtonKey,
+                label: 'Open Ladder Trading',
+                icon: Icons.track_changes_rounded,
+                colors: const [AppColors.buy, AppColors.buyDark],
+                onOpen: _openLadderSheet,
+              )
+            else if (_tab == _ToolsTab.bulk)
+              _ActionTab(
+                description:
+                    'Select multiple orders and perform batch actions',
+                buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
+                label: 'Open Bulk Operations',
+                icon: Icons.check_box_rounded,
+                colors: const [
+                  AppColors.caution,
+                  AppColors.medalBronzeMuted,
+                ],
+                onOpen: _openBulkSheet,
+              )
+            else
+              _ActionTab(
+                description:
+                    'View all keyboard shortcuts and customize key bindings',
+                buttonKey: AdvancedToolsDemoPage.shortcutsButtonKey,
+                label: 'View Shortcuts Reference',
+                icon: Icons.keyboard_rounded,
+                colors: const [AppColors.accent, AppColors.accentDark],
+                onOpen: _openShortcutsSheet,
+              ),
+          ];
+        },
+      ),
     );
   }
 
@@ -213,7 +196,13 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
       ),
     );
     if (!mounted) return;
-    setState(() => _successMessage = 'Buy Order Placed · 0.5 BTC');
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Đặt lệnh thành công',
+      message: 'Đã đặt lệnh mua · 0.5 BTC',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    ));
   }
 
   Future<void> _openBulkSheet() async {
@@ -238,9 +227,13 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
       ),
     );
     if (!mounted) return;
-    setState(
-      () => _successMessage = '${result.affectedCount} orders cancelled',
-    );
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Hủy lệnh thành công',
+      message: 'Đã hủy ${result.affectedCount} lệnh',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    ));
   }
 
   Future<void> _openShortcutsSheet() async {
@@ -261,6 +254,12 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
       ),
     );
     if (!mounted) return;
-    setState(() => _successMessage = 'Shortcut triggered · Quick Buy');
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Kích hoạt thành công',
+      message: 'Phím tắt · Quick Buy',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    ));
   }
 }

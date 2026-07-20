@@ -22,15 +22,24 @@ class _TradePageState extends ConsumerState<TradePage> {
     if (!mounted) return;
     final orderState = ref.read(provider);
     if (orderState.status == TradeHighRiskFlowStatus.success) {
+      final orderId = orderState.receipt?.orderId ?? 'lệnh';
       context.go(AppRoutePaths.tradeOrderReceipt);
-      if (context.mounted) {
-        await showVitNoticeSheet(
-          context: context,
-          title: 'Lệnh đã gửi',
-          message: 'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}',
-          variant: VitBannerVariant.success,
-        );
-      }
+      if (!context.mounted) return;
+      await showVitNoticeSheet(
+        context: context,
+        title: 'Lệnh đã gửi',
+        message: 'Đã gửi $orderId',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+        ctaLabel: 'Tiếp tục giao dịch',
+        primaryKey: OrderReceiptPage.continueTradingKey,
+        secondaryLabel: 'Chia sẻ',
+        secondaryPressedLabel: 'Đã chia sẻ',
+        secondaryKey: OrderReceiptPage.shareKey,
+        onPrimary: () {
+          context.go(AppRoutePaths.tradePair('btcusdt'));
+        },
+      );
       return;
     }
     // Nhánh error/offline: ở lại trang, panel rủi ro hiển thị trạng thái;
@@ -157,33 +166,6 @@ class _TradePageState extends ConsumerState<TradePage> {
           volumeLabel: daySnapshot.volumeLabel,
           availableBalanceLabel: availableBalanceLabel,
         ),
-        if (snapshot.highRiskContractId != null)
-          VitTradeSection(
-            title: 'Đánh giá rủi ro',
-            child: VitHighRiskStatePanel(
-              state: orderState.status.uiState,
-              title: switch (orderState.status.uiState) {
-                VitHighRiskUiState.submitting => 'Đang gửi lệnh',
-                VitHighRiskUiState.success => 'Lệnh đã gửi',
-                VitHighRiskUiState.error => 'Gửi lệnh thất bại',
-                VitHighRiskUiState.offline => 'Mất kết nối',
-                _ => 'Rủi ro cao',
-              },
-              message: switch (orderState.status.uiState) {
-                VitHighRiskUiState.submitting =>
-                  'Đang gửi lệnh tới sàn. Vui lòng chờ trong giây lát.',
-                VitHighRiskUiState.success =>
-                  'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}.',
-                VitHighRiskUiState.error || VitHighRiskUiState.offline =>
-                  orderState.errorMessage ??
-                      'Không gửi được lệnh. Vui lòng thử lại.',
-                _ =>
-                  'Xem trước phí, trượt giá và số dư khả dụng trước khi đặt lệnh thị trường.',
-              },
-              contractId: snapshot.highRiskContractId,
-              density: VitDensity.tool,
-            ),
-          ),
         VitTradeSimpleOrderForm(
           side: _side,
           pair: pair,
@@ -210,6 +192,33 @@ class _TradePageState extends ConsumerState<TradePage> {
           onPreviewDismissed: orderNotifier.cancelPreview,
           onConfirmedSubmit: () => _submitOrder(orderRequest),
         ),
+        if (snapshot.highRiskContractId != null)
+          VitTradeSection(
+            title: 'Đánh giá rủi ro',
+            child: VitHighRiskStatePanel(
+              state: orderState.status.uiState,
+              title: switch (orderState.status.uiState) {
+                VitHighRiskUiState.submitting => 'Đang gửi lệnh',
+                VitHighRiskUiState.success => 'Lệnh đã gửi',
+                VitHighRiskUiState.error => 'Gửi lệnh thất bại',
+                VitHighRiskUiState.offline => 'Mất kết nối',
+                _ => 'Review spot order risk',
+              },
+              message: switch (orderState.status.uiState) {
+                VitHighRiskUiState.submitting =>
+                  'Đang gửi lệnh tới sàn. Vui lòng chờ trong giây lát.',
+                VitHighRiskUiState.success =>
+                  'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}.',
+                VitHighRiskUiState.error || VitHighRiskUiState.offline =>
+                  orderState.errorMessage ??
+                      'Không gửi được lệnh. Vui lòng thử lại.',
+                _ =>
+                  'Preview fees, slippage, and available balance before submitting a market order.',
+              },
+              contractId: snapshot.highRiskContractId,
+              density: VitDensity.tool,
+            ),
+          ),
         VitTradeSection(
           title: 'Tiếp theo',
           child: VitNextActionCard(

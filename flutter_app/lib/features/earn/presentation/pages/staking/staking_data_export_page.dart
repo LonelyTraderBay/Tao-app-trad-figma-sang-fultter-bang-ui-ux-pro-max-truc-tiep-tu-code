@@ -329,9 +329,11 @@ class _CustomExport extends StatelessWidget {
                 key: StakingDataExportPage.exportKey,
                 onPressed: () {
                   unawaited(HapticFeedback.selectionClick());
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Xuất dữ liệu sẽ sớm ra mắt')),
-                  );
+                  unawaited(showVitNoticeSheet(
+                    context: context,
+                    title: 'Sẽ sớm ra mắt',
+                    message: 'Xuất dữ liệu sẽ sớm ra mắt',
+                  ));
                 },
                 height: AppSpacing.buttonStandard,
                 child: Text(snapshot.exportLabel),

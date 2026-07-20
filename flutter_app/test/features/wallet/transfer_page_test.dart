@@ -168,6 +168,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(TransferPage.confirmKey));
     await tester.pumpAndSettle();
-    expect(find.text('Chuy\u1ec3n th\u00e0nh c\u00f4ng!'), findsOneWidget);
+    // showVitNoticeSheet replaces the former inline TransferSuccessBanner.
+    expect(find.text('Chuy\u1ec3n th\u00e0nh c\u00f4ng'), findsOneWidget);
   });
 }

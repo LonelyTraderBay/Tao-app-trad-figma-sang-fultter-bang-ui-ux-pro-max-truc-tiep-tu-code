@@ -255,11 +255,11 @@ class _AuditReportCard extends StatelessWidget {
             height: AppSpacing.buttonCompact,
             onPressed: () {
               unawaited(HapticFeedback.selectionClick());
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Tải báo cáo (PDF) sẽ sớm ra mắt'),
-                ),
-              );
+              unawaited(showVitNoticeSheet(
+                context: context,
+                title: 'Sẽ sớm ra mắt',
+                message: 'Tải báo cáo (PDF) sẽ sớm ra mắt',
+              ));
             },
             leading: const Icon(Icons.open_in_new_rounded),
             child: const Text('Download Report (PDF)'),

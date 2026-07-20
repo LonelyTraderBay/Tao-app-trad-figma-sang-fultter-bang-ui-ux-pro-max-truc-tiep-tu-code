@@ -122,7 +122,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Export Reports'), findsOneWidget);
-    expect(find.text('ISO 20022 XML Export'), findsOneWidget);
+    expect(find.text('Xuất ISO 20022 XML'), findsOneWidget);
 
     await tester.tap(RegulatoryReportsDashboardPage.tabKey('queue').asFinder());
     await tester.pumpAndSettle();

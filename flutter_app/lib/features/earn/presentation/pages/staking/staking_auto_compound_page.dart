@@ -70,7 +70,6 @@ class _StakingAutoCompoundPageState
 
   String _frequency = 'daily';
   bool _gasOptimization = true;
-  bool _showSuccess = false;
 
   @override
   void initState() {
@@ -101,9 +100,7 @@ class _StakingAutoCompoundPageState
       semanticIdentifier: 'SC-363',
       child: Material(
         color: AppColors.bg,
-        child: Stack(
-          children: [
-            snapshotAsync.when(
+        child: snapshotAsync.when(
               loading: () => VitAutoHideHeaderScaffold(
                 header: VitTopChrome(
                   type: VitTopChromeType.detail,
@@ -235,7 +232,15 @@ class _StakingAutoCompoundPageState
                                 leading: const Icon(Icons.settings_outlined),
                                 onPressed: () {
                                   unawaited(HapticFeedback.lightImpact());
-                                  setState(() => _showSuccess = true);
+                                  unawaited(showVitNoticeSheet(
+                                    context: context,
+                                    title: 'Đã lưu cài đặt',
+                                    message: 'Đã lưu cài đặt auto-compound',
+                                    variant: VitBannerVariant.success,
+                                    ctaVariant: VitCtaButtonVariant.success,
+                                    primaryKey:
+                                        StakingAutoCompoundPage.successToastKey,
+                                  ));
                                 },
                                 child: const Text('Lưu cài đặt'),
                               ),
@@ -249,17 +254,6 @@ class _StakingAutoCompoundPageState
                 );
               },
             ),
-            if (_showSuccess)
-              Positioned(
-                left: AppSpacing.contentPad,
-                right: AppSpacing.contentPad,
-                top: MediaQuery.paddingOf(context).top + AppSpacing.x7,
-                child: _SuccessToast(
-                  onDismiss: () => setState(() => _showSuccess = false),
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }

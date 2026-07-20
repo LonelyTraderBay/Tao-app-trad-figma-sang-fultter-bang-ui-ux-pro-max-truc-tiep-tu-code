@@ -58,16 +58,13 @@ class _RegulatoryReportsDashboardPageState
     extends ConsumerState<RegulatoryReportsDashboardPage> {
   String _tab = 'overview';
   String _range = '7D';
-  String? _notice;
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeRegulatoryReportsDashboardProvider);
     return Material(
       color: _dashBackground,
-      child: Stack(
-        children: [
-          VitTradeHubScaffold(
+      child: VitTradeHubScaffold(
             title: 'Regulatory Reports',
             subtitle: 'Dashboard - MiFID II - EMIR',
             semanticLabel: 'Bảng báo cáo tuân thủ quy định',
@@ -82,7 +79,13 @@ class _RegulatoryReportsDashboardPageState
             headerActions: [
               VitHeaderActionItem(
                 type: VitHeaderActionType.export,
-                onPressed: () => setState(() => _notice = 'Export queued'),
+                onPressed: () => showVitNoticeSheet(
+                  context: context,
+                  title: 'Đã xếp hàng',
+                  message: 'Export đã được xếp hàng.',
+                  variant: VitBannerVariant.success,
+                  ctaVariant: VitCtaButtonVariant.success,
+                ),
               ),
             ],
             children: async.when(
@@ -178,7 +181,13 @@ class _RegulatoryReportsDashboardPageState
                         _ComplianceTab(totals: snapshot.totals)
                       else
                         _ExportsTab(
-                          onNotice: (text) => setState(() => _notice = text),
+                          onNotice: (text) => showVitNoticeSheet(
+                            context: context,
+                            title: 'Xuất dữ liệu',
+                            message: text,
+                            variant: VitBannerVariant.success,
+                            ctaVariant: VitCtaButtonVariant.success,
+                          ),
                         ),
                       _QuickActions(
                         onQueue: () => context.push(
@@ -193,23 +202,6 @@ class _RegulatoryReportsDashboardPageState
                 ),
               ],
             ),
-          ),
-          if (_notice != null)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              bottom:
-                  TradeSpacingTokens.tradeBotBottomInsetVisual +
-                  TradeSpacingTokens.tradeBotPanelGap +
-                  MediaQuery.paddingOf(context).bottom,
-              child: VitBanner(
-                variant: VitBannerVariant.success,
-                icon: Icons.check_circle_outline,
-                message: _notice!,
-                onDismiss: () => setState(() => _notice = null),
-              ),
-            ),
-        ],
       ),
     );
   }

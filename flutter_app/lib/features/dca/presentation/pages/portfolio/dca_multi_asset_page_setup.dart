@@ -229,15 +229,19 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
   }
 
   void _showAddAssetNotice() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Add asset flow ready')));
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: 'Thêm tài sản sẽ sớm ra mắt.',
+    ));
   }
 
   void _showDeleteNotice() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Asset removal preview ready')),
-    );
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: 'Xoá tài sản sẽ sớm ra mắt.',
+    ));
   }
 }
 

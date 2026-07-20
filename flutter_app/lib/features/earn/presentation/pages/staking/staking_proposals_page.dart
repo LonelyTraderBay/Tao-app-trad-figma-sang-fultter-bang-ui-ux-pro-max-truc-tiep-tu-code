@@ -106,11 +106,11 @@ class StakingProposalsPage extends ConsumerWidget {
                             key: StakingProposalsPage.createKey,
                             onPressed: () {
                               unawaited(HapticFeedback.selectionClick());
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Tạo đề xuất sẽ sớm ra mắt'),
-                                ),
-                              );
+                              unawaited(showVitNoticeSheet(
+                                context: context,
+                                title: 'Sẽ sớm ra mắt',
+                                message: 'Tạo đề xuất sẽ sớm ra mắt',
+                              ));
                             },
                             variant: VitCtaButtonVariant.secondary,
                             child: Text(snapshot.createLabel),

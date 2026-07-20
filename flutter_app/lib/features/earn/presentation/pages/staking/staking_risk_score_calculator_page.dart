@@ -170,11 +170,11 @@ class _StakingRiskScoreCalculatorPageState
                             height: AppSpacing.buttonStandard,
                             onPressed: () {
                               unawaited(HapticFeedback.selectionClick());
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Tiếp tục sẽ sớm ra mắt'),
-                                ),
-                              );
+                              unawaited(showVitNoticeSheet(
+                                context: context,
+                                title: 'Sẽ sớm ra mắt',
+                                message: 'Tiếp tục sẽ sớm ra mắt',
+                              ));
                             },
                             child: Text(snapshot.proceedLabel),
                           ),

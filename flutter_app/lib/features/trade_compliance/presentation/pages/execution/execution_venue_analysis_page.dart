@@ -51,16 +51,13 @@ class _ExecutionVenueAnalysisPageState
     extends ConsumerState<ExecutionVenueAnalysisPage> {
   String _tab = 'comparison';
   String _sort = 'volume';
-  String? _notice;
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeExecutionVenueAnalysisProvider);
     return Material(
       color: _venueBackground,
-      child: Stack(
-        children: [
-          VitTradeHubScaffold(
+      child: VitTradeHubScaffold(
             title: 'Execution Venue Analysis',
             subtitle: 'Detailed Comparison',
             semanticLabel: 'Phân tích chi tiết các sàn thực thi lệnh giao dịch',
@@ -75,8 +72,13 @@ class _ExecutionVenueAnalysisPageState
             headerActions: [
               VitHeaderActionItem(
                 type: VitHeaderActionType.export,
-                onPressed: () =>
-                    setState(() => _notice = 'Analysis export queued'),
+                onPressed: () => showVitNoticeSheet(
+                  context: context,
+                  title: 'Đã xếp hàng',
+                  message: 'Export phân tích đã được xếp hàng.',
+                  variant: VitBannerVariant.success,
+                  ctaVariant: VitCtaButtonVariant.success,
+                ),
               ),
             ],
             children: async.when(
@@ -167,22 +169,6 @@ class _ExecutionVenueAnalysisPageState
                 ];
               },
             ),
-          ),
-          if (_notice != null)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              top:
-                  MediaQuery.paddingOf(context).top +
-                  TradeSpacingTokens.executionVenueNoticeTopOffset,
-              child: VitBanner(
-                variant: VitBannerVariant.success,
-                icon: Icons.check_circle_outline,
-                message: _notice!,
-                onDismiss: () => setState(() => _notice = null),
-              ),
-            ),
-        ],
       ),
     );
   }

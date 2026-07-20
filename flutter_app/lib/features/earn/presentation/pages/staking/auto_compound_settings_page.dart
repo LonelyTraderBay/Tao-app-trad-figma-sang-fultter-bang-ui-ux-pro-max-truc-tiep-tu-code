@@ -59,7 +59,6 @@ class _AutoCompoundSettingsPageState
   final Map<String, String> _frequencies = {};
   final Map<String, double> _thresholds = {};
   String? _editingId;
-  bool _showSuccess = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +70,7 @@ class _AutoCompoundSettingsPageState
       semanticIdentifier: 'SC-341',
       child: Material(
         color: AppColors.bg,
-        child: Stack(
-          children: [
-            snapshotAsync.when(
+        child: snapshotAsync.when(
               loading: () => VitAutoHideHeaderScaffold(
                 header: VitHeader(
                   title: 'Đang tải…',
@@ -169,19 +166,6 @@ class _AutoCompoundSettingsPageState
                 );
               },
             ),
-            if (_showSuccess)
-              Positioned(
-                left: AppSpacing.contentPad,
-                right: AppSpacing.contentPad,
-                top: MediaQuery.paddingOf(context).top + AppSpacing.x7,
-                child: _SuccessToast(
-                  onDismiss: () {
-                    setState(() => _showSuccess = false);
-                  },
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }
@@ -229,6 +213,7 @@ class _AutoCompoundSettingsPageState
   ) async {
     unawaited(HapticFeedback.selectionClick());
     setState(() => _editingId = position.id);
+    var pendingSave = false;
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -257,11 +242,9 @@ class _AutoCompoundSettingsPageState
             },
             onSave: () {
               unawaited(HapticFeedback.lightImpact());
+              pendingSave = true;
               Navigator.of(context).pop();
-              setState(() {
-                _editingId = null;
-                _showSuccess = true;
-              });
+              setState(() => _editingId = null);
             },
           ),
         );
@@ -269,6 +252,16 @@ class _AutoCompoundSettingsPageState
     );
     if (mounted && _editingId == position.id) {
       setState(() => _editingId = null);
+    }
+    if (pendingSave && mounted) {
+      unawaited(showVitNoticeSheet(
+        context: context,
+        title: 'Đã lưu cài đặt',
+        message: 'Compound sẽ áp dụng từ kỳ tiếp theo.',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+        primaryKey: AutoCompoundSettingsPage.successToastKey,
+      ));
     }
   }
 }

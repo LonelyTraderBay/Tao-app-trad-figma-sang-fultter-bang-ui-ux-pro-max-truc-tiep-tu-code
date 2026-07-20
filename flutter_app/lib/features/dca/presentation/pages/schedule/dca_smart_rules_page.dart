@@ -192,21 +192,27 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
   }
 
   void _showCreateNotice() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Create rule flow ready')));
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: 'Tạo quy tắc sẽ sớm ra mắt.',
+    ));
   }
 
   void _showDeleteNotice() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Rule delete preview ready')));
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: 'Xoá quy tắc sẽ sớm ra mắt.',
+    ));
   }
 
   void _showApplyTemplateNotice() {
     unawaited(HapticFeedback.selectionClick());
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Áp dụng mẫu quy tắc sẽ sớm ra mắt')),
-    );
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: 'Áp dụng mẫu quy tắc sẽ sớm ra mắt.',
+    ));
   }
 }

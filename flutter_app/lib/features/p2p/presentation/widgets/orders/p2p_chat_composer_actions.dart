@@ -67,13 +67,12 @@ class _ChatComposer extends StatelessWidget {
                         tooltip: 'Attach payment proof image',
                         onPressed: () {
                           unawaited(HapticFeedback.selectionClick());
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
+                          unawaited(showVitNoticeSheet(
+                            context: context,
+                            title: 'Sắp ra mắt',
+                            message:
                                 'Đính kèm ảnh bằng chứng thanh toán sẽ sớm ra mắt',
-                              ),
-                            ),
-                          );
+                          ));
                         },
                       ),
                       const SizedBox(width: AppSpacing.x3),

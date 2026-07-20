@@ -146,7 +146,7 @@ void main() {
       find.byKey(AutoCompoundSettingsPage.successToastKey),
       findsOneWidget,
     );
-    expect(find.text('Đã lưu cài đặt!'), findsOneWidget);
+    expect(find.text('Đã lưu cài đặt'), findsOneWidget);
   });
 
   testWidgets('SC-341 info sheet explains compound rules', (tester) async {

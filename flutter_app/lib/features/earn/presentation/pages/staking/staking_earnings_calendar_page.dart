@@ -185,12 +185,12 @@ class _StakingEarningsCalendarPageState
 
   void _exportCalendar() {
     unawaited(HapticFeedback.selectionClick());
-    if (Scaffold.maybeOf(context) == null) return;
-    final messenger = ScaffoldMessenger.maybeOf(context);
-    if (messenger == null) return;
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Xuất lịch nhận lãi (.ics) sẽ sớm ra mắt')),
-    );
+    if (!mounted) return;
+    unawaited(showVitNoticeSheet(
+      context: context,
+      title: 'Sẽ sớm ra mắt',
+      message: 'Xuất lịch nhận lãi (.ics) sẽ sớm ra mắt',
+    ));
   }
 
   void _previousMonth() {

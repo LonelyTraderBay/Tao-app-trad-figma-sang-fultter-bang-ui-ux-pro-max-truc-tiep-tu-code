@@ -359,11 +359,11 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
   }
 
   void _showScanNotice() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Quét QR sẽ mở khi trình quét ví được kết nối'),
-
-        duration: Duration(milliseconds: 900),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Quét QR sẽ mở khi trình quét ví được kết nối',
       ),
     );
   }

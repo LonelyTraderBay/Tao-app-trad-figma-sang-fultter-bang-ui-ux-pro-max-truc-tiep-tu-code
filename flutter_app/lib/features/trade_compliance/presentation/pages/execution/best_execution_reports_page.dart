@@ -52,17 +52,13 @@ class BestExecutionReportsPage extends ConsumerStatefulWidget {
 class _BestExecutionReportsPageState
     extends ConsumerState<BestExecutionReportsPage> {
   String _tab = 'current';
-  String? _notice;
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeBestExecutionReportsProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     return Material(
       color: _bestBackground,
-      child: Stack(
-        children: [
-          VitTradeHubScaffold(
+      child: VitTradeHubScaffold(
             title: 'Best Execution Reports',
             subtitle: 'RTS 27 / RTS 28 Compliance',
             semanticLabel: 'Báo cáo thực thi lệnh tốt nhất theo RTS 27/28',
@@ -77,7 +73,13 @@ class _BestExecutionReportsPageState
             headerActions: [
               VitHeaderActionItem(
                 type: VitHeaderActionType.export,
-                onPressed: () => setState(() => _notice = 'PDF export queued'),
+                onPressed: () => showVitNoticeSheet(
+                  context: context,
+                  title: 'Đã xếp hàng',
+                  message: 'PDF export đã được xếp hàng.',
+                  variant: VitBannerVariant.success,
+                  ctaVariant: VitCtaButtonVariant.success,
+                ),
               ),
             ],
             children: async.when(
@@ -147,38 +149,37 @@ class _BestExecutionReportsPageState
                           onAnalysis: () => context.push(
                             AppRoutePaths.tradeCopyExecutionVenueAnalysis,
                           ),
-                          onExport: () =>
-                              setState(() => _notice = 'PDF export queued'),
-                          onPublish: () =>
-                              setState(() => _notice = 'Report submitted'),
+                          onExport: () => showVitNoticeSheet(
+                            context: context,
+                            title: 'Đã xếp hàng',
+                            message: 'PDF export đã được xếp hàng.',
+                            variant: VitBannerVariant.success,
+                            ctaVariant: VitCtaButtonVariant.success,
+                          ),
+                          onPublish: () => showVitNoticeSheet(
+                            context: context,
+                            title: 'Đã gửi',
+                            message: 'Báo cáo đã được gửi.',
+                            variant: VitBannerVariant.success,
+                            ctaVariant: VitCtaButtonVariant.success,
+                          ),
                         )
                       else
                         _ArchiveReport(
                           reports: snapshot.archive,
-                          onExport: (id) =>
-                              setState(() => _notice = '$id PDF queued'),
+                          onExport: (id) => showVitNoticeSheet(
+                            context: context,
+                            title: 'Đã xếp hàng',
+                            message: '$id: PDF đã được xếp hàng.',
+                            variant: VitBannerVariant.success,
+                            ctaVariant: VitCtaButtonVariant.success,
+                          ),
                         ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-          if (_notice != null)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              top: mode.usesVisualQaFrame
-                  ? AppSpacing.buttonHero
-                  : AppSpacing.x5,
-              child: VitBanner(
-                variant: VitBannerVariant.success,
-                icon: Icons.check_circle_outline,
-                message: _notice!,
-                onDismiss: () => setState(() => _notice = null),
-              ),
-            ),
-        ],
       ),
     );
   }

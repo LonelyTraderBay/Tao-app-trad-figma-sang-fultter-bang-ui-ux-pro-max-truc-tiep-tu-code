@@ -51,17 +51,13 @@ class SlippageMonitoringPage extends ConsumerStatefulWidget {
 class _SlippageMonitoringPageState
     extends ConsumerState<SlippageMonitoringPage> {
   String _tab = 'realtime';
-  String? _notice;
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeSlippageMonitoringProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     return Material(
       color: _slipBackground,
-      child: Stack(
-        children: [
-          VitTradeHubScaffold(
+      child: VitTradeHubScaffold(
             title: 'Slippage Monitoring',
             subtitle: 'Real-time Tracking · Alerts',
             semanticLabel: 'Theo dõi trượt giá theo thời gian thực và cảnh báo',
@@ -76,8 +72,13 @@ class _SlippageMonitoringPageState
             headerActions: [
               VitHeaderActionItem(
                 type: VitHeaderActionType.settings,
-                onPressed: () =>
-                    setState(() => _notice = 'Alert settings opened'),
+                onPressed: () => showVitNoticeSheet(
+                  context: context,
+                  title: 'Cài đặt cảnh báo',
+                  message: 'Đã mở cài đặt cảnh báo.',
+                  variant: VitBannerVariant.success,
+                  ctaVariant: VitCtaButtonVariant.success,
+                ),
               ),
             ],
             children: async.when(
@@ -180,21 +181,6 @@ class _SlippageMonitoringPageState
                 ),
               ],
             ),
-          ),
-          if (_notice != null)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              top: mode.usesVisualQaFrame
-                  ? AppSpacing.buttonHero
-                  : AppSpacing.x5,
-              child: VitBanner(
-                variant: VitBannerVariant.success,
-                message: _notice!,
-                onDismiss: () => setState(() => _notice = null),
-              ),
-            ),
-        ],
       ),
     );
   }

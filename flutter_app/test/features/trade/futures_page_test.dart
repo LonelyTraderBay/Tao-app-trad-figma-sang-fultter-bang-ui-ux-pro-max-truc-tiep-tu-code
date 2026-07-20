@@ -155,6 +155,8 @@ void main() {
 
     expect(find.byType(FuturesPage), findsOneWidget);
     expect(find.text('Nhập ký quỹ để tiếp tục'), findsOneWidget);
+    // Success notice sheet shown after order submit (replaces old inline banner).
+    expect(find.text('Đã gửi lệnh'), findsWidgets);
   });
 
   testWidgets('SC-057 close returns to SC-049 TradePage', (tester) async {
