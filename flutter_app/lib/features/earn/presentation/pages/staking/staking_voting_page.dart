@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -124,7 +126,9 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
                           VitStickyFooter(
                             child: VitCtaButton(
                               key: StakingVotingPage.submitKey,
-                              onPressed: _selectedVote == null ? null : () {},
+                              onPressed: _selectedVote == null
+                                  ? null
+                                  : () => unawaited(_submitVote(snapshot)),
                               child: Text(snapshot.submitLabel),
                             ),
                           ),
@@ -139,6 +143,26 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _submitVote(StakingVotingSnapshot snapshot) async {
+    final selectedId = _selectedVote;
+    if (selectedId == null) return;
+    final optionLabel = snapshot.options
+        .firstWhere((option) => option.id == selectedId)
+        .label;
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã ghi nhận phiếu bầu',
+      message:
+          'Bạn đã bỏ phiếu "$optionLabel" cho đề xuất "${snapshot.proposalTitle}".',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (!mounted) return;
+        context.go(snapshot.backRoute);
+      },
     );
   }
 }

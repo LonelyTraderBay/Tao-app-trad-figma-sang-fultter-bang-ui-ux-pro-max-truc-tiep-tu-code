@@ -10,7 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_notice_sheet.dart';
 
 const addressAddBackground = AppColors.bg;
 const addressAddPanel = AppColors.surface;

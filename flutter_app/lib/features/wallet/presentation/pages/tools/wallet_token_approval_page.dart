@@ -20,7 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_notice_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';

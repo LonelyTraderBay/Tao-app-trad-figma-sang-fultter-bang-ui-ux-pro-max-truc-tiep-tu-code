@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_notice_sheet.dart';
 
 class WalletUnavailableBanner extends StatelessWidget {
   const WalletUnavailableBanner({super.key, required this.message});

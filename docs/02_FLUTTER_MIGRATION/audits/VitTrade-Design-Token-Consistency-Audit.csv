@@ -2858,6 +2858,7 @@ shared_widget,,flutter_app/lib/shared/widgets/vit_metric_column.dart,pass,0,0,0,
 shared_widget,,flutter_app/lib/shared/widgets/vit_metric_delta_pill.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_module_components.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_next_action_card.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+shared_widget,,flutter_app/lib/shared/widgets/vit_notice_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_offline_banner.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_preset_chip_row.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_preview_confirm_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
