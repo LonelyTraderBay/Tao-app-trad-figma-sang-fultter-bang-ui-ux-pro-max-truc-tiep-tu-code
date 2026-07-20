@@ -111,7 +111,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-035 share receipt button shows a placeholder snackbar', (
+  testWidgets('SC-035 share receipt button shows a coming-soon notice sheet', (
     tester,
   ) async {
     await pumpReceipt(tester, 'po-1');
@@ -120,7 +120,7 @@ void main() {
     await tester.tap(find.byKey(PredictionOrderReceiptPage.shareKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Chia sẻ chi tiết lệnh sẽ sớm ra mắt'), findsOneWidget);
+    expect(find.text('Chia sẻ chi tiết lệnh sẽ sớm ra mắt.'), findsOneWidget);
   });
 
   testWidgets('SC-035 receipt navigation edges are wired safely', (
