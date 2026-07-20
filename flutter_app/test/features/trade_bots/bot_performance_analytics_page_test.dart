@@ -70,11 +70,11 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Performance Analytics'), findsOneWidget);
+    expect(find.text('Phân tích hiệu suất'), findsOneWidget);
     expect(find.text('+\$199.30'), findsOneWidget);
-    expect(find.text('Cumulative PnL'), findsOneWidget);
+    expect(find.text('Lãi/lỗ luỹ kế'), findsOneWidget);
     expect(find.text('Win/Loss Distribution'), findsOneWidget);
-    expect(find.text('Performance by Strategy'), findsOneWidget);
+    expect(find.text('Hiệu suất theo chiến lược'), findsOneWidget);
   });
 
   testWidgets('SC-124 first viewport reaches cumulative PnL chart', (
@@ -107,7 +107,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('30 Days'), findsOneWidget);
-    expect(find.text('All Time'), findsOneWidget);
+    expect(find.text('30 ngày'), findsOneWidget);
+    expect(find.text('Toàn thời gian'), findsOneWidget);
   });
 }

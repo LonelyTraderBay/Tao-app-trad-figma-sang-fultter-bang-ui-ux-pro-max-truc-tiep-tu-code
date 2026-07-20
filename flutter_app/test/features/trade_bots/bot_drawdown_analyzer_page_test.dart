@@ -67,13 +67,13 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Drawdown Analyzer'), findsOneWidget);
-    expect(find.text('Max Drawdown'), findsOneWidget);
+    expect(find.text('Phân tích sụt giảm vốn'), findsNWidgets(2));
+    expect(find.text('Sụt tối đa'), findsOneWidget);
     expect(find.text('-10.3%'), findsWidgets);
-    expect(find.text('Underwater Equity'), findsOneWidget);
-    expect(find.text('Drawdown Duration Distribution'), findsOneWidget);
-    expect(find.text('Major Drawdown Events'), findsOneWidget);
-    expect(find.text('Drawdown Analysis'), findsOneWidget);
+    expect(find.text('Vốn trong giai đoạn sụt giảm'), findsOneWidget);
+    expect(find.text('Phân bố thời gian sụt giảm vốn'), findsOneWidget);
+    expect(find.text('Các đợt sụt giảm vốn lớn'), findsOneWidget);
+    expect(find.text('Phân tích sụt giảm vốn'), findsNWidgets(2));
   });
 
   testWidgets('SC-129 first viewport reaches full drawdown summary', (
@@ -88,7 +88,7 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.text('DD Frequency'),
+      find.text('Tần suất sụt giảm'),
       minVisibleHeight: 12,
       targetLabel: 'full drawdown summary',
       reason:

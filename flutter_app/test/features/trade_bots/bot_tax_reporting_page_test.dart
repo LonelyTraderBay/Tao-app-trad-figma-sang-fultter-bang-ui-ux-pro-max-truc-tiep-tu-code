@@ -78,15 +78,15 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Tax Reporting'), findsOneWidget);
-    expect(find.text('Tax Reporting Notice'), findsOneWidget);
-    expect(find.text('Select Tax Year'), findsOneWidget);
+    expect(find.text('Báo cáo thuế'), findsOneWidget);
+    expect(find.text('Thông báo báo cáo thuế'), findsOneWidget);
+    expect(find.text('Chọn năm thuế'), findsOneWidget);
     expect(find.text('Summary for 2025'), findsOneWidget);
-    expect(find.text('Total Trades'), findsOneWidget);
-    expect(find.text('Cost Basis Method'), findsOneWidget);
+    expect(find.text('Tổng số giao dịch'), findsOneWidget);
+    expect(find.text('Phương pháp tính giá vốn'), findsOneWidget);
     expect(find.text('IRS Form 8949'), findsOneWidget);
     expect(find.text('TurboTax CSV'), findsOneWidget);
-    expect(find.text('Generate 2 Reports for 2025'), findsOneWidget);
+    expect(find.text('Tạo 2 báo cáo cho năm 2025'), findsOneWidget);
   });
 
   testWidgets('SC-133 year, method, and report controls update CTA', (
@@ -97,17 +97,17 @@ void main() {
     await tester.tap(find.byKey(BotTaxReportingPage.yearKey('2026')));
     await tester.pumpAndSettle();
     expect(find.text('Summary for 2026'), findsOneWidget);
-    expect(find.text('Generate 2 Reports for 2026'), findsOneWidget);
+    expect(find.text('Tạo 2 báo cáo cho năm 2026'), findsOneWidget);
 
     await tester.tap(find.byKey(BotTaxReportingPage.methodKey('LIFO')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(BotTaxReportingPage.reportKey('irs-8949')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Generate 1 Report for 2026'), findsOneWidget);
+    expect(find.text('Tạo 1 báo cáo cho năm 2026'), findsOneWidget);
     await tester.tap(find.byKey(BotTaxReportingPage.generateKey));
     await tester.pumpAndSettle();
-    expect(find.text('Generate 1 Report for 2026'), findsOneWidget);
+    expect(find.text('Tạo 1 báo cáo cho năm 2026'), findsOneWidget);
   });
 
   testWidgets('SC-133 first viewport reaches report type selection', (

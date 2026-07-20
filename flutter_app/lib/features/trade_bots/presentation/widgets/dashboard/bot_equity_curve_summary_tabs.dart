@@ -9,7 +9,7 @@ class _SummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       (
-        'Bot Return',
+        'Lợi nhuận Bot',
         '+${summary.botReturnPct.toStringAsFixed(1)}%',
         _equityGreen,
       ),

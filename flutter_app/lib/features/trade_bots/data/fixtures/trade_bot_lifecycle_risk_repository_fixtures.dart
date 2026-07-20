@@ -256,90 +256,92 @@ const List<TradeBot> _activeBots = [
 
 const List<TradeBotTermsSection> _botTermsSections = [
   TradeBotTermsSection(
-    title: '1. Acceptance of Terms',
+    title: '1. Chấp nhận điều khoản',
     paragraphs: [
-      'By using our Trading Bots service ("Service"), you agree to be bound '
-          'by these Terms of Service ("Terms"). If you do not agree to these '
-          'Terms, you must not use the Service.',
-      'These Terms constitute a legally binding agreement between you and the '
-          'Company. Your use of automated trading algorithms is subject to '
-          'additional regulatory requirements which you acknowledge and accept.',
+      'Khi sử dụng dịch vụ Bot giao dịch ("Dịch vụ"), bạn đồng ý bị ràng buộc '
+          'bởi các Điều khoản dịch vụ này ("Điều khoản"). Nếu không đồng ý '
+          'với các Điều khoản này, bạn không được sử dụng Dịch vụ.',
+      'Các Điều khoản này là thoả thuận ràng buộc pháp lý giữa bạn và Công '
+          'ty. Việc sử dụng thuật toán giao dịch tự động của bạn phải tuân '
+          'theo các yêu cầu quy định bổ sung mà bạn xác nhận và chấp nhận.',
     ],
   ),
   TradeBotTermsSection(
-    title: '2. No Profit Guarantee',
-    warningTitle: 'CRITICAL WARNING:',
+    title: '2. Không đảm bảo lợi nhuận',
+    warningTitle: 'CẢNH BÁO QUAN TRỌNG:',
     warningBody:
-        'Trading Bots do NOT guarantee profits. Past performance does not '
-        'predict future results. You may lose some or all of your invested '
-        'capital.',
+        'Bot giao dịch KHÔNG đảm bảo lợi nhuận. Hiệu suất quá khứ không dự '
+        'đoán được kết quả tương lai. Bạn có thể mất một phần hoặc toàn bộ '
+        'vốn đã đầu tư.',
     paragraphs: [
-      'Automated trading carries significant risk. Market conditions, '
-          'volatility, liquidity, technical failures, and other factors can '
-          'result in substantial losses. You should only invest capital you '
-          'can afford to lose entirely.',
+      'Giao dịch tự động tiềm ẩn rủi ro đáng kể. Điều kiện thị trường, biến '
+          'động, thanh khoản, lỗi kỹ thuật và các yếu tố khác có thể gây ra '
+          'thua lỗ đáng kể. Bạn chỉ nên đầu tư số vốn mà bạn chấp nhận mất '
+          'hoàn toàn.',
     ],
   ),
   TradeBotTermsSection(
-    title: '3. Risk Acknowledgment',
-    paragraphs: ['You acknowledge and accept the following risks:'],
+    title: '3. Xác nhận rủi ro',
+    paragraphs: ['Bạn xác nhận và chấp nhận các rủi ro sau:'],
     bullets: [
-      'Market Risk: Cryptocurrency markets are highly volatile.',
-      'Liquidity Risk: Orders may not execute at desired prices.',
-      'Slippage Risk: Execution prices may differ from expected prices.',
-      'Technical Risk: System failures may cause unexpected behavior.',
+      'Rủi ro thị trường: Thị trường tiền mã hoá biến động rất mạnh.',
+      'Rủi ro thanh khoản: Lệnh có thể không khớp ở mức giá mong muốn.',
+      'Rủi ro trượt giá: Giá khớp lệnh có thể khác giá dự kiến.',
+      'Rủi ro kỹ thuật: Lỗi hệ thống có thể gây ra hành vi ngoài dự kiến.',
     ],
   ),
   TradeBotTermsSection(
-    title: '4. User Responsibilities',
+    title: '4. Trách nhiệm của người dùng',
     paragraphs: [
-      'You are solely responsible for configuring bot parameters, monitoring '
-          'performance, maintaining sufficient balance, understanding each '
-          'strategy, and complying with applicable laws.',
+      'Bạn hoàn toàn chịu trách nhiệm về việc cấu hình tham số bot, theo dõi '
+          'hiệu suất, duy trì đủ số dư, hiểu rõ từng chiến lược, và tuân thủ '
+          'pháp luật hiện hành.',
     ],
   ),
   TradeBotTermsSection(
-    title: '5. Liability Limitation',
+    title: '5. Giới hạn trách nhiệm pháp lý',
     paragraphs: [
-      'To the maximum extent permitted by law, the Company shall not be liable '
-          'for trading losses, inaccurate projections, downtime, exchange '
-          'failures, or regulatory changes affecting your trading ability.',
+      'Trong phạm vi tối đa pháp luật cho phép, Công ty không chịu trách '
+          'nhiệm về các khoản lỗ giao dịch, dự báo không chính xác, thời '
+          'gian gián đoạn dịch vụ, lỗi từ sàn giao dịch, hoặc thay đổi quy '
+          'định ảnh hưởng đến khả năng giao dịch của bạn.',
     ],
   ),
   TradeBotTermsSection(
-    title: '6. Service Modifications & Termination',
+    title: '6. Thay đổi & chấm dứt dịch vụ',
     paragraphs: [
-      'We reserve the right to modify, suspend, or terminate the Service at '
-          'any time to comply with regulations or protect user interests.',
+      'Chúng tôi có quyền thay đổi, tạm ngừng hoặc chấm dứt Dịch vụ bất kỳ '
+          'lúc nào để tuân thủ quy định hoặc bảo vệ quyền lợi người dùng.',
     ],
   ),
   TradeBotTermsSection(
-    title: '7. Dispute Resolution',
+    title: '7. Giải quyết tranh chấp',
     paragraphs: [
-      'Any disputes arising from these Terms or your use of the Service shall '
-          'be resolved through binding arbitration in accordance with the '
-          'applicable rules.',
+      'Mọi tranh chấp phát sinh từ các Điều khoản này hoặc từ việc bạn sử '
+          'dụng Dịch vụ sẽ được giải quyết thông qua trọng tài ràng buộc '
+          'theo các quy tắc hiện hành.',
     ],
   ),
   TradeBotTermsSection(
-    title: '8. Regulatory Compliance',
+    title: '8. Tuân thủ quy định',
     paragraphs: [
-      'Trading Bots may be classified as complex financial products under '
-          'MiFID II, requiring appropriateness assessment and local compliance.',
+      'Bot giao dịch có thể được xếp vào nhóm sản phẩm tài chính phức tạp '
+          'theo MiFID II, yêu cầu đánh giá mức độ phù hợp và tuân thủ quy '
+          'định địa phương.',
     ],
   ),
   TradeBotTermsSection(
-    title: '9. Data Usage & Privacy',
+    title: '9. Sử dụng dữ liệu & quyền riêng tư',
     paragraphs: [
-      'We collect and process trading data, bot performance metrics, and '
-          'account information to provide and improve the Service.',
+      'Chúng tôi thu thập và xử lý dữ liệu giao dịch, chỉ số hiệu suất bot '
+          'và thông tin tài khoản để cung cấp và cải thiện Dịch vụ.',
     ],
   ),
   TradeBotTermsSection(
-    title: '10. Contact Information',
+    title: '10. Thông tin liên hệ',
     paragraphs: [
-      'For questions about these Terms, contact legal@tradingplatform.com or '
-          'support@tradingplatform.com.',
+      'Nếu có thắc mắc về các Điều khoản này, liên hệ legal@tradingplatform.com '
+          'hoặc support@tradingplatform.com.',
     ],
   ),
 ];
@@ -348,130 +350,133 @@ const List<TradeBotRiskCategory> _botRiskCategories = [
   TradeBotRiskCategory(
     id: 'market',
     kind: TradeBotRiskKind.market,
-    title: 'Market Volatility Risk',
+    title: 'Rủi ro biến động thị trường',
     description:
-        'Cryptocurrency markets are extremely volatile and can move rapidly '
-        'against your positions.',
+        'Thị trường tiền mã hoá biến động cực mạnh và có thể đi ngược vị '
+        'thế của bạn rất nhanh.',
     examples: [
-      'Bitcoin dropped 30% in a single day during flash crashes',
-      'Altcoins can lose 50-90% of value in bear markets',
-      'News events can cause sudden price swings of 10-20% in minutes',
+      'Bitcoin giảm 30% chỉ trong một ngày khi xảy ra flash crash',
+      'Altcoin có thể mất 50-90% giá trị trong thị trường giá xuống',
+      'Tin tức có thể gây biến động giá đột ngột 10-20% chỉ trong vài phút',
     ],
     mitigation:
-        'Use stop-loss orders, diversify across assets, and never invest '
-        'more than you can afford to lose.',
+        'Dùng lệnh cắt lỗ, đa dạng hoá tài sản, và không bao giờ đầu tư quá '
+        'số tiền bạn chấp nhận mất.',
   ),
   TradeBotRiskCategory(
     id: 'leverage',
     kind: TradeBotRiskKind.leverage,
-    title: 'Leverage & Martingale Risk',
+    title: 'Rủi ro đòn bẩy & Martingale',
     description:
-        'Strategies that increase position size (like Martingale) can '
-        'amplify losses exponentially.',
+        'Các chiến lược tăng khối lượng vị thế (như Martingale) có thể '
+        'khuếch đại thua lỗ theo cấp số nhân.',
     examples: [
-      'Martingale can require 10x initial capital after 3-4 consecutive losses',
-      'Liquidation can occur if market moves against you before recovery',
-      'Compound losses can exceed total account balance',
+      'Martingale có thể cần gấp 10 lần vốn ban đầu sau 3-4 lần thua liên tiếp',
+      'Có thể bị thanh lý nếu thị trường đi ngược trước khi kịp phục hồi',
+      'Thua lỗ dồn tích có thể vượt quá toàn bộ số dư tài khoản',
     ],
     mitigation:
-        'Set strict maximum position size limits, use conservative '
-        'multipliers, and monitor drawdown closely.',
+        'Đặt giới hạn khối lượng vị thế tối đa nghiêm ngặt, dùng hệ số nhân '
+        'thận trọng, và theo dõi sát mức sụt giảm vốn.',
   ),
   TradeBotRiskCategory(
     id: 'liquidity',
     kind: TradeBotRiskKind.liquidity,
-    title: 'Liquidity & Slippage Risk',
+    title: 'Rủi ro thanh khoản & trượt giá',
     description:
-        'Low liquidity markets may not execute your orders at expected prices.',
+        'Thị trường thanh khoản thấp có thể không khớp lệnh của bạn ở mức '
+        'giá mong muốn.',
     examples: [
-      'Limit orders may not fill during volatile periods',
-      'Market orders can execute 2-5% worse than displayed price',
-      'Large orders can move the market against you',
+      'Lệnh giới hạn có thể không khớp trong giai đoạn biến động mạnh',
+      'Lệnh thị trường có thể khớp tệ hơn giá hiển thị 2-5%',
+      'Lệnh khối lượng lớn có thể khiến thị trường đi ngược lại bạn',
     ],
     mitigation:
-        'Trade liquid pairs (BTC/USDT, ETH/USDT), use limit orders, and '
-        'split large orders into smaller chunks.',
+        'Giao dịch cặp có thanh khoản tốt (BTC/USDT, ETH/USDT), dùng lệnh '
+        'giới hạn, và chia nhỏ lệnh lớn thành nhiều lệnh nhỏ.',
   ),
   TradeBotRiskCategory(
     id: 'technical',
     kind: TradeBotRiskKind.technical,
-    title: 'Technical Failure Risk',
+    title: 'Rủi ro lỗi kỹ thuật',
     description:
-        'System bugs, network issues, or exchange downtime can cause '
-        'unexpected bot behavior.',
+        'Lỗi hệ thống, sự cố mạng, hoặc sàn giao dịch gián đoạn có thể gây '
+        'ra hành vi bot ngoài dự kiến.',
     examples: [
-      'Exchange API failures can prevent bot execution',
-      'Network latency can cause missed opportunities or double orders',
-      'Software bugs may execute unintended trades',
+      'Lỗi API sàn giao dịch có thể khiến bot không thực thi được lệnh',
+      'Độ trễ mạng có thể gây bỏ lỡ cơ hội hoặc đặt lệnh trùng',
+      'Lỗi phần mềm có thể thực thi giao dịch ngoài ý muốn',
     ],
     mitigation:
-        'Enable emergency stop alerts, monitor bot activity regularly, and '
-        'test strategies in demo mode first.',
+        'Bật cảnh báo dừng khẩn cấp, theo dõi hoạt động bot thường xuyên, và '
+        'thử nghiệm chiến lược ở chế độ demo trước.',
   ),
   TradeBotRiskCategory(
     id: 'timing',
     kind: TradeBotRiskKind.timing,
-    title: 'Execution & Timing Risk',
+    title: 'Rủi ro thực thi & độ trễ',
     description:
-        'Delays between signal generation and order execution can reduce '
-        'profitability.',
+        'Độ trễ giữa lúc phát tín hiệu và lúc khớp lệnh có thể làm giảm lợi '
+        'nhuận.',
     examples: [
-      'Backtest results assume instant execution (unrealistic)',
-      'Real trading incurs 0.1-1 second delays affecting entry/exit prices',
-      'High-frequency strategies are most sensitive to timing issues',
+      'Kết quả kiểm thử chiến lược giả định khớp lệnh tức thì (không thực tế)',
+      'Giao dịch thực tế có độ trễ 0.1-1 giây ảnh hưởng giá vào/ra lệnh',
+      'Chiến lược tần suất cao nhạy cảm nhất với vấn đề độ trễ',
     ],
     mitigation:
-        'Account for realistic execution delays in backtests, avoid '
-        'over-optimized strategies, and use VPS for stable connectivity.',
+        'Tính đến độ trễ thực thi thực tế khi kiểm thử chiến lược, tránh tối '
+        'ưu hoá quá mức, và dùng VPS để kết nối ổn định.',
   ),
   TradeBotRiskCategory(
     id: 'regulatory',
     kind: TradeBotRiskKind.regulatory,
-    title: 'Regulatory & Legal Risk',
+    title: 'Rủi ro pháp lý & quy định',
     description:
-        'Changes in regulations may affect your ability to trade or access '
-        'funds.',
+        'Thay đổi quy định có thể ảnh hưởng đến khả năng giao dịch hoặc '
+        'truy cập tài sản của bạn.',
     examples: [
-      'Automated trading may be restricted in certain jurisdictions',
-      'KYC/AML requirements can freeze withdrawals pending verification',
-      'Tax reporting obligations apply to all bot trades',
+      'Giao dịch tự động có thể bị hạn chế tại một số khu vực pháp lý',
+      'Yêu cầu KYC/AML có thể tạm khoá rút tiền chờ xác minh',
+      'Nghĩa vụ báo cáo thuế áp dụng cho mọi giao dịch của bot',
     ],
     mitigation:
-        'Ensure compliance with local laws, keep detailed trade records, and '
-        'consult a tax professional.',
+        'Đảm bảo tuân thủ pháp luật địa phương, lưu giữ hồ sơ giao dịch chi '
+        'tiết, và tham khảo chuyên gia thuế.',
   ),
 ];
 
 const List<TradeBotRiskWarning> _botRiskWarnings = [
   TradeBotRiskWarning(
-    title: 'No Guarantee of Profit',
+    title: 'Không đảm bảo lợi nhuận',
     text:
-        'Bots can lose money consistently. A strategy that works in '
-        'backtests may fail in live trading due to changing market conditions.',
+        'Bot có thể liên tục thua lỗ. Một chiến lược hiệu quả khi kiểm thử '
+        'lịch sử vẫn có thể thất bại khi giao dịch thực do điều kiện thị '
+        'trường thay đổi.',
   ),
   TradeBotRiskWarning(
-    title: 'Fees Compound Losses',
+    title: 'Phí giao dịch làm tăng thua lỗ',
     text:
-        'Every trade incurs exchange fees (0.1-0.5%). High-frequency bots can '
-        'lose money purely from fees even if price moves are neutral.',
+        'Mỗi giao dịch đều mất phí sàn (0.1-0.5%). Bot tần suất cao có thể '
+        'lỗ chỉ vì phí ngay cả khi biến động giá trung tính.',
   ),
   TradeBotRiskWarning(
-    title: 'Market Manipulation',
+    title: 'Thao túng thị trường',
     text:
-        'Cryptocurrency markets are less regulated and more susceptible to '
-        'manipulation, wash trading, and pump-and-dump schemes.',
+        'Thị trường tiền mã hoá ít được quản lý và dễ bị thao túng, giao '
+        'dịch giả (wash trading), hoặc bơm-xả giá (pump-and-dump).',
   ),
   TradeBotRiskWarning(
-    title: 'Account Liquidation',
+    title: 'Thanh lý tài khoản',
     text:
-        'If using margin or leverage, your entire account can be liquidated '
-        'if the market moves against you before stop-loss triggers.',
+        'Nếu dùng ký quỹ hoặc đòn bẩy, toàn bộ tài khoản có thể bị thanh lý '
+        'nếu thị trường đi ngược trước khi lệnh cắt lỗ kích hoạt.',
   ),
   TradeBotRiskWarning(
-    title: 'No Recourse for Losses',
+    title: 'Không có cơ chế bồi hoàn',
     text:
-        'Unlike traditional finance, crypto trading is largely uninsured. '
-        'Lost funds cannot be recovered through deposit insurance schemes.',
+        'Khác với tài chính truyền thống, giao dịch tiền mã hoá hầu như '
+        'không được bảo hiểm. Tài sản đã mất không thể lấy lại qua bảo hiểm '
+        'tiền gửi.',
   ),
 ];
 
@@ -479,41 +484,41 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
   TradeBotSuitabilityQuestion(
     id: 'q1',
     category: TradeBotSuitabilityCategory.experience,
-    question: 'How long have you been trading cryptocurrencies?',
+    question: 'Bạn đã giao dịch tiền mã hoá được bao lâu?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: 'Never traded before / Less than 3 months',
+        text: 'Chưa từng giao dịch / Dưới 3 tháng',
         score: 0,
       ),
-      TradeBotSuitabilityOption(id: 'b', text: '3-12 months', score: 1),
-      TradeBotSuitabilityOption(id: 'c', text: '1-3 years', score: 2),
-      TradeBotSuitabilityOption(id: 'd', text: 'More than 3 years', score: 3),
+      TradeBotSuitabilityOption(id: 'b', text: '3-12 tháng', score: 1),
+      TradeBotSuitabilityOption(id: 'c', text: '1-3 năm', score: 2),
+      TradeBotSuitabilityOption(id: 'd', text: 'Trên 3 năm', score: 3),
     ],
   ),
   TradeBotSuitabilityQuestion(
     id: 'q2',
     category: TradeBotSuitabilityCategory.experience,
-    question: 'Have you ever used trading bots or algorithmic trading before?',
+    question: 'Bạn đã từng dùng bot giao dịch hoặc giao dịch thuật toán chưa?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: 'No, this is my first time',
+        text: 'Chưa, đây là lần đầu tiên',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: 'Yes, but only in demo/paper trading',
+        text: 'Có, nhưng chỉ ở chế độ demo/thử nghiệm',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
-        text: 'Yes, with real money for less than 6 months',
+        text: 'Có, với tiền thật dưới 6 tháng',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'Yes, extensively with real money for over 6 months',
+        text: 'Có, thường xuyên với tiền thật trên 6 tháng',
         score: 3,
       ),
     ],
@@ -521,26 +526,26 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
   TradeBotSuitabilityQuestion(
     id: 'q3',
     category: TradeBotSuitabilityCategory.knowledge,
-    question: 'Do you understand how Grid Bots work?',
+    question: 'Bạn có hiểu cách hoạt động của Grid Bot không?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: "No, I don't know what a Grid Bot is",
+        text: 'Không, tôi không biết Grid Bot là gì',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: 'Slightly - I have a basic idea',
+        text: 'Sơ sơ - tôi có ý niệm cơ bản',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
-        text: 'Yes - I understand the concept and risks',
+        text: 'Có - tôi hiểu khái niệm và rủi ro',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'Expert - I can explain it and have used it before',
+        text: 'Thành thạo - tôi có thể giải thích và đã từng dùng',
         score: 3,
       ),
     ],
@@ -548,27 +553,28 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
   TradeBotSuitabilityQuestion(
     id: 'q4',
     category: TradeBotSuitabilityCategory.knowledge,
-    question: 'Do you understand what "slippage" means in trading?',
+    question:
+        'Bạn có hiểu "trượt giá" (slippage) trong giao dịch nghĩa là gì không?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: 'No, never heard of it',
+        text: 'Không, chưa từng nghe đến',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: "Vaguely - I've seen the term but not sure what it means",
+        text: 'Mơ hồ - tôi có nghe thuật ngữ này nhưng chưa chắc hiểu đúng',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
         text:
-            "Yes - I know it's the difference between expected and actual price",
+            'Có - tôi biết đó là chênh lệch giữa giá dự kiến và giá khớp thực tế',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'Expert - I know how to mitigate slippage',
+        text: 'Thành thạo - tôi biết cách giảm thiểu trượt giá',
         score: 3,
       ),
     ],
@@ -577,27 +583,27 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
     id: 'q5',
     category: TradeBotSuitabilityCategory.risk,
     question:
-        'What percentage of your total savings/investments are you planning '
-        'to allocate to trading bots?',
+        'Bạn dự định phân bổ bao nhiêu phần trăm tổng tiền tiết kiệm/đầu tư '
+        'của mình vào bot giao dịch?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: 'More than 50% of my total savings',
+        text: 'Trên 50% tổng tiền tiết kiệm',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: '20-50% of my total savings',
+        text: '20-50% tổng tiền tiết kiệm',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
-        text: '5-20% of my total savings',
+        text: '5-20% tổng tiền tiết kiệm',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'Less than 5% - only money I can afford to lose',
+        text: 'Dưới 5% - chỉ số tiền tôi chấp nhận mất',
         score: 3,
       ),
     ],
@@ -605,27 +611,26 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
   TradeBotSuitabilityQuestion(
     id: 'q6',
     category: TradeBotSuitabilityCategory.risk,
-    question:
-        'If your bot lost 30% of its value in one week, what would you do?',
+    question: 'Nếu bot của bạn mất 30% giá trị trong một tuần, bạn sẽ làm gì?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: 'Panic and sell immediately',
+        text: 'Hoảng loạn và bán ngay lập tức',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: 'Feel very uncomfortable but hold',
+        text: 'Rất lo lắng nhưng vẫn giữ',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
-        text: 'Accept it as normal volatility and continue',
+        text: 'Chấp nhận đó là biến động bình thường và tiếp tục',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'See it as a buying opportunity and add more',
+        text: 'Xem đó là cơ hội mua thêm',
         score: 3,
       ),
     ],
@@ -633,26 +638,26 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
   TradeBotSuitabilityQuestion(
     id: 'q7',
     category: TradeBotSuitabilityCategory.financial,
-    question: 'What is your primary investment goal with trading bots?',
+    question: 'Mục tiêu đầu tư chính của bạn khi dùng bot giao dịch là gì?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: 'Get rich quick / Double my money fast',
+        text: 'Làm giàu nhanh / Nhân đôi tiền thật nhanh',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: 'Earn steady income to replace my salary',
+        text: 'Có thu nhập ổn định để thay lương',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
-        text: 'Long-term wealth accumulation over years',
+        text: 'Tích luỹ tài sản dài hạn qua nhiều năm',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'Experiment and learn, with small capital',
+        text: 'Thử nghiệm và học hỏi, với vốn nhỏ',
         score: 3,
       ),
     ],
@@ -661,27 +666,27 @@ const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
     id: 'q8',
     category: TradeBotSuitabilityCategory.knowledge,
     question:
-        'Do you understand the difference between DCA, Grid, and Martingale '
-        'strategies?',
+        'Bạn có hiểu sự khác biệt giữa chiến lược DCA, Grid và Martingale '
+        'không?',
     options: [
       TradeBotSuitabilityOption(
         id: 'a',
-        text: "No, I don't know any of them",
+        text: 'Không, tôi không biết chiến lược nào trong số này',
         score: 0,
       ),
       TradeBotSuitabilityOption(
         id: 'b',
-        text: 'I know DCA but not the others',
+        text: 'Tôi biết DCA nhưng không biết các chiến lược còn lại',
         score: 1,
       ),
       TradeBotSuitabilityOption(
         id: 'c',
-        text: 'I understand all three conceptually',
+        text: 'Tôi hiểu khái niệm của cả ba chiến lược',
         score: 2,
       ),
       TradeBotSuitabilityOption(
         id: 'd',
-        text: 'Expert - I know when to use each strategy',
+        text: 'Thành thạo - tôi biết khi nào nên dùng từng chiến lược',
         score: 3,
       ),
     ],
@@ -730,10 +735,10 @@ const List<TradeBotVarPoint> _botRiskVarHistory = [
 ];
 
 const List<TradeBotSafetyControl> _botRiskSafetyControls = [
-  TradeBotSafetyControl(label: 'Drawdown limit', value: '-20%'),
-  TradeBotSafetyControl(label: 'Daily loss limit', value: '-\$500'),
-  TradeBotSafetyControl(label: 'Max position size', value: '\$1,000'),
-  TradeBotSafetyControl(label: 'Emergency stop', value: 'Enabled'),
+  TradeBotSafetyControl(label: 'Giới hạn sụt giảm vốn', value: '-20%'),
+  TradeBotSafetyControl(label: 'Giới hạn lỗ mỗi ngày', value: '-\$500'),
+  TradeBotSafetyControl(label: 'Khối lượng vị thế tối đa', value: '\$1,000'),
+  TradeBotSafetyControl(label: 'Dừng khẩn cấp', value: 'Đang bật'),
 ];
 
 const List<TradeBotEmergencyBot> _botEmergencyStopBots = [
@@ -742,65 +747,61 @@ const List<TradeBotEmergencyBot> _botEmergencyStopBots = [
     name: 'DCA Bot #1',
     pair: 'BTC/USDT',
     profit: 84.20,
-    statusLabel: 'Running',
+    statusLabel: 'Đang chạy',
   ),
   TradeBotEmergencyBot(
     id: 'bot2',
     name: 'Grid Bot #1',
     pair: 'ETH/USDT',
     profit: 127.40,
-    statusLabel: 'Running',
+    statusLabel: 'Đang chạy',
   ),
   TradeBotEmergencyBot(
     id: 'bot3',
     name: 'Momentum Bot #1',
     pair: 'SOL/USDT',
     profit: -12.30,
-    statusLabel: 'Running',
+    statusLabel: 'Đang chạy',
   ),
 ];
 
 const List<TradeBotEmergencyReason> _botEmergencyStopReasons = [
   TradeBotEmergencyReason(
     id: 'crash',
-    label: 'Market crash / extreme volatility',
+    label: 'Thị trường sập / biến động cực mạnh',
     iconName: 'crash',
   ),
   TradeBotEmergencyReason(
     id: 'bug',
-    label: 'Technical bug / unexpected behavior',
+    label: 'Lỗi kỹ thuật / hành vi ngoài dự kiến',
     iconName: 'bug',
   ),
   TradeBotEmergencyReason(
     id: 'unauthorized',
-    label: 'Unauthorized access detected',
+    label: 'Phát hiện truy cập trái phép',
     iconName: 'unauthorized',
   ),
   TradeBotEmergencyReason(
     id: 'drawdown',
-    label: 'Drawdown limit approaching',
+    label: 'Sắp chạm giới hạn sụt giảm vốn',
     iconName: 'drawdown',
   ),
-  TradeBotEmergencyReason(
-    id: 'other',
-    label: 'Other reason',
-    iconName: 'other',
-  ),
+  TradeBotEmergencyReason(id: 'other', label: 'Lý do khác', iconName: 'other'),
 ];
 
 const List<TradeBotApiKey> _botSecurityApiKeys = [
   TradeBotApiKey(
     id: '1',
     name: 'Trading Bot Key #1',
-    permissions: 'Trade + Read',
-    lastUsed: '2 hours ago',
+    permissions: 'Giao dịch + Đọc',
+    lastUsed: '2 giờ trước',
     created: '2026-01-15',
   ),
   TradeBotApiKey(
     id: '2',
     name: 'Analytics Key',
-    permissions: 'Read Only',
-    lastUsed: '1 day ago',
+    permissions: 'Chỉ đọc',
+    lastUsed: '1 ngày trước',
     created: '2026-02-20',
   ),
 ];
@@ -809,13 +810,13 @@ const List<TradeBotIpWhitelistEntry> _botSecurityIpWhitelist = [
   TradeBotIpWhitelistEntry(
     id: '1',
     ip: '192.168.1.100',
-    label: 'Home Network',
+    label: 'Mạng nhà riêng',
     added: '2026-03-01',
   ),
   TradeBotIpWhitelistEntry(
     id: '2',
     ip: '203.0.113.42',
-    label: 'VPS Server',
+    label: 'Máy chủ VPS',
     added: '2026-03-05',
   ),
 ];
@@ -823,36 +824,36 @@ const List<TradeBotIpWhitelistEntry> _botSecurityIpWhitelist = [
 const List<TradeBotSecurityActivity> _botSecurityRecentActivity = [
   TradeBotSecurityActivity(
     id: '1',
-    action: 'Bot created: DCA Bot #1',
-    time: '2 hours ago',
+    action: 'Đã tạo bot: DCA Bot #1',
+    time: '2 giờ trước',
     status: TradeBotSecurityActivityStatus.success,
   ),
   TradeBotSecurityActivity(
     id: '2',
-    action: 'API key generated',
-    time: '1 day ago',
+    action: 'Đã tạo API key',
+    time: '1 ngày trước',
     status: TradeBotSecurityActivityStatus.success,
   ),
   TradeBotSecurityActivity(
     id: '3',
-    action: 'Failed login attempt',
-    time: '3 days ago',
+    action: 'Đăng nhập thất bại',
+    time: '3 ngày trước',
     status: TradeBotSecurityActivityStatus.warning,
   ),
   TradeBotSecurityActivity(
     id: '4',
-    action: 'Bot stopped: Grid Bot #2',
-    time: '5 days ago',
+    action: 'Đã dừng bot: Grid Bot #2',
+    time: '5 ngày trước',
     status: TradeBotSecurityActivityStatus.success,
   ),
 ];
 
 const List<String> _botSecurityTips = [
-  'Never share your API keys with anyone',
-  'Use Read-Only keys for analytics, Trade keys only for bots',
-  'Restrict API access to specific IP addresses',
-  'Enable 2FA for all bot-related actions',
-  'Regularly review activity log for suspicious behavior',
+  'Không bao giờ chia sẻ API key với bất kỳ ai',
+  'Dùng key Chỉ đọc cho phân tích, key Giao dịch chỉ dành cho bot',
+  'Giới hạn quyền truy cập API theo địa chỉ IP cụ thể',
+  'Bật xác thực 2 lớp (2FA) cho mọi hành động liên quan đến bot',
+  'Thường xuyên xem lại nhật ký hoạt động để phát hiện dấu hiệu bất thường',
 ];
 
 const List<TradeBotHistoryTrade> _botHistoryTrades = [

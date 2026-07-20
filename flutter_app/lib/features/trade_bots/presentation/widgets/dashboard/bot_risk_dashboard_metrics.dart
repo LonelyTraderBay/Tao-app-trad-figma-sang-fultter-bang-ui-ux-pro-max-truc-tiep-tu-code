@@ -10,25 +10,26 @@ class _CriticalMetricsGrid extends StatelessWidget {
     final metrics = [
       _MetricData(
         icon: Icons.trending_down_rounded,
-        label: 'Drawdown',
+        label: 'Sụt giảm vốn',
         value: '${snapshot.currentDrawdown.toStringAsFixed(1)}%',
-        limit: 'Limit: ${snapshot.maxDrawdownLimit.toStringAsFixed(0)}%',
+        limit: 'Giới hạn: ${snapshot.maxDrawdownLimit.toStringAsFixed(0)}%',
         color: _riskRed,
         percent: (snapshot.currentDrawdown / snapshot.maxDrawdownLimit).abs(),
       ),
       _MetricData(
         icon: Icons.attach_money_rounded,
-        label: 'Daily Loss',
+        label: 'Lỗ trong ngày',
         value: '-\$${snapshot.dailyLoss.abs().toStringAsFixed(0)}',
-        limit: 'Limit: -\$${snapshot.dailyLossLimit.abs().toStringAsFixed(0)}',
+        limit:
+            'Giới hạn: -\$${snapshot.dailyLossLimit.abs().toStringAsFixed(0)}',
         color: _riskAmber,
         percent: (snapshot.dailyLoss / snapshot.dailyLossLimit).abs(),
       ),
       _MetricData(
         icon: Icons.monitor_heart_outlined,
-        label: 'Total Exposure',
+        label: 'Tổng mức phơi nhiễm',
         value: '\$${_formatCompact(snapshot.totalExposure)}',
-        limit: 'Max: \$${_formatCompact(snapshot.maxExposure)}',
+        limit: 'Tối đa: \$${_formatCompact(snapshot.maxExposure)}',
         color: _riskPrimary,
         percent: snapshot.totalExposure / snapshot.maxExposure,
       ),
@@ -36,7 +37,7 @@ class _CriticalMetricsGrid extends StatelessWidget {
         icon: Icons.bolt_rounded,
         label: 'VaR (95%)',
         value: '\$${snapshot.var95.toStringAsFixed(0)}',
-        limit: 'Max 1-day loss (95%)',
+        limit: 'Lỗ tối đa 1 ngày (95%)',
         color: _riskPurple,
         percent: .72,
       ),
@@ -105,7 +106,7 @@ class _MetricCard extends StatelessWidget {
             metric.value,
             style: AppTextStyles.sectionTitleXs.copyWith(
               color:
-                  metric.label == 'Total Exposure' ||
+                  metric.label == 'Tổng mức phơi nhiễm' ||
                       metric.label == 'VaR (95%)'
                   ? AppColors.text1
                   : metric.color,
@@ -202,12 +203,12 @@ class _ExposureCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Diversification Score',
+                  'Điểm đa dạng hóa',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               Text(
-                '72/100 (Good)',
+                '72/100 (Tốt)',
                 style: AppTextStyles.caption.copyWith(
                   color: _riskGreen,
                   fontWeight: AppTextStyles.bold,

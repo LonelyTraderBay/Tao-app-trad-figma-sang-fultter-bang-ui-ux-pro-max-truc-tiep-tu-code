@@ -52,7 +52,7 @@ class _ReportTypeCard extends StatelessWidget {
                         width: TradeSpacingTokens.tradeBotSmallGap,
                       ),
                       const _Pill(
-                        text: 'Recommended',
+                        text: 'Đề xuất',
                         color: _taxGreen,
                         background: AppColors.buy12,
                       ),
@@ -160,7 +160,7 @@ class _TaxNotesCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Important Tax Notes',
+            'Lưu ý thuế quan trọng',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -232,8 +232,8 @@ class _GenerateFooter extends StatelessWidget {
         leading: generating ? null : const Icon(Icons.download_rounded),
         child: Text(
           generating
-              ? 'Generating Reports...'
-              : 'Generate $selectedCount Report${selectedCount > 1 ? 's' : ''} for $selectedYear',
+              ? 'Đang tạo báo cáo...'
+              : 'Tạo $selectedCount báo cáo cho năm $selectedYear',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),

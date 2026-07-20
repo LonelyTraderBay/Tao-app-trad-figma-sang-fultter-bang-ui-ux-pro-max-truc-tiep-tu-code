@@ -50,7 +50,7 @@ void main(List<String> args) {
       exitCode = 1;
       return;
     }
-    if (auditCsv.readAsStringSync() != csv) {
+    if (_normalizeEol(auditCsv.readAsStringSync()) != _normalizeEol(csv)) {
       stderr.writeln('Card tile audit CSV is stale.');
       stderr.writeln(
         'Run `dart run tool/card_tile_audit.dart` from flutter_app/.',
@@ -469,6 +469,14 @@ String _renderComplianceReport(List<_AuditRow> rows) {
 
   return buffer.toString();
 }
+
+/// Normalizes CRLF/CR line endings to LF so the staleness check is not
+/// sensitive to git's checkout-time EOL conversion (core.autocrlf) on
+/// Windows worktrees. Generated content is always LF-only (StringBuffer
+/// hardcodes '\n'), so without this the check would false-fail on any
+/// fresh Windows checkout even when the artifact is up to date.
+String _normalizeEol(String value) =>
+    value.replaceAll('\r\n', '\n').replaceAll('\r', '\n');
 
 Directory _findAppRoot() {
   final dir = Directory.current;

@@ -83,7 +83,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotTermsOfServiceProvider);
     return VitTradeHubScaffold(
-      title: 'Trading Bots Terms',
+      title: 'Điều khoản Bot giao dịch',
       subtitle: 'Điều khoản sử dụng bot giao dịch',
       semanticLabel: 'Điều khoản dịch vụ bot giao dịch',
       semanticIdentifier: 'SC-117',
@@ -107,7 +107,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
         ],
         data: (snapshot) => [
           VitTradeSection(
-            title: 'Information',
+            title: 'Thông tin',
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: _termsInfoMinExtent),
               child: VitInfoCallout(
@@ -120,7 +120,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
             ),
           ),
           VitTradeSection(
-            title: 'Terms',
+            title: 'Điều khoản',
             child: _TermsCard(snapshot: snapshot, controller: _termsController),
           ),
           VitTradeSection(
@@ -144,13 +144,13 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
             ),
           ),
           VitTradeSection(
-            title: 'Compliance',
+            title: 'Tuân thủ',
             child: _ComplianceNote(snapshot: snapshot),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Terms acceptance review',
+            title: 'Xem lại việc chấp nhận điều khoản',
             message:
-                'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
+                'Trạng thái đọc hết, ô đồng ý, giới hạn phù hợp và bước xác nhận tiếp theo được xem lại trước khi cấp quyền truy cập bot.',
             contractId: 'bot-terms-acceptance-review',
           ),
         ],

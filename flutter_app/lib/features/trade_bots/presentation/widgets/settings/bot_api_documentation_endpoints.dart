@@ -8,7 +8,7 @@ class _EndpointsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'REST API Endpoints',
+      label: 'Các điểm cuối REST API',
       density: VitDensity.tool,
       children: [
         VitPageContent(
@@ -82,7 +82,7 @@ class _Parameters extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'PARAMETERS:',
+          'THAM SỐ:',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
@@ -155,7 +155,7 @@ class _ResponseBlock extends StatelessWidget {
         Row(
           children: [
             Text(
-              'RESPONSE:',
+              'PHẢN HỒI:',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
                 fontWeight: AppTextStyles.bold,
@@ -166,7 +166,7 @@ class _ResponseBlock extends StatelessWidget {
             VitIconButton(
               key: BotApiDocumentationPage.copyKey,
               icon: Icons.content_copy_rounded,
-              tooltip: 'Copy response',
+              tooltip: 'Sao chép phản hồi',
               size: VitIconButtonSize.sm,
               variant: VitIconButtonVariant.transparent,
               onPressed: () => Clipboard.setData(ClipboardData(text: response)),

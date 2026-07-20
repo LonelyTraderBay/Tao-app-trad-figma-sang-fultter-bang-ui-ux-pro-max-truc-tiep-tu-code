@@ -160,16 +160,16 @@ class _ComplaintSubmissionPageState
                     onChanged: (value) => setState(() => _acceptTerms = value),
                   ),
                   const TradeBodyReviewSection(
-                    title: 'Complaint submission body review',
-                    message: 'Complaint submission body reviewed',
+                    title: 'Rà soát nội dung gửi khiếu nại',
+                    message: 'Nội dung gửi khiếu nại đã được rà soát',
                     detail:
-                        'Category, subject, description, evidence, consent, submitting, and result states stay visible.',
+                        'Danh mục, chủ đề, mô tả, bằng chứng, đồng ý điều khoản, trạng thái đang gửi và trạng thái kết quả luôn hiển thị.',
                     primary:
-                        'Process notice remains above the regulated complaint form.',
+                        'Thông báo quy trình luôn hiển thị phía trên biểu mẫu khiếu nại theo quy định.',
                     secondary:
-                        'Evidence and terms stay visible before the submit action.',
+                        'Bằng chứng và điều khoản luôn hiển thị trước khi thực hiện thao tác gửi.',
                     tertiary:
-                        'Submission copy remains regulatory and non-promotional.',
+                        'Nội dung gửi khiếu nại luôn mang tính quy định, không mang tính quảng cáo.',
                   ),
                   _SubmissionFooter(
                     enabled: canSubmit,

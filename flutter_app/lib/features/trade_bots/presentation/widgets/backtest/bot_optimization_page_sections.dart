@@ -24,14 +24,14 @@ class _IntroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Automated Parameter Tuning',
+                  'Tinh chỉnh tham số tự động',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
-                  'Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.',
+                  'Sử dụng thuật toán di truyền để tìm tham số bot tối ưu, tối đa hóa tỷ lệ Sharpe đồng thời giảm thiểu sụt giảm vốn. Quá trình này thường mất 2-5 phút.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -259,7 +259,7 @@ class _HowItWorksCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'How It Works',
+            'Cách hoạt động',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -308,7 +308,7 @@ class _QueuedCard extends StatelessWidget {
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .24),
       child: Text(
-        'Optimization queued (${result.jobId}) - about ${result.estimatedMinutes} min',
+        'Đã xếp hàng chờ tối ưu hóa (${result.jobId}) - khoảng ${result.estimatedMinutes} phút',
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),
       ),
     );

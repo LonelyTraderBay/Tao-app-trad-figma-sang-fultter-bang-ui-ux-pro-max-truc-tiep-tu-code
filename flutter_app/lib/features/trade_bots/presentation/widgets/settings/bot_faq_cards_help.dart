@@ -14,7 +14,7 @@ class _HelpCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Still need help?',
+            'Vẫn cần trợ giúp?',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -22,7 +22,7 @@ class _HelpCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
-            "Can't find your answer? Our support team is here to help 24/7.",
+            'Không tìm thấy câu trả lời? Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng 24/7.',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -30,14 +30,14 @@ class _HelpCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _HelpButton(
-                  label: 'Live Chat',
+                  label: 'Trò chuyện trực tiếp',
                   variant: VitCtaButtonVariant.secondary,
                 ),
               ),
               SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _HelpButton(
-                  label: 'Contact Support',
+                  label: 'Liên hệ hỗ trợ',
                   variant: VitCtaButtonVariant.primary,
                 ),
               ),
@@ -85,7 +85,7 @@ class _EmptyFaqs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitEmptyState(
-      title: 'No FAQs found',
+      title: 'Không tìm thấy câu hỏi thường gặp',
       icon: Icons.help_outline_rounded,
     );
   }

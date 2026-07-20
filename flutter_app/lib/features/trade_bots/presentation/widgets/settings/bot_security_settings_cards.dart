@@ -23,7 +23,7 @@ class _TwoFaCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '2FA for Bot Actions',
+                  'Xác thực 2 lớp cho hành động Bot',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
@@ -31,7 +31,7 @@ class _TwoFaCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Required for creating/deleting bots',
+                  'Bắt buộc khi tạo/xoá bot',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -81,7 +81,7 @@ class _ApiKeyCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.x2),
                     Flexible(
                       child: Text(
-                        'Created ${apiKey.created}',
+                        'Đã tạo ${apiKey.created}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
@@ -93,7 +93,7 @@ class _ApiKeyCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
-                  'Last used: ${apiKey.lastUsed}',
+                  'Lần dùng cuối: ${apiKey.lastUsed}',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -134,7 +134,7 @@ class _IpCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  '${entry.label} - Added ${entry.added}',
+                  '${entry.label} - Đã thêm ${entry.added}',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -230,7 +230,7 @@ class _SecurityTipsCard extends StatelessWidget {
         density: VitDensity.tool,
         children: [
           Text(
-            'Security Best Practices',
+            'Phương pháp bảo mật tốt nhất',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,

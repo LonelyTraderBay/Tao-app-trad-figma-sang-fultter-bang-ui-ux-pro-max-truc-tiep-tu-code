@@ -201,7 +201,7 @@ class _BacktestPeriodCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Backtest Period',
+                  'Giai đoạn kiểm thử',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
@@ -209,7 +209,7 @@ class _BacktestPeriodCard extends StatelessWidget {
                 ),
                 const SizedBox(height: TradeSpacingTokens.tradeBotSmallGap),
                 Text(
-                  'Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.',
+                  'Đang kiểm thử chiến lược ${strategyId.toUpperCase()} trên $pair từ ${range.periodLabel} với vốn ban đầu \$$capital.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -239,7 +239,7 @@ class _RunFooter extends StatelessWidget {
         height: TradeSpacingTokens.tradeBotFooterButtonHeight,
         leading: const Icon(Icons.play_arrow_outlined, size: 19),
         child: Text(
-          'Run Backtest',
+          'Chạy kiểm thử chiến lược',
           style: AppTextStyles.control.copyWith(
             color: AppColors.onAccent,
             fontWeight: AppTextStyles.bold,

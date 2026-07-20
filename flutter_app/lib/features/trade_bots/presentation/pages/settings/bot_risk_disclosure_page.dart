@@ -50,7 +50,7 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotRiskDisclosureProvider);
     return VitTradeHubScaffold(
-      title: 'Risk Disclosure',
+      title: 'Công bố rủi ro',
       subtitle: 'Công bố rủi ro trước khi dùng bot',
       semanticLabel: 'Công bố rủi ro khi sử dụng bot giao dịch',
       semanticIdentifier: 'SC-118',
@@ -81,11 +81,11 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
             secondaryColor: _acknowledged ? _botRiskGreen : _botRiskAmber,
           ),
           VitTradeSection(
-            title: 'High risk notice',
+            title: 'Cảnh báo rủi ro cao',
             child: _HighRiskBanner(snapshot: snapshot),
           ),
           VitTradeSection(
-            title: 'Past performance',
+            title: 'Hiệu suất quá khứ',
             child: _PastPerformanceCard(snapshot: snapshot),
           ),
           VitTradeSection(
@@ -127,15 +127,15 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
             ),
           ),
           VitTradeSection(
-            title: 'Help',
+            title: 'Hỗ trợ',
             child: _HelpCard(snapshot: snapshot),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Bot risk disclosure review',
+            title: 'Xem lại công bố rủi ro Bot',
             message:
-                'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
+                'Hiệu suất quá khứ, rủi ro theo hạng mục, thông báo quy định, xác nhận và bước tiếp theo được xem lại trước khi cấp quyền truy cập bot.',
             contractId: 'bot-risk-disclosure-review',
-            statusLabel: 'Acknowledgment required',
+            statusLabel: 'Cần xác nhận',
             status: VitStatusPillStatus.error,
           ),
         ],

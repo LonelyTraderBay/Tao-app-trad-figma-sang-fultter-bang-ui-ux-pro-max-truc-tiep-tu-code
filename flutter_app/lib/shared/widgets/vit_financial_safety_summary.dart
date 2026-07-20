@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
@@ -65,13 +64,6 @@ class VitFinancialSafetySummary extends StatelessWidget {
                 fontWeight: AppTextStyles.medium,
               ),
             ),
-            if (contractId != null) ...[
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                contractId!,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
             SizedBox(height: density.verticalSpace),
             for (var index = 0; index < items.length; index += 1)
               VitInfoRow(

@@ -71,12 +71,12 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Backtest Strategy'), findsOneWidget);
-    expect(find.text('Strategy Selection'), findsOneWidget);
+    expect(find.text('Kiểm thử chiến lược'), findsOneWidget);
+    expect(find.text('Chọn chiến lược'), findsOneWidget);
     expect(find.text('Grid Bot'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text('6 Months'), findsOneWidget);
-    expect(find.text('Run Backtest'), findsOneWidget);
+    expect(find.text('Chạy kiểm thử chiến lược'), findsOneWidget);
   });
 
   testWidgets('SC-125 lets users change config and run backtest', (

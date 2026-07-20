@@ -21,14 +21,14 @@ class _StatsCard extends StatelessWidget {
         children: [
           Expanded(
             child: _StatColumn(
-              label: 'Total Trades',
+              label: 'Tổng số giao dịch',
               value: '$totalTrades',
               color: AppColors.text1,
             ),
           ),
           Expanded(
             child: _StatColumn(
-              label: 'Total PnL',
+              label: 'Tổng lãi/lỗ',
               value:
                   '${totalPnL >= 0 ? '+' : ''}${totalPnL.toStringAsFixed(2)}',
               color: totalPnL >= 0 ? _historyGreen : _historyRed,
@@ -36,7 +36,7 @@ class _StatsCard extends StatelessWidget {
           ),
           Expanded(
             child: _StatColumn(
-              label: 'Total Fees',
+              label: 'Tổng phí',
               value: totalFees.toStringAsFixed(2),
               color: AppColors.text1,
             ),

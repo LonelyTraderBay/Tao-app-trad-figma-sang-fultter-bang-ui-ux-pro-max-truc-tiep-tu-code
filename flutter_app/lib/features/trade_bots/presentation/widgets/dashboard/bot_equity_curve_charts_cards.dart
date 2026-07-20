@@ -85,7 +85,7 @@ class _SharpeCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _MiniStat(
-                  label: 'Current',
+                  label: 'Hiện tại',
                   value: currentSharpe.toStringAsFixed(2),
                   status: _sharpeStatus(currentSharpe),
                 ),
@@ -93,7 +93,7 @@ class _SharpeCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MiniStat(
-                  label: 'Average',
+                  label: 'Trung bình',
                   value: averageSharpe.toStringAsFixed(2),
                   status: _sharpeStatus(averageSharpe),
                 ),
@@ -101,7 +101,7 @@ class _SharpeCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MiniStat(
-                  label: 'Min',
+                  label: 'Tối thiểu',
                   value: minSharpe.toStringAsFixed(2),
                   status: _sharpeStatus(minSharpe),
                 ),
@@ -117,9 +117,9 @@ class _SharpeCard extends StatelessWidget {
 // Illustrative rolling-Sharpe quality bands (matches the page's original
 // design intent) — kept local since only this card classifies Sharpe values.
 String _sharpeStatus(double value) {
-  if (value >= 2.0) return 'Excellent';
-  if (value >= 1.7) return 'Good';
-  return 'Fair';
+  if (value >= 2.0) return 'Xuất sắc';
+  if (value >= 1.7) return 'Tốt';
+  return 'Khá';
 }
 
 class _MiniStat extends StatelessWidget {

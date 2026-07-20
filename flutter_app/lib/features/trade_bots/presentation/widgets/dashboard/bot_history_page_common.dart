@@ -70,7 +70,7 @@ class _TradeCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
-                      'PnL',
+                      'Lãi/Lỗ',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -83,19 +83,22 @@ class _TradeCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _DetailBox(label: 'Qty', value: _formatQty(trade.qty)),
+                child: _DetailBox(
+                  label: 'Số lượng',
+                  value: _formatQty(trade.qty),
+                ),
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
                 child: _DetailBox(
-                  label: 'Price',
+                  label: 'Giá',
                   value: '\$${_formatNumber(trade.price)}',
                 ),
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
                 child: _DetailBox(
-                  label: 'Fee',
+                  label: 'Phí',
                   value: '\$${trade.fee.toStringAsFixed(3)}',
                 ),
               ),
@@ -182,7 +185,7 @@ class _ExportNote extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Export Options',
+            'Tùy chọn xuất dữ liệu',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -190,7 +193,7 @@ class _ExportNote extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
-            'Download your complete trade history for tax reporting, accounting, or analysis. Available formats: CSV, PDF, Excel.',
+            'Tải xuống toàn bộ lịch sử giao dịch của bạn để phục vụ báo cáo thuế, kế toán hoặc phân tích. Định dạng khả dụng: CSV, PDF, Excel.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -199,7 +202,7 @@ class _ExportNote extends StatelessWidget {
             height: VitDensity.tool.controlHeight,
             onPressed: onTap,
             leading: const Icon(Icons.download_rounded),
-            child: const Text('Export All Trades'),
+            child: const Text('Xuất tất cả giao dịch'),
           ),
         ],
       ),
@@ -213,7 +216,7 @@ class _EmptyHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitEmptyState(
-      title: 'No trades found',
+      title: 'Không tìm thấy giao dịch nào',
       icon: Icons.history_rounded,
     );
   }

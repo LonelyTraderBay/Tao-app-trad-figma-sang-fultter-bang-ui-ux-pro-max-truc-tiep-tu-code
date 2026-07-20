@@ -117,16 +117,17 @@ class OmbudsmanReferralPage extends ConsumerWidget {
                   _ProcessStepCard(step: step),
                 _VisitButton(snapshot: snapshot),
                 const TradeBodyReviewSection(
-                  title: 'Ombudsman body review',
-                  message: 'Ombudsman referral body reviewed',
+                  title: 'Đánh giá nội dung chuyển khiếu nại đến Thanh tra',
+                  message:
+                      'Nội dung chuyển khiếu nại đến Thanh tra đã được xem xét',
                   detail:
-                      'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
+                      'Trạng thái điều kiện chuyển khiếu nại, liên hệ, quy trình, nút truy cập, trống và kết quả luôn hiển thị rõ ràng.',
                   primary:
-                      'Eligibility remains above external referral actions.',
+                      'Điều kiện chuyển khiếu nại luôn hiển thị phía trên các hành động chuyển khiếu nại ra bên ngoài.',
                   secondary:
-                      'Contact and process steps stay separated for regulated escalation.',
+                      'Thông tin liên hệ và các bước quy trình luôn được tách riêng để phục vụ việc chuyển khiếu nại theo quy định.',
                   tertiary:
-                      'Visit CTA remains framed as external dispute resolution.',
+                      'Nút truy cập luôn được thể hiện là bước giải quyết tranh chấp bên ngoài.',
                 ),
               ],
             ),

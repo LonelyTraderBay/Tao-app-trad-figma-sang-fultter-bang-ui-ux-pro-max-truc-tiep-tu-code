@@ -76,13 +76,13 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Security Settings'), findsOneWidget);
-    expect(find.text('Two-Factor Authentication'), findsOneWidget);
-    expect(find.text('2FA for Bot Actions'), findsOneWidget);
-    expect(find.text('API Keys'), findsOneWidget);
+    expect(find.text('Cài đặt bảo mật'), findsOneWidget);
+    expect(find.text('Xác thực 2 lớp'), findsOneWidget);
+    expect(find.text('Xác thực 2 lớp cho hành động Bot'), findsOneWidget);
+    expect(find.text('API Key'), findsOneWidget);
     expect(find.text('Trading Bot Key #1'), findsOneWidget);
     expect(find.text('Create New API Key'), findsOneWidget);
-    expect(find.text('IP Whitelist'), findsOneWidget);
+    expect(find.text('Danh sách IP cho phép'), findsOneWidget);
   });
 
   testWidgets('SC-122 first viewport reaches API key controls', (tester) async {
@@ -110,8 +110,8 @@ void main() {
     await tester.tap(find.byKey(BotSecuritySettingsPage.createApiKeyKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Create API Key'), findsOneWidget);
-    expect(find.text('Generate API Key'), findsOneWidget);
+    expect(find.text('Tạo API Key'), findsOneWidget);
+    expect(find.text('Khởi tạo API Key'), findsOneWidget);
   });
 
   testWidgets('SC-122 opens IP whitelist sheet', (tester) async {
@@ -121,7 +121,7 @@ void main() {
     await tester.tap(find.byKey(BotSecuritySettingsPage.addIpKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Add IP to Whitelist'), findsOneWidget);
-    expect(find.text('IP Address'), findsOneWidget);
+    expect(find.text('Thêm IP vào danh sách cho phép'), findsOneWidget);
+    expect(find.text('Địa chỉ IP'), findsOneWidget);
   });
 }

@@ -24,7 +24,7 @@ class _TaxNotice extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Tax Reporting Notice',
+                  'Thông báo báo cáo thuế',
                   style: AppTextStyles.caption.copyWith(
                     color: _taxAmber,
                     fontWeight: AppTextStyles.bold,
@@ -32,10 +32,11 @@ class _TaxNotice extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Cryptocurrency trading is taxable in most countries. Bot '
-                  'trades are treated as individual transactions. We provide '
-                  'reports for convenience, but you should consult a tax '
-                  'professional for accurate filing.',
+                  'Giao dịch tiền mã hoá phải chịu thuế ở hầu hết các quốc '
+                  'gia. Giao dịch của Bot giao dịch được tính là các giao '
+                  'dịch riêng lẻ. Chúng tôi cung cấp báo cáo để tiện theo '
+                  'dõi, nhưng bạn nên tham khảo chuyên gia thuế để khai báo '
+                  'chính xác.',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],

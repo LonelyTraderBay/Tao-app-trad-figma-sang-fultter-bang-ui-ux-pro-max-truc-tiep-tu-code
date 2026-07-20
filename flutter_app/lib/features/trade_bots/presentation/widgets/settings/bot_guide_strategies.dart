@@ -14,7 +14,7 @@ class _StrategiesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'Bot Strategies Explained',
+      label: 'Giải thích các chiến lược Bot',
       density: VitDensity.tool,
       children: [
         for (final strategy in strategies)
@@ -166,7 +166,7 @@ class _StrategyDetails extends StatelessWidget {
           children: [
             Expanded(
               child: _BulletsBlock(
-                title: 'Pros',
+                title: 'Ưu điểm',
                 titleColor: _guideGreen,
                 items: strategy.pros,
               ),

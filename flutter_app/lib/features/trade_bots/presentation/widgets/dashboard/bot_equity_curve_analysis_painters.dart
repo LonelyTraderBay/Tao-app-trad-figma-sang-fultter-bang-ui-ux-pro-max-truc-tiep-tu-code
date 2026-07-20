@@ -24,7 +24,7 @@ class _AnalysisCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
-                'Strong Outperformance',
+                'Vượt trội mạnh mẽ',
                 style: AppTextStyles.caption.copyWith(
                   color: _equityGreen,
                   fontWeight: AppTextStyles.bold,

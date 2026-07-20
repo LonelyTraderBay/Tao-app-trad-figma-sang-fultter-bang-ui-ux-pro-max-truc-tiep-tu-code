@@ -27,28 +27,28 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   Future<TradeBotTermsSnapshot> getBotTermsOfService() async {
     await _simulateNetwork();
     return const TradeBotTermsSnapshot(
-      infoTitle: 'Legal Agreement Required',
+      infoTitle: 'Yêu cầu đồng ý điều khoản',
       infoDescription:
-          'You must read and accept these terms before using Trading Bots. '
-          'Scroll to the bottom to enable acceptance.',
-      title: 'Trading Bots Terms of Service',
-      lastUpdatedLabel: 'Last Updated: March 8, 2026',
+          'Bạn phải đọc và chấp nhận các điều khoản này trước khi dùng Bot '
+          'giao dịch. Cuộn xuống cuối trang để bật nút chấp nhận.',
+      title: 'Điều khoản dịch vụ Bot giao dịch',
+      lastUpdatedLabel: 'Cập nhật lần cuối: 08/03/2026',
       sections: _botTermsSections,
-      acceptSectionLabel: 'Accept Terms',
+      acceptSectionLabel: 'Chấp nhận điều khoản',
       scrollWarning:
-          'Please scroll to the bottom of the terms to enable acceptance.',
+          'Vui lòng cuộn xuống cuối điều khoản để bật nút chấp nhận.',
       agreementTitle:
-          'I have read and agree to the Trading Bots Terms of Service',
+          'Tôi đã đọc và đồng ý với Điều khoản dịch vụ Bot giao dịch',
       agreementDescription:
-          'By checking this box, you acknowledge that you understand the '
-          'risks of automated trading and accept the terms outlined above.',
-      disabledCta: 'Read Terms to Continue',
-      enabledCta: 'Accept & Continue',
-      complianceTitle: 'Regulatory Compliance',
+          'Khi đánh dấu ô này, bạn xác nhận đã hiểu rõ rủi ro của giao dịch '
+          'tự động và chấp nhận các điều khoản nêu trên.',
+      disabledCta: 'Đọc điều khoản để tiếp tục',
+      enabledCta: 'Chấp nhận & Tiếp tục',
+      complianceTitle: 'Tuân thủ quy định',
       complianceDescription:
-          'These terms comply with MiFID II (EU), SEC regulations (US), '
-          'FCA guidelines (UK), and other applicable financial regulations. '
-          'Acceptance is recorded and auditable.',
+          'Các điều khoản này tuân thủ MiFID II (EU), quy định SEC (Mỹ), '
+          'hướng dẫn FCA (Anh) và các quy định tài chính hiện hành khác. '
+          'Việc chấp nhận được ghi nhận và có thể kiểm tra lại.',
       endpoint: '/api/mobile/trade/trade-bots-terms-of-service',
       actionDraft:
           'POST /trade/order-preview + POST /trade/orders; '
@@ -67,47 +67,49 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   Future<TradeBotRiskDisclosureSnapshot> getBotRiskDisclosure() async {
     await _simulateNetwork();
     return const TradeBotRiskDisclosureSnapshot(
-      highRiskTitle: 'HIGH RISK WARNING',
+      highRiskTitle: 'CẢNH BÁO RỦI RO CAO',
       highRiskBody:
-          'Trading Bots are complex financial products involving significant '
-          'risk of loss. You may lose your entire investment. Only use '
-          'capital you can afford to lose completely.',
-      pastPerformanceTitle: 'Past Performance Disclaimer',
+          'Bot giao dịch là sản phẩm tài chính phức tạp, tiềm ẩn rủi ro thua '
+          'lỗ đáng kể. Bạn có thể mất toàn bộ khoản đầu tư. Chỉ dùng số vốn '
+          'bạn chấp nhận mất hoàn toàn.',
+      pastPerformanceTitle: 'Miễn trừ trách nhiệm về hiệu suất quá khứ',
       pastPerformanceBody:
-          'Backtest results and historical performance do not guarantee '
-          'future results. Market conditions change, and strategies that '
-          'worked in the past may fail in the future. Always assume actual '
-          'performance will be worse than backtests due to slippage, fees, '
-          'and execution delays.',
-      riskSectionLabel: 'Risk Categories',
+          'Kết quả kiểm thử chiến lược và hiệu suất quá khứ không đảm bảo '
+          'kết quả tương lai. Điều kiện thị trường thay đổi, chiến lược hiệu '
+          'quả trong quá khứ vẫn có thể thất bại trong tương lai. Luôn giả '
+          'định hiệu suất thực tế sẽ kém hơn kết quả kiểm thử do trượt giá, '
+          'phí và độ trễ thực thi.',
+      riskSectionLabel: 'Các hạng mục rủi ro',
       categories: _botRiskCategories,
-      additionalWarningsLabel: 'Additional Warnings',
+      additionalWarningsLabel: 'Cảnh báo bổ sung',
       additionalWarnings: _botRiskWarnings,
-      regulatoryNoticeLabel: 'Regulatory Notice',
-      regulatoryTitle: 'MiFID II / ESMA / SEC Compliance',
+      regulatoryNoticeLabel: 'Thông báo về quy định',
+      regulatoryTitle: 'Tuân thủ MiFID II / ESMA / SEC',
       regulatoryBody:
-          'Trading Bots are classified as complex financial products under '
-          'European (MiFID II) and US (SEC) regulations. You must complete '
-          'an appropriateness assessment to ensure you understand the risks '
-          'before using this service.',
+          'Bot giao dịch được xếp vào nhóm sản phẩm tài chính phức tạp theo '
+          'quy định châu Âu (MiFID II) và Mỹ (SEC). Bạn phải hoàn tất đánh '
+          'giá mức độ phù hợp để đảm bảo hiểu rõ rủi ro trước khi dùng dịch '
+          'vụ này.',
       regulatoryNotes: [
-        'EU residents: Subject to ESMA leverage limits and negative balance protection',
-        'US residents: May be restricted based on accredited investor status',
-        'UK residents: FCA appropriateness test required for complex products',
+        'Cư dân EU: Áp dụng giới hạn đòn bẩy ESMA và bảo vệ số dư âm',
+        'Cư dân Mỹ: Có thể bị hạn chế theo trạng thái nhà đầu tư đủ điều kiện',
+        'Cư dân Anh: Yêu cầu bài kiểm tra phù hợp FCA cho sản phẩm phức tạp',
       ],
-      acknowledgmentLabel: 'Acknowledgment',
-      acknowledgmentTitle: 'I acknowledge and accept all risks disclosed above',
+      acknowledgmentLabel: 'Xác nhận',
+      acknowledgmentTitle:
+          'Tôi xác nhận và chấp nhận toàn bộ rủi ro đã công bố ở trên',
       acknowledgmentDescription:
-          'I understand that Trading Bots are high-risk, I may lose my '
-          'entire investment, and past performance does not guarantee future '
-          'results. I accept full responsibility for my trading decisions.',
-      disabledCta: 'Acknowledge Risks to Continue',
-      enabledCta: 'I Understand the Risks - Continue',
-      helpTitle: 'Need Help Understanding Risks?',
+          'Tôi hiểu rằng Bot giao dịch có rủi ro cao, tôi có thể mất toàn bộ '
+          'khoản đầu tư, và hiệu suất quá khứ không đảm bảo kết quả tương '
+          'lai. Tôi chấp nhận hoàn toàn trách nhiệm với quyết định giao dịch '
+          'của mình.',
+      disabledCta: 'Xác nhận rủi ro để tiếp tục',
+      enabledCta: 'Tôi đã hiểu rủi ro - Tiếp tục',
+      helpTitle: 'Cần hỗ trợ hiểu rõ rủi ro?',
       helpDescription:
-          "If you don't fully understand these risks, we recommend consulting "
-          'a financial advisor before proceeding.',
-      helpCta: 'View Risk Education Guide ->',
+          'Nếu bạn chưa hiểu rõ các rủi ro này, chúng tôi khuyên bạn nên '
+          'tham khảo cố vấn tài chính trước khi tiếp tục.',
+      helpCta: 'Xem hướng dẫn giáo dục về rủi ro ->',
       nextPath: '/trade/bots/suitability-assessment',
       endpoint: '/api/mobile/trade/trade-bots-risk-disclosure',
       actionDraft:
@@ -129,57 +131,58 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
     await _simulateNetwork();
     return const TradeBotSuitabilityAssessmentSnapshot(
       questions: _botSuitabilityQuestions,
-      infoTitle: 'Why we ask:',
+      infoTitle: 'Vì sao chúng tôi hỏi:',
       infoDescription:
-          'These questions help determine if Trading Bots are suitable for '
-          'your experience level and risk profile. Answer honestly for '
-          'accurate results.',
+          'Các câu hỏi này giúp xác định Bot giao dịch có phù hợp với mức '
+          'kinh nghiệm và khả năng chấp nhận rủi ro của bạn không. Trả lời '
+          'trung thực để có kết quả chính xác.',
       pass: TradeBotSuitabilityOutcomeCopy(
         outcome: TradeBotSuitabilityOutcome.pass,
-        title: 'Suitable for Trading Bots',
+        title: 'Phù hợp để dùng Bot giao dịch',
         message:
-            'Based on your responses, you have sufficient knowledge and risk '
-            'tolerance to use Trading Bots.',
+            'Dựa trên câu trả lời của bạn, bạn có đủ kiến thức và khả năng '
+            'chấp nhận rủi ro để dùng Bot giao dịch.',
         recommendations: [
-          'You may use all bot strategies (DCA, Grid, Momentum, Martingale)',
-          'Still recommended to start with small amounts (\$100-500)',
-          'Monitor performance daily and adjust parameters as needed',
+          'Bạn có thể dùng mọi chiến lược bot (DCA, Grid, Momentum, Martingale)',
+          'Vẫn nên bắt đầu với số tiền nhỏ (\$100-500)',
+          'Theo dõi hiệu suất hằng ngày và điều chỉnh tham số khi cần',
         ],
-        ctaLabel: 'Continue to Trading Bots',
+        ctaLabel: 'Tiếp tục đến Bot giao dịch',
       ),
       warning: TradeBotSuitabilityOutcomeCopy(
         outcome: TradeBotSuitabilityOutcome.warning,
-        title: 'Proceed with Caution',
+        title: 'Nên thận trọng',
         message:
-            'You have some experience, but we recommend starting with small '
-            'amounts and simpler strategies like DCA. Avoid high-risk '
-            'strategies like Martingale.',
+            'Bạn có một số kinh nghiệm, nhưng chúng tôi khuyên bạn nên bắt '
+            'đầu với số tiền nhỏ và chiến lược đơn giản hơn như DCA. Tránh '
+            'các chiến lược rủi ro cao như Martingale.',
         recommendations: [
-          'Start with DCA Bot only - avoid Grid and Martingale',
-          'Use small amounts (\$50-200 maximum per bot)',
-          'Complete the Bot Guide tutorial before creating your first bot',
+          'Chỉ bắt đầu với DCA Bot - tránh Grid và Martingale',
+          'Dùng số tiền nhỏ (tối đa \$50-200 mỗi bot)',
+          'Hoàn thành hướng dẫn Bot Guide trước khi tạo bot đầu tiên',
         ],
-        ctaLabel: 'Continue to Trading Bots',
+        ctaLabel: 'Tiếp tục đến Bot giao dịch',
       ),
       fail: TradeBotSuitabilityOutcomeCopy(
         outcome: TradeBotSuitabilityOutcome.fail,
-        title: 'Not Recommended',
+        title: 'Không khuyến nghị',
         message:
-            'Based on your responses, Trading Bots may not be suitable for '
-            'you at this time. We recommend gaining more trading experience '
-            'and knowledge before using automated strategies.',
+            'Dựa trên câu trả lời của bạn, Bot giao dịch có thể chưa phù hợp '
+            'với bạn ở thời điểm này. Chúng tôi khuyên bạn nên tích luỹ thêm '
+            'kinh nghiệm và kiến thức giao dịch trước khi dùng chiến lược tự '
+            'động.',
         recommendations: [
-          'Not recommended to proceed at this time',
-          'Gain more manual trading experience first (3-6 months)',
-          'Review educational materials and retake assessment later',
+          'Không khuyến nghị tiếp tục ở thời điểm này',
+          'Tích luỹ thêm kinh nghiệm giao dịch thủ công trước (3-6 tháng)',
+          'Xem lại tài liệu giáo dục và làm lại bài đánh giá sau',
         ],
-        ctaLabel: 'Review Educational Materials',
+        ctaLabel: 'Xem tài liệu giáo dục',
       ),
-      regulatoryTitle: 'Regulatory Compliance (MiFID II)',
+      regulatoryTitle: 'Tuân thủ quy định (MiFID II)',
       regulatoryDescription:
-          'This appropriateness assessment is required under European '
-          'regulations for complex financial products. Your responses have '
-          'been recorded for compliance purposes.',
+          'Đánh giá mức độ phù hợp này là bắt buộc theo quy định châu Âu '
+          'đối với sản phẩm tài chính phức tạp. Câu trả lời của bạn đã được '
+          'ghi nhận cho mục đích tuân thủ.',
       completionPath: '/trade/bots',
       endpoint: '/api/mobile/trade/trade-bots-suitability-assessment',
       actionDraft:
@@ -200,10 +203,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
     await _simulateNetwork();
     return const TradeBotRiskDashboardSnapshot(
       riskScore: 68,
-      riskLabel: 'Medium Risk',
+      riskLabel: 'Rủi ro trung bình',
       riskMessage:
-          'Moderate risk detected. Consider reducing position sizes or '
-          'stopping high-risk bots.',
+          'Phát hiện rủi ro ở mức vừa phải. Cân nhắc giảm khối lượng vị thế '
+          'hoặc dừng các bot rủi ro cao.',
       currentDrawdown: -15.2,
       maxDrawdownLimit: -20,
       dailyLoss: -127,
@@ -235,27 +238,29 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   Future<TradeBotEmergencyStopSnapshot> getBotEmergencyStop() async {
     await _simulateNetwork();
     return const TradeBotEmergencyStopSnapshot(
-      warningTitle: 'EMERGENCY STOP',
+      warningTitle: 'DỪNG KHẨN CẤP',
       warningDescription:
-          'This will immediately stop all running bots and cancel pending '
-          'orders. Use this only in emergency situations (market crash, '
-          'technical issues, unauthorized activity).',
+          'Thao tác này sẽ dừng ngay lập tức mọi bot đang chạy và huỷ các '
+          'lệnh đang chờ. Chỉ dùng trong tình huống khẩn cấp (thị trường '
+          'sập, sự cố kỹ thuật, hoạt động trái phép).',
       bots: _botEmergencyStopBots,
       reasons: _botEmergencyStopReasons,
-      closePositionsTitle: 'Also close all open positions (market sell)',
+      closePositionsTitle:
+          'Đóng luôn toàn bộ vị thế đang mở (bán theo giá thị trường)',
       closePositionsDescription:
-          'WARNING: This will sell all holdings at market price. Only use if '
-          'you need to exit immediately. May incur slippage.',
-      confirmationTitle: 'I understand this is a destructive action',
+          'CẢNH BÁO: Thao tác này sẽ bán toàn bộ tài sản đang nắm giữ theo '
+          'giá thị trường. Chỉ dùng khi bạn cần thoát vị thế ngay lập tức. '
+          'Có thể phát sinh trượt giá.',
+      confirmationTitle: 'Tôi hiểu đây là hành động không thể hoàn tác',
       confirmationDescription:
-          'All running bots will stop immediately. Pending orders will be '
-          'cancelled. This action cannot be undone. I take full '
-          'responsibility for this decision.',
-      supportTitle: 'Support Will Be Notified',
+          'Mọi bot đang chạy sẽ dừng ngay lập tức. Lệnh đang chờ sẽ bị huỷ. '
+          'Hành động này không thể hoàn tác. Tôi chịu hoàn toàn trách nhiệm '
+          'với quyết định này.',
+      supportTitle: 'Đội hỗ trợ sẽ được thông báo',
       supportDescription:
-          'Our security team will be automatically notified of this emergency '
-          'stop for review and assistance. You will receive a confirmation '
-          'email within 5 minutes.',
+          'Đội bảo mật của chúng tôi sẽ tự động được thông báo về lần dừng '
+          'khẩn cấp này để xem xét và hỗ trợ. Bạn sẽ nhận email xác nhận '
+          'trong vòng 5 phút.',
       completionPath: '/trade/bots',
       endpoint: '/api/mobile/trade/trade-bots-emergency-stop',
       actionDraft:

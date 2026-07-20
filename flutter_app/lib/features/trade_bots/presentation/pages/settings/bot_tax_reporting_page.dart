@@ -59,7 +59,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
     return Stack(
       children: [
         VitTradeHubScaffold(
-          title: 'Tax Reporting',
+          title: 'Báo cáo thuế',
           subtitle: 'Báo cáo thuế bot giao dịch',
           semanticLabel: 'Báo cáo thuế cho giao dịch bot',
           semanticIdentifier: 'SC-133',
@@ -92,9 +92,9 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
               final costBasisMethod = _costBasisMethod!;
               final selectedReportIds = _selectedReportIds!;
               return [
-                const VitTradeSection(title: 'Notice', child: _TaxNotice()),
+                const VitTradeSection(title: 'Lưu ý', child: _TaxNotice()),
                 VitTradeSection(
-                  title: 'Select Tax Year',
+                  title: 'Chọn năm thuế',
                   child: _YearPicker(
                     years: snapshot.taxYears,
                     selectedYear: selectedYear,
@@ -108,7 +108,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                   child: _SummaryCard(summary: snapshot.summary),
                 ),
                 VitTradeSection(
-                  title: 'Cost Basis Method',
+                  title: 'Phương pháp tính giá vốn',
                   child: _CostBasisPicker(
                     selectedMethod: costBasisMethod,
                     onChanged: (method) {
@@ -117,7 +117,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                   ),
                 ),
                 VitTradeSection(
-                  title: 'Select Report Types',
+                  title: 'Chọn loại báo cáo',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -131,22 +131,22 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                   ),
                 ),
                 VitTradeSection(
-                  title: 'Capital Gains Breakdown',
+                  title: 'Chi tiết lãi vốn',
                   child: _BreakdownCard(
                     summary: snapshot.summary,
                     breakdown: snapshot.breakdown,
                   ),
                 ),
                 VitTradeSection(
-                  title: 'Tax notes',
+                  title: 'Ghi chú thuế',
                   child: _TaxNotesCard(notes: snapshot.taxNotes),
                 ),
                 const VitBotRiskReviewFooter(
-                  title: 'Tax export review required',
+                  title: 'Cần xem lại xuất báo cáo thuế',
                   message:
-                      'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
+                      'Năm thuế, giá vốn, loại báo cáo, file đã tạo, che dữ liệu nhạy cảm và bước tiếp theo được xem lại trước khi xuất.',
                   contractId: 'bot-tax-reporting-review',
-                  statusLabel: 'Report preview before export',
+                  statusLabel: 'Xem trước báo cáo trước khi xuất',
                 ),
                 const SizedBox(height: generateFooterHeight),
               ];

@@ -14,7 +14,7 @@ class _StepsBlock extends StatelessWidget {
       density: VitDensity.tool,
       children: [
         Text(
-          'How It Works:',
+          'Cách hoạt động:',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
@@ -135,7 +135,7 @@ class _BestForBlock extends StatelessWidget {
         density: VitDensity.tool,
         children: [
           Text(
-            'BEST FOR:',
+            'PHÙ HỢP VỚI:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           Text(
@@ -160,10 +160,10 @@ class _ExampleBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      ('Setup:', example.setup, AppColors.text1),
-      ('Duration:', example.duration, AppColors.text1),
-      ('Result:', example.result, AppColors.text1),
-      ('Profit:', example.profit, _guideGreen),
+      ('Thiết lập:', example.setup, AppColors.text1),
+      ('Thời gian:', example.duration, AppColors.text1),
+      ('Kết quả:', example.result, AppColors.text1),
+      ('Lợi nhuận:', example.profit, _guideGreen),
     ];
     return VitCard(
       radius: VitCardRadius.tight,
@@ -176,7 +176,7 @@ class _ExampleBlock extends StatelessWidget {
         density: VitDensity.tool,
         children: [
           Text(
-            'Example',
+            'Ví dụ',
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,

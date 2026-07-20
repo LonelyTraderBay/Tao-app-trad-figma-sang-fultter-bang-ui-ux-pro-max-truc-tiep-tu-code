@@ -56,7 +56,6 @@ class VitHighRiskStatePanel extends StatelessWidget {
         VitHighRiskUiState.loading => _LoadingPanel(
           title: title,
           message: message,
-          contractId: contractId,
           density: density,
         ),
         VitHighRiskUiState.empty => VitEmptyState(
@@ -80,7 +79,6 @@ class VitHighRiskStatePanel extends StatelessWidget {
           icon: Icons.pending_actions_rounded,
           title: title,
           message: message,
-          contractId: contractId,
           foreground: AppColors.primary,
           background: AppColors.primary08,
           border: AppColors.primary20,
@@ -97,7 +95,6 @@ class VitHighRiskStatePanel extends StatelessWidget {
           icon: Icons.check_circle_outline_rounded,
           title: title,
           message: message,
-          contractId: contractId,
           foreground: AppColors.buy,
           background: AppColors.buy10,
           border: AppColors.buy20,
@@ -107,7 +104,6 @@ class VitHighRiskStatePanel extends StatelessWidget {
           icon: Icons.verified_user_outlined,
           title: title,
           message: message,
-          contractId: contractId,
           foreground: AppColors.riskWarning,
           background: AppColors.riskWarning08,
           border: AppColors.warningBorder,
@@ -123,13 +119,11 @@ class _LoadingPanel extends StatelessWidget {
     required this.title,
     required this.message,
     required this.density,
-    this.contractId,
   });
 
   final String title;
   final String message;
   final VitDensity density;
-  final String? contractId;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +131,6 @@ class _LoadingPanel extends StatelessWidget {
       icon: Icons.hourglass_empty_rounded,
       title: title,
       message: message,
-      contractId: contractId,
       foreground: AppColors.text2,
       background: AppColors.surface2,
       border: AppColors.borderSolid,
@@ -172,7 +165,6 @@ class _CompactPanel extends StatelessWidget {
     required this.background,
     required this.border,
     required this.density,
-    this.contractId,
     this.trailing,
   });
 
@@ -183,7 +175,6 @@ class _CompactPanel extends StatelessWidget {
   final Color background;
   final Color border;
   final VitDensity density;
-  final String? contractId;
   final Widget? trailing;
 
   bool get _isCompact =>
@@ -234,17 +225,6 @@ class _CompactPanel extends StatelessWidget {
                     message,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  if (contractId != null) ...[
-                    SizedBox(
-                      height: _isCompact ? AppSpacing.x1 : AppSpacing.x2,
-                    ),
-                    Text(
-                      contractId!,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),

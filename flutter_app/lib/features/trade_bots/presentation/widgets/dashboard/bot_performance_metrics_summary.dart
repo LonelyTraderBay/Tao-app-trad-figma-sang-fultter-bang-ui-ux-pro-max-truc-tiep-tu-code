@@ -10,32 +10,32 @@ class _AdvancedMetricsGrid extends StatelessWidget {
     final items = [
       _AdvancedMetricData(
         icon: Icons.adjust_rounded,
-        label: 'Profit Factor',
+        label: 'Hệ số lợi nhuận',
         value: metrics.profitFactor.toStringAsFixed(2),
-        helper: 'Gross profit / Gross loss',
+        helper: 'Lãi gộp / Lỗ gộp',
         color: _analyticsPrimary,
       ),
       _AdvancedMetricData(
         icon: Icons.workspace_premium_outlined,
-        label: 'Avg Win',
+        label: 'Lãi TB',
         value: '+\$${metrics.avgWin.toStringAsFixed(1)}',
-        helper: 'Per winning trade',
+        helper: 'Mỗi lệnh thắng',
         color: _analyticsAmber,
         valueColor: _analyticsGreen,
       ),
       _AdvancedMetricData(
         icon: Icons.trending_up_rounded,
-        label: 'Best Trade',
+        label: 'Lệnh tốt nhất',
         value: '+\$${metrics.bestTrade.toStringAsFixed(1)}',
-        helper: 'Largest single win',
+        helper: 'Lệnh thắng lớn nhất',
         color: _analyticsGreen,
         valueColor: _analyticsGreen,
       ),
       _AdvancedMetricData(
         icon: Icons.show_chart_rounded,
-        label: 'Avg Loss',
+        label: 'Lỗ TB',
         value: metrics.avgLoss.toStringAsFixed(1),
-        helper: 'Per losing trade',
+        helper: 'Mỗi lệnh thua',
         color: _analyticsRed,
         valueColor: _analyticsRed,
       ),
@@ -146,16 +146,16 @@ class _PerformanceSummaryCard extends StatelessWidget {
     final wins = (metrics.totalTrades * metrics.winRate / 100).round();
     final losses = metrics.totalTrades - wins;
     final rows = [
-      ('Total Trades', '${metrics.totalTrades}', 'trades'),
+      ('Tổng số lệnh', '${metrics.totalTrades}', 'lệnh'),
       (
-        'Win Rate',
+        'Tỷ lệ thắng',
         '${metrics.winRate.toStringAsFixed(1)}%',
-        '(${wins}W / ${losses}L)',
+        '($wins thắng / $losses thua)',
       ),
-      ('Sharpe Ratio', metrics.sharpeRatio.toStringAsFixed(2), '(Excellent)'),
-      ('Profit Factor', metrics.profitFactor.toStringAsFixed(2), '(Good)'),
-      ('Best Trade', '+\$${metrics.bestTrade.toStringAsFixed(1)}', ''),
-      ('Worst Trade', '\$${metrics.worstTrade.toStringAsFixed(1)}', ''),
+      ('Tỷ lệ Sharpe', metrics.sharpeRatio.toStringAsFixed(2), '(Xuất sắc)'),
+      ('Hệ số lợi nhuận', metrics.profitFactor.toStringAsFixed(2), '(Tốt)'),
+      ('Lệnh tốt nhất', '+\$${metrics.bestTrade.toStringAsFixed(1)}', ''),
+      ('Lệnh tệ nhất', '\$${metrics.worstTrade.toStringAsFixed(1)}', ''),
     ];
 
     return VitCard(
@@ -166,7 +166,7 @@ class _PerformanceSummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Performance Summary',
+            'Tổng quan hiệu suất',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -263,7 +263,7 @@ class _RatingCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Excellent Performance (A+)',
+                  'Hiệu suất xuất sắc (A+)',
                   style: AppTextStyles.caption.copyWith(
                     color: _analyticsGreen,
                     fontWeight: AppTextStyles.bold,
@@ -271,7 +271,7 @@ class _RatingCard extends StatelessWidget {
                 ),
                 const SizedBox(height: _analyticsTinySpace),
                 Text(
-                  'Your bots are performing above average. Sharpe ratio > 1.5, win rate > 65%, and profit factor > 2 indicate strong risk-adjusted returns. Keep monitoring and adjusting as market conditions change.',
+                  'Các bot giao dịch của bạn đang hoạt động trên mức trung bình. Tỷ lệ Sharpe > 1.5, tỷ lệ thắng > 65% và hệ số lợi nhuận > 2 cho thấy lợi nhuận đã điều chỉnh theo rủi ro ở mức mạnh. Tiếp tục theo dõi và điều chỉnh khi điều kiện thị trường thay đổi.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],

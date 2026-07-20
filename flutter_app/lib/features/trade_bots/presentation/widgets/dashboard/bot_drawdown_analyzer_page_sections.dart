@@ -15,7 +15,7 @@ class _MetricGrid extends StatelessWidget {
               child: _MetricCard(
                 icon: Icons.trending_down_rounded,
                 iconColor: _drawdownRed,
-                label: 'Max Drawdown',
+                label: 'Sụt giảm vốn tối đa',
                 value: '${summary.maxDrawdownPct.toStringAsFixed(1)}%',
                 valueColor: _drawdownRed,
               ),
@@ -25,7 +25,7 @@ class _MetricGrid extends StatelessWidget {
               child: _MetricCard(
                 icon: Icons.bar_chart_rounded,
                 iconColor: _drawdownAmber,
-                label: 'Avg Drawdown',
+                label: 'Sụt giảm vốn trung bình',
                 value: '${summary.avgDrawdownPct.toStringAsFixed(1)}%',
                 valueColor: _drawdownAmber,
               ),
@@ -39,9 +39,9 @@ class _MetricGrid extends StatelessWidget {
               child: _MetricCard(
                 icon: Icons.schedule_rounded,
                 iconColor: _drawdownPrimary,
-                label: 'Drawdown Days',
+                label: 'Ngày sụt giảm vốn',
                 value: summary.drawdownDays.toString(),
-                caption: 'of ${summary.totalDays} days',
+                caption: 'trong ${summary.totalDays} ngày',
               ),
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -49,9 +49,9 @@ class _MetricGrid extends StatelessWidget {
               child: _MetricCard(
                 icon: Icons.report_problem_outlined,
                 iconColor: _drawdownGreen,
-                label: 'DD Frequency',
+                label: 'Tần suất sụt giảm',
                 value: summary.frequency.toString(),
-                caption: 'events',
+                caption: 'lần',
               ),
             ),
           ],
@@ -134,7 +134,7 @@ class _UnderwaterCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
-            'Below zero = in drawdown (underwater)',
+            'Dưới mức 0 là đang trong giai đoạn sụt giảm vốn (âm)',
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
@@ -204,14 +204,14 @@ class _EventCard extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      'Event #${event.id}',
+                      'Sự kiện #${event.id}',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
                     if (event.severe)
                       const VitAccentPill(
-                        label: 'Severe',
+                        label: 'Nghiêm trọng',
                         accentColor: _drawdownRed,
                         size: VitStatusPillSize.sm,
                       ),

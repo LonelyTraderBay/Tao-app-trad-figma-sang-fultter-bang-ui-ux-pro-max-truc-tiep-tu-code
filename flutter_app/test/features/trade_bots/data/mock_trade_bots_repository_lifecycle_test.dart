@@ -38,11 +38,11 @@ void main() {
       'getBotTermsOfService / getBotRiskDisclosure pin fixture copy',
       () async {
         final terms = await repo.getBotTermsOfService();
-        expect(terms.title, 'Trading Bots Terms of Service');
+        expect(terms.title, 'Điều khoản dịch vụ Bot giao dịch');
         expect(terms.sections, isNotEmpty);
 
         final risk = await repo.getBotRiskDisclosure();
-        expect(risk.highRiskTitle, 'HIGH RISK WARNING');
+        expect(risk.highRiskTitle, 'CẢNH BÁO RỦI RO CAO');
         expect(risk.categories, isNotEmpty);
       },
     );

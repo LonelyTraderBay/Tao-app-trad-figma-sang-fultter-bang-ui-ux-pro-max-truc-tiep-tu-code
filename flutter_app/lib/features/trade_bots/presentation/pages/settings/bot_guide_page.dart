@@ -49,7 +49,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotGuideProvider);
     return VitTradeHubScaffold(
-      title: 'Trading Bots Guide',
+      title: 'Hướng dẫn Bot giao dịch',
       subtitle: 'Hướng dẫn chiến lược và thực hành bot',
       semanticLabel: 'Hướng dẫn sử dụng bot giao dịch',
       semanticIdentifier: 'SC-131',
@@ -121,15 +121,15 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                 : _MistakesView(items: snapshot.mistakes),
           ),
           const VitTradeSection(
-            title: 'Video tutorials',
+            title: 'Video hướng dẫn',
             child: _VideoTutorialsCard(),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Bot education review',
+            title: 'Xem lại nội dung giáo dục Bot',
             message:
-                'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
+                'Loại chiến lược, rủi ro thiết lập, giới hạn vận hành, lỗi thường gặp và bước tiếp theo được xem lại trước khi kích hoạt bot.',
             contractId: 'bot-guide-review',
-            statusLabel: 'Education before activation',
+            statusLabel: 'Học trước khi kích hoạt',
             status: VitStatusPillStatus.warning,
           ),
         ],

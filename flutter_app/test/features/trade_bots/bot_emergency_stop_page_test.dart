@@ -43,7 +43,7 @@ void main() {
       ),
     );
 
-    expect(snapshot.warningTitle, 'EMERGENCY STOP');
+    expect(snapshot.warningTitle, 'DỪNG KHẨN CẤP');
     expect(snapshot.bots, hasLength(3));
     expect(snapshot.reasons.map((item) => item.id), [
       'crash',
@@ -82,11 +82,11 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Emergency Stop'), findsOneWidget);
-    expect(find.text('EMERGENCY STOP'), findsOneWidget);
-    expect(find.text('Bots to Stop (3)'), findsOneWidget);
+    expect(find.text('Dừng khẩn cấp'), findsOneWidget);
+    expect(find.text('DỪNG KHẨN CẤP'), findsOneWidget);
+    expect(find.text('Bot cần dừng (3)'), findsOneWidget);
     expect(find.text('DCA Bot #1'), findsOneWidget);
-    expect(find.text('Reason for Emergency Stop'), findsOneWidget);
+    expect(find.text('Lý do dừng khẩn cấp'), findsOneWidget);
 
     final button = tester.widget<VitCtaButton>(
       find.byKey(BotEmergencyStopPage.submitKey),

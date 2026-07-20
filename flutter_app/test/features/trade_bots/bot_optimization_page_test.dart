@@ -72,11 +72,11 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Parameter Optimization'), findsOneWidget);
-    expect(find.text('Automated Parameter Tuning'), findsOneWidget);
-    expect(find.text('Optimization Target'), findsOneWidget);
-    expect(find.text('Parameter Ranges'), findsOneWidget);
-    expect(find.text('Start Optimization'), findsOneWidget);
+    expect(find.text('Tối ưu tham số'), findsOneWidget);
+    expect(find.text('Tinh chỉnh tham số tự động'), findsOneWidget);
+    expect(find.text('Mục tiêu tối ưu'), findsOneWidget);
+    expect(find.text('Khoảng tham số'), findsOneWidget);
+    expect(find.text('Bắt đầu tối ưu hóa'), findsOneWidget);
   });
 
   testWidgets('SC-127 target selection and start action use mock contract', (

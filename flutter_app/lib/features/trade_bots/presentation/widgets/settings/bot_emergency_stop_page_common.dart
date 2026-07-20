@@ -33,7 +33,7 @@ class _StickyActions extends StatelessWidget {
               variant: VitCtaButtonVariant.secondary,
               onPressed: onCancel,
               child: Text(
-                'Cancel',
+                'Hủy',
                 style: AppTextStyles.body.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -51,7 +51,7 @@ class _StickyActions extends StatelessWidget {
               onPressed: canSubmit ? onSubmit : null,
               leading: const Icon(Icons.pause_rounded),
               child: Text(
-                stopping ? 'Stopping...' : 'Stop All Bots Now',
+                stopping ? 'Đang dừng...' : 'Dừng tất cả Bot ngay',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.body.copyWith(

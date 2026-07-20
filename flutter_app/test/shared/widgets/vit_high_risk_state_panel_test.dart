@@ -27,11 +27,14 @@ void main() {
         find.textContaining('Shared high-risk state message'),
         findsOneWidget,
       );
-      if (state != VitHighRiskUiState.empty &&
-          state != VitHighRiskUiState.error &&
-          state != VitHighRiskUiState.offline) {
-        expect(find.text('contract.${state.name}'), findsOneWidget);
-      }
+      // contractId is an internal tooling/debug id (SC-xxx style) — it must
+      // never render as visible text, only stay reachable via Semantics for
+      // a11y/testing tools.
+      expect(find.text('contract.${state.name}'), findsNothing);
+      expect(
+        find.bySemanticsLabel(RegExp('Contract: contract\\.${state.name}')),
+        findsOneWidget,
+      );
     }
   });
 
@@ -64,7 +67,11 @@ void main() {
     );
     expect(find.text('Review network risk'), findsOneWidget);
     expect(find.textContaining('Confirm fees, limits'), findsOneWidget);
-    expect(find.text('wallet.withdraw.compact'), findsOneWidget);
+    expect(find.text('wallet.withdraw.compact'), findsNothing);
+    expect(
+      find.bySemanticsLabel(RegExp('Contract: wallet\\.withdraw\\.compact')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('VitFinancialSafetySummary keeps fee risk limit rows compact', (
@@ -93,7 +100,11 @@ void main() {
     expect(find.text('Address review'), findsOneWidget);
     expect(find.text('Limit'), findsOneWidget);
     expect(find.text('2 BTC daily'), findsOneWidget);
-    expect(find.text('wallet.withdraw.preview'), findsOneWidget);
+    expect(find.text('wallet.withdraw.preview'), findsNothing);
+    expect(
+      find.bySemanticsLabel(RegExp('Contract: wallet\\.withdraw\\.preview')),
+      findsOneWidget,
+    );
     expect(
       find.text('Preview and confirmation are required before signing.'),
       findsOneWidget,

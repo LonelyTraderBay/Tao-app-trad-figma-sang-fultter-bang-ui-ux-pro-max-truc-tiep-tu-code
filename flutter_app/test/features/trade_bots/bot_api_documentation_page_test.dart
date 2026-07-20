@@ -82,16 +82,16 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('API Documentation'), findsOneWidget);
-    expect(find.text('Bot API Documentation'), findsOneWidget);
+    expect(find.text('Tài liệu API'), findsOneWidget);
+    expect(find.text('Tài liệu API bot'), findsOneWidget);
     expect(find.text('endpoints'), findsOneWidget);
     expect(find.text('websocket'), findsOneWidget);
     expect(find.text('examples'), findsOneWidget);
-    expect(find.text('REST API Endpoints'), findsOneWidget);
+    expect(find.text('Các điểm cuối REST API'), findsOneWidget);
     expect(find.text('/api/v1/bots'), findsWidgets);
     expect(find.text('List all user bots'), findsOneWidget);
-    expect(find.text('PARAMETERS:'), findsWidgets);
-    expect(find.text('RESPONSE:'), findsWidgets);
+    expect(find.text('THAM SỐ:'), findsWidgets);
+    expect(find.text('PHẢN HỒI:'), findsWidgets);
   });
 
   testWidgets('SC-134 tabs switch websocket and examples content', (
@@ -101,22 +101,22 @@ void main() {
 
     await tester.tap(BotApiDocumentationPage.tabKey('websocket').finder);
     await tester.pumpAndSettle();
-    expect(find.text('WebSocket Connection'), findsOneWidget);
-    expect(find.text('Event Types'), findsOneWidget);
+    expect(find.text('Kết nối WebSocket'), findsOneWidget);
+    expect(find.text('Loại sự kiện'), findsOneWidget);
     expect(find.text('bot.status'), findsOneWidget);
 
     await tester.tap(BotApiDocumentationPage.tabKey('examples').finder);
     await tester.pumpAndSettle();
-    expect(find.text('Quick Start'), findsOneWidget);
+    expect(find.text('Bắt đầu nhanh'), findsOneWidget);
     expect(find.text('JavaScript SDK'), findsOneWidget);
 
     await tester.tap(BotApiDocumentationPage.languageKey('python').finder);
     await tester.pumpAndSettle();
     expect(find.text('Python SDK'), findsOneWidget);
 
-    await tester.tap(find.text('Copy'));
+    await tester.tap(find.text('Sao chép'));
     await tester.pumpAndSettle();
-    expect(find.text('Copied!'), findsOneWidget);
+    expect(find.text('Đã sao chép!'), findsOneWidget);
   });
 
   testWidgets('SC-134 first viewport reaches first endpoint card', (

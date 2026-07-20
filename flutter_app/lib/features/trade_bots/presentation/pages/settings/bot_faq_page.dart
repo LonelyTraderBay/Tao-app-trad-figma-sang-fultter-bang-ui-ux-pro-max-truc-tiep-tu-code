@@ -59,7 +59,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotFaqProvider);
     return VitTradeHubScaffold(
-      title: 'Trading Bots FAQ',
+      title: 'Hỏi đáp Bot giao dịch',
       subtitle: 'Câu hỏi thường gặp về bot giao dịch',
       semanticLabel: 'Giải đáp câu hỏi thường gặp về bot giao dịch',
       semanticIdentifier: 'SC-132',

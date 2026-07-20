@@ -45,7 +45,7 @@ class _PercentRow extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       tone: VitChoicePillTone.neutral,
       items: [
-        for (final pct in const [10, 25, 50, 100])
+        for (final pct in const [25, 50, 75, 100])
           VitPresetChipItem(
             key: FuturesPage.pctKey(pct),
             value: pct,
@@ -66,37 +66,37 @@ class _PreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitFinancialSafetySummary(
-      title: 'Futures order preview',
+      title: 'Xem trước lệnh Futures',
       contractId: 'SC-057 Futures preview',
       density: VitDensity.tool,
       footer:
-          'Review leverage, margin, liquidation, fee, TP/SL, and side before opening a futures position.',
+          'Xem lại đòn bẩy, ký quỹ, giá thanh lý, phí, TP/SL và chiều lệnh trước khi mở vị thế Futures.',
       items: [
         VitFinancialSafetyItem(
-          label: 'Contract value',
+          label: 'Giá trị hợp đồng',
           value: formatTradeMoney(preview.positionSize),
           leading: const Icon(Icons.stacked_line_chart_rounded),
         ),
         VitFinancialSafetyItem(
-          label: 'Contract quantity',
+          label: 'Số lượng hợp đồng',
           value: '${preview.contractQty.toStringAsFixed(4)} ${pair.baseAsset}',
           leading: const Icon(Icons.format_list_numbered_rounded),
         ),
         VitFinancialSafetyItem(
-          label: 'Liquidation estimate',
+          label: 'Ước tính giá thanh lý',
           value: formatTradeMoney(preview.liquidationPrice),
           leading: const Icon(Icons.warning_amber_rounded),
           valueColor: _futuresRed,
         ),
         VitFinancialSafetyItem(
-          label: 'Open fee',
+          label: 'Phí mở lệnh',
           value: formatTradeMoney(preview.openFee),
           leading: const Icon(Icons.receipt_long_outlined),
           valueColor: AppColors.primary,
         ),
         const VitFinancialSafetyItem(
-          label: 'Risk check',
-          value: 'Confirm before submit',
+          label: 'Kiểm tra rủi ro',
+          value: 'Xác nhận trước khi gửi lệnh',
           leading: Icon(Icons.verified_user_outlined),
           valueColor: AppColors.warn,
         ),

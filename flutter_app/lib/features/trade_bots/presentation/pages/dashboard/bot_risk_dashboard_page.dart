@@ -46,7 +46,7 @@ class BotRiskDashboardPage extends ConsumerWidget {
     final snapshotAsync = ref.watch(tradeBotRiskDashboardProvider);
 
     return VitTradeHubScaffold(
-      title: 'Risk Dashboard',
+      title: 'Bảng điều khiển rủi ro',
       subtitle: 'Giám sát rủi ro bot theo thời gian thực',
       semanticLabel: 'Bảng giám sát rủi ro bot theo thời gian thực',
       semanticIdentifier: 'SC-120',
@@ -92,42 +92,42 @@ class BotRiskDashboardPage extends ConsumerWidget {
             child: _RiskScoreCard(snapshot: snapshot),
           ),
           VitTradeSection(
-            title: 'Critical Metrics',
+            title: 'Chỉ số quan trọng',
             child: _CriticalMetricsGrid(snapshot: snapshot),
           ),
           VitTradeSection(
-            title: 'Drawdown Trend (24h)',
+            title: 'Xu hướng sụt giảm vốn (24h)',
             child: _DrawdownChartCard(points: snapshot.drawdownPoints),
           ),
           VitTradeSection(
-            title: 'Exposure by Asset',
+            title: 'Mức phơi nhiễm theo tài sản',
             child: _ExposureCard(exposures: snapshot.exposures),
           ),
           VitTradeSection(
-            title: 'VaR Trend (7 days)',
+            title: 'Xu hướng VaR (7 ngày)',
             child: _VarChartCard(points: snapshot.varHistory),
           ),
           VitTradeSection(
-            title: 'Safety Controls',
+            title: 'Biện pháp an toàn',
             child: _SafetyControlsCard(controls: snapshot.safetyControls),
           ),
           VitTradeSection(
-            title: 'Emergency Actions',
+            title: 'Hành động khẩn cấp',
             child: _EmergencyActionCard(
               runningBots: snapshot.runningBots,
               onTap: () => context.go(snapshot.emergencyPath),
             ),
           ),
           const VitTradeSection(
-            title: 'Risk explanation',
+            title: 'Giải thích rủi ro',
             child: _RiskExplanationCard(),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Risk dashboard review',
+            title: 'Xem lại bảng điều khiển rủi ro',
             message:
-                'Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.',
+                'Điểm rủi ro, chỉ số quan trọng, mức phơi nhiễm, xu hướng VaR, biện pháp an toàn và bước dừng khẩn cấp tiếp theo được xem lại trước khi thực hiện hành động rủi ro với bot.',
             contractId: 'bot-risk-dashboard-review',
-            statusLabel: 'Emergency route confirmed',
+            statusLabel: 'Đã xác nhận lối thoát khẩn cấp',
             status: VitStatusPillStatus.warning,
           ),
         ],

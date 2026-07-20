@@ -107,11 +107,11 @@ class _RadarPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2 - 10);
     const radius = 84.0;
     final labels = [
-      'Return',
+      'Lợi nhuận',
       'Sharpe',
-      'Win Rate',
-      'Profit Factor',
-      'Low Risk',
+      'Tỷ lệ thắng',
+      'Hệ số lợi nhuận',
+      'Rủi ro thấp',
     ];
     final gridPaint = Paint()
       ..color = AppColors.text3

@@ -59,15 +59,14 @@ double tradeTerminalScrollBottomInset(
 
 /// Prepends [VitTradeProductTabs] when [showProductTabs] is true.
 ///
-/// The Spot/Futures/Margin/Convert product-tab nav bar is a
-/// `trade_terminal`-specific concept — `trade_core` has no knowledge of
-/// which routes those tabs point to, so it never supplies a default
-/// [navigationBuilder]. Only `trade_terminal` pages (or a page that
-/// deliberately wants the terminal quick-switcher) should pass
-/// `showProductTabs: true` together with `trade_terminal`'s
-/// `buildTradeProductNavigation`. Every other module (`trade_copy`,
-/// `trade_bots`, `trade_compliance`) should leave [showProductTabs] at its
-/// default `false` rather than borrowing this wrong-domain nav source.
+/// The Spot/Futures/Margin/Convert/Bot product-tab nav bar is a
+/// `trade`-domain concept — `trade_core` has no knowledge of which routes
+/// those tabs point to, so it never supplies a default [navigationBuilder].
+/// `trade` pages and `trade_bots`'s hub (as of ARCH-A2, 2026-07-19 — see
+/// `trade_product_navigation.dart`) pass `showProductTabs: true` together
+/// with `buildTradeProductNavigation`. `trade_copy` and `trade_compliance`
+/// should still leave [showProductTabs] at its default `false` rather than
+/// borrowing this wrong-domain nav source.
 List<Widget> tradeShellWithProductTabs({
   required BuildContext context,
   required List<Widget> children,
@@ -188,8 +187,9 @@ class VitTradeDetailScaffold extends StatelessWidget {
   final Key Function(String id)? quickNavKey;
 
   /// Required whenever [showProductTabs] is true (see
-  /// [tradeShellWithProductTabs]). `trade_terminal` pages should pass its
-  /// `buildTradeProductNavigation`; no other module should set this.
+  /// [tradeShellWithProductTabs]). `trade` pages and `trade_bots`'s hub
+  /// should pass `buildTradeProductNavigation`; `trade_copy` and
+  /// `trade_compliance` should not set this.
   final TradeProductNavigationBuilder? navigationBuilder;
 
   /// Optional sticky footer rendered below the scrollable content (e.g. a
@@ -301,8 +301,9 @@ class VitTradeHubScaffold extends StatelessWidget {
   final Key Function(String id)? quickNavKey;
 
   /// Required whenever [showProductTabs] is true (see
-  /// [tradeShellWithProductTabs]). `trade_terminal` pages should pass its
-  /// `buildTradeProductNavigation`; no other module should set this.
+  /// [tradeShellWithProductTabs]). `trade` pages and `trade_bots`'s hub
+  /// should pass `buildTradeProductNavigation`; `trade_copy` and
+  /// `trade_compliance` should not set this.
   final TradeProductNavigationBuilder? navigationBuilder;
 
   @override

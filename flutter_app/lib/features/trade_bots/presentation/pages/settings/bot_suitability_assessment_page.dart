@@ -57,7 +57,7 @@ class _BotSuitabilityAssessmentPageState
   Widget build(BuildContext context) {
     final controllerAsync = ref.watch(tradeBotSuitabilityControllerProvider);
     return VitTradeHubScaffold(
-      title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
+      title: _showResult ? 'Kết quả đánh giá' : 'Đánh giá mức độ phù hợp',
       subtitle: 'Đánh giá mức độ phù hợp với bot',
       semanticLabel: 'Đánh giá mức độ phù hợp trước khi dùng bot',
       semanticIdentifier: 'SC-119',
@@ -114,9 +114,9 @@ class _BotSuitabilityAssessmentPageState
                 ),
               ),
             const VitBotRiskReviewFooter(
-              title: 'Review bot suitability risk',
+              title: 'Xem lại rủi ro phù hợp với Bot',
               message:
-                  'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
+                  'Xác nhận kiến thức, giới hạn rủi ro, mức độ tiếp xúc với tự động hoá, và bước tiếp theo trước khi bật Bot giao dịch.',
             ),
           ];
         },

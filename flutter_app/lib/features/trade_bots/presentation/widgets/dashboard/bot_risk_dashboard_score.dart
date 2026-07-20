@@ -20,7 +20,7 @@ class _RiskScoreCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Portfolio Risk Score',
+                      'Điểm rủi ro danh mục',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),

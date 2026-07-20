@@ -61,15 +61,19 @@ const TradePair kTradeShellDefaultPair = TradePair(
   logoColorHex: 0xFFF7931A,
 );
 
-/// `trade` product tab + overflow navigation source (Spot/Futures/Margin/Convert).
+/// `trade` product tab + overflow navigation source (Spot/Futures/Margin/
+/// Convert/Bot).
 ///
 /// This is the ONE nav-bar source `trade_core`'s `tradeShellWithProductTabs`
-/// (via its `navigationBuilder` parameter) is meant to be pointed at. It only
-/// knows about the 4 `trade`-domain routes (Spot/Futures/Margin/
-/// Convert) — `trade_copy`, `trade_bots`, and `trade_compliance` pages must
-/// NOT pass this as their nav source (there is no shared "trade" product
-/// switcher across modules; each module either leaves `showProductTabs` at
-/// its default `false` or builds its own domain-appropriate nav source).
+/// (via its `navigationBuilder` parameter) is meant to be pointed at. It
+/// knows about the 5 `trade`-family L1 destinations (Spot/Futures/Margin/
+/// Convert/Bot). `trade_bots`'s hub joined this switcher under ARCH-A2
+/// (2026-07-19) — before that it was reachable only via a Profile menu item
+/// with no path back into the trade switcher, which read as disconnected
+/// from the rest of `trade`. `trade_copy` and `trade_compliance` pages must
+/// still NOT pass this as their nav source — each of those leaves
+/// `showProductTabs` at its default `false` or builds its own
+/// domain-appropriate nav source.
 ///
 /// See the ARCH-A1 note on [TradeProductNavigation] for why this factory —
 /// despite knowing about `trade`-owned routes — lives in `trade_core`
@@ -86,7 +90,7 @@ TradeProductNavigation buildTradeProductNavigation({
     resolvedPair,
     quickNavKey: quickNavKey,
   );
-  const primaryIds = ['spot', 'futures', 'margin', 'convert'];
+  const primaryIds = ['spot', 'futures', 'margin', 'convert', 'bots'];
 
   VitTradeProductTab tabFor(VitTradeHubItem item) => VitTradeProductTab(
     id: item.id,
@@ -125,8 +129,9 @@ List<VitTradeHubItem> _tradeHubItems(
 }) {
   Key navKey(String id) => quickNavKey?.call(id) ?? Key('trade_nav_$id');
 
-  // L1 trade modes only. Overflow tiles (Bot, Copy, Wallet, …) live on Home
-  // quick actions and Wallet bottom nav — no duplicate "Thêm" sheet entries.
+  // L1 trade modes. Bot joined this switcher under ARCH-A2 (2026-07-19).
+  // Remaining overflow tiles (Copy, Wallet, …) live on Home quick actions
+  // and Wallet bottom nav — no duplicate "Thêm" sheet entries for those.
   return [
     VitTradeHubItem(
       id: 'spot',
@@ -163,6 +168,15 @@ List<VitTradeHubItem> _tradeHubItems(
       accentColor: AppModuleAccents.trade,
       tileKey: navKey('margin'),
       onTap: () => context.go(AppRoutePaths.tradeMargin),
+    ),
+    VitTradeHubItem(
+      id: 'bots',
+      label: 'Bot',
+      badge: 'Auto',
+      icon: Icons.smart_toy_rounded,
+      accentColor: AppModuleAccents.trade,
+      tileKey: navKey('bots'),
+      onTap: () => context.go(AppRoutePaths.tradeBots),
     ),
   ];
 }
