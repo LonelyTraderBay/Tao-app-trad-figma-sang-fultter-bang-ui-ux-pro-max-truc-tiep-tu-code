@@ -131,6 +131,10 @@ void main() {
     await tester.tap(find.text('Xóa'));
     await tester.pumpAndSettle();
 
+    expect(find.text('Đã xóa địa chỉ'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
     expect(find.text('Ví lạnh cá nhân'), findsNothing);
   });
 
@@ -146,6 +150,8 @@ void main() {
       await tester.tap(find.byKey(AddressBookPage.deleteKey('addr1')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Xóa'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Đã hiểu'));
       await tester.pumpAndSettle();
 
       expect(find.text('Ví lạnh cá nhân'), findsNothing);

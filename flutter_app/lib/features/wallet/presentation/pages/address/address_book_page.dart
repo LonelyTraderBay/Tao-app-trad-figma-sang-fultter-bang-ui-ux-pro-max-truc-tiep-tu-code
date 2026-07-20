@@ -155,7 +155,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                             onEdit: () => _showActionNotice(
                               'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
                             ),
-                            onDelete: () => _confirmDelete(address),
+                            onDelete: () => unawaited(_confirmDelete(address)),
                           ),
                       ],
                     ),
@@ -176,7 +176,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                             onEdit: () => _showActionNotice(
                               'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
                             ),
-                            onDelete: () => _confirmDelete(address),
+                            onDelete: () => unawaited(_confirmDelete(address)),
                           ),
                       ],
                     ),
@@ -239,46 +239,26 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
     );
   }
 
-  void _confirmDelete(WalletSavedAddress address) {
-    unawaited(
-      showDialog<void>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: AppColors.surface,
-            title: const Text('Xóa địa chỉ'),
-            content: Text(
-              'Bạn có chắc muốn xóa địa chỉ "${address.label}" (${_maskAddress(address.address)})?',
-            ),
-            actions: [
-              VitCtaButton(
-                onPressed: () => Navigator.of(context).pop(),
-                variant: VitCtaButtonVariant.ghost,
-                fullWidth: false,
-                height: AppSpacing.buttonCompact,
-                child: const Text('Hủy'),
-              ),
-              VitCtaButton(
-                onPressed: () {
-                  ref
-                      .read(addressBookStateControllerProvider.notifier)
-                      .deleteAddress(address.id);
-                  Navigator.of(context).pop();
-                },
-                variant: VitCtaButtonVariant.destructive,
-                fullWidth: false,
-                height: AppSpacing.buttonCompact,
-                child: Text(
-                  'Xóa',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+  Future<void> _confirmDelete(WalletSavedAddress address) async {
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Xóa địa chỉ',
+      message:
+          'Bạn có chắc muốn xóa địa chỉ "${address.label}" '
+          '(${_maskAddress(address.address)})?',
+      confirmLabel: 'Xóa',
+      confirmVariant: VitCtaButtonVariant.destructive,
+    );
+    if (!confirmed || !mounted) return;
+    ref
+        .read(addressBookStateControllerProvider.notifier)
+        .deleteAddress(address.id);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã xóa địa chỉ',
+      message: 'Đã xóa "${address.label}" khỏi sổ địa chỉ.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
     );
   }
 }

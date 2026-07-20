@@ -121,6 +121,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Xóa'));
     await tester.pumpAndSettle();
+    expect(find.text('Đã xóa quảng cáo'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
 
     expect(find.text('Tất cả (2)'), findsOneWidget);
     expect(find.text('BÁN USDT'), findsNothing);
