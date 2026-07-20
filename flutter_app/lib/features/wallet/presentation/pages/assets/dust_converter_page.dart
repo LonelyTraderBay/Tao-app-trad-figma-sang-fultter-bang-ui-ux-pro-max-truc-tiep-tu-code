@@ -50,7 +50,6 @@ class DustConverterPage extends ConsumerStatefulWidget {
 class _DustConverterPageState extends ConsumerState<DustConverterPage> {
   String _targetSymbol = 'USDT';
   final Set<String> _selectedIds = {};
-  bool _converted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +85,6 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
               assets.isNotEmpty && _selectedIds.length == assets.length;
 
           return [
-            if (_converted) _ConvertedBanner(targetSymbol: _targetSymbol),
             VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
               title: 'Xem lại chuy\u1EC3n \u0111\u1ED5i dust',
@@ -115,7 +113,6 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                   onSelected: (symbol) => setState(() {
                     _targetSymbol = symbol;
                     _selectedIds.clear();
-                    _converted = false;
                   }),
                 ),
               ],
@@ -135,7 +132,6 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
               onAction: assets.isEmpty
                   ? null
                   : () => setState(() {
-                      _converted = false;
                       if (selectedAll) {
                         _selectedIds.clear();
                       } else {
@@ -182,7 +178,6 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
 
   void _toggleAsset(String id) {
     setState(() {
-      _converted = false;
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
       } else {
@@ -232,8 +227,16 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
 
     if (!confirmed || !context.mounted) return;
     setState(() {
-      _converted = true;
       _selectedIds.clear();
     });
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã chuyển đổi thành công',
+      message:
+          'Đã nhận ${_formatAmount(received)} $_targetSymbol '
+          'từ chuyển đổi số dư nhỏ.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 }

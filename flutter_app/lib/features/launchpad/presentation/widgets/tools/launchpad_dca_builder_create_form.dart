@@ -26,7 +26,6 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
     required this.budgetController,
     required this.startDateController,
     required this.frequency,
-    required this.submissionMessage,
     required this.onFrequencyChanged,
     required this.onInputChanged,
   });
@@ -44,7 +43,6 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
   final TextEditingController budgetController;
   final TextEditingController startDateController;
   final LaunchpadDcaFrequency frequency;
-  final String? submissionMessage;
   final ValueChanged<LaunchpadDcaFrequency> onFrequencyChanged;
   final VoidCallback onInputChanged;
 
@@ -166,31 +164,6 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
               title: 'Review DCA plan',
               message: 'Check token, amount, budget, start date, and cadence.',
               contractId: 'SC-316 / ${tokenController.text.trim()}',
-            ),
-          ],
-          if (submissionMessage != null) ...[
-            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-            VitCard(
-              padding: LaunchpadSpacingTokens.launchpadPaddingX3,
-              borderColor: AppColors.buy20,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: AppColors.buy,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      submissionMessage!,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ],

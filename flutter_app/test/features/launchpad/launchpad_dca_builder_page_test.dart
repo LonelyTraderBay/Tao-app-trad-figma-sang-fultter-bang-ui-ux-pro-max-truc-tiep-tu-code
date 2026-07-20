@@ -149,10 +149,8 @@ void main() {
     await tester.tap(find.byKey(LaunchpadDcaBuilderPage.ctaKey));
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('DCA strategy queued: 2 tuan/lan 100 USD vao ARB'),
-      findsOneWidget,
-    );
+    expect(find.text('Đã tạo chiến lược DCA'), findsOneWidget);
+    expect(find.text('2 tuan/lan 100 USD vào ARB.'), findsOneWidget);
   });
 
   testWidgets('SC-316 create tab is reachable from tab bar', (tester) async {

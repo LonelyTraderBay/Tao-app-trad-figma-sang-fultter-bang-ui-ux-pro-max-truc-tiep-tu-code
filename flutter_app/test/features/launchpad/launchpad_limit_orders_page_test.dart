@@ -171,10 +171,8 @@ void main() {
     await tester.tap(find.byKey(LaunchpadLimitOrdersPage.ctaKey));
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('Limit order queued: BUY 1000 ARB @ \$2.35'),
-      findsOneWidget,
-    );
+    expect(find.text('Đã tạo lệnh giới hạn'), findsOneWidget);
+    expect(find.text('Mua 1000 ARB tại giá \$2.35.'), findsOneWidget);
   });
 
   testWidgets('SC-315 create tab switches order side', (tester) async {

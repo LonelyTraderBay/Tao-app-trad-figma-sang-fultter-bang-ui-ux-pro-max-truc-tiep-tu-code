@@ -8,7 +8,6 @@ class _CreateOrderSection extends StatelessWidget {
     required this.amountController,
     required this.expiryDays,
     required this.partialFill,
-    required this.submissionMessage,
     required this.onSideChanged,
     required this.onExpiryChanged,
     required this.onPartialFillChanged,
@@ -21,7 +20,6 @@ class _CreateOrderSection extends StatelessWidget {
   final TextEditingController amountController;
   final String expiryDays;
   final bool partialFill;
-  final String? submissionMessage;
   final ValueChanged<LaunchpadLimitOrderSide> onSideChanged;
   final ValueChanged<String> onExpiryChanged;
   final ValueChanged<bool> onPartialFillChanged;
@@ -188,31 +186,6 @@ class _CreateOrderSection extends StatelessWidget {
               amount: amountController.text.trim(),
               expiryDays: expiryDays,
               partialFill: partialFill,
-            ),
-          ],
-          if (submissionMessage != null) ...[
-            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-            VitCard(
-              padding: LaunchpadSpacingTokens.launchpadPaddingX3,
-              borderColor: AppColors.buy20,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: AppColors.buy,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      submissionMessage!,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ],

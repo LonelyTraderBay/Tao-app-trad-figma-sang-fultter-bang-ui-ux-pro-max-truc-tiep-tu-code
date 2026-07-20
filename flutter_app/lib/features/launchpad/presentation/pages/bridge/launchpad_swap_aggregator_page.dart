@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -66,7 +68,6 @@ class _LaunchpadSwapAggregatorPageState
   bool _autoRefresh = true;
   var _activeTab = _SwapTab.compare;
   String? _expandedDexId;
-  String? _swapPreview;
 
   @override
   void dispose() {
@@ -204,8 +205,6 @@ class _LaunchpadSwapAggregatorPageState
                             }),
                           ),
                           _SwapWarning(slippage: _slippage),
-                          if (_swapPreview != null)
-                            _SwapPreview(message: _swapPreview!),
                         ] else if (_activeTab == _SwapTab.history) ...[
                           _HistorySection(history: snapshot.history),
                         ] else ...[
@@ -224,6 +223,8 @@ class _LaunchpadSwapAggregatorPageState
                 ),
                 if (_activeTab == _SwapTab.compare)
                   Positioned(
+                    // notice-ack: allow-sticky-footer-form-cta — in-progress
+                    // compare-tab CTA footer, not a success toast overlay.
                     left: 0,
                     right: 0,
                     bottom: navInset + safeBottom,
@@ -231,10 +232,7 @@ class _LaunchpadSwapAggregatorPageState
                       backgroundColor: AppColors.surface.withValues(alpha: .94),
                       child: VitCtaButton(
                         key: LaunchpadSwapAggregatorPage.ctaKey,
-                        onPressed: () => setState(() {
-                          _swapPreview =
-                              'Swap ${_amountController.text} $_fromToken qua ${bestDex.name}';
-                        }),
+                        onPressed: () => unawaited(_submitSwap(bestDex.name)),
                         leading: const Icon(Icons.repeat_rounded),
                         child: Text('Swap v\u1EDBi ${bestDex.name}'),
                       ),
@@ -245,6 +243,17 @@ class _LaunchpadSwapAggregatorPageState
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _submitSwap(String dexName) async {
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã tạo yêu cầu swap',
+      message:
+          'Swap ${_amountController.text.trim()} $_fromToken qua $dexName.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
     );
   }
 }

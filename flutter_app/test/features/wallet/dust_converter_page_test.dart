@@ -136,7 +136,13 @@ void main() {
     await tester.tap(find.byKey(DustConverterPage.confirmButtonKey));
     await tester.pumpAndSettle();
     expect(
-      find.text('\u0110\u00E3 chuy\u1EC3n \u0111\u1ED5i sang USDT'),
+      find.text('\u0110\u00E3 chuy\u1EC3n \u0111\u1ED5i th\u00E0nh c\u00F4ng'),
+      findsOneWidget,
+    );
+    expect(
+      find.text(
+        '\u0110\u00E3 nh\u1EADn 12.1489 USDT t\u1EEB chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF.',
+      ),
       findsOneWidget,
     );
   });

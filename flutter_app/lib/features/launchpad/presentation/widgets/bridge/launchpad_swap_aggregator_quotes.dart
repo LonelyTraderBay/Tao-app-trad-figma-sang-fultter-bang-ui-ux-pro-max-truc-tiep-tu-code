@@ -327,19 +327,3 @@ class _SwapWarning extends StatelessWidget {
     );
   }
 }
-
-class _SwapPreview extends StatelessWidget {
-  const _SwapPreview({required this.message});
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitHighRiskStatePanel(
-      state: VitHighRiskUiState.success,
-      title: 'Preview swap s\u1EB5n s\u00E0ng',
-      message: message,
-      contractId: 'Best route preview',
-    );
-  }
-}

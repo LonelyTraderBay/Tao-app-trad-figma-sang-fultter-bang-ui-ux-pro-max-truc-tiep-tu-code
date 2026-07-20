@@ -22,39 +22,6 @@ class _PrimaryButton extends StatelessWidget {
   }
 }
 
-class _ConvertedBanner extends StatelessWidget {
-  const _ConvertedBanner({required this.targetSymbol});
-
-  final String targetSymbol;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      borderColor: AppColors.buy20,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.check_circle_outline,
-            color: AppColors.buy,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: _dustInlineGap),
-          Expanded(
-            child: Text(
-              '\u0110\u00E3 chuy\u1EC3n \u0111\u1ED5i sang $targetSymbol',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.buy,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 double _sumUsd(List<WalletDustAsset> assets) {
   return assets.fold<double>(0, (sum, asset) => sum + asset.usdValue);
 }
