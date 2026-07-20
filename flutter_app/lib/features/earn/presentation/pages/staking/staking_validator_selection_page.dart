@@ -230,11 +230,13 @@ class _StakingValidatorSelectionPageState
   void _confirmSelection(StakingValidatorDraft validator) {
     unawaited(HapticFeedback.mediumImpact());
     setState(() => _selected = null);
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Đã xác nhận',
-      message: 'Đã chọn ${validator.name} làm validator',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã xác nhận',
+        message: 'Đã chọn ${validator.name} làm validator',
+      ),
+    );
   }
 
   void _clearFilters() {

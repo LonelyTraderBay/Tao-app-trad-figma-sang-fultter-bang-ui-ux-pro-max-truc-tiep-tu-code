@@ -157,11 +157,13 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
   }
 
   void _downloadReport() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Báo cáo kiểm tra chiến lược sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Báo cáo kiểm tra chiến lược sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   void _close() {

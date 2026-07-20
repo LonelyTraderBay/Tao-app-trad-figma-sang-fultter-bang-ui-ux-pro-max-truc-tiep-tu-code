@@ -186,11 +186,13 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
 
   void _exportReport() {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sẽ sớm ra mắt',
-      message: 'Xuất báo cáo CSV/PDF sẽ sớm ra mắt',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sẽ sớm ra mắt',
+        message: 'Xuất báo cáo CSV/PDF sẽ sớm ra mắt',
+      ),
+    );
   }
 }
 

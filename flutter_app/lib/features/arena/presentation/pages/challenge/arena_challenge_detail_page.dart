@@ -242,7 +242,9 @@ class _ArenaChallengeDetailPageState
 
   void _showActionSheet({required String title, required String body}) {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(context: context, title: title, message: body));
+    unawaited(
+      showVitNoticeSheet(context: context, title: title, message: body),
+    );
   }
 
   void _showEvidenceSheet() => _showActionSheet(

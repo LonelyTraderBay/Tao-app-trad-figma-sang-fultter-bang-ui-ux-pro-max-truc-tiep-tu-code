@@ -79,11 +79,13 @@ class _PredictionDataIntegrationPageState
 
   void _showComingSoon(String message) {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: message,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: message,
+      ),
+    );
   }
 
   @override

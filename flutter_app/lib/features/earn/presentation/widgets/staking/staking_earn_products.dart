@@ -138,11 +138,13 @@ class _ProductCard extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             onPressed: () {
               unawaited(HapticFeedback.selectionClick());
-              unawaited(showVitNoticeSheet(
-                context: context,
-                title: 'Sẽ sớm ra mắt',
-                message: 'Xem chi tiết sản phẩm sẽ sớm ra mắt',
-              ));
+              unawaited(
+                showVitNoticeSheet(
+                  context: context,
+                  title: 'Sẽ sớm ra mắt',
+                  message: 'Xem chi tiết sản phẩm sẽ sớm ra mắt',
+                ),
+              );
             },
             child: const Text('Xem chi tiet'),
           ),

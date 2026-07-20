@@ -48,11 +48,13 @@ class _AddLiquidityButton extends StatelessWidget {
       // thông báo minh bạch theo pattern coming-soon sẵn có của feature.
       onPressed: enabled
           ? () {
-              unawaited(showVitNoticeSheet(
-                context: context,
-                title: 'Sắp ra mắt',
-                message: 'Thêm thanh khoản sẽ sớm ra mắt.',
-              ));
+              unawaited(
+                showVitNoticeSheet(
+                  context: context,
+                  title: 'Sắp ra mắt',
+                  message: 'Thêm thanh khoản sẽ sớm ra mắt.',
+                ),
+              );
             }
           : null,
       density: VitDensity.compact,

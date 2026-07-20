@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -170,7 +170,8 @@ class _TradeHistoryExportPageState
             ),
           ],
         ),
-        Positioned( // notice-ack: allow-sticky-footer
+        Positioned(
+          // notice-ack: allow-sticky-footer
           left: 0,
           right: 0,
           bottom: footerSafePadding,

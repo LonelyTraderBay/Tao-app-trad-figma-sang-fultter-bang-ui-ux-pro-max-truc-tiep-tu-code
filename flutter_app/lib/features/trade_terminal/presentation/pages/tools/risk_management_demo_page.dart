@@ -84,8 +84,7 @@ class _RiskManagementDemoPageState
             title: 'Không tải được quản lý rủi ro',
             message: 'Vui lòng kiểm tra kết nối và thử lại.',
             actionLabel: 'Thử lại',
-            onAction: () =>
-                ref.invalidate(tradeRiskManagementSnapshotProvider),
+            onAction: () => ref.invalidate(tradeRiskManagementSnapshotProvider),
           ),
         ],
         data: (controller) {
@@ -180,13 +179,15 @@ class _RiskManagementDemoPageState
       ),
     );
     if (!mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Lệnh OCO đã gửi',
-      message: 'Đã đặt ${result.orderId}',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Lệnh OCO đã gửi',
+        message: 'Đã đặt ${result.orderId}',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 
   Future<void> _openCalculatorSheet() async {
@@ -208,12 +209,14 @@ class _RiskManagementDemoPageState
       builder: (context) => _CalculatorSheet(result: result),
     );
     if (applied != true || !mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Đã áp dụng',
-      message: 'Đã áp dụng khối lượng đề xuất',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã áp dụng',
+        message: 'Đã áp dụng khối lượng đề xuất',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 }

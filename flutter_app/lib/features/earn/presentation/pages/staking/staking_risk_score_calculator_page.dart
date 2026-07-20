@@ -170,11 +170,13 @@ class _StakingRiskScoreCalculatorPageState
                             height: AppSpacing.buttonStandard,
                             onPressed: () {
                               unawaited(HapticFeedback.selectionClick());
-                              unawaited(showVitNoticeSheet(
-                                context: context,
-                                title: 'Sẽ sớm ra mắt',
-                                message: 'Tiếp tục sẽ sớm ra mắt',
-                              ));
+                              unawaited(
+                                showVitNoticeSheet(
+                                  context: context,
+                                  title: 'Sẽ sớm ra mắt',
+                                  message: 'Tiếp tục sẽ sớm ra mắt',
+                                ),
+                              );
                             },
                             child: Text(snapshot.proceedLabel),
                           ),

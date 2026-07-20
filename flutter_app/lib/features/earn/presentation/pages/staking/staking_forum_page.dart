@@ -316,11 +316,13 @@ class _ThreadCard extends StatelessWidget {
 
 void _showComingSoon(BuildContext context, String message) {
   unawaited(HapticFeedback.selectionClick());
-  unawaited(showVitNoticeSheet(
-    context: context,
-    title: 'Sẽ sớm ra mắt',
-    message: message,
-  ));
+  unawaited(
+    showVitNoticeSheet(
+      context: context,
+      title: 'Sẽ sớm ra mắt',
+      message: message,
+    ),
+  );
 }
 
 class _ThreadMetric extends StatelessWidget {

@@ -199,11 +199,13 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                     height: AppSpacing.ctaHeight,
                     onPressed: () {
                       unawaited(HapticFeedback.selectionClick());
-                      unawaited(showVitNoticeSheet(
-                        context: context,
-                        title: 'Sẽ sớm ra mắt',
-                        message: 'Lấy Sandbox API Key sẽ sớm ra mắt',
-                      ));
+                      unawaited(
+                        showVitNoticeSheet(
+                          context: context,
+                          title: 'Sẽ sớm ra mắt',
+                          message: 'Lấy Sandbox API Key sẽ sớm ra mắt',
+                        ),
+                      );
                     },
                     child: const Text('Get Sandbox API Key'),
                   ),

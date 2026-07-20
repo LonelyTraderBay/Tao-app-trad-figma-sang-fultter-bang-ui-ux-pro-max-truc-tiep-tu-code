@@ -83,13 +83,8 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
           final runningBots = bots
               .where((bot) => bot.status == TradeBotStatus.running)
               .length;
-          final totalProfit = bots.fold(
-            0.0,
-            (sum, bot) => sum + bot.profit,
-          );
-          final profitColor = totalProfit >= 0
-              ? AppColors.buy
-              : AppColors.sell;
+          final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
+          final profitColor = totalProfit >= 0 ? AppColors.buy : AppColors.sell;
           return [
             VitTradeHubHero(
               primaryLabel: 'Đang chạy',
@@ -117,8 +112,7 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
                 bots: bots,
                 onToggle: _toggleBot,
                 onDelete: _confirmDeleteBot,
-                onAdd: () =>
-                    setState(() => _tab = _TradingBotsTab.strategies),
+                onAdd: () => setState(() => _tab = _TradingBotsTab.strategies),
               )
             else
               _StrategiesTab(

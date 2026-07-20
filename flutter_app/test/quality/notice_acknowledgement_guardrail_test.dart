@@ -52,9 +52,13 @@ void main() {
           // Pattern B: banned toast class names.
           // Pattern C: Positioned collocated with VitBannerVariant.success
           //            in the same file (file-level heuristic).
-          final hasPositioned = lines.any(
-            (l) => l.contains('Positioned(') && !_isOptOut(l),
-          );
+          // Opt-out for Positioned may sit on the same line or the next line
+          // (dart format often moves trailing // comments inside the call).
+          final hasPositioned = [
+            for (var i = 0; i < lines.length; i++)
+              if (lines[i].contains('Positioned(') && !_isOptOutAt(lines, i))
+                true,
+          ].isNotEmpty;
           final hasSuccessBanner = lines.any(
             (l) => l.contains('VitBannerVariant.success') && !_isOptOut(l),
           );
@@ -76,7 +80,8 @@ void main() {
             // Positioned + success banner in the same file.
             if (hasPositioned &&
                 hasSuccessBanner &&
-                line.contains('Positioned(')) {
+                line.contains('Positioned(') &&
+                !_isOptOutAt(lines, i)) {
               _addIfNew(violations, baseline, '$lineRef: ${line.trim()}');
             }
           }
@@ -141,6 +146,13 @@ void main() {
 }
 
 bool _isOptOut(String line) => line.contains('// notice-ack: allow-');
+
+/// Same-line or next-line opt-out (survives `dart format` moving trailing comments).
+bool _isOptOutAt(List<String> lines, int index) {
+  if (_isOptOut(lines[index])) return true;
+  if (index + 1 < lines.length && _isOptOut(lines[index + 1])) return true;
+  return false;
+}
 
 bool _isBannedToastClass(String line) {
   return line.contains('class _SuccessToast') ||

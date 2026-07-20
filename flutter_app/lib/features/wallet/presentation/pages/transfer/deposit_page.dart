@@ -180,7 +180,8 @@ class _DepositPageState extends ConsumerState<DepositPage> {
       showVitNoticeSheet(
         context: context,
         title: 'Đã làm mới',
-        message: 'Thông tin địa chỉ nạp tiền đã được cập nhật. Luôn kiểm tra lại địa chỉ và mạng lưới trước khi nạp.',
+        message:
+            'Thông tin địa chỉ nạp tiền đã được cập nhật. Luôn kiểm tra lại địa chỉ và mạng lưới trước khi nạp.',
       ),
     );
   }

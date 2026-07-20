@@ -114,4 +114,3 @@ class TransferAssetPickerRow extends StatelessWidget {
     );
   }
 }
-

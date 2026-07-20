@@ -58,117 +58,117 @@ class _ExecutionVenueAnalysisPageState
     return Material(
       color: _venueBackground,
       child: VitTradeHubScaffold(
-            title: 'Execution Venue Analysis',
-            subtitle: 'Detailed Comparison',
-            semanticLabel: 'Phân tích chi tiết các sàn thực thi lệnh giao dịch',
-            semanticIdentifier: 'SC-097',
-            contentKey: ExecutionVenueAnalysisPage.contentKey,
-            shellRenderMode: widget.shellRenderMode,
-            onBack: () => goBackOrFallback(
-              context,
-              fallbackPath: AppRoutePaths.tradeCopyBestExecutionReports,
-              mode: BackNavigationMode.historyThenFallback,
+        title: 'Execution Venue Analysis',
+        subtitle: 'Detailed Comparison',
+        semanticLabel: 'Phân tích chi tiết các sàn thực thi lệnh giao dịch',
+        semanticIdentifier: 'SC-097',
+        contentKey: ExecutionVenueAnalysisPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyBestExecutionReports,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        headerActions: [
+          VitHeaderActionItem(
+            type: VitHeaderActionType.export,
+            onPressed: () => showVitNoticeSheet(
+              context: context,
+              title: 'Đã xếp hàng',
+              message: 'Export phân tích đã được xếp hàng.',
+              variant: VitBannerVariant.success,
+              ctaVariant: VitCtaButtonVariant.success,
             ),
-            headerActions: [
-              VitHeaderActionItem(
-                type: VitHeaderActionType.export,
-                onPressed: () => showVitNoticeSheet(
-                  context: context,
-                  title: 'Đã xếp hàng',
-                  message: 'Export phân tích đã được xếp hàng.',
-                  variant: VitBannerVariant.success,
-                  ctaVariant: VitCtaButtonVariant.success,
+          ),
+        ],
+        children: async.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(tradeExecutionVenueAnalysisProvider),
+            ),
+          ],
+          data: (snapshot) {
+            final venues = _sorted(snapshot.venues);
+            return [
+              VitTradeSection(
+                title: 'Summary',
+                child: _SummaryGrid(summary: snapshot.summary),
+              ),
+              VitTradeComplianceSection(
+                title: 'Venue review',
+                statusPill: const VitStatusPill(
+                  label: 'Review required',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Venues',
+                    value: '${venues.length} compared',
+                  ),
+                  VitTradeComplianceItem(label: 'Sort', value: _sort),
+                ],
+              ),
+              VitTradeSection(
+                title: 'Analysis',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      density: VitDensity.tool,
+                      title: 'Execution venue review',
+                      message:
+                          'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
+                      contractId: 'SC-097 venue analysis review',
+                    ),
+                    _SortSelector(
+                      activeId: _sort,
+                      onChanged: (id) => setState(() => _sort = id),
+                    ),
+                    VitCard(
+                      density: VitDensity.tool,
+                      radius: VitCardRadius.tight,
+                      child: VitTabBar(
+                        activeKey: _tab,
+                        onChanged: (id) => setState(() => _tab = id),
+                        variant: VitTabBarVariant.underline,
+                        tabs: [
+                          for (final tab in const [
+                            ('comparison', 'Comparison'),
+                            ('costs', 'Costs'),
+                            ('speed', 'Speed'),
+                            ('trends', 'Trends'),
+                          ])
+                            VitTabItem(
+                              key: tab.$1,
+                              label: tab.$2,
+                              widgetKey: ExecutionVenueAnalysisPage.tabKey(
+                                tab.$1,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (_tab == 'comparison')
+                      _ComparisonTab(venues: venues)
+                    else if (_tab == 'costs')
+                      _CostsTab(venues: venues)
+                    else if (_tab == 'speed')
+                      _SpeedTab(venues: venues)
+                    else
+                      _TrendsTab(trends: snapshot.costTrends),
+                  ],
                 ),
               ),
-            ],
-            children: async.when(
-              loading: () => const [VitSkeletonList()],
-              error: (error, stackTrace) => [
-                VitErrorState(
-                  title: 'Không tải được dữ liệu',
-                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                  actionLabel: 'Thử lại',
-                  onAction: () =>
-                      ref.invalidate(tradeExecutionVenueAnalysisProvider),
-                ),
-              ],
-              data: (snapshot) {
-                final venues = _sorted(snapshot.venues);
-                return [
-                  VitTradeSection(
-                    title: 'Summary',
-                    child: _SummaryGrid(summary: snapshot.summary),
-                  ),
-                  VitTradeComplianceSection(
-                    title: 'Venue review',
-                    statusPill: const VitStatusPill(
-                      label: 'Review required',
-                      status: VitStatusPillStatus.info,
-                      size: VitStatusPillSize.sm,
-                    ),
-                    items: [
-                      VitTradeComplianceItem(
-                        label: 'Venues',
-                        value: '${venues.length} compared',
-                      ),
-                      VitTradeComplianceItem(label: 'Sort', value: _sort),
-                    ],
-                  ),
-                  VitTradeSection(
-                    title: 'Analysis',
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          density: VitDensity.tool,
-                          title: 'Execution venue review',
-                          message:
-                              'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
-                          contractId: 'SC-097 venue analysis review',
-                        ),
-                        _SortSelector(
-                          activeId: _sort,
-                          onChanged: (id) => setState(() => _sort = id),
-                        ),
-                        VitCard(
-                          density: VitDensity.tool,
-                          radius: VitCardRadius.tight,
-                          child: VitTabBar(
-                            activeKey: _tab,
-                            onChanged: (id) => setState(() => _tab = id),
-                            variant: VitTabBarVariant.underline,
-                            tabs: [
-                              for (final tab in const [
-                                ('comparison', 'Comparison'),
-                                ('costs', 'Costs'),
-                                ('speed', 'Speed'),
-                                ('trends', 'Trends'),
-                              ])
-                                VitTabItem(
-                                  key: tab.$1,
-                                  label: tab.$2,
-                                  widgetKey: ExecutionVenueAnalysisPage.tabKey(
-                                    tab.$1,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                        if (_tab == 'comparison')
-                          _ComparisonTab(venues: venues)
-                        else if (_tab == 'costs')
-                          _CostsTab(venues: venues)
-                        else if (_tab == 'speed')
-                          _SpeedTab(venues: venues)
-                        else
-                          _TrendsTab(trends: snapshot.costTrends),
-                      ],
-                    ),
-                  ),
-                ];
-              },
-            ),
+            ];
+          },
+        ),
       ),
     );
   }

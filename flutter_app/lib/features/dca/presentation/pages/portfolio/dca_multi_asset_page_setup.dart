@@ -229,19 +229,23 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
   }
 
   void _showAddAssetNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Thêm tài sản sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Thêm tài sản sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   void _showDeleteNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Xoá tài sản sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Xoá tài sản sẽ sớm ra mắt.',
+      ),
+    );
   }
 }
 

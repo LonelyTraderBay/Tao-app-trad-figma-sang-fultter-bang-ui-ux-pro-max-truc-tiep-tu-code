@@ -86,11 +86,13 @@ class _ApiKeyCard extends StatelessWidget {
                   child: _RegenerateButton(
                     onTap: () {
                       unawaited(HapticFeedback.selectionClick());
-                      unawaited(showVitNoticeSheet(
-                        context: context,
-                        title: 'Sắp ra mắt',
-                        message: 'Tạo lại Secret sẽ sớm ra mắt',
-                      ));
+                      unawaited(
+                        showVitNoticeSheet(
+                          context: context,
+                          title: 'Sắp ra mắt',
+                          message: 'Tạo lại Secret sẽ sớm ra mắt',
+                        ),
+                      );
                     },
                   ),
                 ),

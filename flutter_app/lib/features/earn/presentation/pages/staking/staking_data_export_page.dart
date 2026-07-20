@@ -329,11 +329,13 @@ class _CustomExport extends StatelessWidget {
                 key: StakingDataExportPage.exportKey,
                 onPressed: () {
                   unawaited(HapticFeedback.selectionClick());
-                  unawaited(showVitNoticeSheet(
-                    context: context,
-                    title: 'Sẽ sớm ra mắt',
-                    message: 'Xuất dữ liệu sẽ sớm ra mắt',
-                  ));
+                  unawaited(
+                    showVitNoticeSheet(
+                      context: context,
+                      title: 'Sẽ sớm ra mắt',
+                      message: 'Xuất dữ liệu sẽ sớm ra mắt',
+                    ),
+                  );
                 },
                 height: AppSpacing.buttonStandard,
                 child: Text(snapshot.exportLabel),

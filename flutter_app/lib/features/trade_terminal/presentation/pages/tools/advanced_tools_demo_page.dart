@@ -79,8 +79,7 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
             title: 'Không tải được công cụ nâng cao',
             message: 'Vui lòng kiểm tra kết nối và thử lại.',
             actionLabel: 'Thử lại',
-            onAction: () =>
-                ref.invalidate(tradeAdvancedToolsSnapshotProvider),
+            onAction: () => ref.invalidate(tradeAdvancedToolsSnapshotProvider),
           ),
         ],
         data: (controller) {
@@ -136,15 +135,11 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
               )
             else if (_tab == _ToolsTab.bulk)
               _ActionTab(
-                description:
-                    'Select multiple orders and perform batch actions',
+                description: 'Select multiple orders and perform batch actions',
                 buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
                 label: 'Open Bulk Operations',
                 icon: Icons.check_box_rounded,
-                colors: const [
-                  AppColors.caution,
-                  AppColors.medalBronzeMuted,
-                ],
+                colors: const [AppColors.caution, AppColors.medalBronzeMuted],
                 onOpen: _openBulkSheet,
               )
             else
@@ -196,13 +191,15 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
       ),
     );
     if (!mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Đặt lệnh thành công',
-      message: 'Đã đặt lệnh mua · 0.5 BTC',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đặt lệnh thành công',
+        message: 'Đã đặt lệnh mua · 0.5 BTC',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 
   Future<void> _openBulkSheet() async {
@@ -227,13 +224,15 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
       ),
     );
     if (!mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Hủy lệnh thành công',
-      message: 'Đã hủy ${result.affectedCount} lệnh',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Hủy lệnh thành công',
+        message: 'Đã hủy ${result.affectedCount} lệnh',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 
   Future<void> _openShortcutsSheet() async {
@@ -254,12 +253,14 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
       ),
     );
     if (!mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Kích hoạt thành công',
-      message: 'Phím tắt · Quick Buy',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Kích hoạt thành công',
+        message: 'Phím tắt · Quick Buy',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 }

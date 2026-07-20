@@ -53,66 +53,66 @@ class _ExecutionQualityDemoPageState
     final snapshotAsync = ref.watch(tradeExecutionQualitySnapshotProvider);
 
     return VitTradeHubScaffold(
-          title: 'Chất lượng khớp lệnh',
-          subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
-          semanticLabel: 'Chất lượng khớp lệnh',
-          semanticIdentifier: 'SC-061',
-          contentKey: ExecutionQualityDemoPage.contentKey,
-          shellRenderMode: widget.shellRenderMode,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.trade,
-            mode: BackNavigationMode.historyThenFallback,
+      title: 'Chất lượng khớp lệnh',
+      subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
+      semanticLabel: 'Chất lượng khớp lệnh',
+      semanticIdentifier: 'SC-061',
+      contentKey: ExecutionQualityDemoPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      showProductTabs: true,
+      navigationBuilder: buildTradeProductNavigation,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được chất lượng khớp lệnh',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeExecutionQualitySnapshotProvider),
           ),
-          showProductTabs: true,
-          navigationBuilder: buildTradeProductNavigation,
-          children: snapshotAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được chất lượng khớp lệnh',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () =>
-                    ref.invalidate(tradeExecutionQualitySnapshotProvider),
+        ],
+        data: (snapshot) {
+          final settings = _settings ??= snapshot.slippageSettings;
+          return [
+            const ExecutionQualityIntroCard(),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Xem lại chất lượng khớp lệnh',
+              message:
+                  'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
+              contractId: 'execution-quality-demo-review',
+              density: VitDensity.tool,
+            ),
+            for (final feature in snapshot.features)
+              ExecutionQualityFeatureCard(
+                feature: feature,
+                onTap: () => _onFeatureTap(feature),
               ),
-            ],
-            data: (snapshot) {
-              final settings = _settings ??= snapshot.slippageSettings;
-              return [
-                const ExecutionQualityIntroCard(),
-                const VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Xem lại chất lượng khớp lệnh',
-                  message:
-                      'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
-                  contractId: 'execution-quality-demo-review',
-                  density: VitDensity.tool,
-                ),
-                for (final feature in snapshot.features)
-                  ExecutionQualityFeatureCard(
-                    feature: feature,
-                    onTap: () => _onFeatureTap(feature),
-                  ),
-                const ExecutionQualityBenefitsCard(),
-                ExecutionQualityProgressCard(items: snapshot.statusItems),
-                const ExecutionQualityParityCard(),
-                ExecutionQualityTabs(
-                  active: _tab,
-                  onChanged: (tab) => setState(() => _tab = tab),
-                ),
-                if (_tab == ExecutionQualityTab.slippage)
-                  ExecutionQualitySlippageTab(
-                    settings: settings,
-                    onOpen: _openSlippageSheet,
-                  )
-                else if (_tab == ExecutionQualityTab.execution)
-                  ExecutionQualityExecutionTab(onOpen: _openExecutionSheet)
-                else
-                  ExecutionQualityAmendmentTab(onOpen: _openAmendmentSheet),
-              ];
-            },
-          ),
+            const ExecutionQualityBenefitsCard(),
+            ExecutionQualityProgressCard(items: snapshot.statusItems),
+            const ExecutionQualityParityCard(),
+            ExecutionQualityTabs(
+              active: _tab,
+              onChanged: (tab) => setState(() => _tab = tab),
+            ),
+            if (_tab == ExecutionQualityTab.slippage)
+              ExecutionQualitySlippageTab(
+                settings: settings,
+                onOpen: _openSlippageSheet,
+              )
+            else if (_tab == ExecutionQualityTab.execution)
+              ExecutionQualityExecutionTab(onOpen: _openExecutionSheet)
+            else
+              ExecutionQualityAmendmentTab(onOpen: _openAmendmentSheet),
+          ];
+        },
+      ),
     );
   }
 
@@ -146,13 +146,15 @@ class _ExecutionQualityDemoPageState
         .updateSlippageSettings(updated);
     if (!mounted) return;
     setState(() => _settings = saved);
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Đã lưu cài đặt',
-      message: 'Ngưỡng trượt giá: ${saved.tolerancePct.toStringAsFixed(1)}%',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã lưu cài đặt',
+        message: 'Ngưỡng trượt giá: ${saved.tolerancePct.toStringAsFixed(1)}%',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 
   Future<void> _openExecutionSheet() async {
@@ -192,12 +194,14 @@ class _ExecutionQualityDemoPageState
           ),
         );
     if (!mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sửa lệnh thành công',
-      message: 'Đã sửa lệnh ${result.orderId}',
-      variant: VitBannerVariant.success,
-      ctaVariant: VitCtaButtonVariant.success,
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sửa lệnh thành công',
+        message: 'Đã sửa lệnh ${result.orderId}',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 }

@@ -137,4 +137,3 @@ class _FooterNote extends StatelessWidget {
     );
   }
 }
-

@@ -211,11 +211,13 @@ class _LevelCard extends StatelessWidget {
 
   void _upgradeComingSoon(BuildContext context, String levelName) {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Nâng cấp lên $levelName sẽ sớm ra mắt',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Nâng cấp lên $levelName sẽ sớm ra mắt',
+      ),
+    );
   }
 }
 

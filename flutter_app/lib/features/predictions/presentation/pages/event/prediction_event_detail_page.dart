@@ -101,11 +101,13 @@ class _PredictionEventDetailPageState
 
   void _showComingSoon() {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Tìm hiểu rủi ro sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Tìm hiểu rủi ro sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   /// ERR-36: submit thật qua máy trạng thái ADR-001 — thành công điều hướng

@@ -144,7 +144,10 @@ void main() {
     expect(find.text('Modify Order'), findsWidgets);
     await tester.tap(find.byKey(ExecutionQualityDemoPage.amendmentSaveKey));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Đã sửa lệnh ORD-2026-03-11-B9G4E3'), findsOneWidget);
+    expect(
+      find.textContaining('Đã sửa lệnh ORD-2026-03-11-B9G4E3'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('SC-061 back returns to SC-048 TradePage', (tester) async {

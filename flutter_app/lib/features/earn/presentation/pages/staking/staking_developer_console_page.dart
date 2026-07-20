@@ -498,11 +498,13 @@ class _DocCard extends StatelessWidget {
 
 void _showComingSoon(BuildContext context, String message) {
   unawaited(HapticFeedback.selectionClick());
-  unawaited(showVitNoticeSheet(
-    context: context,
-    title: 'Sẽ sớm ra mắt',
-    message: message,
-  ));
+  unawaited(
+    showVitNoticeSheet(
+      context: context,
+      title: 'Sẽ sớm ra mắt',
+      message: message,
+    ),
+  );
 }
 
 Color _toneColor(String tone) {

@@ -171,18 +171,22 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
   }
 
   void _showSettingsNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Cài đặt số tiền linh hoạt sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Cài đặt số tiền linh hoạt sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   void _showStrategyNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Chọn chiến lược',
-      message: 'Chọn chiến lược trong thanh bên dưới.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Chọn chiến lược',
+        message: 'Chọn chiến lược trong thanh bên dưới.',
+      ),
+    );
   }
 }

@@ -186,11 +186,13 @@ class _StakingEarningsCalendarPageState
   void _exportCalendar() {
     unawaited(HapticFeedback.selectionClick());
     if (!mounted) return;
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sẽ sớm ra mắt',
-      message: 'Xuất lịch nhận lãi (.ics) sẽ sớm ra mắt',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sẽ sớm ra mắt',
+        message: 'Xuất lịch nhận lãi (.ics) sẽ sớm ra mắt',
+      ),
+    );
   }
 
   void _previousMonth() {

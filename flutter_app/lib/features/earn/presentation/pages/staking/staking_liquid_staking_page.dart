@@ -158,11 +158,13 @@ class _StakingLiquidStakingPageState
                               onDetail: _showTokenDetail,
                               onStake: (token) {
                                 unawaited(HapticFeedback.lightImpact());
-                                unawaited(showVitNoticeSheet(
-                                  context: context,
-                                  title: 'Đã chọn',
-                                  message: 'Đã chọn stake ${token.symbol}',
-                                ));
+                                unawaited(
+                                  showVitNoticeSheet(
+                                    context: context,
+                                    title: 'Đã chọn',
+                                    message: 'Đã chọn stake ${token.symbol}',
+                                  ),
+                                );
                               },
                             ),
                           if (_tab == _LiquidTab.swap)

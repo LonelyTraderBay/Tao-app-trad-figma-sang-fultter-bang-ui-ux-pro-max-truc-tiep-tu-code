@@ -228,10 +228,12 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
 
   void _export() {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sẽ sớm ra mắt',
-      message: 'Xuất lịch sử staking CSV sẽ sớm ra mắt',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sẽ sớm ra mắt',
+        message: 'Xuất lịch sử staking CSV sẽ sớm ra mắt',
+      ),
+    );
   }
 }

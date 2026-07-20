@@ -202,7 +202,7 @@ class _TradePageState extends ConsumerState<TradePage> {
                 VitHighRiskUiState.success => 'Lệnh đã gửi',
                 VitHighRiskUiState.error => 'Gửi lệnh thất bại',
                 VitHighRiskUiState.offline => 'Mất kết nối',
-                _ => 'Review spot order risk',
+                _ => 'Xem lại rủi ro lệnh spot',
               },
               message: switch (orderState.status.uiState) {
                 VitHighRiskUiState.submitting =>
@@ -213,7 +213,7 @@ class _TradePageState extends ConsumerState<TradePage> {
                   orderState.errorMessage ??
                       'Không gửi được lệnh. Vui lòng thử lại.',
                 _ =>
-                  'Preview fees, slippage, and available balance before submitting a market order.',
+                  'Xem trước phí, trượt giá và số dư khả dụng trước khi gửi lệnh thị trường.',
               },
               contractId: snapshot.highRiskContractId,
               density: VitDensity.tool,

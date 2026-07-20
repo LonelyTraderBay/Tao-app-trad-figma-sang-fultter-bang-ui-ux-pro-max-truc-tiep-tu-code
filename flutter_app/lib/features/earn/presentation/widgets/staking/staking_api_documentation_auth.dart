@@ -14,11 +14,13 @@ import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 void _showComingSoon(BuildContext context, String message) {
   unawaited(HapticFeedback.selectionClick());
-  unawaited(showVitNoticeSheet(
-    context: context,
-    title: 'Sẽ sớm ra mắt',
-    message: message,
-  ));
+  unawaited(
+    showVitNoticeSheet(
+      context: context,
+      title: 'Sẽ sớm ra mắt',
+      message: message,
+    ),
+  );
 }
 
 class StakingApiDocumentationAuthTab extends StatelessWidget {

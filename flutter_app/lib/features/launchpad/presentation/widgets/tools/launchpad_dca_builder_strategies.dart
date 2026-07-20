@@ -47,11 +47,9 @@ class LaunchpadDcaStrategiesSection extends StatelessWidget {
 
 void _showComingSoon(BuildContext context, String message) {
   unawaited(HapticFeedback.selectionClick());
-  unawaited(showVitNoticeSheet(
-    context: context,
-    title: 'Sắp ra mắt',
-    message: message,
-  ));
+  unawaited(
+    showVitNoticeSheet(context: context, title: 'Sắp ra mắt', message: message),
+  );
 }
 
 class _StrategyCard extends StatelessWidget {

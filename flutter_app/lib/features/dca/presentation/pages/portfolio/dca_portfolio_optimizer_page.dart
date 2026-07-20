@@ -183,18 +183,22 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
   }
 
   void _showExportNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Chia sẻ báo cáo danh mục sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Chia sẻ báo cáo danh mục sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   void _showDriftSettings() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Ngưỡng tái cân bằng',
-      message: 'Ngưỡng tái cân bằng: 5%.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Ngưỡng tái cân bằng',
+        message: 'Ngưỡng tái cân bằng: 5%.',
+      ),
+    );
   }
 }

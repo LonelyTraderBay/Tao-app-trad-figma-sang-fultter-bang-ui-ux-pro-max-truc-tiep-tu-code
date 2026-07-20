@@ -192,27 +192,33 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
   }
 
   void _showCreateNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Tạo quy tắc sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Tạo quy tắc sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   void _showDeleteNotice() {
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Xoá quy tắc sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Xoá quy tắc sẽ sớm ra mắt.',
+      ),
+    );
   }
 
   void _showApplyTemplateNotice() {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Áp dụng mẫu quy tắc sẽ sớm ra mắt.',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Áp dụng mẫu quy tắc sẽ sớm ra mắt.',
+      ),
+    );
   }
 }

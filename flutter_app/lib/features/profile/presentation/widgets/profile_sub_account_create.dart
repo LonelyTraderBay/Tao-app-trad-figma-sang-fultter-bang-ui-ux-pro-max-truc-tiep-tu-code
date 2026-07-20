@@ -95,11 +95,13 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
 
   void _submitCreate() {
     unawaited(HapticFeedback.selectionClick());
-    unawaited(showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: 'Tạo tài khoản phụ sẽ sớm ra mắt',
-    ));
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Tạo tài khoản phụ sẽ sớm ra mắt',
+      ),
+    );
   }
 }
 

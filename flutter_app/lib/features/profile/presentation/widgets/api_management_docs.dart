@@ -8,11 +8,13 @@ class _ApiDocsCard extends StatelessWidget {
     return VitCard(
       onTap: () {
         unawaited(HapticFeedback.selectionClick());
-        unawaited(showVitNoticeSheet(
-          context: context,
-          title: 'Sắp ra mắt',
-          message: 'Tài liệu API sẽ sớm ra mắt',
-        ));
+        unawaited(
+          showVitNoticeSheet(
+            context: context,
+            title: 'Sắp ra mắt',
+            message: 'Tài liệu API sẽ sớm ra mắt',
+          ),
+        );
       },
       density: VitDensity.compact,
       borderColor: _apiBorder,
