@@ -1,3 +1,5 @@
+// Origin: 3b8c3e79 (2026-05-31) - refactor: tách nhỏ kiến trúc Flutter enterprise
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

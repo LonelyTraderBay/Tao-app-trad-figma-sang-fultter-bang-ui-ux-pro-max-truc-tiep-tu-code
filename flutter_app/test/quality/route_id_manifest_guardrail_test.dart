@@ -1,3 +1,5 @@
+// Origin: e03df632 (2026-07-18) - feat(gd3-b): requireRouteParam + trang loi route vi + tach 832 route id theo nhom — dong Cum B GD3
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

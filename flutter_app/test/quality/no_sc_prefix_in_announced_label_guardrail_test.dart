@@ -1,3 +1,5 @@
+// Origin: dc19f520 (2026-07-17) - feat(a11y): hoàn tất A11Y-1 — semanticIdentifier + nhãn tiếng Việt cho ~420 màn hình, đóng gate GĐ0+GĐ1
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

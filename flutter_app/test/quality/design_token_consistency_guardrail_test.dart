@@ -1,3 +1,5 @@
+// Origin: 010eaf01 (2026-06-13) - feat(design-system): chuẩn hóa token UI Flutter enterprise
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

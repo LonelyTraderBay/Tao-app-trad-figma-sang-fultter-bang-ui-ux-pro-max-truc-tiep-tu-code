@@ -1,3 +1,5 @@
+// Origin: 60a7f124 (2026-06-04) - feat: chuẩn hóa header và điều hướng Flutter
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

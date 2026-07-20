@@ -1,3 +1,5 @@
+// Origin: 2e71daab (2026-07-17) - feat(arch-a1+perf): gỡ sạch 2 cycle họ trade + hiệu năng markets — đóng Cụm 3
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

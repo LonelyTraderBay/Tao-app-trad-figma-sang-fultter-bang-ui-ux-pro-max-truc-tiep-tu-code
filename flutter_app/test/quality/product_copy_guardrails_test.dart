@@ -1,3 +1,5 @@
+// Origin: 9048cda4 (2026-05-31) - feat(flutter): hoàn thiện nền tảng enterprise VitTrade
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'product_copy_guardrail_test_utils.dart';

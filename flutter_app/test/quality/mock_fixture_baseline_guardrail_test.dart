@@ -1,3 +1,5 @@
+// Origin: 3b2197fe (2026-07-18) - feat(gd3-a): quyet toan 2 task + const lints + 3 guardrail + tach spacing tokens — dong Cum A GD3
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

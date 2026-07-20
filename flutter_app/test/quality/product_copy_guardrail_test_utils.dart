@@ -1,3 +1,5 @@
+// Origin: 573c8664 (2026-06-01) - refactor: hoàn thiện tái cấu trúc Flutter enterprise hậu E900
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

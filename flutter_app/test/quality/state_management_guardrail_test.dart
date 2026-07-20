@@ -1,3 +1,5 @@
+// Origin: 70c67af6 (2026-07-17) - refactor: nâng cấp nền tảng VitTrade Flutter theo lộ trình enterprise A+
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
