@@ -21,9 +21,18 @@ flutter_app/*.log
 .DS_Store
 Thumbs.db
 
-# Agent-specific generated files
-.claude/
-CLAUDE.md
+# Claude Code — track harness; ignore runtime / machine-local only
+.claude/worktrees/
+.claude/data/
+.claude/settings.local.json
+.claude/**/*.lock
+.claude/scheduled_tasks.json
+.claude/agent-registry.json
+.claude/first-run
+.claude/assistant-daemon-state.json
+.claude/checkpoints/
+.claude/mailbox/
+.claude/routines/
 CLAUDE.local.md
 scripts/headroom/vittrade.headroom.local.env
 .headroom/

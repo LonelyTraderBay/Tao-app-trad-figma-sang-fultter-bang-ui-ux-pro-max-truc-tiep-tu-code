@@ -321,6 +321,13 @@ invokable from Cursor/Codex. Each file under `.claude/agents/` is a
 self-contained runbook in plain markdown; any AI (including Cursor's) can
 still open one and follow its procedure manually for a matching task.
 
+Entry slash commands (Claude Code): `/vt-verify`, `/vt-audit`, `/vt-batch`
+(Plan → Build → Trim → Verify for one batch), `/vt-review` (pre-merge).
+Project skills: `.claude/skills/*/SKILL.md` (mirrors under `.codex/skills/`
+are for Cursor/Codex — runtimes do not share skill discovery). Session
+discipline: `.claude/rules/session-discipline.md`. Descendant notes:
+`flutter_app/CLAUDE.md`.
+
 | Task | Agent |
 | --- | --- |
 | Split large migration/rollout into safe batches | `.claude/agents/flutter-batch-planner.md` |
