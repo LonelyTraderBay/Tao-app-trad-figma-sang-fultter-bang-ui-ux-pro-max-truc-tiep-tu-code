@@ -10,8 +10,9 @@ class _TradeCard extends StatelessWidget {
     final isBuy = trade.side == TradeBotHistorySide.buy;
     final sideColor = isBuy ? _historyGreen : _historyRed;
     return VitCard(
+      density: VitDensity.tool,
       radius: VitCardRadius.tight,
-      padding: VitDensity.tool.cardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -31,12 +32,16 @@ class _TradeCard extends StatelessWidget {
                           color: sideColor,
                           size: AppSpacing.iconSm,
                         ),
-                        const SizedBox(width: AppSpacing.x1),
+                        const SizedBox(
+                          width: TradeSpacingTokens.tradeBotTinyGap,
+                        ),
                         VitAccentPill(
-                          label: trade.side.name.toUpperCase(),
+                          label: isBuy ? 'MUA' : 'BÁN',
                           accentColor: sideColor,
                         ),
-                        const SizedBox(width: AppSpacing.x1),
+                        const SizedBox(
+                          width: TradeSpacingTokens.tradeBotInlineIconGap,
+                        ),
                         Text(
                           trade.pair,
                           style: AppTextStyles.caption.copyWith(
@@ -46,9 +51,11 @@ class _TradeCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
-                      '${trade.botName} - ${trade.strategy}',
+                      '${trade.botName} · ${trade.strategy}',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -61,16 +68,16 @@ class _TradeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '${trade.pnl >= 0 ? '+' : ''}${trade.pnl.toStringAsFixed(2)}',
+                      _formatSignedMoney(trade.pnl),
                       style: AppTextStyles.caption.copyWith(
                         color: trade.pnl >= 0 ? _historyGreen : _historyRed,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const SizedBox(height: TradeSpacingTokens.tradeBotTinyGap),
                     Text(
-                      'Lãi/Lỗ',
+                      'Lãi/lỗ',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -88,14 +95,14 @@ class _TradeCard extends StatelessWidget {
                   value: _formatQty(trade.qty),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x1),
+              const SizedBox(width: TradeSpacingTokens.tradeBotMetricGap),
               Expanded(
                 child: _DetailBox(
                   label: 'Giá',
                   value: '\$${_formatNumber(trade.price)}',
                 ),
               ),
-              const SizedBox(width: AppSpacing.x1),
+              const SizedBox(width: TradeSpacingTokens.tradeBotMetricGap),
               Expanded(
                 child: _DetailBox(
                   label: 'Phí',
@@ -104,12 +111,12 @@ class _TradeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             color: AppColors.borderSolid,
             height: AppSpacing.dividerHairline,
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -119,7 +126,7 @@ class _TradeCard extends StatelessWidget {
                 ),
               ),
               VitStatusPill(
-                label: trade.status,
+                label: _statusLabel(trade.status),
                 status: VitStatusPillStatus.success,
                 size: VitStatusPillSize.sm,
               ),
@@ -140,12 +147,10 @@ class _DetailBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.tool,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.tight,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x2,
-      ),
+      padding: TradeSpacingTokens.tradeBotMetricBoxPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -153,7 +158,7 @@ class _DetailBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: TradeSpacingTokens.tradeBotTinyGap),
           Text(
             value,
             maxLines: 1,
@@ -178,9 +183,10 @@ class _ExportNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.tool,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.tight,
-      padding: VitDensity.tool.cardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -199,7 +205,8 @@ class _ExportNote extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: BotHistoryPage.exportAllKey,
-            height: VitDensity.tool.controlHeight,
+            density: VitDensity.tool,
+            height: TradeSpacingTokens.tradeBotSheetActionHeight,
             onPressed: onTap,
             leading: const Icon(Icons.download_rounded),
             child: const Text('Xuất tất cả giao dịch'),
@@ -220,6 +227,16 @@ class _EmptyHistory extends StatelessWidget {
       icon: Icons.history_rounded,
     );
   }
+}
+
+String _statusLabel(String status) {
+  return switch (status.toLowerCase()) {
+    'filled' => 'Đã khớp',
+    'partial' || 'partially_filled' => 'Khớp một phần',
+    'cancelled' || 'canceled' => 'Đã hủy',
+    'open' => 'Đang mở',
+    _ => status,
+  };
 }
 
 String _formatNumber(double value) {

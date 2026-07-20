@@ -14,8 +14,9 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.tool,
       radius: VitCardRadius.tight,
-      padding: VitDensity.tool.cardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         children: [
@@ -29,15 +30,14 @@ class _StatsCard extends StatelessWidget {
           Expanded(
             child: _StatColumn(
               label: 'Tổng lãi/lỗ',
-              value:
-                  '${totalPnL >= 0 ? '+' : ''}${totalPnL.toStringAsFixed(2)}',
+              value: _formatSignedMoney(totalPnL),
               color: totalPnL >= 0 ? _historyGreen : _historyRed,
             ),
           ),
           Expanded(
             child: _StatColumn(
               label: 'Tổng phí',
-              value: totalFees.toStringAsFixed(2),
+              value: '\$${totalFees.toStringAsFixed(2)}',
               color: AppColors.text1,
             ),
           ),
@@ -64,13 +64,16 @@ class _StatColumn extends StatelessWidget {
       children: [
         Text(
           label,
+          textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: TradeSpacingTokens.tradeBotTinyGap),
         Text(
           value,
-          style: AppTextStyles.sectionTitle.copyWith(
+          textAlign: TextAlign.center,
+          style: AppTextStyles.baseMedium.copyWith(
             color: color,
+            fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),

@@ -20,6 +20,7 @@ class _StickyActions extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.tradeBotFooterPadding.copyWith(
         bottom: bottomPadding,
       ),
@@ -42,20 +43,24 @@ class _StickyActions extends StatelessWidget {
           ),
           const SizedBox(width: TradeSpacingTokens.tradeBotCardGap),
           Expanded(
-            child: VitCtaButton(
-              key: BotEmergencyStopPage.submitKey,
-              density: VitDensity.tool,
-              height: TradeSpacingTokens.tradeBotFooterButtonHeight,
-              variant: VitCtaButtonVariant.destructive,
-              loading: stopping,
-              onPressed: canSubmit ? onSubmit : null,
-              leading: const Icon(Icons.pause_rounded),
-              child: Text(
-                stopping ? 'Đang dừng...' : 'Dừng tất cả Bot ngay',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.body.copyWith(
-                  fontWeight: AppTextStyles.bold,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: canSubmit || stopping ? 1 : 0.55,
+              child: VitCtaButton(
+                key: BotEmergencyStopPage.submitKey,
+                density: VitDensity.tool,
+                height: TradeSpacingTokens.tradeBotFooterButtonHeight,
+                variant: VitCtaButtonVariant.destructive,
+                loading: stopping,
+                onPressed: canSubmit ? onSubmit : null,
+                leading: const Icon(Icons.stop_circle_outlined),
+                child: Text(
+                  stopping ? 'Đang dừng...' : 'Dừng tất cả Bot ngay',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             ),

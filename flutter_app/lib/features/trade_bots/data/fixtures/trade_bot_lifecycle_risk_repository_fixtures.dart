@@ -700,7 +700,7 @@ const List<TradeBotDrawdownPoint> _botRiskDrawdownPoints = [
   TradeBotDrawdownPoint(label: '12:00', value: -8.4),
   TradeBotDrawdownPoint(label: '16:00', value: -12.2),
   TradeBotDrawdownPoint(label: '20:00', value: -15.2),
-  TradeBotDrawdownPoint(label: 'Now', value: -15.2),
+  TradeBotDrawdownPoint(label: 'Hiện tại', value: -15.2),
 ];
 
 const List<TradeBotExposure> _botRiskExposures = [
@@ -725,13 +725,13 @@ const List<TradeBotExposure> _botRiskExposures = [
 ];
 
 const List<TradeBotVarPoint> _botRiskVarHistory = [
-  TradeBotVarPoint(label: 'Mon', value: 142),
-  TradeBotVarPoint(label: 'Tue', value: 156),
-  TradeBotVarPoint(label: 'Wed', value: 134),
-  TradeBotVarPoint(label: 'Thu', value: 167),
-  TradeBotVarPoint(label: 'Fri', value: 189),
-  TradeBotVarPoint(label: 'Sat', value: 201),
-  TradeBotVarPoint(label: 'Sun', value: 178),
+  TradeBotVarPoint(label: 'T2', value: 142),
+  TradeBotVarPoint(label: 'T3', value: 156),
+  TradeBotVarPoint(label: 'T4', value: 134),
+  TradeBotVarPoint(label: 'T5', value: 167),
+  TradeBotVarPoint(label: 'T6', value: 189),
+  TradeBotVarPoint(label: 'T7', value: 201),
+  TradeBotVarPoint(label: 'CN', value: 178),
 ];
 
 const List<TradeBotSafetyControl> _botRiskSafetyControls = [
@@ -951,21 +951,21 @@ const List<TradeBotHistoryTrade> _botHistoryTrades = [
 ];
 
 const List<TradeBotPnlPoint> _botPerformancePnlPoints = [
-  TradeBotPnlPoint(date: 'Mar 1', pnl: 12.5),
-  TradeBotPnlPoint(date: 'Mar 2', pnl: 28.3),
-  TradeBotPnlPoint(date: 'Mar 3', pnl: 45.7),
-  TradeBotPnlPoint(date: 'Mar 4', pnl: 32.1),
-  TradeBotPnlPoint(date: 'Mar 5', pnl: 58.9),
-  TradeBotPnlPoint(date: 'Mar 6', pnl: 91.2),
-  TradeBotPnlPoint(date: 'Mar 7', pnl: 127.4),
-  TradeBotPnlPoint(date: 'Mar 8', pnl: 199.3),
+  TradeBotPnlPoint(date: '01/03', pnl: 12.5),
+  TradeBotPnlPoint(date: '02/03', pnl: 28.3),
+  TradeBotPnlPoint(date: '03/03', pnl: 45.7),
+  TradeBotPnlPoint(date: '04/03', pnl: 32.1),
+  TradeBotPnlPoint(date: '05/03', pnl: 58.9),
+  TradeBotPnlPoint(date: '06/03', pnl: 91.2),
+  TradeBotPnlPoint(date: '07/03', pnl: 127.4),
+  TradeBotPnlPoint(date: '08/03', pnl: 199.3),
 ];
 
 const List<TradeBotWinLossPoint> _botPerformanceWinLossPoints = [
-  TradeBotWinLossPoint(week: 'W1', wins: 18, losses: 7),
-  TradeBotWinLossPoint(week: 'W2', wins: 22, losses: 5),
-  TradeBotWinLossPoint(week: 'W3', wins: 15, losses: 12),
-  TradeBotWinLossPoint(week: 'W4', wins: 25, losses: 8),
+  TradeBotWinLossPoint(week: 'Tuần 1', wins: 18, losses: 7),
+  TradeBotWinLossPoint(week: 'Tuần 2', wins: 22, losses: 5),
+  TradeBotWinLossPoint(week: 'Tuần 3', wins: 15, losses: 12),
+  TradeBotWinLossPoint(week: 'Tuần 4', wins: 25, losses: 8),
 ];
 
 const List<TradeBotStrategyPerformance> _botStrategyPerformance = [

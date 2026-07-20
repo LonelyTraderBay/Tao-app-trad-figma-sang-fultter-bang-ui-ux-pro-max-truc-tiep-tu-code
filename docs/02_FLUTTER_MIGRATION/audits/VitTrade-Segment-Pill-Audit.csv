@@ -248,6 +248,8 @@ trade_bots,trade_bots/presentation/pages/settings/bot_api_documentation_page.dar
 trade_bots,trade_bots/presentation/pages/settings/bot_guide_page.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
 trade_bots,trade_bots/presentation/widgets/backtest/bot_backtesting_widgets.dart,VitChoicePill,chip,2,44,full_or_hug,-,pass,
 trade_bots,trade_bots/presentation/widgets/dashboard/bot_performance_charts_strategy.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_bots,trade_bots/presentation/widgets/hub/trading_bots_page_bot_card.dart,VitFilterChip,filter_accent,1,44,hug_scroll,-,review,wrapper over VitChoicePill
+trade_bots,trade_bots/presentation/widgets/hub/trading_bots_page_create_bot_sheet.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
 trade_bots,trade_bots/presentation/widgets/hub/trading_bots_page_my_bots_tab.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
 trade_bots,trade_bots/presentation/widgets/settings/bot_faq_search_tabs.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
 trade_compliance,trade_compliance/presentation/pages/client_money/cass_reconciliation_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment

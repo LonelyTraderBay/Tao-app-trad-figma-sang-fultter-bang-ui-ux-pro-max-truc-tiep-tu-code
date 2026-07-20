@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
@@ -31,18 +31,46 @@ const _riskAmber = AppColors.caution;
 const _riskRed = AppColors.sell;
 const _riskPurple = AppColors.accent;
 const _riskTrack = AppColors.chartTrackRisk;
+const double _riskRingSize = 64;
 
-class BotRiskDashboardPage extends ConsumerWidget {
+class BotRiskDashboardPage extends ConsumerStatefulWidget {
   const BotRiskDashboardPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc120_bot_risk_dashboard_content');
   static const emergencyHeaderKey = Key('sc120_bot_risk_header_emergency');
   static const emergencyButtonKey = Key('sc120_bot_risk_emergency_button');
+  static const historyCtaKey = Key('sc120_bot_risk_history_cta');
 
   final ShellRenderMode? shellRenderMode;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BotRiskDashboardPage> createState() =>
+      _BotRiskDashboardPageState();
+}
+
+class _BotRiskDashboardPageState extends ConsumerState<BotRiskDashboardPage>
+    with SingleTickerProviderStateMixin {
+  bool _explanationOpen = false;
+  late final AnimationController _revealController;
+
+  @override
+  void initState() {
+    super.initState();
+    _revealController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 280),
+    );
+    unawaited(_revealController.forward());
+  }
+
+  @override
+  void dispose() {
+    _revealController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotRiskDashboardProvider);
 
     return VitTradeHubScaffold(
@@ -51,7 +79,7 @@ class BotRiskDashboardPage extends ConsumerWidget {
       semanticLabel: 'Bảng giám sát rủi ro bot theo thời gian thực',
       semanticIdentifier: 'SC-120',
       contentKey: BotRiskDashboardPage.contentKey,
-      shellRenderMode: shellRenderMode,
+      shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
@@ -79,25 +107,17 @@ class BotRiskDashboardPage extends ConsumerWidget {
           ),
         ],
         data: (snapshot) => [
-          VitBotSubpageHero(
-            primaryLabel: 'Điểm rủi ro',
-            primaryValue: '${snapshot.riskScore}',
-            primaryColor: _riskAmber,
-            secondaryLabel: 'Bot đang chạy',
-            secondaryValue: '${snapshot.runningBots}',
-            secondaryColor: AppColors.buy,
-          ),
-          VitTradeSection(
-            title: 'Tổng quan rủi ro',
-            child: _RiskScoreCard(snapshot: snapshot),
-          ),
+          _RiskOpening(snapshot: snapshot, reveal: _revealController),
           VitTradeSection(
             title: 'Chỉ số quan trọng',
             child: _CriticalMetricsGrid(snapshot: snapshot),
           ),
           VitTradeSection(
             title: 'Xu hướng sụt giảm vốn (24h)',
-            child: _DrawdownChartCard(points: snapshot.drawdownPoints),
+            child: _DrawdownChartCard(
+              points: snapshot.drawdownPoints,
+              limit: snapshot.maxDrawdownLimit,
+            ),
           ),
           VitTradeSection(
             title: 'Mức phơi nhiễm theo tài sản',
@@ -118,9 +138,21 @@ class BotRiskDashboardPage extends ConsumerWidget {
               onTap: () => context.go(snapshot.emergencyPath),
             ),
           ),
-          const VitTradeSection(
+          VitCtaButton(
+            key: BotRiskDashboardPage.historyCtaKey,
+            density: VitDensity.tool,
+            height: TradeSpacingTokens.tradeBotSheetActionHeight,
+            variant: VitCtaButtonVariant.secondary,
+            onPressed: () => context.go(AppRoutePaths.tradeBotHistory),
+            child: const Text('Xem lịch sử lệnh'),
+          ),
+          VitTradeSection(
             title: 'Giải thích rủi ro',
-            child: _RiskExplanationCard(),
+            child: _RiskExplanationCard(
+              expanded: _explanationOpen,
+              onToggle: () =>
+                  setState(() => _explanationOpen = !_explanationOpen),
+            ),
           ),
           const VitBotRiskReviewFooter(
             title: 'Xem lại bảng điều khiển rủi ro',
@@ -135,3 +167,77 @@ class BotRiskDashboardPage extends ConsumerWidget {
     );
   }
 }
+
+class _RiskOpening extends StatelessWidget {
+  const _RiskOpening({required this.snapshot, required this.reveal});
+
+  final TradeBotRiskDashboardSnapshot snapshot;
+  final Animation<double> reveal;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _riskColor(snapshot.riskScore);
+    final headroom =
+        (snapshot.maxDrawdownLimit.abs() - snapshot.currentDrawdown.abs())
+            .clamp(0, 100);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Điểm rủi ro',
+          primaryValue: '${snapshot.riskScore}',
+          primaryColor: color,
+          secondaryLabel: 'Bot đang chạy',
+          secondaryValue: '${snapshot.runningBots}',
+          secondaryColor: _riskGreen,
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        Wrap(
+          spacing: TradeSpacingTokens.tradeBotInlineIconGap,
+          runSpacing: TradeSpacingTokens.tradeBotTinyGap,
+          children: [
+            VitStatusPill(
+              label: snapshot.riskLabel,
+              status: snapshot.riskScore < 40
+                  ? VitStatusPillStatus.success
+                  : snapshot.riskScore < 70
+                  ? VitStatusPillStatus.warning
+                  : VitStatusPillStatus.error,
+              size: VitStatusPillSize.sm,
+            ),
+            VitAccentPill(
+              label: 'Còn ${headroom.toStringAsFixed(1)}% tới hạn drawdown',
+              accentColor: color,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        _RiskScoreCard(snapshot: snapshot, reveal: reveal),
+      ],
+    );
+  }
+}
+
+Color _riskColor(int score) {
+  if (score < 40) return _riskGreen;
+  if (score < 70) return _riskAmber;
+  return _riskRed;
+}
+
+String _formatCompact(double value) {
+  final text = value.abs().toStringAsFixed(0);
+  final buffer = StringBuffer();
+  for (var i = 0; i < text.length; i++) {
+    final remaining = text.length - i;
+    buffer.write(text[i]);
+    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
+  }
+  return buffer.toString();
+}
+
+String _formatSignedMoney(double value) {
+  final sign = value >= 0 ? '+' : '-';
+  return '$sign\$${_formatCompact(value.abs())}';
+}
+
+String _formatMoney(double value) => '\$${_formatCompact(value)}';

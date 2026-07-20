@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -34,6 +35,9 @@ class BotEmergencyStopPage extends ConsumerStatefulWidget {
     'sc121_bot_emergency_stop_close_positions',
   );
   static const confirmationKey = Key('sc121_bot_emergency_stop_confirm');
+  static const dialogConfirmKey = Key(
+    'sc121_bot_emergency_stop_dialog_confirm',
+  );
 
   static Key reasonKey(String reasonId) =>
       Key('sc121_bot_emergency_stop_reason_$reasonId');
@@ -50,6 +54,15 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
   bool _closePositions = false;
   bool _confirmed = false;
   bool _stopping = false;
+  bool _supportOpen = false;
+
+  void _goBack() {
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.tradeBotRiskDashboard,
+      mode: BackNavigationMode.historyThenFallback,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,21 +82,13 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
       shellRenderMode: widget.shellRenderMode,
       bottomInset: scrollEndClearance,
       activeProductId: 'bots',
-      onBack: () => goBackOrFallback(
-        context,
-        fallbackPath: AppRoutePaths.tradeBots,
-        mode: BackNavigationMode.historyThenFallback,
-      ),
+      onBack: _goBack,
       footer: _StickyActions(
         bottomPadding:
             AppSpacing.contentPad + MediaQuery.paddingOf(context).bottom,
         canSubmit: _reasonId != null && _confirmed && !_stopping,
         stopping: _stopping,
-        onCancel: () => goBackOrFallback(
-          context,
-          fallbackPath: AppRoutePaths.tradeBots,
-          mode: BackNavigationMode.historyThenFallback,
-        ),
+        onCancel: _goBack,
         onSubmit: _submit,
       ),
       children: controllerAsync.when(
@@ -99,24 +104,29 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
         ],
         data: (controller) {
           final snapshot = controller.state.snapshot;
+          final reasonLabel = snapshot.reasons
+              .where((r) => r.id == _reasonId)
+              .map((r) => r.label)
+              .firstOrNull;
           return [
-            VitBotSubpageHero(
-              primaryLabel: 'Bot cần dừng',
-              primaryValue: '${snapshot.bots.length}',
-              primaryColor: _stopRed,
-              secondaryLabel: 'Lý do',
-              secondaryValue: _reasonId == null ? '—' : 'Đã chọn',
-              secondaryColor: _reasonId == null ? AppColors.text3 : _stopGreen,
-            ),
-            VitTradeSection(
-              title: 'Cảnh báo khẩn cấp',
-              child: _WarningBanner(snapshot: snapshot),
+            _EmergencyOpening(
+              snapshot: snapshot,
+              reasonSelected: _reasonId != null,
+              confirmed: _confirmed,
             ),
             VitTradeSection(
               title: 'Bot cần dừng (${snapshot.bots.length})',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [for (final bot in snapshot.bots) _BotCard(bot: bot)],
+                children: [
+                  for (var i = 0; i < snapshot.bots.length; i++) ...[
+                    _BotCard(bot: snapshot.bots[i]),
+                    if (i != snapshot.bots.length - 1)
+                      const SizedBox(
+                        height: TradeSpacingTokens.tradeBotCardGap,
+                      ),
+                  ],
+                ],
               ),
             ),
             VitTradeSection(
@@ -124,12 +134,18 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  for (final reason in snapshot.reasons)
+                  for (var i = 0; i < snapshot.reasons.length; i++) ...[
                     _ReasonOption(
-                      reason: reason,
-                      selected: reason.id == _reasonId,
-                      onTap: () => setState(() => _reasonId = reason.id),
+                      reason: snapshot.reasons[i],
+                      selected: snapshot.reasons[i].id == _reasonId,
+                      onTap: () =>
+                          setState(() => _reasonId = snapshot.reasons[i].id),
                     ),
+                    if (i != snapshot.reasons.length - 1)
+                      const SizedBox(
+                        height: TradeSpacingTokens.tradeBotCardGap,
+                      ),
+                  ],
                 ],
               ),
             ),
@@ -158,8 +174,21 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               ),
             ),
             VitTradeSection(
+              title: 'Tóm tắt tác động',
+              child: _ImpactSummaryCard(
+                botCount: snapshot.bots.length,
+                reasonLabel: reasonLabel,
+                closePositions: _closePositions,
+                confirmed: _confirmed,
+              ),
+            ),
+            VitTradeSection(
               title: 'Hỗ trợ',
-              child: _SupportNotice(snapshot: snapshot),
+              child: _SupportNotice(
+                snapshot: snapshot,
+                expanded: _supportOpen,
+                onToggle: () => setState(() => _supportOpen = !_supportOpen),
+              ),
             ),
             const VitBotRiskReviewFooter(
               title: 'Xem lại yêu cầu dừng khẩn cấp',
@@ -180,6 +209,32 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
         _stopping) {
       return;
     }
+
+    final snapshot = controller.state.snapshot;
+    final reasonLabel = snapshot.reasons
+        .where((r) => r.id == _reasonId)
+        .map((r) => r.label)
+        .firstOrNull;
+
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Xác nhận dừng khẩn cấp?',
+      message:
+          'Thao tác sẽ dừng ngay tất cả bot đang chạy. Không thể hoàn tác ngay lập tức.',
+      rows: [
+        VitConfirmDialogRow(label: 'Số bot', value: '${snapshot.bots.length}'),
+        VitConfirmDialogRow(label: 'Lý do', value: reasonLabel ?? '—'),
+        VitConfirmDialogRow(
+          label: 'Đóng vị thế',
+          value: _closePositions ? 'Có' : 'Không',
+        ),
+      ],
+      confirmLabel: 'Dừng ngay',
+      confirmVariant: VitCtaButtonVariant.destructive,
+      confirmKey: BotEmergencyStopPage.dialogConfirmKey,
+    );
+    if (!confirmed || !mounted) return;
+
     setState(() => _stopping = true);
     final result = await controller.submit(
       TradeBotEmergencyStopDraft(
@@ -191,4 +246,9 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
     if (!mounted) return;
     context.go(result.redirectPath);
   }
+}
+
+String _formatSignedMoney(double value) {
+  final sign = value >= 0 ? '+' : '-';
+  return '$sign\$${value.abs().toStringAsFixed(2)}';
 }
