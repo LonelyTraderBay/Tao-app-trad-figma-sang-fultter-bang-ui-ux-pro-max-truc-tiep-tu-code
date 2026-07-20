@@ -119,6 +119,75 @@ void main() {
     expect(find.text('Nghĩa vụ công khai'), findsOneWidget);
   });
 
+  testWidgets(
+    'SC-069 completing the wizard submits and shows acknowledgement',
+    (tester) async {
+      await pumpProviderApplication(tester);
+
+      await tester.tap(find.byKey(ProviderApplicationPage.nextKey));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(ProviderApplicationPage.kycKey));
+      await tester.enterText(
+        find.byKey(ProviderApplicationPage.monthsFieldKey),
+        '6',
+      );
+      tester.testTextInput.hide();
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(ProviderApplicationPage.nextKey));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Nghĩa vụ công khai'), findsOneWidget);
+      await tester.ensureVisible(
+        find.byKey(ProviderApplicationPage.disclosureKey),
+      );
+      await tester.tap(find.byKey(ProviderApplicationPage.disclosureKey));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(ProviderApplicationPage.fiduciaryKey),
+      );
+      await tester.tap(find.byKey(ProviderApplicationPage.fiduciaryKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(ProviderApplicationPage.nextKey));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Cấu trúc phí'), findsOneWidget);
+      await tester.ensureVisible(
+        find.byKey(ProviderApplicationPage.strategyFieldKey),
+      );
+      await tester.enterText(
+        find.byKey(ProviderApplicationPage.strategyFieldKey),
+        List.filled(100, 'x').join(),
+      );
+      tester.testTextInput.hide();
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(ProviderApplicationPage.nextKey));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Xem lại đơn đăng ký'), findsOneWidget);
+      await tester.ensureVisible(find.byKey(ProviderApplicationPage.termsKey));
+      await tester.tap(find.byKey(ProviderApplicationPage.termsKey));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(ProviderApplicationPage.submitKey));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Đã gửi đơn đăng ký'), findsOneWidget);
+      expect(
+        find.text(
+          'Mã đơn CPA-069-DEMO. Thời gian xét duyệt: 2-3 ngày làm việc.',
+        ),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.text('Đã hiểu'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(CopyTradingPage), findsOneWidget);
+      expect(find.byType(ProviderApplicationPage), findsNothing);
+    },
+  );
+
   testWidgets('SC-069 back returns to SC-063 CopyTradingPage', (tester) async {
     await pumpProviderApplication(tester);
 

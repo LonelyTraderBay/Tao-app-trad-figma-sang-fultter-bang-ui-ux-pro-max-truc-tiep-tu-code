@@ -113,7 +113,7 @@ class _ProviderApplicationPageState
               child: _FooterButton(
                 step: step,
                 enabled: _canProceed(step, draft),
-                onPressed: () => _handlePrimaryAction(controller),
+                onPressed: () => unawaited(_handlePrimaryAction(controller)),
               ),
             ),
           ),
@@ -268,7 +268,9 @@ class _ProviderApplicationPageState
     };
   }
 
-  void _handlePrimaryAction(TradeProviderApplicationController controller) {
+  Future<void> _handlePrimaryAction(
+    TradeProviderApplicationController controller,
+  ) async {
     final step = _step!;
     final draft = _draft!;
     if (!_canProceed(step, draft)) return;
@@ -283,8 +285,20 @@ class _ProviderApplicationPageState
       case TradeProviderApplicationStep.fees:
         setState(() => _step = TradeProviderApplicationStep.review);
       case TradeProviderApplicationStep.review:
-        unawaited(controller.submit(draft));
-        context.go(AppRoutePaths.tradeCopyTrading);
+        final result = await controller.submit(draft);
+        if (!mounted) return;
+        await showVitNoticeSheet(
+          context: context,
+          title: 'Đã gửi đơn đăng ký',
+          message:
+              'Mã đơn ${result.applicationId}. Thời gian xét duyệt: '
+              '${result.reviewWindow}.',
+          variant: VitBannerVariant.success,
+          ctaVariant: VitCtaButtonVariant.success,
+          onPrimary: () {
+            if (mounted) context.go(AppRoutePaths.tradeCopyTrading);
+          },
+        );
     }
   }
 }
