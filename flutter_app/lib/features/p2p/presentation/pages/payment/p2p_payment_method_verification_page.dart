@@ -215,46 +215,28 @@ class _P2PPaymentMethodVerificationPageState
     BuildContext context,
     P2PPaymentMethodVerificationSnapshot snapshot,
   ) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showVitConfirmDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        surfaceTintColor: AppColors.surface,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-        title: Text(
-          snapshot.confirmTitle,
-          style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-        ),
-        content: Text(
-          snapshot.confirmMessage,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
-        actions: [
-          VitCtaButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            variant: VitCtaButtonVariant.secondary,
-            fullWidth: false,
-            height: AppSpacing.buttonCompact,
-            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
-            child: const Text('Hủy'),
-          ),
-          VitCtaButton(
-            key: P2PPaymentMethodVerificationPage.confirmSubmitKey,
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            variant: VitCtaButtonVariant.primary,
-            fullWidth: false,
-            height: AppSpacing.buttonCompact,
-            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
-            child: const Text('Xác nhận'),
-          ),
-        ],
-      ),
+      title: snapshot.confirmTitle,
+      message: snapshot.confirmMessage,
+      confirmLabel: 'Xác nhận',
+      confirmKey: P2PPaymentMethodVerificationPage.confirmSubmitKey,
     );
 
-    if (!context.mounted || confirmed != true) return;
+    if (!context.mounted || !confirmed) return;
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
     if (!context.mounted) return;
-    context.go(snapshot.saveRoute);
+    setState(() => _submitting = false);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã xác minh phương thức',
+      message: 'Phương thức thanh toán đã sẵn sàng sử dụng cho giao dịch P2P.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (context.mounted) context.go(snapshot.saveRoute);
+      },
+    );
   }
 }

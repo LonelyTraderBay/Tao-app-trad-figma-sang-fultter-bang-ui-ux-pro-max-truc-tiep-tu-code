@@ -96,6 +96,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    expect(find.text('Đã gửi xác minh sở hữu'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
     expect(find.text('Phương thức thanh toán'), findsOneWidget);
   });
 
