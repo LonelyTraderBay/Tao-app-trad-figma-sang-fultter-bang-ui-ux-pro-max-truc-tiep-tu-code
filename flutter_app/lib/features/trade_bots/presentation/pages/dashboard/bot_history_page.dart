@@ -8,9 +8,11 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
@@ -84,13 +86,18 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
             0,
             (sum, trade) => sum + trade.fee,
           );
+          final buyCount = snapshot.trades
+              .where((t) => t.side == TradeBotHistorySide.buy)
+              .length;
+          final sellCount = snapshot.trades
+              .where((t) => t.side == TradeBotHistorySide.sell)
+              .length;
           return [
             VitBotSubpageHero(
               primaryLabel: 'Giao dịch',
               primaryValue: '${filteredTrades.length}',
               secondaryLabel: 'Lãi/lỗ',
-              secondaryValue:
-                  '${totalPnL >= 0 ? '+' : ''}\$${totalPnL.toStringAsFixed(2)}',
+              secondaryValue: _formatSignedMoney(totalPnL),
               secondaryColor: totalPnL >= 0 ? _historyGreen : _historyRed,
             ),
             VitTradeSection(
@@ -101,61 +108,61 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
                 totalFees: totalFees,
               ),
             ),
-            const VitTradeSection(
-              title: 'Tìm kiếm',
-              child: VitSearchBar(
-                enabled: false,
-                placeholder: 'Search by bot name or pair...',
-              ),
-            ),
             VitTradeSection(
-              title: 'Bộ lọc',
-              child: VitTabBar(
-                tabs: [
-                  VitTabItem(
-                    key: _HistoryFilter.all.name,
-                    label: 'All (${snapshot.trades.length})',
-                    widgetKey: BotHistoryPage.filterKey(
-                      _HistoryFilter.all.name,
-                    ),
+              title: 'Giao dịch (${filteredTrades.length})',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitSearchBar(
+                    enabled: false,
+                    placeholder: 'Tìm theo tên bot hoặc cặp...',
                   ),
-                  VitTabItem(
-                    key: _HistoryFilter.buy.name,
-                    label:
-                        'Buy (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.buy).length})',
-                    widgetKey: BotHistoryPage.filterKey(
-                      _HistoryFilter.buy.name,
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                  VitTabBar(
+                    tabs: [
+                      VitTabItem(
+                        key: _HistoryFilter.all.name,
+                        label: 'Tất cả (${snapshot.trades.length})',
+                        widgetKey: BotHistoryPage.filterKey(
+                          _HistoryFilter.all.name,
+                        ),
+                      ),
+                      VitTabItem(
+                        key: _HistoryFilter.buy.name,
+                        label: 'Mua ($buyCount)',
+                        widgetKey: BotHistoryPage.filterKey(
+                          _HistoryFilter.buy.name,
+                        ),
+                      ),
+                      VitTabItem(
+                        key: _HistoryFilter.sell.name,
+                        label: 'Bán ($sellCount)',
+                        widgetKey: BotHistoryPage.filterKey(
+                          _HistoryFilter.sell.name,
+                        ),
+                      ),
+                    ],
+                    activeKey: _filter.name,
+                    onChanged: (key) => setState(
+                      () => _filter = _HistoryFilter.values.firstWhere(
+                        (filter) => filter.name == key,
+                      ),
                     ),
+                    variant: VitTabBarVariant.segment,
                   ),
-                  VitTabItem(
-                    key: _HistoryFilter.sell.name,
-                    label:
-                        'Sell (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.sell).length})',
-                    widgetKey: BotHistoryPage.filterKey(
-                      _HistoryFilter.sell.name,
-                    ),
-                  ),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                  if (filteredTrades.isEmpty)
+                    const _EmptyHistory()
+                  else
+                    for (final trade in filteredTrades) ...[
+                      _TradeCard(trade: trade),
+                      if (trade != filteredTrades.last)
+                        const SizedBox(
+                          height: TradeSpacingTokens.tradeBotCardGap,
+                        ),
+                    ],
                 ],
-                activeKey: _filter.name,
-                onChanged: (key) => setState(
-                  () => _filter = _HistoryFilter.values.firstWhere(
-                    (filter) => filter.name == key,
-                  ),
-                ),
-                variant: VitTabBarVariant.segment,
               ),
-            ),
-            VitTradeSection(
-              title: 'Trades (${filteredTrades.length})',
-              child: filteredTrades.isEmpty
-                  ? const _EmptyHistory()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        for (final trade in filteredTrades)
-                          _TradeCard(trade: trade),
-                      ],
-                    ),
             ),
             VitTradeSection(
               title: 'Xuất dữ liệu',
@@ -195,3 +202,5 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
     );
   }
 }
+
+String _formatSignedMoney(double value) => VitFormat.usdSigned(value);

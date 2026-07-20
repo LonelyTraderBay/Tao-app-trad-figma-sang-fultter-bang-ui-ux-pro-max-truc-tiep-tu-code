@@ -1232,6 +1232,7 @@ trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/da
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_charts_strategy.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_metrics_summary.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_painters.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
+trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_timeframe_view.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_portfolio_dashboard_page_common.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_portfolio_dashboard_page_sections.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_risk_dashboard_charts.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
@@ -1242,6 +1243,7 @@ trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/hu
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_create_bot_sheet.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_formatters.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_my_bots_tab.dart,0,0,0,0,0,0,0,0,no,-
+trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_tools.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_endpoints.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_intro_tabs.dart,0,0,0,0,0,0,0,0,no,-
 trade_bots,root_page,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_support_common.dart,0,0,0,0,0,0,0,0,no,-

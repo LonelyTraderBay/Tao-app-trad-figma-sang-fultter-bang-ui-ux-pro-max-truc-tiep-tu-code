@@ -1,15 +1,29 @@
 part of '../../pages/hub/trading_bots_page.dart';
 
+IconData _botIconData(String icon) {
+  return switch (icon) {
+    'calendar' => Icons.calendar_month_rounded,
+    'bolt' => Icons.bolt_rounded,
+    'chart' => Icons.show_chart_rounded,
+    'target' => Icons.gps_fixed_rounded,
+    _ => Icons.smart_toy_outlined,
+  };
+}
+
 class _BotCard extends StatelessWidget {
   const _BotCard({
     required this.bot,
     required this.onToggle,
     required this.onDelete,
+    required this.onSettings,
+    required this.onOpen,
   });
 
   final TradeBot bot;
   final ValueChanged<String> onToggle;
   final ValueChanged<String> onDelete;
+  final ValueChanged<String> onSettings;
+  final ValueChanged<String> onOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +32,19 @@ class _BotCard extends StatelessWidget {
     final profitColor = bot.profit >= 0 ? AppColors.buy : AppColors.sell;
 
     return VitCard(
+      key: TradingBotsPage.botCardKey(bot.id),
+      density: VitDensity.tool,
       radius: VitCardRadius.tight,
-      padding: TradeSpacingTokens.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
+      onTap: () => onOpen(bot.id),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _BotIcon(icon: bot.icon, color: color),
-              const SizedBox(width: AppSpacing.x4),
+              VitAccentIconBox(icon: _botIconData(bot.icon), color: color),
+              const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +57,7 @@ class _BotCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: AppSpacing.pageRhythmStandardInnerGap,
+                      height: AppSpacing.pageRhythmCompactInnerGap,
                     ),
                     VitStatusPill(
                       label: running ? 'Đang chạy' : 'Tạm dừng',
@@ -52,14 +69,27 @@ class _BotCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Text(
-                _formatSignedMoney(bot.profit),
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: profitColor,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
+              const SizedBox(width: TradeSpacingTokens.tradeBotInlineIconGap),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    _formatSignedMoney(bot.profit),
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: profitColor,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  const SizedBox(height: TradeSpacingTokens.tradeBotTinyGap),
+                  Text(
+                    '${bot.profitPct >= 0 ? '+' : ''}${bot.profitPct.toStringAsFixed(2)}%',
+                    style: AppTextStyles.caption.copyWith(
+                      color: profitColor,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -69,6 +99,24 @@ class _BotCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          Wrap(
+            spacing: AppSpacing.rowGap,
+            runSpacing: AppSpacing.rowGap,
+            children: [
+              VitAccentPill(
+                label: '${bot.trades} lệnh',
+                accentColor: AppColors.text2,
+                size: VitStatusPillSize.sm,
+              ),
+              VitAccentPill(
+                label:
+                    'ROI ${bot.profitPct >= 0 ? '+' : ''}${bot.profitPct.toStringAsFixed(1)}%',
+                accentColor: profitColor,
+                size: VitStatusPillSize.sm,
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
@@ -77,7 +125,7 @@ class _BotCard extends StatelessWidget {
                   key: TradingBotsPage.botToggleKey(bot.id),
                   onPressed: () => onToggle(bot.id),
                   density: VitDensity.tool,
-                  height: AppSpacing.buttonCompact + AppSpacing.x3,
+                  height: TradeSpacingTokens.tradeBotFooterButtonHeight,
                   variant: running
                       ? VitCtaButtonVariant.warning
                       : VitCtaButtonVariant.success,
@@ -90,13 +138,17 @@ class _BotCard extends StatelessWidget {
                   child: Text(running ? 'Tạm dừng' : 'Tiếp tục'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: TradeSpacingTokens.tradeBotInlineIconGap),
               PopupMenuButton<String>(
                 key: TradingBotsPage.botSettingsKey(bot.id),
                 tooltip: 'Tùy chọn bot',
                 icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (action) {
-                  if (action == 'delete') onDelete(bot.id);
+                  if (action == 'settings') {
+                    onSettings(bot.id);
+                  } else if (action == 'delete') {
+                    onDelete(bot.id);
+                  }
                 },
                 itemBuilder: (context) => [
                   const PopupMenuItem(
@@ -131,68 +183,73 @@ class _BotCard extends StatelessWidget {
   }
 }
 
-class _BotIcon extends StatelessWidget {
-  const _BotIcon({required this.icon, required this.color});
-
-  final String icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final iconData = switch (icon) {
-      'calendar' => Icons.calendar_month_rounded,
-      'bolt' => Icons.bolt_rounded,
-      'chart' => Icons.show_chart_rounded,
-      'target' => Icons.gps_fixed_rounded,
-      _ => Icons.smart_toy_outlined,
-    };
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.smRadius,
-          side: BorderSide(color: color.withValues(alpha: .22)),
-        ),
-      ),
-      child: SizedBox(
-        width: LaunchpadSpacingTokens.launchpadBox40,
-        height: LaunchpadSpacingTokens.launchpadBox40,
-        child: Center(
-          child: Icon(
-            iconData,
-            color: color,
-            size: TradeSpacingTokens.tradeBotActionIcon,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _StrategiesTab extends StatelessWidget {
-  const _StrategiesTab({required this.strategies, required this.onCreate});
+  const _StrategiesTab({
+    required this.strategies,
+    required this.riskFilter,
+    required this.onRiskFilterChanged,
+    required this.onCreate,
+  });
 
   final List<TradeBotStrategy> strategies;
+  final _StrategyRiskFilter riskFilter;
+  final ValueChanged<_StrategyRiskFilter> onRiskFilterChanged;
   final ValueChanged<TradeBotStrategy> onCreate;
 
   @override
   Widget build(BuildContext context) {
-    if (strategies.isEmpty) {
-      return const VitEmptyState(
-        title: 'Chưa có chiến lược',
-        message: 'Danh sách chiến lược sẽ hiển thị tại đây.',
-        icon: Icons.storefront_outlined,
-      );
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final strategy in strategies) ...[
-          _StrategyCard(strategy: strategy, onCreate: () => onCreate(strategy)),
-          if (strategy != strategies.last)
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        ],
+        Wrap(
+          spacing: AppSpacing.rowGap,
+          runSpacing: AppSpacing.rowGap,
+          children: [
+            for (final filter in _StrategyRiskFilter.values)
+              VitFilterChip(
+                key: TradingBotsPage.riskFilterKey(filter.name),
+                label: _riskFilterLabel(filter),
+                active: riskFilter == filter,
+                onTap: () => onRiskFilterChanged(filter),
+                color: _riskFilterColor(filter),
+              ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+        if (strategies.isEmpty)
+          const VitEmptyState(
+            title: 'Không có chiến lược phù hợp',
+            message: 'Thử bộ lọc rủi ro khác để xem thêm chiến lược.',
+            icon: Icons.storefront_outlined,
+          )
+        else
+          for (final strategy in strategies) ...[
+            _StrategyCard(
+              strategy: strategy,
+              onCreate: () => onCreate(strategy),
+            ),
+            if (strategy != strategies.last)
+              const SizedBox(height: AppSpacing.rowGap),
+          ],
       ],
     );
+  }
+
+  String _riskFilterLabel(_StrategyRiskFilter filter) {
+    return switch (filter) {
+      _StrategyRiskFilter.all => 'Tất cả',
+      _StrategyRiskFilter.low => 'Thấp',
+      _StrategyRiskFilter.medium => 'Trung bình',
+      _StrategyRiskFilter.high => 'Cao',
+    };
+  }
+
+  Color _riskFilterColor(_StrategyRiskFilter filter) {
+    return switch (filter) {
+      _StrategyRiskFilter.all => AppColors.primary,
+      _StrategyRiskFilter.low => AppColors.buy,
+      _StrategyRiskFilter.medium => AppColors.warn,
+      _StrategyRiskFilter.high => AppColors.sell,
+    };
   }
 }

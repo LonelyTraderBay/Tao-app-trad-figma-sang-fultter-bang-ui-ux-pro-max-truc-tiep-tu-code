@@ -9,13 +9,17 @@ class _SafetyControlsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.tight,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       density: VitDensity.tool,
       child: Column(
         children: [
           Row(
             children: [
-              const Icon(Icons.circle, color: _riskGreen, size: AppSpacing.x2),
-              const SizedBox(width: AppSpacing.x2),
+              const VitAccentIconBox(
+                icon: Icons.security_rounded,
+                color: _riskGreen,
+              ),
+              const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,30 +31,29 @@ class _SafetyControlsCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const SizedBox(height: TradeSpacingTokens.tradeBotTinyGap),
                     Text(
                       'Tự động dừng khi vượt giới hạn',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
                   ],
                 ),
               ),
-              Text(
-                'Đang hoạt động',
-                style: AppTextStyles.caption.copyWith(
-                  color: _riskGreen,
-                  fontWeight: AppTextStyles.bold,
-                ),
+              const VitStatusPill(
+                label: 'Đang bật',
+                status: VitStatusPillStatus.success,
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final control in controls) ...[
             VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.tight,
+              padding: TradeSpacingTokens.tradeBotMetricBoxPadding,
               density: VitDensity.tool,
               child: Row(
                 children: [
@@ -70,17 +73,17 @@ class _SafetyControlsCard extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  const Icon(
-                    Icons.circle,
-                    color: _riskGreen,
-                    size: AppSpacing.x2,
+                  const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
+                  const VitStatusPill(
+                    label: 'OK',
+                    status: VitStatusPillStatus.success,
+                    size: VitStatusPillSize.sm,
                   ),
                 ],
               ),
             ),
             if (control != controls.last)
-              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+              const SizedBox(height: TradeSpacingTokens.tradeBotCardGap),
           ],
         ],
       ),
@@ -96,53 +99,54 @@ class _EmergencyActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      key: BotRiskDashboardPage.emergencyButtonKey,
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.tight,
-      density: VitDensity.tool,
-      borderColor: _riskRed.withValues(alpha: .48),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: _riskRed,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Dừng khẩn cấp tất cả bot',
-                  style: AppTextStyles.caption.copyWith(
-                    color: _riskRed,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.tight,
+          padding: TradeSpacingTokens.tradeBotCompactCardPadding,
+          density: VitDensity.tool,
+          borderColor: _riskRed.withValues(alpha: .4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.error_outline_rounded,
+                color: _riskRed,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: TradeSpacingTokens.tradeBotCardGap),
+              Expanded(
+                child: Text(
+                  'Dừng ngay lập tức tất cả $runningBots bot đang chạy. Chỉ dùng khi thị trường sập hoặc sự cố kỹ thuật.',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Dừng ngay lập tức tất cả $runningBots bot đang chạy',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Text(
-            '->',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        VitCtaButton(
+          key: BotRiskDashboardPage.emergencyButtonKey,
+          density: VitDensity.tool,
+          height: TradeSpacingTokens.tradeBotSheetActionHeight,
+          variant: VitCtaButtonVariant.danger,
+          onPressed: onTap,
+          leading: const Icon(Icons.stop_circle_outlined),
+          trailing: const Icon(Icons.chevron_right_rounded),
+          child: const Text('Dừng khẩn cấp tất cả bot'),
+        ),
+      ],
     );
   }
 }
 
 class _RiskExplanationCard extends StatelessWidget {
-  const _RiskExplanationCard();
+  const _RiskExplanationCard({required this.expanded, required this.onToggle});
+
+  final bool expanded;
+  final VoidCallback onToggle;
 
   static const _items = [
     'Sụt giảm vốn hiện tại (30%)',
@@ -157,38 +161,68 @@ class _RiskExplanationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.tight,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       density: VitDensity.tool,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Cách tính điểm rủi ro',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          for (final item in _items) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          InkWell(
+            onTap: onToggle,
+            borderRadius: AppRadii.smRadius,
+            child: Row(
               children: [
-                Text(
-                  '-',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
-                    item,
+                    'Cách tính điểm rủi ro',
                     style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),
+                Icon(
+                  expanded
+                      ? Icons.expand_less_rounded
+                      : Icons.expand_more_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconSm,
+                ),
               ],
             ),
-            if (item != _items.last) const SizedBox(height: AppSpacing.x1),
+          ),
+          if (expanded) ...[
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            for (final item in _items) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Transform.translate(
+                    offset: const Offset(0, AppSpacing.x2),
+                    child: const DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: AppColors.text3,
+                        shape: CircleBorder(),
+                      ),
+                      child: SizedBox(
+                        width: AppSpacing.x2,
+                        height: AppSpacing.x2,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: TradeSpacingTokens.tradeBotCardGap),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (item != _items.last)
+                const SizedBox(height: TradeSpacingTokens.tradeBotTinyGap),
+            ],
           ],
         ],
       ),

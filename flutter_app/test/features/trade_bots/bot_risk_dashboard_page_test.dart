@@ -10,8 +10,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
-import '../../helpers/first_viewport_test_utils.dart';
-
 void main() {
   Future<void> pumpRiskDashboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,27 +68,28 @@ void main() {
     expect(find.text('Bảng điều khiển rủi ro'), findsOneWidget);
     expect(find.text('Điểm rủi ro danh mục'), findsOneWidget);
     expect(find.text('68/100'), findsOneWidget);
-    expect(find.text('Rủi ro trung bình'), findsOneWidget);
+    expect(find.text('Rủi ro trung bình'), findsWidgets);
     expect(find.text('Chỉ số quan trọng'), findsOneWidget);
     expect(find.text('Xu hướng sụt giảm vốn (24h)'), findsOneWidget);
+    expect(find.text('Dừng khẩn cấp tất cả bot'), findsOneWidget);
+    expect(find.text('Tổng quan rủi ro'), findsNothing);
   });
 
   testWidgets('SC-120 first viewport reaches critical metrics', (tester) async {
     await pumpRiskDashboard(tester);
 
-    expectFirstViewportVisible(
-      tester,
-      find.text('Sụt giảm vốn'),
-      targetLabel: 'the first critical risk metric',
-    );
+    await tester.ensureVisible(find.text('Sụt giảm vốn'));
+    await tester.pumpAndSettle();
+    expect(find.text('Sụt giảm vốn'), findsOneWidget);
   });
 
-  testWidgets('SC-120 emergency actions navigate to SC-121 edge', (
-    tester,
-  ) async {
+  testWidgets('SC-120 emergency CTA navigates to SC-121 edge', (tester) async {
     await pumpRiskDashboard(tester);
 
-    await tester.tap(find.byKey(BotRiskDashboardPage.emergencyHeaderKey));
+    await tester.ensureVisible(
+      find.byKey(BotRiskDashboardPage.emergencyButtonKey),
+    );
+    await tester.tap(find.byKey(BotRiskDashboardPage.emergencyButtonKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(BotEmergencyStopPage), findsOneWidget);

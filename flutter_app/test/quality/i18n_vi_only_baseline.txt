@@ -200,7 +200,6 @@ lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Trade setting
 lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Trade settings safety review
 lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart|Settings are saved on this device and apply immediately. Other devices keep default settings until changed there.
 lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart|Which Strategy to Choose?
-lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Search by bot name or pair...
 lib/features/trade_bots/presentation/pages/settings/bot_security_settings_page.dart|Create New API Key
 lib/features/trade_compliance/presentation/pages/client_money/arm_integration_status_page.dart|Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.
 lib/features/trade_compliance/presentation/pages/client_money/cass_reconciliation_page.dart|Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.

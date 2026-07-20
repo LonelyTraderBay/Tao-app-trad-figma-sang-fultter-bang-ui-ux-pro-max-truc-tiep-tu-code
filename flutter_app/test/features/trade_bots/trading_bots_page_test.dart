@@ -77,12 +77,15 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Trading Bots'), findsOneWidget);
+    expect(find.text('Bot giao dịch'), findsOneWidget);
     expect(find.text('Tự động hóa giao dịch theo chiến lược'), findsOneWidget);
     expect(find.text('Khám phá chiến lược'), findsOneWidget);
     expect(find.text('Lãi/lỗ'), findsOneWidget);
     expect(find.text('+\$199.30'), findsOneWidget);
     expect(find.text('Bot của tôi (3)'), findsOneWidget);
+    expect(find.text('Công cụ'), findsOneWidget);
+    expect(find.byKey(TradingBotsPage.toolsKey), findsOneWidget);
+    expect(find.text('Dừng khẩn cấp'), findsOneWidget);
     expect(find.text('DCA Bot'), findsOneWidget);
     expect(find.text('Grid Bot'), findsOneWidget);
     expect(find.text('Momentum Bot'), findsOneWidget);
@@ -118,15 +121,21 @@ void main() {
   testWidgets('SC-059 bot actions stay local', (tester) async {
     await pumpTradingBots(tester);
 
+    await tester.ensureVisible(
+      find.byKey(TradingBotsPage.botToggleKey('bot1')),
+    );
     await tester.tap(find.byKey(TradingBotsPage.botToggleKey('bot1')));
     await tester.pumpAndSettle();
     expect(find.text('Tiếp tục'), findsNWidgets(2));
 
+    await tester.ensureVisible(
+      find.byKey(TradingBotsPage.botSettingsKey('bot2')),
+    );
     await tester.tap(find.byKey(TradingBotsPage.botSettingsKey('bot2')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(TradingBotsPage.botDeleteKey('bot2')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Xóa'));
+    await tester.tap(find.byKey(TradingBotsPage.deleteConfirmKey));
     await tester.pumpAndSettle();
     expect(find.text('Grid Bot'), findsNothing);
     expect(find.text('Bot của tôi (2)'), findsOneWidget);
@@ -140,16 +149,67 @@ void main() {
 
     expect(find.text('Tạo bot'), findsWidgets);
 
+    await tester.ensureVisible(
+      find.byKey(TradingBotsPage.strategyCreateKey('dca')),
+    );
     await tester.tap(find.byKey(TradingBotsPage.strategyCreateKey('dca')));
     await tester.pumpAndSettle();
-    expect(find.text('Nhập thông số Bot'), findsOneWidget);
+    expect(find.text('Đồng ý điều khoản để tiếp tục'), findsOneWidget);
+    expect(find.text('Thông số bot'), findsOneWidget);
+    expect(find.text('Xem lại trước khi khởi chạy'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(TradingBotsPage.sheetAgreeKey));
     await tester.tap(find.byKey(TradingBotsPage.sheetAgreeKey));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(TradingBotsPage.sheetCreateKey));
     await tester.tap(find.byKey(TradingBotsPage.sheetCreateKey));
     await tester.pumpAndSettle();
 
     expect(find.text('Bot đã được khởi chạy!'), findsOneWidget);
+  });
+
+  testWidgets('SC-059 quick tools navigate to bot child routes', (
+    tester,
+  ) async {
+    await pumpTradingBots(tester);
+
+    await tester.ensureVisible(find.byKey(TradingBotsPage.toolKey('history')));
+    await tester.tap(find.byKey(TradingBotsPage.toolKey('history')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Lịch sử giao dịch'), findsOneWidget);
+  });
+
+  testWidgets('SC-059 strategy risk filter narrows the catalog', (
+    tester,
+  ) async {
+    await pumpTradingBots(tester);
+
+    await tester.tap(find.byKey(TradingBotsPage.tabKey('strategies')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(
+      find.byKey(TradingBotsPage.riskFilterKey('high')),
+    );
+    await tester.tap(find.byKey(TradingBotsPage.riskFilterKey('high')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Martingale Bot'), findsOneWidget);
+    expect(find.text('DCA Bot'), findsNothing);
+  });
+
+  testWidgets('SC-059 bot settings opens security settings', (tester) async {
+    await pumpTradingBots(tester);
+
+    await tester.ensureVisible(
+      find.byKey(TradingBotsPage.botSettingsKey('bot1')),
+    );
+    await tester.tap(find.byKey(TradingBotsPage.botSettingsKey('bot1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cài đặt'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TradingBotsPage), findsNothing);
   });
 
   testWidgets('SC-059 back returns to SC-048 TradePage', (tester) async {

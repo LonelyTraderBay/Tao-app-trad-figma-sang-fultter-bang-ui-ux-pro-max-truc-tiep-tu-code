@@ -777,8 +777,8 @@ trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bo
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_equity_curve_charts_cards.dart,2,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_history_page_common.dart,3,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_history_page_sections.dart,1,0,0,C,0,0,0,pass,-
-trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_charts_strategy.dart,5,0,0,C,0,0,0,pass,-
-trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_metrics_summary.dart,5,1,0,C,0,0,0,pass,-
+trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_charts_strategy.dart,4,0,0,C,0,0,0,pass,-
+trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_metrics_summary.dart,3,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_portfolio_dashboard_page_common.dart,1,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_portfolio_dashboard_page_sections.dart,4,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_risk_dashboard_charts.dart,2,0,0,C,0,0,0,pass,-
@@ -786,12 +786,13 @@ trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bo
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_risk_dashboard_metrics.dart,2,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_risk_dashboard_score.dart,2,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_bot_card.dart,1,0,0,C,0,0,0,pass,-
-trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_create_bot_sheet.dart,3,1,0,C,0,0,0,pass,-
+trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_create_bot_sheet.dart,3,0,0,C,0,0,0,pass,-
+trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_tools.dart,3,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_endpoints.dart,1,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_intro_tabs.dart,1,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_support_common.dart,3,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_emergency_stop_page_common.dart,1,0,0,C,0,0,0,pass,-
-trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_emergency_stop_page_sections.dart,6,4,0,D,0,0,0,pass,-
+trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_emergency_stop_page_sections.dart,6,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_faq_cards_help.dart,1,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_guide_blocks.dart,3,0,0,C,0,0,0,pass,-
 trade_bots,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_guide_intro_tabs.dart,1,0,0,C,0,0,0,pass,-

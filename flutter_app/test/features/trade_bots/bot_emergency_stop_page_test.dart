@@ -127,6 +127,9 @@ void main() {
     await tester.tap(find.byKey(BotEmergencyStopPage.submitKey));
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(BotEmergencyStopPage.dialogConfirmKey));
+    await tester.pumpAndSettle();
+
     expect(find.byType(TradingBotsPage), findsOneWidget);
   });
 

@@ -74,10 +74,10 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
     expect(find.text('Tổng số giao dịch'), findsOneWidget);
-    expect(find.text('+1.50'), findsOneWidget);
-    expect(find.text('All (7)'), findsOneWidget);
-    expect(find.text('Trades (7)'), findsOneWidget);
-    expect(find.text('DCA Bot #1 - DCA'), findsWidgets);
+    expect(find.text(r'+$1.50'), findsWidgets);
+    expect(find.text('Tất cả (7)'), findsOneWidget);
+    expect(find.text('Giao dịch (7)'), findsOneWidget);
+    expect(find.text('DCA Bot #1 · DCA'), findsWidgets);
   });
 
   testWidgets('SC-123 first viewport reaches first trade card', (tester) async {
@@ -90,7 +90,7 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.text('DCA Bot #1 - DCA').first,
+      find.text('DCA Bot #1 · DCA').first,
       minVisibleHeight: 12,
       targetLabel: 'first bot history trade card',
       reason:
@@ -105,7 +105,7 @@ void main() {
     await tester.tap(find.byKey(BotHistoryPage.filterKey('sell')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Trades (3)'), findsOneWidget);
-    expect(find.text('Sell (3)'), findsOneWidget);
+    expect(find.text('Giao dịch (3)'), findsOneWidget);
+    expect(find.text('Bán (3)'), findsOneWidget);
   });
 }
