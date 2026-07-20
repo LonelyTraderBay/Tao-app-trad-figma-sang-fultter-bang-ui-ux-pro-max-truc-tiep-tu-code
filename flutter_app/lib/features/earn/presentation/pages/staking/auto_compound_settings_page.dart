@@ -59,7 +59,6 @@ class _AutoCompoundSettingsPageState
   final Map<String, String> _frequencies = {};
   final Map<String, double> _thresholds = {};
   String? _editingId;
-  bool _showSuccess = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,116 +70,100 @@ class _AutoCompoundSettingsPageState
       semanticIdentifier: 'SC-341',
       child: Material(
         color: AppColors.bg,
-        child: Stack(
-          children: [
-            snapshotAsync.when(
-              loading: () => VitAutoHideHeaderScaffold(
-                header: VitHeader(
-                  title: 'Đang tải…',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.earnSavings),
-                ),
-                child: const VitSkeletonList(),
-              ),
-              error: (error, stackTrace) => VitAutoHideHeaderScaffold(
-                header: VitHeader(
-                  title: 'Không tải được',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.earnSavings),
-                ),
-                child: VitErrorState(
-                  title: 'Không tải được',
-                  message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
-                  actionLabel: 'Thử lại',
-                  onAction: () =>
-                      ref.invalidate(autoCompoundSettingsSnapshotProvider),
-                ),
-              ),
-              data: (snapshot) {
-                final positions = [
-                  for (final position in snapshot.positions)
-                    _resolved(position),
-                ];
-                final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-                final scrollTailReserve =
-                    (mode.usesVisualQaFrame
-                        ? DeviceMetrics.bottomChrome + AppSpacing.x3
-                        : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
-                    MediaQuery.paddingOf(context).bottom;
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
+          ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(autoCompoundSettingsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final positions = [
+              for (final position in snapshot.positions) _resolved(position),
+            ];
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final scrollTailReserve =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x3
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+                MediaQuery.paddingOf(context).bottom;
 
-                return VitAutoHideHeaderScaffold(
-                  header: VitHeader(
-                    title: snapshot.title,
-                    subtitle: kSavingsToolsHeaderSubtitle,
-                    showBack: true,
-                    onBack: () => context.go(snapshot.backRoute),
-                    actions: [
-                      VitHeaderActionItem(
-                        key: AutoCompoundSettingsPage.infoButtonKey,
-                        type: VitHeaderActionType.help,
-                        onPressed: () => _openInfo(snapshot),
-                      ),
-                    ],
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: AutoCompoundSettingsPage.infoButtonKey,
+                    type: VitHeaderActionType.help,
+                    onPressed: () => _openInfo(snapshot),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          physics: const ClampingScrollPhysics(),
-                          padding: AppSpacing.zeroInsets.copyWith(
-                            bottom: scrollTailReserve,
-                          ),
-                          child: VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            padding: VitContentPadding.compact,
-                            gap: VitContentGap.tight,
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: AppSpacing.zeroInsets.copyWith(
+                        bottom: scrollTailReserve,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _SummaryCard(positions: positions),
+                          VitPageSection(
+                            label: 'Vị thế tiết kiệm',
+                            accentColor: AppColors.buy,
                             children: [
-                              _SummaryCard(positions: positions),
-                              VitPageSection(
-                                label: 'Vị thế tiết kiệm',
-                                accentColor: AppColors.buy,
-                                children: [
-                                  for (final position in positions)
-                                    _PositionCard(
-                                      position: position,
-                                      onToggle: () => _toggle(position),
-                                      onSettings: () =>
-                                          _openSettings(snapshot, position),
-                                    ),
-                                ],
-                              ),
-                              const _CalculatorPreview(),
-                              _NoteCard(text: snapshot.note),
-                              const VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Auto-compound settings review',
-                                message:
-                                    'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
-                                contractId: 'SC-341',
-                              ),
-                              const SavingsToolsYieldFooter(),
+                              for (final position in positions)
+                                _PositionCard(
+                                  position: position,
+                                  onToggle: () => _toggle(position),
+                                  onSettings: () =>
+                                      _openSettings(snapshot, position),
+                                ),
                             ],
                           ),
-                        ),
+                          const _CalculatorPreview(),
+                          _NoteCard(text: snapshot.note),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Auto-compound settings review',
+                            message:
+                                'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
+                            contractId: 'SC-341',
+                          ),
+                          const SavingsToolsYieldFooter(),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                );
-              },
-            ),
-            if (_showSuccess)
-              Positioned(
-                left: AppSpacing.contentPad,
-                right: AppSpacing.contentPad,
-                top: MediaQuery.paddingOf(context).top + AppSpacing.x7,
-                child: _SuccessToast(
-                  onDismiss: () {
-                    setState(() => _showSuccess = false);
-                  },
-                ),
+                ],
               ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -229,6 +212,7 @@ class _AutoCompoundSettingsPageState
   ) async {
     unawaited(HapticFeedback.selectionClick());
     setState(() => _editingId = position.id);
+    var pendingSave = false;
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -257,11 +241,9 @@ class _AutoCompoundSettingsPageState
             },
             onSave: () {
               unawaited(HapticFeedback.lightImpact());
+              pendingSave = true;
               Navigator.of(context).pop();
-              setState(() {
-                _editingId = null;
-                _showSuccess = true;
-              });
+              setState(() => _editingId = null);
             },
           ),
         );
@@ -269,6 +251,18 @@ class _AutoCompoundSettingsPageState
     );
     if (mounted && _editingId == position.id) {
       setState(() => _editingId = null);
+    }
+    if (pendingSave && mounted) {
+      unawaited(
+        showVitNoticeSheet(
+          context: context,
+          title: 'Đã lưu cài đặt',
+          message: 'Compound sẽ áp dụng từ kỳ tiếp theo.',
+          variant: VitBannerVariant.success,
+          ctaVariant: VitCtaButtonVariant.success,
+          primaryKey: AutoCompoundSettingsPage.successToastKey,
+        ),
+      );
     }
   }
 }

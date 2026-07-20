@@ -178,6 +178,12 @@ Chuẩn chốt tại GĐ2 · I18N-1 (DEC-i18n Nhánh A, 2026-07-16):
   `_headerVisible` + `heightFactor` collapse; see
   `docs/02_FLUTTER_MIGRATION/standards/Scroll-Auto-Hide-Standard.md` and
   `flutter test test/quality/scroll_auto_hide_guardrail_test.dart`.
+- **Notice acknowledgements:** success / error / “sẽ sớm ra mắt” / must-ack UI
+  must use `showVitNoticeSheet` (not `SnackBar`, not `Positioned` success
+  toasts, not sticky Share+Continue footers). `VitStickyFooter` / scaffold
+  `footer:` stay valid only for in-progress form/wizard CTAs. See
+  `docs/02_FLUTTER_MIGRATION/standards/Notice-Acknowledgement-Standard.md` and
+  `flutter test test/quality/notice_acknowledgement_guardrail_test.dart`.
 - **Card tiles:** Tier A strip tiles use `VitCard.height` / `minHeight` with
   `contentAlign: VitCardContentAlign.center`, `cardTilePadding`, and
   `cardTileInnerGap` — see

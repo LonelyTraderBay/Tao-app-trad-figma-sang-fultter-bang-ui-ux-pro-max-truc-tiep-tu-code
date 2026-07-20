@@ -20,13 +20,7 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_t
 part '../../widgets/hub/order_receipt_page_sections.dart';
 part '../../widgets/hub/order_receipt_page_common.dart';
 
-const _footerBackground = AppColors.surface;
-const double _receiptFramedFooterClearance =
-    AppSpacing.buttonStandard + AppSpacing.x5;
-const double _receiptNativeFooterClearance =
-    AppSpacing.buttonStandard + AppSpacing.x3;
 const double _receiptCopyActionExtent = AppSpacing.buttonCompact;
-const double _receiptFooterHeight = AppSpacing.buttonStandard + AppSpacing.x4;
 
 class OrderReceiptPage extends ConsumerStatefulWidget {
   const OrderReceiptPage({super.key, this.shellRenderMode});
@@ -34,6 +28,7 @@ class OrderReceiptPage extends ConsumerStatefulWidget {
   static const contentKey = Key('sc051_order_receipt_content');
   static const openOrdersKey = Key('sc051_open_orders');
   static const copyOrderIdKey = Key('sc051_copy_order_id');
+  static const openActionsKey = Key('sc051_open_actions');
   static const shareKey = Key('sc051_share');
   static const continueTradingKey = Key('sc051_continue_trading');
   static const supportKey = Key('sc051_support');
@@ -45,21 +40,32 @@ class OrderReceiptPage extends ConsumerStatefulWidget {
 }
 
 class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
-  bool _sharePressed = false;
+  Future<void> _openReceiptActionsSheet(String orderId) {
+    return showVitNoticeSheet(
+      context: context,
+      title: 'Lệnh đã gửi',
+      message: 'Đã gửi $orderId',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      ctaLabel: 'Tiếp tục giao dịch',
+      primaryKey: OrderReceiptPage.continueTradingKey,
+      secondaryLabel: 'Chia sẻ',
+      secondaryPressedLabel: 'Đã chia sẻ',
+      secondaryKey: OrderReceiptPage.shareKey,
+      onPrimary: () {
+        context.go(AppRoutePaths.tradePair('btcusdt'));
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final receiptAsync = ref.watch(tradeOrderReceiptProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final footerSafePadding =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _receiptFramedFooterClearance
-            : _receiptNativeFooterClearance);
-    final scrollEndClearance =
-        tradeScrollBottomInset(context, shellRenderMode: mode) +
-        _receiptFooterHeight +
-        footerSafePadding;
+    final scrollEndClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitTradeDetailScaffold(
       title: 'Chi tiết lệnh',
@@ -73,12 +79,6 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
         context,
         fallbackPath: AppRoutePaths.trade,
         mode: BackNavigationMode.historyThenFallback,
-      ),
-      footer: _ReceiptFooter(
-        sharePressed: _sharePressed,
-        onShare: () => setState(() => _sharePressed = true),
-        onContinue: () => context.go(AppRoutePaths.tradePair('btcusdt')),
-        bottomPadding: footerSafePadding,
       ),
       children: receiptAsync.when(
         loading: () => const [VitSkeletonList()],
@@ -105,6 +105,13 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
             VitTradeSection(
               title: 'Hỗ trợ',
               child: _OrderSupportLink(supportRoute: snapshot.supportRoute),
+            ),
+            VitCtaButton(
+              key: OrderReceiptPage.openActionsKey,
+              variant: VitCtaButtonVariant.success,
+              density: VitDensity.compact,
+              onPressed: () => _openReceiptActionsSheet(receipt.orderId),
+              child: const Text('Thao tác tiếp theo'),
             ),
           ];
         },

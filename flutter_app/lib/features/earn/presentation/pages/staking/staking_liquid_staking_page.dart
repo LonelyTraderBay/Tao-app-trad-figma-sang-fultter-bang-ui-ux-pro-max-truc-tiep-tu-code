@@ -158,11 +158,11 @@ class _StakingLiquidStakingPageState
                               onDetail: _showTokenDetail,
                               onStake: (token) {
                                 unawaited(HapticFeedback.lightImpact());
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Đã chọn stake ${token.symbol}',
-                                    ),
+                                unawaited(
+                                  showVitNoticeSheet(
+                                    context: context,
+                                    title: 'Đã chọn',
+                                    message: 'Đã chọn stake ${token.symbol}',
                                   ),
                                 );
                               },

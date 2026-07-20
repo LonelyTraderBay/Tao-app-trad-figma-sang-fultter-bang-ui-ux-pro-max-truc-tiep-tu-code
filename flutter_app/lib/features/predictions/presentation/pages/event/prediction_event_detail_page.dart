@@ -101,8 +101,12 @@ class _PredictionEventDetailPageState
 
   void _showComingSoon() {
     unawaited(HapticFeedback.selectionClick());
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Tìm hiểu rủi ro sẽ sớm ra mắt')),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Tìm hiểu rủi ro sẽ sớm ra mắt.',
+      ),
     );
   }
 

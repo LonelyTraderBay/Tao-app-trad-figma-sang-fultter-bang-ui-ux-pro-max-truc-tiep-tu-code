@@ -222,7 +222,9 @@ void main() {
     },
   );
 
-  testWidgets('SC-030 risk link shows a placeholder snackbar', (tester) async {
+  testWidgets('SC-030 risk link shows a coming-soon notice sheet', (
+    tester,
+  ) async {
     await pumpDetail(tester);
 
     await tester.ensureVisible(
@@ -231,7 +233,7 @@ void main() {
     await tester.tap(find.byKey(PredictionEventDetailPage.riskLinkKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Tìm hiểu rủi ro sẽ sớm ra mắt'), findsOneWidget);
+    expect(find.text('Tìm hiểu rủi ro sẽ sớm ra mắt.'), findsOneWidget);
   });
 
   testWidgets('SC-030 back button returns to SC-027 Predictions home', (

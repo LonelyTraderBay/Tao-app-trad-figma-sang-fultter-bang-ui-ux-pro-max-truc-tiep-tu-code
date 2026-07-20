@@ -135,8 +135,12 @@ class _NewCommentCard extends StatelessWidget {
             // thông báo minh bạch theo pattern coming-soon sẵn có.
             onPressed: hasComment
                 ? () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Bình luận sẽ sớm ra mắt')),
+                    unawaited(
+                      showVitNoticeSheet(
+                        context: context,
+                        title: 'Sắp ra mắt',
+                        message: 'Bình luận sẽ sớm ra mắt.',
+                      ),
                     );
                   }
                 : null,

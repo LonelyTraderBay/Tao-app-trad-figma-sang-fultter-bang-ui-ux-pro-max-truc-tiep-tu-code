@@ -114,30 +114,3 @@ class TransferAssetPickerRow extends StatelessWidget {
     );
   }
 }
-
-class TransferSuccessBanner extends StatelessWidget {
-  const TransferSuccessBanner({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      borderColor: _transferGreen.withValues(alpha: .30),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.check_circle_outline_rounded,
-            color: _transferGreen,
-            size: _transferActionIcon,
-          ),
-          const SizedBox(width: _transferInlineGap),
-          Text(
-            'Chuy\u1ec3n th\u00e0nh c\u00f4ng!',
-            style: AppTextStyles.control.copyWith(color: _transferGreen),
-          ),
-        ],
-      ),
-    );
-  }
-}

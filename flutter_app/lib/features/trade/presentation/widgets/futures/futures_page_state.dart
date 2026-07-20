@@ -4,7 +4,6 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
   final _marginController = TextEditingController();
   TradeFuturesSide _side = TradeFuturesSide.long;
   final int _leverage = 10;
-  String? _lastOrderId;
 
   @override
   void dispose() {
@@ -12,8 +11,8 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     super.dispose();
   }
 
-  void _setPercent(int pct) {
-    final value = 5000 * pct / 100;
+  void _setPercent(int pct, double availableBalance) {
+    final value = availableBalance * pct / 100;
     setState(() {
       _marginController.text = value.toStringAsFixed(0);
     });
@@ -42,12 +41,17 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     if (!mounted) return;
     final orderState = ref.read(provider);
     if (orderState.status == TradeHighRiskFlowStatus.success) {
-      setState(() {
-        _marginController.clear();
-        // Banner giữ ở state trang: request đổi khi clear ô ký quỹ nên
-        // member Notifier cũ (nơi giữ receipt) sẽ bị dispose ngay sau đó.
-        _lastOrderId = orderState.receipt?.orderId;
-      });
+      // Clear form trước khi mở sheet — request thay đổi khi margin xoá
+      // nên Notifier cũ sẽ dispose sau khi sheet đóng, không race.
+      setState(() => _marginController.clear());
+      final orderId = orderState.receipt?.orderId ?? 'lệnh';
+      await showVitNoticeSheet(
+        context: context,
+        title: 'Đã gửi lệnh',
+        message: 'Đã gửi $orderId',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      );
       return;
     }
     await showVitNoticeSheet(
@@ -86,95 +90,87 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     final daySnapshot = tradeSyntheticDaySnapshot(pair.price, pair.changePct);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return Stack(
+    // Banner nằm trong scroll content (sau product tabs do
+    // tradeShellWithProductTabs prepend) — không overlay Stack/Positioned
+    // lên header/tab Spot·Futures·Margin.
+    return VitTradeSimpleShell(
+      title: pair.symbol,
+      subtitle: 'Hợp đồng tương lai',
+      semanticLabel: 'Giao dịch hợp đồng tương lai (Futures)',
+      semanticIdentifier: 'SC-057',
+      contentKey: const Key('sc057_futures_scroll_content'),
+      shellRenderMode: mode,
+      showBack: true,
+      backKey: FuturesPage.closeKey,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.tradePair(widget.pairId),
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      activeProductId: 'futures',
+      productPair: pair,
+      quickNavKey: FuturesPage.quickNavKey,
       children: [
-        VitTradeSimpleShell(
-          title: pair.symbol,
-          subtitle: 'Hợp đồng tương lai',
-          semanticLabel: 'Giao dịch hợp đồng tương lai (Futures)',
-          semanticIdentifier: 'SC-057',
-          contentKey: const Key('sc057_futures_scroll_content'),
-          shellRenderMode: mode,
-          showBack: true,
-          backKey: FuturesPage.closeKey,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.tradePair(widget.pairId),
-            mode: BackNavigationMode.historyThenFallback,
-          ),
-          activeProductId: 'futures',
-          productPair: pair,
-          quickNavKey: FuturesPage.quickNavKey,
-          children: [
-            VitTradeSimpleHero(
-              symbol: pair.symbol,
-              priceLabel: formatTradePrice(pair.price),
-              changePct: pair.changePct,
-              sparklineValues: daySnapshot.sparkline,
-              highLabel: daySnapshot.highLabel,
-              lowLabel: daySnapshot.lowLabel,
-              volumeLabel: daySnapshot.volumeLabel,
-            ),
-            VitTradeSection(
-              title: 'Giao dịch',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  VitHighRiskStatePanel(
-                    state: orderState.status.uiState,
-                    density: VitDensity.tool,
-                    title: switch (orderState.status.uiState) {
-                      VitHighRiskUiState.submitting => 'Đang gửi lệnh',
-                      VitHighRiskUiState.success => 'Đã gửi lệnh',
-                      VitHighRiskUiState.error => 'Gửi lệnh thất bại',
-                      VitHighRiskUiState.offline => 'Mất kết nối',
-                      _ => 'Rủi ro cao',
-                    },
-                    message: switch (orderState.status.uiState) {
-                      VitHighRiskUiState.submitting =>
-                        'Đang gửi lệnh tới sàn. Vui lòng chờ trong giây lát.',
-                      VitHighRiskUiState.success =>
-                        'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}.',
-                      VitHighRiskUiState.error || VitHighRiskUiState.offline =>
-                        orderState.errorMessage ??
-                            'Không gửi được lệnh. Vui lòng thử lại.',
-                      _ =>
-                        'Hợp đồng tương lai có thể làm bạn mất toàn bộ ký quỹ. Chỉ dùng số tiền bạn chấp nhận mất.',
-                    },
-                    contractId: snapshot.highRiskContractId,
-                  ),
-                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-                  _FuturesSimpleForm(
-                    snapshot: snapshot,
-                    preview: orderState.preview,
-                    submitting: orderState.status.isBusy,
-                    side: _side,
-                    leverage: _leverage,
-                    marginController: _marginController,
-                    onSideChanged: (side) => setState(() => _side = side),
-                    onPercent: _setPercent,
-                    onChanged: () => setState(() {}),
-                    onPreviewOpened: orderNotifier.enterPreview,
-                    onPreviewDismissed: orderNotifier.cancelPreview,
-                    onConfirmedSubmit: _submit,
-                  ),
-                ],
-              ),
-            ),
-          ],
+        VitTradeSimpleHero(
+          symbol: pair.symbol,
+          priceLabel: formatTradePrice(pair.price),
+          changePct: pair.changePct,
+          sparklineValues: daySnapshot.sparkline,
+          highLabel: daySnapshot.highLabel,
+          lowLabel: daySnapshot.lowLabel,
+          volumeLabel: daySnapshot.volumeLabel,
+          availableBalanceLabel:
+              '${formatTradeMoney(snapshot.accountBalance - snapshot.usedMargin)} USDT',
         ),
-        if (_lastOrderId != null)
-          Positioned(
-            left: AppSpacing.contentPad,
-            right: AppSpacing.contentPad,
-            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
-            child: VitBanner(
-              variant: VitBannerVariant.success,
-              title: 'Đã gửi lệnh',
-              message: 'Đã gửi $_lastOrderId',
-              onDismiss: () => setState(() => _lastOrderId = null),
-            ),
+        VitTradeSection(
+          title: 'Giao dịch',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              VitHighRiskStatePanel(
+                state: orderState.status.uiState,
+                density: VitDensity.tool,
+                title: switch (orderState.status.uiState) {
+                  VitHighRiskUiState.submitting => 'Đang gửi lệnh',
+                  VitHighRiskUiState.success => 'Đã gửi lệnh',
+                  VitHighRiskUiState.error => 'Gửi lệnh thất bại',
+                  VitHighRiskUiState.offline => 'Mất kết nối',
+                  _ => 'Rủi ro cao',
+                },
+                message: switch (orderState.status.uiState) {
+                  VitHighRiskUiState.submitting =>
+                    'Đang gửi lệnh tới sàn. Vui lòng chờ trong giây lát.',
+                  VitHighRiskUiState.success =>
+                    'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}.',
+                  VitHighRiskUiState.error || VitHighRiskUiState.offline =>
+                    orderState.errorMessage ??
+                        'Không gửi được lệnh. Vui lòng thử lại.',
+                  _ =>
+                    'Hợp đồng tương lai có thể làm bạn mất toàn bộ ký quỹ. Chỉ dùng số tiền bạn chấp nhận mất.',
+                },
+                contractId: snapshot.highRiskContractId,
+              ),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+              _FuturesSimpleForm(
+                snapshot: snapshot,
+                preview: orderState.preview,
+                submitting: orderState.status.isBusy,
+                side: _side,
+                leverage: _leverage,
+                marginController: _marginController,
+                onSideChanged: (side) => setState(() => _side = side),
+                onPercent: (pct) => _setPercent(
+                  pct,
+                  snapshot.accountBalance - snapshot.usedMargin,
+                ),
+                onChanged: () => setState(() {}),
+                onPreviewOpened: orderNotifier.enterPreview,
+                onPreviewDismissed: orderNotifier.cancelPreview,
+                onConfirmedSubmit: _submit,
+              ),
+            ],
           ),
+        ),
       ],
     );
   }

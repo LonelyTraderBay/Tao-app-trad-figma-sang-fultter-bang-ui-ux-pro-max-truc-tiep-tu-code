@@ -125,7 +125,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ExecutionQualityDemoPage.slippageSaveKey));
     await tester.pumpAndSettle();
-    expect(find.text('Slippage tolerance updated to 1.0%'), findsOneWidget);
+    expect(find.textContaining('Ngưỡng trượt giá: 1.0%'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(
       find.byKey(ExecutionQualityDemoPage.tabKey('amendment')),
@@ -142,7 +144,10 @@ void main() {
     expect(find.text('Modify Order'), findsWidgets);
     await tester.tap(find.byKey(ExecutionQualityDemoPage.amendmentSaveKey));
     await tester.pumpAndSettle();
-    expect(find.text('Order Modified · ORD-2026-03-11-B9G4E3'), findsOneWidget);
+    expect(
+      find.textContaining('Đã sửa lệnh ORD-2026-03-11-B9G4E3'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('SC-061 back returns to SC-048 TradePage', (tester) async {

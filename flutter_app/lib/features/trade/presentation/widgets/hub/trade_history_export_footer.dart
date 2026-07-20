@@ -64,64 +64,28 @@ class _ExportFooter extends StatelessWidget {
           vertical: AppSpacing.x2,
         ),
         child: exported
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
+            ? Row(
                 children: [
-                  // card-tile: allow-start — fixed surface, not horizontal strip tile
-                  VitCard(
-                    variant: VitCardVariant.inner,
-                    radius: VitCardRadius.tight,
-                    height: VitDensity.tool.controlHeight,
-                    alignment: Alignment.center,
-                    borderColor: AppColors.buy.withValues(alpha: .2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.check_circle_outline,
-                          color: AppColors.buy,
-                          size: AppSpacing.iconSm,
-                        ),
-                        const SizedBox(width: AppSpacing.x2),
-                        Flexible(
-                          child: Text(
-                            'File đã sẵn sàng tải xuống',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.buy,
-                              fontWeight: AppTextStyles.medium,
-                            ),
-                          ),
-                        ),
-                      ],
+                  Expanded(
+                    child: VitCtaButton(
+                      key: TradeHistoryExportPage.newExportKey,
+                      variant: VitCtaButtonVariant.secondary,
+                      density: VitDensity.tool,
+                      onPressed: onNewExport,
+                      child: const Text('Tạo mới'),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: VitCtaButton(
-                          key: TradeHistoryExportPage.newExportKey,
-                          variant: VitCtaButtonVariant.secondary,
-                          density: VitDensity.tool,
-                          onPressed: onNewExport,
-                          child: const Text('Tạo mới'),
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.x2),
-                      Expanded(
-                        flex: TradeSpacingTokens.tradeToolFooterButtonFlex,
-                        child: VitCtaButton(
-                          key: TradeHistoryExportPage.downloadKey,
-                          variant: VitCtaButtonVariant.success,
-                          density: VitDensity.tool,
-                          onPressed: () => _showComingSoon(context),
-                          leading: const Icon(Icons.file_download_outlined),
-                          child: Text('Tải ${format.toUpperCase()}'),
-                        ),
-                      ),
-                    ],
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    flex: TradeSpacingTokens.tradeToolFooterButtonFlex,
+                    child: VitCtaButton(
+                      key: TradeHistoryExportPage.downloadKey,
+                      variant: VitCtaButtonVariant.success,
+                      density: VitDensity.tool,
+                      onPressed: () => _showComingSoon(context),
+                      leading: const Icon(Icons.file_download_outlined),
+                      child: Text('Tải ${format.toUpperCase()}'),
+                    ),
                   ),
                 ],
               )

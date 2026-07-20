@@ -176,10 +176,12 @@ class _DepositPageState extends ConsumerState<DepositPage> {
 
   void _refreshDepositIntent() {
     setState(() => _copied = false);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Đã làm mới thông tin nạp tiền'),
-        duration: Duration(milliseconds: 900),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã làm mới',
+        message:
+            'Thông tin địa chỉ nạp tiền đã được cập nhật. Luôn kiểm tra lại địa chỉ và mạng lưới trước khi nạp.',
       ),
     );
   }

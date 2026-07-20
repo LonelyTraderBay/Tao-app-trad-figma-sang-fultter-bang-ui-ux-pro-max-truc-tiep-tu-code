@@ -230,10 +230,11 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
   }
 
   void _showActionNotice(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(milliseconds: 900),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Thông báo',
+        message: message,
       ),
     );
   }

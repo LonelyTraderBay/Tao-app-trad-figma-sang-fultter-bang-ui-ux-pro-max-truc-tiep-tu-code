@@ -52,133 +52,126 @@ class BestExecutionReportsPage extends ConsumerStatefulWidget {
 class _BestExecutionReportsPageState
     extends ConsumerState<BestExecutionReportsPage> {
   String _tab = 'current';
-  String? _notice;
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeBestExecutionReportsProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     return Material(
       color: _bestBackground,
-      child: Stack(
-        children: [
-          VitTradeHubScaffold(
-            title: 'Best Execution Reports',
-            subtitle: 'RTS 27 / RTS 28 Compliance',
-            semanticLabel: 'Báo cáo thực thi lệnh tốt nhất theo RTS 27/28',
-            semanticIdentifier: 'SC-096',
-            contentKey: BestExecutionReportsPage.contentKey,
-            shellRenderMode: widget.shellRenderMode,
-            onBack: () => goBackOrFallback(
-              context,
-              fallbackPath: AppRoutePaths.tradeCopyTrading,
-              mode: BackNavigationMode.historyThenFallback,
-            ),
-            headerActions: [
-              VitHeaderActionItem(
-                type: VitHeaderActionType.export,
-                onPressed: () => setState(() => _notice = 'PDF export queued'),
-              ),
-            ],
-            children: async.when(
-              loading: () => const [VitSkeletonList()],
-              error: (error, stackTrace) => [
-                VitErrorState(
-                  title: 'Không tải được dữ liệu',
-                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                  actionLabel: 'Thử lại',
-                  onAction: () =>
-                      ref.invalidate(tradeBestExecutionReportsProvider),
-                ),
-              ],
-              data: (snapshot) => [
-                const VitTradeSection(
-                  title: 'Notice',
-                  child: _ComplianceNotice(),
-                ),
-                VitTradeComplianceSection(
-                  title: 'Execution review',
-                  statusPill: VitStatusPill(
-                    label: 'Updated ${snapshot.lastUpdatedLabel}',
-                    status: VitStatusPillStatus.info,
-                    size: VitStatusPillSize.sm,
-                  ),
-                  items: [
-                    VitTradeComplianceItem(
-                      label: 'Venues',
-                      value: '${snapshot.venues.length} tracked',
-                    ),
-                    VitTradeComplianceItem(
-                      label: 'Archive',
-                      value: '${snapshot.archive.length} reports',
-                    ),
-                  ],
-                ),
-                VitTradeSection(
-                  title: 'Reports',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _SummaryGrid(summary: snapshot.summary),
-                      VitTabBar(
-                        variant: VitTabBarVariant.segment,
-                        activeKey: _tab,
-                        onChanged: _setTab,
-                        tabs: [
-                          VitTabItem(
-                            key: 'current',
-                            label: 'Q1 2026 (Current)',
-                            widgetKey: BestExecutionReportsPage.tabKey(
-                              'current',
-                            ),
-                          ),
-                          VitTabItem(
-                            key: 'archive',
-                            label: 'Archive',
-                            widgetKey: BestExecutionReportsPage.tabKey(
-                              'archive',
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (_tab == 'current')
-                        _CurrentReport(
-                          venues: snapshot.venues,
-                          onAnalysis: () => context.push(
-                            AppRoutePaths.tradeCopyExecutionVenueAnalysis,
-                          ),
-                          onExport: () =>
-                              setState(() => _notice = 'PDF export queued'),
-                          onPublish: () =>
-                              setState(() => _notice = 'Report submitted'),
-                        )
-                      else
-                        _ArchiveReport(
-                          reports: snapshot.archive,
-                          onExport: (id) =>
-                              setState(() => _notice = '$id PDF queued'),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
+      child: VitTradeHubScaffold(
+        title: 'Best Execution Reports',
+        subtitle: 'RTS 27 / RTS 28 Compliance',
+        semanticLabel: 'Báo cáo thực thi lệnh tốt nhất theo RTS 27/28',
+        semanticIdentifier: 'SC-096',
+        contentKey: BestExecutionReportsPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        headerActions: [
+          VitHeaderActionItem(
+            type: VitHeaderActionType.export,
+            onPressed: () => showVitNoticeSheet(
+              context: context,
+              title: 'Đã xếp hàng',
+              message: 'PDF export đã được xếp hàng.',
+              variant: VitBannerVariant.success,
+              ctaVariant: VitCtaButtonVariant.success,
             ),
           ),
-          if (_notice != null)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              top: mode.usesVisualQaFrame
-                  ? AppSpacing.buttonHero
-                  : AppSpacing.x5,
-              child: VitBanner(
-                variant: VitBannerVariant.success,
-                icon: Icons.check_circle_outline,
-                message: _notice!,
-                onDismiss: () => setState(() => _notice = null),
+        ],
+        children: async.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeBestExecutionReportsProvider),
+            ),
+          ],
+          data: (snapshot) => [
+            const VitTradeSection(title: 'Notice', child: _ComplianceNotice()),
+            VitTradeComplianceSection(
+              title: 'Execution review',
+              statusPill: VitStatusPill(
+                label: 'Updated ${snapshot.lastUpdatedLabel}',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Venues',
+                  value: '${snapshot.venues.length} tracked',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Archive',
+                  value: '${snapshot.archive.length} reports',
+                ),
+              ],
+            ),
+            VitTradeSection(
+              title: 'Reports',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _SummaryGrid(summary: snapshot.summary),
+                  VitTabBar(
+                    variant: VitTabBarVariant.segment,
+                    activeKey: _tab,
+                    onChanged: _setTab,
+                    tabs: [
+                      VitTabItem(
+                        key: 'current',
+                        label: 'Q1 2026 (Current)',
+                        widgetKey: BestExecutionReportsPage.tabKey('current'),
+                      ),
+                      VitTabItem(
+                        key: 'archive',
+                        label: 'Archive',
+                        widgetKey: BestExecutionReportsPage.tabKey('archive'),
+                      ),
+                    ],
+                  ),
+                  if (_tab == 'current')
+                    _CurrentReport(
+                      venues: snapshot.venues,
+                      onAnalysis: () => context.push(
+                        AppRoutePaths.tradeCopyExecutionVenueAnalysis,
+                      ),
+                      onExport: () => showVitNoticeSheet(
+                        context: context,
+                        title: 'Đã xếp hàng',
+                        message: 'PDF export đã được xếp hàng.',
+                        variant: VitBannerVariant.success,
+                        ctaVariant: VitCtaButtonVariant.success,
+                      ),
+                      onPublish: () => showVitNoticeSheet(
+                        context: context,
+                        title: 'Đã gửi',
+                        message: 'Báo cáo đã được gửi.',
+                        variant: VitBannerVariant.success,
+                        ctaVariant: VitCtaButtonVariant.success,
+                      ),
+                    )
+                  else
+                    _ArchiveReport(
+                      reports: snapshot.archive,
+                      onExport: (id) => showVitNoticeSheet(
+                        context: context,
+                        title: 'Đã xếp hàng',
+                        message: '$id: PDF đã được xếp hàng.',
+                        variant: VitBannerVariant.success,
+                        ctaVariant: VitCtaButtonVariant.success,
+                      ),
+                    ),
+                ],
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -261,8 +261,12 @@ class _WebhookCard extends StatelessWidget {
                 size: VitIconButtonSize.sm,
                 onPressed: () {
                   unawaited(HapticFeedback.selectionClick());
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Xóa webhook sẽ sớm ra mắt')),
+                  unawaited(
+                    showVitNoticeSheet(
+                      context: context,
+                      title: 'Sẽ sớm ra mắt',
+                      message: 'Xóa webhook sẽ sớm ra mắt',
+                    ),
                   );
                 },
               ),

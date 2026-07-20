@@ -89,7 +89,7 @@ void main() {
     expect(find.text('Total Saved'), findsOneWidget);
   });
 
-  testWidgets('SC-179 template Use button shows a placeholder snackbar', (
+  testWidgets('SC-179 template Use button shows a coming-soon notice sheet', (
     tester,
   ) async {
     await pumpSmartRules(tester);
@@ -101,6 +101,6 @@ void main() {
     await tester.tap(find.text('Use').first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Áp dụng mẫu quy tắc sẽ sớm ra mắt'), findsOneWidget);
+    expect(find.text('Áp dụng mẫu quy tắc sẽ sớm ra mắt.'), findsOneWidget);
   });
 }

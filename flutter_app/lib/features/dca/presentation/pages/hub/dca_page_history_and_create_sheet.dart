@@ -223,6 +223,8 @@ class _HistoryStat extends StatelessWidget {
   }
 }
 
+// notice-ack: allow-onboarding — intro overlay for the multi-step DCA
+// creation wizard ("trong bước sau"); not a post-action acknowledgement.
 class _CreatePlanSheet extends StatelessWidget {
   const _CreatePlanSheet({required this.bottomInset, required this.onClose});
 

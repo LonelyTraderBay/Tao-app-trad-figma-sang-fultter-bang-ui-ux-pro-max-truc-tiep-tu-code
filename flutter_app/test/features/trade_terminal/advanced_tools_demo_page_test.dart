@@ -141,7 +141,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(AdvancedToolsDemoPage.ladderSubmitKey));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Buy Order Placed'), findsOneWidget);
+    expect(find.textContaining('Đã đặt lệnh mua'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(
       find.byKey(AdvancedToolsDemoPage.tabKey('bulk')),
@@ -158,7 +160,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(AdvancedToolsDemoPage.bulkCancelKey));
     await tester.pumpAndSettle();
-    expect(find.text('4 orders cancelled'), findsOneWidget);
+    expect(find.textContaining('Đã hủy 4 lệnh'), findsOneWidget);
   });
 
   testWidgets('SC-062 back returns to SC-048 TradePage', (tester) async {

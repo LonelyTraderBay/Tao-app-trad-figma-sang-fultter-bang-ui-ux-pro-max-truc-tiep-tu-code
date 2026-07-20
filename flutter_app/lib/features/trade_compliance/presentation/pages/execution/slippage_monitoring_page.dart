@@ -51,150 +51,131 @@ class SlippageMonitoringPage extends ConsumerStatefulWidget {
 class _SlippageMonitoringPageState
     extends ConsumerState<SlippageMonitoringPage> {
   String _tab = 'realtime';
-  String? _notice;
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeSlippageMonitoringProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     return Material(
       color: _slipBackground,
-      child: Stack(
-        children: [
-          VitTradeHubScaffold(
-            title: 'Slippage Monitoring',
-            subtitle: 'Real-time Tracking · Alerts',
-            semanticLabel: 'Theo dõi trượt giá theo thời gian thực và cảnh báo',
-            semanticIdentifier: 'SC-098',
-            contentKey: SlippageMonitoringPage.contentKey,
-            shellRenderMode: widget.shellRenderMode,
-            onBack: () => goBackOrFallback(
-              context,
-              fallbackPath: AppRoutePaths.tradeCopyTrading,
-              mode: BackNavigationMode.historyThenFallback,
-            ),
-            headerActions: [
-              VitHeaderActionItem(
-                type: VitHeaderActionType.settings,
-                onPressed: () =>
-                    setState(() => _notice = 'Alert settings opened'),
-              ),
-            ],
-            children: async.when(
-              loading: () => const [VitSkeletonList()],
-              error: (error, stackTrace) => [
-                VitErrorState(
-                  title: 'Không tải được dữ liệu',
-                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                  actionLabel: 'Thử lại',
-                  onAction: () =>
-                      ref.invalidate(tradeSlippageMonitoringProvider),
-                ),
-              ],
-              data: (snapshot) => [
-                VitTradeSection(
-                  title: 'Alert',
-                  child: VitTradeComplianceHero(
-                    title:
-                        '${snapshot.summary.critical} Critical Slippage Event Detected',
-                    description:
-                        'Slippage exceeded 1% threshold. Review affected trades and consider provider adjustments.',
-                    icon: Icons.warning_amber_rounded,
-                    accentColor: AppColors.text1,
-                  ),
-                ),
-                VitTradeComplianceSection(
-                  title: 'Slippage status',
-                  statusPill: VitStatusPill(
-                    label: '${snapshot.summary.critical} critical',
-                    status: VitStatusPillStatus.warning,
-                    size: VitStatusPillSize.sm,
-                  ),
-                  items: [
-                    VitTradeComplianceItem(
-                      label: 'Avg slippage',
-                      value:
-                          '${snapshot.summary.avgSlippage.toStringAsFixed(2)} bps',
-                    ),
-                    VitTradeComplianceItem(
-                      label: 'Events',
-                      value: '${snapshot.events.length} tracked',
-                    ),
-                  ],
-                ),
-                VitTradeSection(
-                  title: 'Monitoring',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.tool,
-                        title: 'Slippage risk review',
-                        message:
-                            'Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.',
-                        contractId: 'SC-098 slippage monitoring review',
-                      ),
-                      _StatsGrid(summary: snapshot.summary),
-                      VitSegmentedTabBar(
-                        tabs: [
-                          VitTabItem(
-                            key: 'realtime',
-                            label: 'Real-time (${snapshot.summary.total})',
-                            widgetKey: SlippageMonitoringPage.tabKey(
-                              'realtime',
-                            ),
-                          ),
-                          VitTabItem(
-                            key: 'providers',
-                            label: 'By Provider',
-                            widgetKey: SlippageMonitoringPage.tabKey(
-                              'providers',
-                            ),
-                          ),
-                          VitTabItem(
-                            key: 'history',
-                            label: 'History',
-                            widgetKey: SlippageMonitoringPage.tabKey('history'),
-                          ),
-                          VitTabItem(
-                            key: 'alerts',
-                            label:
-                                'Alerts (${snapshot.summary.critical + snapshot.summary.warning})',
-                            widgetKey: SlippageMonitoringPage.tabKey('alerts'),
-                          ),
-                        ],
-                        activeKey: _tab,
-                        onChanged: (id) => setState(() => _tab = id),
-                      ),
-                      if (_tab == 'realtime')
-                        _RealtimeTab(events: snapshot.events)
-                      else if (_tab == 'providers')
-                        _ProvidersTab(providers: snapshot.providers)
-                      else if (_tab == 'history')
-                        _HistoryTab(history: snapshot.history)
-                      else
-                        const _AlertsTab(),
-                    ],
-                  ),
-                ),
-              ],
+      child: VitTradeHubScaffold(
+        title: 'Slippage Monitoring',
+        subtitle: 'Real-time Tracking · Alerts',
+        semanticLabel: 'Theo dõi trượt giá theo thời gian thực và cảnh báo',
+        semanticIdentifier: 'SC-098',
+        contentKey: SlippageMonitoringPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        headerActions: [
+          VitHeaderActionItem(
+            type: VitHeaderActionType.settings,
+            onPressed: () => showVitNoticeSheet(
+              context: context,
+              title: 'Cài đặt cảnh báo',
+              message: 'Đã mở cài đặt cảnh báo.',
+              variant: VitBannerVariant.success,
+              ctaVariant: VitCtaButtonVariant.success,
             ),
           ),
-          if (_notice != null)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              top: mode.usesVisualQaFrame
-                  ? AppSpacing.buttonHero
-                  : AppSpacing.x5,
-              child: VitBanner(
-                variant: VitBannerVariant.success,
-                message: _notice!,
-                onDismiss: () => setState(() => _notice = null),
+        ],
+        children: async.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeSlippageMonitoringProvider),
+            ),
+          ],
+          data: (snapshot) => [
+            VitTradeSection(
+              title: 'Alert',
+              child: VitTradeComplianceHero(
+                title:
+                    '${snapshot.summary.critical} Critical Slippage Event Detected',
+                description:
+                    'Slippage exceeded 1% threshold. Review affected trades and consider provider adjustments.',
+                icon: Icons.warning_amber_rounded,
+                accentColor: AppColors.text1,
               ),
             ),
-        ],
+            VitTradeComplianceSection(
+              title: 'Slippage status',
+              statusPill: VitStatusPill(
+                label: '${snapshot.summary.critical} critical',
+                status: VitStatusPillStatus.warning,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Avg slippage',
+                  value:
+                      '${snapshot.summary.avgSlippage.toStringAsFixed(2)} bps',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Events',
+                  value: '${snapshot.events.length} tracked',
+                ),
+              ],
+            ),
+            VitTradeSection(
+              title: 'Monitoring',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    density: VitDensity.tool,
+                    title: 'Slippage risk review',
+                    message:
+                        'Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.',
+                    contractId: 'SC-098 slippage monitoring review',
+                  ),
+                  _StatsGrid(summary: snapshot.summary),
+                  VitSegmentedTabBar(
+                    tabs: [
+                      VitTabItem(
+                        key: 'realtime',
+                        label: 'Real-time (${snapshot.summary.total})',
+                        widgetKey: SlippageMonitoringPage.tabKey('realtime'),
+                      ),
+                      VitTabItem(
+                        key: 'providers',
+                        label: 'By Provider',
+                        widgetKey: SlippageMonitoringPage.tabKey('providers'),
+                      ),
+                      VitTabItem(
+                        key: 'history',
+                        label: 'History',
+                        widgetKey: SlippageMonitoringPage.tabKey('history'),
+                      ),
+                      VitTabItem(
+                        key: 'alerts',
+                        label:
+                            'Alerts (${snapshot.summary.critical + snapshot.summary.warning})',
+                        widgetKey: SlippageMonitoringPage.tabKey('alerts'),
+                      ),
+                    ],
+                    activeKey: _tab,
+                    onChanged: (id) => setState(() => _tab = id),
+                  ),
+                  if (_tab == 'realtime')
+                    _RealtimeTab(events: snapshot.events)
+                  else if (_tab == 'providers')
+                    _ProvidersTab(providers: snapshot.providers)
+                  else if (_tab == 'history')
+                    _HistoryTab(history: snapshot.history)
+                  else
+                    const _AlertsTab(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

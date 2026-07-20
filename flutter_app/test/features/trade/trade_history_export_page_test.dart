@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -158,6 +158,11 @@ void main() {
 
     await tester.tap(find.byKey(TradeHistoryExportPage.exportKey));
     await tester.pump(const Duration(milliseconds: 260));
+    await tester.pumpAndSettle();
+    // Export-ready notice sheet is shown — dismiss it before interacting
+    // with the footer action buttons behind the modal barrier.
+    expect(find.text('File đã sẵn sàng tải xuống'), findsOneWidget);
+    await tester.tap(find.text('Tiếp tục'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(TradeHistoryExportPage.newExportKey));
     await tester.pumpAndSettle();

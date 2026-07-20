@@ -63,50 +63,6 @@ class _SheetFrame extends StatelessWidget {
   }
 }
 
-class _SuccessToast extends StatelessWidget {
-  const _SuccessToast({required this.onDismiss});
-
-  final VoidCallback onDismiss;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: AutoCompoundSettingsPage.successToastKey,
-      borderColor: AppColors.buy,
-      padding: AppSpacing.cardPadding,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.check_circle_rounded,
-            color: AppColors.buy,
-            size: AppSpacing.iconMd,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Đã lưu cài đặt!', style: AppTextStyles.baseMedium),
-                Text(
-                  'Compound sẽ áp dụng từ kỳ tiếp theo.',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
-            ),
-          ),
-          VitIconButton(
-            icon: Icons.close_rounded,
-            tooltip: 'Đóng thông báo',
-            onPressed: onDismiss,
-            variant: VitIconButtonVariant.transparent,
-            size: VitIconButtonSize.md,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ToggleSwitch extends StatelessWidget {
   const _ToggleSwitch({super.key, required this.on, required this.onTap});
 

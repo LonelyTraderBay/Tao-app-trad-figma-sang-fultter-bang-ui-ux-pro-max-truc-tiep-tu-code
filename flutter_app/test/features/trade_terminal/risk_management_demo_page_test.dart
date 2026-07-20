@@ -159,6 +159,8 @@ void main() {
     await tester.tap(find.byKey(RiskManagementDemoPage.ocoSubmitKey));
     await tester.pumpAndSettle();
     expect(find.text('Đã đặt OCO-DEMO-060'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
 
     await tester.ensureVisible(
       find.byKey(RiskManagementDemoPage.tabKey('calculator')),

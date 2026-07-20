@@ -122,4 +122,62 @@ void main() {
 
     expect(find.text('Margin trading'), findsNothing);
   });
+
+  testWidgets(
+    'showVitNoticeSheet stacks secondary ghost and success primary CTAs',
+    (tester) async {
+      var primaryPressed = false;
+      var secondaryPressed = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    unawaited(
+                      showVitNoticeSheet(
+                        context: context,
+                        title: 'Lệnh đã gửi',
+                        message: 'Đã gửi ORD-DEMO',
+                        variant: VitBannerVariant.success,
+                        ctaVariant: VitCtaButtonVariant.success,
+                        ctaLabel: 'Tiếp tục giao dịch',
+                        secondaryLabel: 'Chia sẻ',
+                        secondaryPressedLabel: 'Đã chia sẻ',
+                        onPrimary: () {
+                          primaryPressed = true;
+                        },
+                        onSecondary: () => secondaryPressed = true,
+                      ),
+                    );
+                  },
+                  child: const Text('Open notice'),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('Open notice'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Lệnh đã gửi'), findsOneWidget);
+      expect(find.text('Đã gửi ORD-DEMO'), findsOneWidget);
+      expect(find.text('Chia sẻ'), findsOneWidget);
+      expect(find.text('Tiếp tục giao dịch'), findsOneWidget);
+
+      await tester.tap(find.text('Chia sẻ'));
+      await tester.pumpAndSettle();
+      expect(secondaryPressed, isTrue);
+      expect(find.text('Đã chia sẻ'), findsOneWidget);
+
+      await tester.tap(find.text('Tiếp tục giao dịch'));
+      await tester.pumpAndSettle();
+      expect(primaryPressed, isTrue);
+      expect(find.text('Lệnh đã gửi'), findsNothing);
+    },
+  );
 }

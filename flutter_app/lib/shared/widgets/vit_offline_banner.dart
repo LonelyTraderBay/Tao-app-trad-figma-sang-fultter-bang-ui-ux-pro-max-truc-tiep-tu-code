@@ -17,33 +17,78 @@ enum VitBannerVariant { info, warning, error, success }
 /// chrome ([showVitBottomSheet] + [VitSheetPanel]). Use this instead of a
 /// hand-rolled scrim overlay or a bare [ScaffoldMessenger] SnackBar for any
 /// notice that needs the user's acknowledgement.
+///
+/// Optional [secondaryLabel] adds a full-width ghost CTA above the primary
+/// button (stacked sheet layout). [ctaVariant] defaults to
+/// [VitCtaButtonVariant.primary] for existing call sites; pass
+/// [VitCtaButtonVariant.success] for trade-success flows.
+/// When [secondaryPressedLabel] is set, the secondary button label switches
+/// after tap.
 Future<void> showVitNoticeSheet({
   required BuildContext context,
   required String title,
   required String message,
   VitBannerVariant variant = VitBannerVariant.info,
   String ctaLabel = 'Đã hiểu',
+  VitCtaButtonVariant ctaVariant = VitCtaButtonVariant.primary,
+  VoidCallback? onPrimary,
+  Key? primaryKey,
+  String? secondaryLabel,
+  String? secondaryPressedLabel,
+  VoidCallback? onSecondary,
+  Key? secondaryKey,
   bool isDismissible = true,
 }) {
   return showVitBottomSheet<void>(
     context: context,
     isDismissible: isDismissible,
-    builder: (sheetContext) => VitSheetPanel(
-      title: title,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          VitBanner(variant: variant, message: message),
-          const SizedBox(height: AppSpacing.x4),
-          VitCtaButton(
-            density: VitDensity.compact,
-            onPressed: () => Navigator.of(sheetContext).pop(),
-            child: Text(ctaLabel),
-          ),
-        ],
-      ),
-    ),
+    builder: (sheetContext) {
+      var secondaryPressed = false;
+      return StatefulBuilder(
+        builder: (context, setSheetState) {
+          final secondaryText =
+              secondaryPressed && secondaryPressedLabel != null
+              ? secondaryPressedLabel
+              : secondaryLabel;
+          return VitSheetPanel(
+            title: title,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                VitBanner(variant: variant, message: message),
+                const SizedBox(height: AppSpacing.x4),
+                if (secondaryText != null) ...[
+                  VitCtaButton(
+                    key: secondaryKey,
+                    variant: VitCtaButtonVariant.ghost,
+                    density: VitDensity.compact,
+                    onPressed: () {
+                      onSecondary?.call();
+                      if (secondaryPressedLabel != null) {
+                        setSheetState(() => secondaryPressed = true);
+                      }
+                    },
+                    child: Text(secondaryText),
+                  ),
+                  const SizedBox(height: AppSpacing.x3),
+                ],
+                VitCtaButton(
+                  key: primaryKey,
+                  variant: ctaVariant,
+                  density: VitDensity.compact,
+                  onPressed: () {
+                    Navigator.of(sheetContext).pop();
+                    onPrimary?.call();
+                  },
+                  child: Text(ctaLabel),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
   );
 }
 

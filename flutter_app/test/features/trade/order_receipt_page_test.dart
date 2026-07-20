@@ -88,8 +88,7 @@ void main() {
     expect(find.text('Take Profit'), findsOneWidget);
     expect(find.text('Stop Loss'), findsOneWidget);
     expect(find.byKey(OrderReceiptPage.copyOrderIdKey), findsOneWidget);
-    expect(find.byKey(OrderReceiptPage.shareKey), findsOneWidget);
-    expect(find.byKey(OrderReceiptPage.continueTradingKey), findsOneWidget);
+    expect(find.byKey(OrderReceiptPage.openActionsKey), findsOneWidget);
     expect(find.byKey(OrderReceiptPage.supportKey), findsOneWidget);
   });
 
@@ -107,8 +106,8 @@ void main() {
       minVisibleHeight: 12,
       targetLabel: 'trade receipt order id',
       reason:
-          'Order receipt should expose the actual order id above the sticky '
-          'footer and bottom navigation on the QA phone viewport.',
+          'Order receipt should expose the actual order id above the bottom '
+          'navigation on the QA phone viewport.',
     );
   });
 
@@ -126,15 +125,28 @@ void main() {
   ) async {
     await pumpOrderReceipt(tester);
 
-    await tester.tap(find.byKey(OrderReceiptPage.continueTradingKey));
+    await tester.ensureVisible(find.byKey(OrderReceiptPage.openActionsKey));
+    await tester.tap(find.byKey(OrderReceiptPage.openActionsKey));
     await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(OrderReceiptPage.continueTradingKey));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
 
     expect(find.byType(TradePage), findsOneWidget);
     expect(find.text('BTC/USDT'), findsWidgets);
+
+    // Drop the tree then flush mock network timers before binding teardown.
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(milliseconds: 500));
   });
 
   testWidgets('SC-051 share button keeps the receipt in place', (tester) async {
     await pumpOrderReceipt(tester);
+
+    await tester.ensureVisible(find.byKey(OrderReceiptPage.openActionsKey));
+    await tester.tap(find.byKey(OrderReceiptPage.openActionsKey));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(OrderReceiptPage.shareKey));
     await tester.pumpAndSettle();

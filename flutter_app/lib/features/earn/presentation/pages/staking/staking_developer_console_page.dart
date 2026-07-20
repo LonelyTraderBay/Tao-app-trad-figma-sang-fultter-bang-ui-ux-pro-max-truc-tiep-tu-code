@@ -498,7 +498,13 @@ class _DocCard extends StatelessWidget {
 
 void _showComingSoon(BuildContext context, String message) {
   unawaited(HapticFeedback.selectionClick());
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  unawaited(
+    showVitNoticeSheet(
+      context: context,
+      title: 'Sẽ sớm ra mắt',
+      message: message,
+    ),
+  );
 }
 
 Color _toneColor(String tone) {

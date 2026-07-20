@@ -13,7 +13,9 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/transfer/
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
@@ -54,7 +56,6 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   String _fromWalletId = 'spot';
   String _toWalletId = 'funding';
   String _assetId = 'usdt';
-  bool _showSuccess = false;
 
   @override
   void dispose() {
@@ -99,7 +100,6 @@ class _TransferPageState extends ConsumerState<TransferPage> {
           final canTransfer = validationMessage == null;
 
           return [
-            if (_showSuccess) const TransferSuccessBanner(),
             TransferDirectionCard(
               fromKey: TransferPage.fromWalletKey,
               toKey: TransferPage.toWalletKey,
@@ -296,9 +296,10 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     required double amount,
     required double usdValue,
   }) {
+    final pageContext = context;
     unawaited(
       showVitBottomSheet<void>(
-        context: context,
+        context: pageContext,
         isScrollControlled: true,
         builder: (context) => TransferConfirmSheet(
           fromWallet: fromWallet,
@@ -308,10 +309,19 @@ class _TransferPageState extends ConsumerState<TransferPage> {
           usdValue: usdValue,
           onConfirm: () {
             Navigator.of(context).pop();
-            setState(() {
-              _showSuccess = true;
-              _amountController.clear();
-            });
+            _amountController.clear();
+            setState(() {});
+            if (mounted) {
+              unawaited(
+                showVitNoticeSheet(
+                  context: pageContext,
+                  title: 'Chuyển thành công',
+                  message: 'Lệnh chuyển nội bộ đã được ghi nhận.',
+                  variant: VitBannerVariant.success,
+                  ctaVariant: VitCtaButtonVariant.success,
+                ),
+              );
+            }
           },
         ),
       ),

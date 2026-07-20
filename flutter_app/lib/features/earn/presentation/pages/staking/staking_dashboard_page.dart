@@ -22,8 +22,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class StakingDashboardPage extends ConsumerStatefulWidget {
   const StakingDashboardPage({super.key, this.shellRenderMode});
@@ -187,8 +186,12 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
 
   void _exportReport() {
     unawaited(HapticFeedback.selectionClick());
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Xuất báo cáo CSV/PDF sẽ sớm ra mắt')),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sẽ sớm ra mắt',
+        message: 'Xuất báo cáo CSV/PDF sẽ sớm ra mắt',
+      ),
     );
   }
 }

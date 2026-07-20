@@ -12,7 +12,6 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_hub_hero.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
@@ -36,7 +35,6 @@ class TradingBotsPage extends ConsumerStatefulWidget {
   static const sheetCreateKey = Key('sc059_sheet_create');
 
   static Key tabKey(String id) => Key('sc059_tab_$id');
-  static Key quickNavKey(String id) => Key('sc059_quick_$id');
   static Key botToggleKey(String botId) => Key('sc059_bot_toggle_$botId');
   static Key botSettingsKey(String botId) => Key('sc059_bot_settings_$botId');
   static Key botDeleteKey(String botId) => Key('sc059_bot_delete_$botId');
@@ -51,14 +49,13 @@ class TradingBotsPage extends ConsumerStatefulWidget {
 
 class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
   _TradingBotsTab _tab = _TradingBotsTab.myBots;
-  bool _showSuccess = false;
 
   @override
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradingBotsSnapshotProvider);
 
     return VitTradeHubScaffold(
-      title: 'Bot giao dịch',
+      title: 'Trading Bots',
       subtitle: 'Tự động hóa giao dịch theo chiến lược',
       semanticLabel: 'Bot giao dịch tự động',
       semanticIdentifier: 'SC-059',
@@ -70,10 +67,6 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
         fallbackPath: AppRoutePaths.trade,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      showProductTabs: true,
-      activeProductId: 'bots',
-      quickNavKey: TradingBotsPage.quickNavKey,
-      navigationBuilder: buildTradeProductNavigation,
       children: snapshotAsync.when(
         loading: () => const [VitSkeletonList()],
         error: (error, stackTrace) => [
@@ -93,13 +86,6 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
           final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
           final profitColor = totalProfit >= 0 ? AppColors.buy : AppColors.sell;
           return [
-            if (_showSuccess)
-              VitBanner(
-                variant: VitBannerVariant.success,
-                title: 'Bot đã được khởi chạy!',
-                message: 'Bot đang hoạt động và giao dịch tự động',
-                onDismiss: () => setState(() => _showSuccess = false),
-              ),
             VitTradeHubHero(
               primaryLabel: 'Đang chạy',
               primaryValue: '$runningBots',
@@ -112,7 +98,6 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
               key: TradingBotsPage.addBotKey,
               onPressed: () =>
                   setState(() => _tab = _TradingBotsTab.strategies),
-              density: VitDensity.tool,
               height: AppSpacing.inputHeight,
               leading: const Icon(Icons.add_rounded),
               child: const Text('Khám phá chiến lược'),
@@ -204,9 +189,13 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
           ),
         );
     if (!mounted) return;
-    setState(() {
-      _tab = _TradingBotsTab.myBots;
-      _showSuccess = true;
-    });
+    setState(() => _tab = _TradingBotsTab.myBots);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Bot đã được khởi chạy!',
+      message: 'Bot đang hoạt động và giao dịch tự động',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 }

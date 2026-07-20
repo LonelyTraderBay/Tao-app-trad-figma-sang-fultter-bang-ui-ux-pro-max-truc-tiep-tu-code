@@ -57,108 +57,90 @@ class RiskManagementDemoPage extends ConsumerStatefulWidget {
 class _RiskManagementDemoPageState
     extends ConsumerState<RiskManagementDemoPage> {
   _RiskTab _tab = _RiskTab.oco;
-  String? _successMessage;
 
   @override
   Widget build(BuildContext context) {
     final controllerAsync = ref.watch(tradeRiskManagementControllerProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
-          title: 'Quản lý rủi ro',
-          subtitle: 'OCO · Vị thế · Khối lượng',
-          semanticLabel: 'Quản lý rủi ro',
-          semanticIdentifier: 'SC-060',
-          contentKey: RiskManagementDemoPage.contentKey,
-          backKey: RiskManagementDemoPage.backKey,
-          shellRenderMode: widget.shellRenderMode,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.trade,
-            mode: BackNavigationMode.historyThenFallback,
+    return VitTradeHubScaffold(
+      title: 'Quản lý rủi ro',
+      subtitle: 'OCO · Vị thế · Khối lượng',
+      semanticLabel: 'Quản lý rủi ro',
+      semanticIdentifier: 'SC-060',
+      contentKey: RiskManagementDemoPage.contentKey,
+      backKey: RiskManagementDemoPage.backKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      showProductTabs: true,
+      navigationBuilder: buildTradeProductNavigation,
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được quản lý rủi ro',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeRiskManagementSnapshotProvider),
           ),
-          showProductTabs: true,
-          navigationBuilder: buildTradeProductNavigation,
-          children: controllerAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được quản lý rủi ro',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () =>
-                    ref.invalidate(tradeRiskManagementSnapshotProvider),
-              ),
-            ],
-            data: (controller) {
-              final snapshot = controller.state.snapshot;
-              return [
-                const _IntroCard(),
-                const VitCard(
-                  variant: VitCardVariant.inner,
-                  radius: VitCardRadius.tight,
-                  padding: TradeSpacingTokens.tradeToolRiskReviewPadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Xem lại công cụ rủi ro',
-                        message:
-                            'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
-                        contractId: 'risk-management-demo-review',
-                        density: VitDensity.tool,
-                      ),
-                      SizedBox(height: _riskSpace),
-                      VitStatusPill(
-                        label: 'Xem trước khi thực hiện',
-                        status: VitStatusPillStatus.warning,
-                        size: VitStatusPillSize.sm,
-                      ),
-                    ],
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          return [
+            const _IntroCard(),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              radius: VitCardRadius.tight,
+              padding: TradeSpacingTokens.tradeToolRiskReviewPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Xem lại công cụ rủi ro',
+                    message:
+                        'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
+                    contractId: 'risk-management-demo-review',
+                    density: VitDensity.tool,
                   ),
-                ),
-                for (final feature in snapshot.features) ...[
-                  _FeatureCard(
-                    feature: feature,
-                    onTap: () => _onFeatureTap(feature),
+                  SizedBox(height: _riskSpace),
+                  VitStatusPill(
+                    label: 'Xem trước khi thực hiện',
+                    status: VitStatusPillStatus.warning,
+                    size: VitStatusPillSize.sm,
                   ),
                 ],
-                const _BenefitsCard(),
-                _StatusCard(items: snapshot.statusItems),
-                _RiskTabs(
-                  active: _tab,
-                  onChanged: (tab) => setState(() => _tab = tab),
-                ),
-                VitPageSection(
-                  density: VitDensity.tool,
-                  children: [
-                    if (_tab == _RiskTab.oco)
-                      _OcoTab(onOpen: _openOcoSheet)
-                    else if (_tab == _RiskTab.positions)
-                      _PositionsTab(positions: snapshot.positions)
-                    else
-                      _CalculatorTab(onOpen: _openCalculatorSheet),
-                  ],
-                ),
-              ];
-            },
-          ),
-        ),
-        if (_successMessage != null)
-          Positioned(
-            left: AppSpacing.contentPad,
-            right: AppSpacing.contentPad,
-            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
-            child: VitBanner(
-              variant: VitBannerVariant.success,
-              message: _successMessage!,
-              onDismiss: () => setState(() => _successMessage = null),
+              ),
             ),
-          ),
-      ],
+            for (final feature in snapshot.features) ...[
+              _FeatureCard(
+                feature: feature,
+                onTap: () => _onFeatureTap(feature),
+              ),
+            ],
+            const _BenefitsCard(),
+            _StatusCard(items: snapshot.statusItems),
+            _RiskTabs(
+              active: _tab,
+              onChanged: (tab) => setState(() => _tab = tab),
+            ),
+            VitPageSection(
+              density: VitDensity.tool,
+              children: [
+                if (_tab == _RiskTab.oco)
+                  _OcoTab(onOpen: _openOcoSheet)
+                else if (_tab == _RiskTab.positions)
+                  _PositionsTab(positions: snapshot.positions)
+                else
+                  _CalculatorTab(onOpen: _openCalculatorSheet),
+              ],
+            ),
+          ];
+        },
+      ),
     );
   }
 
@@ -197,7 +179,15 @@ class _RiskManagementDemoPageState
       ),
     );
     if (!mounted) return;
-    setState(() => _successMessage = 'Đã đặt ${result.orderId}');
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Lệnh OCO đã gửi',
+        message: 'Đã đặt ${result.orderId}',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 
   Future<void> _openCalculatorSheet() async {
@@ -219,6 +209,14 @@ class _RiskManagementDemoPageState
       builder: (context) => _CalculatorSheet(result: result),
     );
     if (applied != true || !mounted) return;
-    setState(() => _successMessage = 'Đã áp dụng khối lượng đề xuất');
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã áp dụng',
+        message: 'Đã áp dụng khối lượng đề xuất',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 }

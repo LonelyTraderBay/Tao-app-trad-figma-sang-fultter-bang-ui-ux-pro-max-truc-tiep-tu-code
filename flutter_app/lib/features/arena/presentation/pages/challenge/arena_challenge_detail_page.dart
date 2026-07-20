@@ -33,18 +33,10 @@ part 'arena_challenge_detail_page_actions_and_shared_widgets.dart';
 const _arenaAccent = AppModuleAccents.arena;
 const _challengeGap = AppSpacing.x2;
 const _challengeTinyGap = AppSpacing.x1;
-const _challengeInlineGap = 8.0;
 const EdgeInsetsGeometry _challengeCardPadding =
     EdgeInsetsDirectional.symmetric(
       horizontal: _challengeGap + _challengeTinyGap,
       vertical: _challengeGap + _challengeTinyGap,
-    );
-const EdgeInsetsGeometry _challengeSheetPadding =
-    EdgeInsetsDirectional.fromSTEB(
-      _challengeGap * 2,
-      _challengeGap + _challengeTinyGap + (_challengeTinyGap / 2),
-      _challengeGap * 2,
-      _challengeGap * 2,
     );
 const _challengeSmallIcon = 16.0;
 const _challengeMdIcon = 20.0;
@@ -248,95 +240,34 @@ class _ArenaChallengeDetailPageState
     );
   }
 
+  void _showActionSheet({required String title, required String body}) {
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(context: context, title: title, message: body),
+    );
+  }
+
   void _showEvidenceSheet() => _showActionSheet(
     title: 'Gửi bằng chứng',
-    icon: Icons.camera_alt_outlined,
     body:
         'Challenge này đang dùng API CoinGecko để chốt kết quả. Bạn vẫn có thể gửi ghi chú hoặc bằng chứng bổ sung nếu phát hiện sai lệch.',
   );
 
   void _showReportSheet() => _showActionSheet(
     title: 'Báo cáo challenge',
-    icon: Icons.flag_outlined,
     body:
         'Báo cáo chỉ dùng cho nội dung, hành vi hoặc rule không rõ ràng. Không dùng để thay đổi kết quả nếu không có bằng chứng.',
   );
 
   void _showBlockSheet() => _showActionSheet(
     title: 'Chặn creator',
-    icon: Icons.block_outlined,
     body:
         'Bạn sẽ không thấy lời mời hoặc room mới từ creator này trên bề mặt Open Arena.',
   );
 
   void _showLeaveSheet() => _showActionSheet(
     title: 'Rời challenge',
-    icon: Icons.cancel_outlined,
     body:
         'Challenge đã bắt đầu nên entry points không được hoàn lại, trừ khi room bị void theo rule đã công bố.',
   );
-
-  void _showActionSheet({
-    required String title,
-    required IconData icon,
-    required String body,
-  }) {
-    unawaited(HapticFeedback.selectionClick());
-    unawaited(
-      showVitBottomSheet<void>(
-        context: context,
-        backgroundColor: AppColors.surface,
-        barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
-        shape: const RoundedRectangleBorder(
-          borderRadius: AppRadii.sheetTopRadius,
-        ),
-        builder: (context) => SafeArea(
-          top: false,
-          child: VitSheetSurface(
-            color: AppColors.surface,
-            borderRadius: AppRadii.sheetTopRadius,
-            padding: _challengeSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    VitAccentIconBox(
-                      icon: icon,
-                      color: _arenaAccent,
-                      iconSize: _challengeIconBubbleIcon,
-                    ),
-                    const SizedBox(width: _challengeInlineGap),
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: AppTextStyles.sectionTitle.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: _challengeGap),
-                Text(
-                  body,
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.text2,
-                    height: AppTextStyles.numericMicro.height,
-                  ),
-                ),
-                const SizedBox(height: _challengeGap),
-                VitCtaButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Đã hiểu'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

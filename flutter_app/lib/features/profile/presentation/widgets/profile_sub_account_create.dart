@@ -95,11 +95,11 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
 
   void _submitCreate() {
     unawaited(HapticFeedback.selectionClick());
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 s\u1EBD s\u1EDBm ra m\u1EAFt',
-        ),
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: 'Tạo tài khoản phụ sẽ sớm ra mắt',
       ),
     );
   }

@@ -36,7 +36,6 @@ lib/features/dca/presentation/pages/portfolio/dca_performance_compare_page.dart|
 lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart|Target allocations, strategy, threshold, frequency, advanced settings, auto-execute risk, preview sheet, fees, and disabled save state remain visible before saving rebalance automation.
 lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_settings_and_preview.dart|Review trade count, estimated fees, and automation risk before saving rebalance execution.
 lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart|Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.
-lib/features/dca/presentation/pages/research/dca_dynamic_amount_page.dart|Dynamic amount settings ready
 lib/features/dca/presentation/pages/schedule/dca_smart_rules_page.dart|Rule conditions, automated trade actions, trigger history, success rate, delete preview, and create-rule confirmation are reviewed before DCA automation changes.
 lib/features/dca/presentation/widgets/hub/dca_overview_demo_shell.dart|Hide balance
 lib/features/dca/presentation/widgets/hub/dca_overview_demo_shell.dart|Show balance
@@ -305,7 +304,6 @@ lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_form.dart
 lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_form.dart|Describe the issue in detail. Include dates, trade IDs, amounts, etc.
 lib/features/trade_core/presentation/widgets/trade_module_layout.dart|navigationBuilder was supplied. This nav-bar source is 
 lib/features/trade_core/presentation/widgets/trade_module_layout.dart|tradeShellWithProductTabs: showProductTabs is true but no 
-lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|Buy Order Placed · 0.5 BTC
 lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|Click any price level on the order book to place instant orders
 lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|Select multiple orders and perform batch actions
 lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|View all keyboard shortcuts and customize key bindings
@@ -319,7 +317,6 @@ lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheet
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${orders.length} open orders selected for batch action.
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|BTC/USDT DOM · click price level to place instant order.
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|Place Buy Order
-lib/features/trade_terminal/presentation/widgets/tools/execution_quality_common.dart|Close success message
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|${fill.amount.toStringAsFixed(1)} BTC @ \$${formatExecutionQualityMoney(fill.price)}
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|Save Slippage Settings
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|Set max slippage tolerance before the order is rejected.

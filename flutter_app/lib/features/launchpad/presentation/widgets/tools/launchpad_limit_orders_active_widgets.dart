@@ -24,7 +24,9 @@ class _ActiveOrdersSection extends StatelessWidget {
 
 void _showComingSoon(BuildContext context, String message) {
   unawaited(HapticFeedback.selectionClick());
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  unawaited(
+    showVitNoticeSheet(context: context, title: 'Sắp ra mắt', message: message),
+  );
 }
 
 class _LimitOrderCard extends StatelessWidget {

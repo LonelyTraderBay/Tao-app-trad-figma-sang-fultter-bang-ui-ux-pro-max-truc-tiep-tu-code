@@ -171,6 +171,7 @@ class _TradeHistoryExportPageState
           ],
         ),
         Positioned(
+          // notice-ack: allow-sticky-footer
           left: 0,
           right: 0,
           bottom: footerSafePadding,
@@ -199,5 +200,18 @@ class _TradeHistoryExportPageState
     await ref
         .read(tradeHistoryExportStateControllerProvider.notifier)
         .submitExport();
+    if (!mounted) return;
+    final viewState = ref.read(tradeHistoryExportStateControllerProvider);
+    if (viewState.result != null) {
+      await showVitNoticeSheet(
+        context: context,
+        title: 'File đã sẵn sàng tải xuống',
+        message:
+            'File ${viewState.format.toUpperCase()} của bạn đã được tạo thành công.',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+        ctaLabel: 'Tiếp tục',
+      );
+    }
   }
 }

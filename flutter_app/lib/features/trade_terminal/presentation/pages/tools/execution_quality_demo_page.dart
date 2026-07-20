@@ -7,7 +7,6 @@ import 'package:vit_trade_flutter/app/providers/trade_terminal_controller_provid
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_common.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_overview.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart';
@@ -48,88 +47,72 @@ class _ExecutionQualityDemoPageState
   /// null trước đó (loading/error), lazily gán trong `data:` branch bên dưới
   /// thay vì initState() (getExecutionQuality() giờ là `Future<T>`).
   TradeSlippageSettings? _settings;
-  String? _successMessage;
 
   @override
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeExecutionQualitySnapshotProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
-          title: 'Chất lượng khớp lệnh',
-          subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
-          semanticLabel: 'Chất lượng khớp lệnh',
-          semanticIdentifier: 'SC-061',
-          contentKey: ExecutionQualityDemoPage.contentKey,
-          shellRenderMode: widget.shellRenderMode,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.trade,
-            mode: BackNavigationMode.historyThenFallback,
+    return VitTradeHubScaffold(
+      title: 'Chất lượng khớp lệnh',
+      subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
+      semanticLabel: 'Chất lượng khớp lệnh',
+      semanticIdentifier: 'SC-061',
+      contentKey: ExecutionQualityDemoPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      showProductTabs: true,
+      navigationBuilder: buildTradeProductNavigation,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được chất lượng khớp lệnh',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeExecutionQualitySnapshotProvider),
           ),
-          showProductTabs: true,
-          navigationBuilder: buildTradeProductNavigation,
-          children: snapshotAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được chất lượng khớp lệnh',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () =>
-                    ref.invalidate(tradeExecutionQualitySnapshotProvider),
-              ),
-            ],
-            data: (snapshot) {
-              final settings = _settings ??= snapshot.slippageSettings;
-              return [
-                const ExecutionQualityIntroCard(),
-                const VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Xem lại chất lượng khớp lệnh',
-                  message:
-                      'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
-                  contractId: 'execution-quality-demo-review',
-                  density: VitDensity.tool,
-                ),
-                for (final feature in snapshot.features)
-                  ExecutionQualityFeatureCard(
-                    feature: feature,
-                    onTap: () => _onFeatureTap(feature),
-                  ),
-                const ExecutionQualityBenefitsCard(),
-                ExecutionQualityProgressCard(items: snapshot.statusItems),
-                const ExecutionQualityParityCard(),
-                ExecutionQualityTabs(
-                  active: _tab,
-                  onChanged: (tab) => setState(() => _tab = tab),
-                ),
-                if (_tab == ExecutionQualityTab.slippage)
-                  ExecutionQualitySlippageTab(
-                    settings: settings,
-                    onOpen: _openSlippageSheet,
-                  )
-                else if (_tab == ExecutionQualityTab.execution)
-                  ExecutionQualityExecutionTab(onOpen: _openExecutionSheet)
-                else
-                  ExecutionQualityAmendmentTab(onOpen: _openAmendmentSheet),
-              ];
-            },
-          ),
-        ),
-        if (_successMessage != null)
-          Positioned(
-            left: AppSpacing.contentPad,
-            right: AppSpacing.contentPad,
-            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
-            child: ExecutionQualitySuccessToast(
-              message: _successMessage!,
-              onClose: () => setState(() => _successMessage = null),
+        ],
+        data: (snapshot) {
+          final settings = _settings ??= snapshot.slippageSettings;
+          return [
+            const ExecutionQualityIntroCard(),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Xem lại chất lượng khớp lệnh',
+              message:
+                  'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
+              contractId: 'execution-quality-demo-review',
+              density: VitDensity.tool,
             ),
-          ),
-      ],
+            for (final feature in snapshot.features)
+              ExecutionQualityFeatureCard(
+                feature: feature,
+                onTap: () => _onFeatureTap(feature),
+              ),
+            const ExecutionQualityBenefitsCard(),
+            ExecutionQualityProgressCard(items: snapshot.statusItems),
+            const ExecutionQualityParityCard(),
+            ExecutionQualityTabs(
+              active: _tab,
+              onChanged: (tab) => setState(() => _tab = tab),
+            ),
+            if (_tab == ExecutionQualityTab.slippage)
+              ExecutionQualitySlippageTab(
+                settings: settings,
+                onOpen: _openSlippageSheet,
+              )
+            else if (_tab == ExecutionQualityTab.execution)
+              ExecutionQualityExecutionTab(onOpen: _openExecutionSheet)
+            else
+              ExecutionQualityAmendmentTab(onOpen: _openAmendmentSheet),
+          ];
+        },
+      ),
     );
   }
 
@@ -162,11 +145,16 @@ class _ExecutionQualityDemoPageState
         .read(tradeReadModelControllerProvider)
         .updateSlippageSettings(updated);
     if (!mounted) return;
-    setState(() {
-      _settings = saved;
-      _successMessage =
-          'Slippage tolerance updated to ${saved.tolerancePct.toStringAsFixed(1)}%';
-    });
+    setState(() => _settings = saved);
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã lưu cài đặt',
+        message: 'Ngưỡng trượt giá: ${saved.tolerancePct.toStringAsFixed(1)}%',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 
   Future<void> _openExecutionSheet() async {
@@ -206,6 +194,14 @@ class _ExecutionQualityDemoPageState
           ),
         );
     if (!mounted) return;
-    setState(() => _successMessage = 'Order Modified · ${result.orderId}');
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sửa lệnh thành công',
+        message: 'Đã sửa lệnh ${result.orderId}',
+        variant: VitBannerVariant.success,
+        ctaVariant: VitCtaButtonVariant.success,
+      ),
+    );
   }
 }
