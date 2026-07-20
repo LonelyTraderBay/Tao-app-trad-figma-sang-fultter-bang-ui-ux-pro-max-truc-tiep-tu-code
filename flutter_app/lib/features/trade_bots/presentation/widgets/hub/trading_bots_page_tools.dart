@@ -154,7 +154,7 @@ class _QuickToolsStrip extends StatelessWidget {
             key: TradingBotsPage.toolsKey,
             child: VitActionTileGrid(
               itemCount: _quickTools.length,
-              crossAxisCount: 4,
+              crossAxisCount: AppSpacing.serviceTileCrossAxisCount,
               density: VitDensity.tool,
               itemBuilder: (context, index, density) {
                 final tool = _quickTools[index];

@@ -33,7 +33,6 @@ class _RiskScoreCard extends StatelessWidget {
                       '${snapshot.riskScore}/100',
                       style: AppTextStyles.heroNumber.copyWith(
                         color: color,
-                        height: 1.15,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),

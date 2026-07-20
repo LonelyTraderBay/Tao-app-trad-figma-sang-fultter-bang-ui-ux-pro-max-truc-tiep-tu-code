@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
@@ -248,7 +249,4 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
   }
 }
 
-String _formatSignedMoney(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign\$${value.abs().toStringAsFixed(2)}';
-}
+String _formatSignedMoney(double value) => VitFormat.usdSigned(value);

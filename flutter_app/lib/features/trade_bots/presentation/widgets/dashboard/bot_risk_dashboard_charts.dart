@@ -404,7 +404,6 @@ void _drawSmallText(
       text: text,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text3,
-        height: 1.1,
         decoration: TextDecoration.none,
       ),
     ),

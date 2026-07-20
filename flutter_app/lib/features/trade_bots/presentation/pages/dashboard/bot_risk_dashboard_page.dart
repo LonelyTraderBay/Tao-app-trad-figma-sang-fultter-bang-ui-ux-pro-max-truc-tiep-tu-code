@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
@@ -224,20 +225,6 @@ Color _riskColor(int score) {
   return _riskRed;
 }
 
-String _formatCompact(double value) {
-  final text = value.abs().toStringAsFixed(0);
-  final buffer = StringBuffer();
-  for (var i = 0; i < text.length; i++) {
-    final remaining = text.length - i;
-    buffer.write(text[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
-  }
-  return buffer.toString();
-}
+String _formatSignedMoney(double value) => VitFormat.usdWholeSigned(value);
 
-String _formatSignedMoney(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign\$${_formatCompact(value.abs())}';
-}
-
-String _formatMoney(double value) => '\$${_formatCompact(value)}';
+String _formatMoney(double value) => VitFormat.usdWhole(value);

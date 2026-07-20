@@ -28,17 +28,6 @@ VitStatusPillStatus _riskStatus(TradeBotRisk risk) {
   };
 }
 
-String _formatWholeNumber(double value) {
-  final text = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < text.length; i++) {
-    if (i > 0 && (text.length - i) % 3 == 0) buffer.write(',');
-    buffer.write(text[i]);
-  }
-  return buffer.toString();
-}
+String _formatWholeNumber(double value) => VitFormat.count(value.round());
 
-String _formatSignedMoney(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign\$${value.abs().toStringAsFixed(2)}';
-}
+String _formatSignedMoney(double value) => VitFormat.usdSigned(value);

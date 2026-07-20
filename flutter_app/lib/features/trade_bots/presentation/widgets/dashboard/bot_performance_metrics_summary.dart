@@ -181,37 +181,31 @@ class _DurationCard extends StatelessWidget {
               child: SizedBox(
                 width: _donutSize,
                 height: _donutSize,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.x5,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '$total',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1.1,
-                            fontFeatures: AppTextStyles.tabularFigures,
-                          ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$total',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
-                        const SizedBox(
-                          height: TradeSpacingTokens.tradeBotTinyGap,
+                      ),
+                      const SizedBox(
+                        height: TradeSpacingTokens.tradeBotTinyGap,
+                      ),
+                      Text(
+                        'lệnh',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
                         ),
-                        Text(
-                          'lệnh',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text2,
-                            height: 1.1,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -278,12 +272,16 @@ class _DurationLegendRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              width: AppSpacing.x3,
-              height: AppSpacing.x3,
-              decoration: BoxDecoration(
+            DecoratedBox(
+              decoration: ShapeDecoration(
                 color: color,
-                borderRadius: AppRadii.smRadius,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                ),
+              ),
+              child: const SizedBox(
+                width: AppSpacing.x3,
+                height: AppSpacing.x3,
               ),
             ),
             const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),

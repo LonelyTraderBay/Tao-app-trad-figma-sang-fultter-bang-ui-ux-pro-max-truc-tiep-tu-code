@@ -173,12 +173,16 @@ class _ExposureCard extends StatelessWidget {
           for (final exposure in exposures) ...[
             Row(
               children: [
-                Container(
-                  width: AppSpacing.x3,
-                  height: AppSpacing.x3,
-                  decoration: BoxDecoration(
+                DecoratedBox(
+                  decoration: ShapeDecoration(
                     color: Color(exposure.colorHex),
-                    borderRadius: AppRadii.smRadius,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                    ),
+                  ),
+                  child: const SizedBox(
+                    width: AppSpacing.x3,
+                    height: AppSpacing.x3,
                   ),
                 ),
                 const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),

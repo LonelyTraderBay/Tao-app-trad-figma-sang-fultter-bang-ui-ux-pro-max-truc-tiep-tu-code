@@ -852,11 +852,12 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/dashboard/bot_risk_dashboard_score.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_bot_card.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_create_bot_sheet.dart,C,-,done,0,-
+06_other,flutter_app/lib/features/trade_bots/presentation/widgets/hub/trading_bots_page_tools.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_endpoints.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_intro_tabs.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_api_documentation_support_common.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_emergency_stop_page_common.dart,C,-,done,0,-
-06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_emergency_stop_page_sections.dart,D,-,done,0,-
+06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_emergency_stop_page_sections.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_faq_cards_help.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_guide_blocks.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_bots/presentation/widgets/settings/bot_guide_intro_tabs.dart,C,-,done,0,-

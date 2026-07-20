@@ -196,13 +196,17 @@ class _RiskExplanationCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: AppSpacing.x2,
-                    height: AppSpacing.x2,
-                    margin: const EdgeInsets.only(top: 5),
-                    decoration: const BoxDecoration(
-                      color: AppColors.text3,
-                      shape: BoxShape.circle,
+                  Transform.translate(
+                    offset: const Offset(0, AppSpacing.x2),
+                    child: const DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: AppColors.text3,
+                        shape: CircleBorder(),
+                      ),
+                      child: SizedBox(
+                        width: AppSpacing.x2,
+                        height: AppSpacing.x2,
+                      ),
                     ),
                   ),
                   const SizedBox(width: TradeSpacingTokens.tradeBotCardGap),

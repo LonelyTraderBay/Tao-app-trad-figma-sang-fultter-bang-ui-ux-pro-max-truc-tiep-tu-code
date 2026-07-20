@@ -284,13 +284,14 @@ class _LegendSwatch extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.x3,
-          height: AppSpacing.x3,
-          decoration: BoxDecoration(
+        DecoratedBox(
+          decoration: ShapeDecoration(
             color: color,
-            borderRadius: AppRadii.smRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
+          child: const SizedBox(width: AppSpacing.x3, height: AppSpacing.x3),
         ),
         const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
         Text(

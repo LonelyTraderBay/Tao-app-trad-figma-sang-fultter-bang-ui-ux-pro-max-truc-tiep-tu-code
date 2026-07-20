@@ -256,14 +256,14 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
-                  for (final param in strategy.params)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.rowGap),
-                      child: VitKeyValueRow(
-                        label: param.label,
-                        value: _values[param.key] ?? param.defaultValue,
-                      ),
+                  for (final param in strategy.params) ...[
+                    VitKeyValueRow(
+                      label: param.label,
+                      value: _values[param.key] ?? param.defaultValue,
                     ),
+                    if (param != strategy.params.last)
+                      const SizedBox(height: AppSpacing.rowGap),
+                  ],
                 ],
               ),
             ),
