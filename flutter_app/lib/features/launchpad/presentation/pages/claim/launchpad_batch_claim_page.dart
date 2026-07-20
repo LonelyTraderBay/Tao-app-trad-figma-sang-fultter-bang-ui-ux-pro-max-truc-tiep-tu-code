@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +24,7 @@ part '../../widgets/claim/launchpad_batch_claim_summary.dart';
 part '../../widgets/claim/launchpad_batch_claim_selection.dart';
 part '../../widgets/claim/launchpad_batch_claim_review_success.dart';
 
-enum _BatchClaimStep { select, review, success }
+enum _BatchClaimStep { select, review }
 
 class LaunchpadBatchClaimPage extends ConsumerStatefulWidget {
   const LaunchpadBatchClaimPage({super.key, this.shellRenderMode});
@@ -34,7 +36,6 @@ class LaunchpadBatchClaimPage extends ConsumerStatefulWidget {
   static const ctaKey = Key('sc304_launchpad_batch_claim_cta');
   static const reviewKey = Key('sc304_launchpad_batch_claim_review');
   static const reviewStateKey = Key('sc304_launchpad_batch_claim_review_state');
-  static const successKey = Key('sc304_launchpad_batch_claim_success');
 
   static Key positionKey(String id) =>
       Key('sc304_launchpad_batch_claim_position_$id');
@@ -131,9 +132,7 @@ class _LaunchpadBatchClaimPageState
                   semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
                   semanticIdentifier: 'SC-304',
                   header: VitHeader(
-                    title: _step == _BatchClaimStep.success
-                        ? 'Hoàn tất'
-                        : snapshot.title,
+                    title: snapshot.title,
                     showBack: true,
                     onBack: () => context.go(snapshot.backRoute),
                   ),
@@ -172,20 +171,19 @@ class _LaunchpadBatchClaimPageState
                             ),
                           if (selectedSummary.chains.length > 1)
                             _ChainWarning(summary: selectedSummary),
-                        ] else if (_step == _BatchClaimStep.review)
+                        ] else
                           _ReviewStep(
                             positions: selectedPositions,
                             summary: selectedSummary,
                             onBack: () =>
                                 setState(() => _step = _BatchClaimStep.select),
-                            onConfirm: () =>
-                                setState(() => _step = _BatchClaimStep.success),
-                          )
-                        else
-                          _SuccessStep(
-                            positions: selectedPositions,
-                            summary: selectedSummary,
-                            onDone: () => context.go(snapshot.backRoute),
+                            onConfirm: () => unawaited(
+                              _confirmClaim(
+                                snapshot,
+                                selectedPositions.length,
+                                selectedSummary,
+                              ),
+                            ),
                           ),
                       ],
                     ),
@@ -193,6 +191,8 @@ class _LaunchpadBatchClaimPageState
                 ),
                 if (_step == _BatchClaimStep.select && selectedIds.isNotEmpty)
                   Positioned(
+                    // notice-ack: allow-sticky-footer-form-cta — select-step
+                    // CTA footer, not a success toast overlay.
                     left: 0,
                     right: 0,
                     bottom: navInset + safeBottom,
@@ -232,5 +232,24 @@ class _LaunchpadBatchClaimPageState
         ids.add(id);
       }
     });
+  }
+
+  Future<void> _confirmClaim(
+    LaunchpadBatchClaimSnapshot snapshot,
+    int positionCount,
+    LaunchpadBatchClaimSummaryDraft summary,
+  ) async {
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Batch Claim thành công!',
+      message:
+          'Đã nhận phần thưởng từ $positionCount vị trí — '
+          '~${_formatUsd(summary.totalClaimableUsd)}.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (mounted) context.go(snapshot.backRoute);
+      },
+    );
   }
 }

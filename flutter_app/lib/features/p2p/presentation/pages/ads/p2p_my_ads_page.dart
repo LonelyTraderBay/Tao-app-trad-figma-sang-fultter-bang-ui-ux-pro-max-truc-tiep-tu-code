@@ -207,48 +207,26 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
 
   Future<void> _confirmDelete(BuildContext context, P2PMyAdDraft ad) async {
     unawaited(HapticFeedback.lightImpact());
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showVitConfirmDialog(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppColors.surface,
-          surfaceTintColor: AppColors.transparent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-          title: Text(
-            'Xóa quảng cáo này?',
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-          ),
-          content: Text(
-            'Quảng cáo sẽ bị xóa vĩnh viễn. Các đơn hàng đang xử lý sẽ không bị ảnh hưởng.',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          actions: [
-            VitCtaButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              variant: VitCtaButtonVariant.secondary,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
-              child: const Text('Hủy'),
-            ),
-            VitCtaButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              variant: VitCtaButtonVariant.danger,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
-              child: const Text('Xóa'),
-            ),
-          ],
-        );
-      },
+      title: 'Xóa quảng cáo này?',
+      message:
+          'Quảng cáo sẽ bị xóa vĩnh viễn. Các đơn hàng đang xử lý sẽ không '
+          'bị ảnh hưởng.',
+      confirmLabel: 'Xóa',
+      confirmVariant: VitCtaButtonVariant.danger,
     );
-    if (confirmed != true || !mounted) return;
+    if (!confirmed || !context.mounted) return;
     setState(() {
       _deletedAds.add(ad.id);
       _statusOverrides.remove(ad.id);
     });
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã xóa quảng cáo',
+      message: 'Quảng cáo đã được xóa khỏi danh sách.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 }

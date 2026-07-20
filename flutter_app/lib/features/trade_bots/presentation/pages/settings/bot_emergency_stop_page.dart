@@ -245,7 +245,18 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
       ),
     );
     if (!mounted) return;
-    context.go(result.redirectPath);
+    setState(() => _stopping = false);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã dừng khẩn cấp',
+      message: 'Đã dừng ${result.stoppedBotCount} bot đang chạy.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (!mounted) return;
+        context.go(result.redirectPath);
+      },
+    );
   }
 }
 

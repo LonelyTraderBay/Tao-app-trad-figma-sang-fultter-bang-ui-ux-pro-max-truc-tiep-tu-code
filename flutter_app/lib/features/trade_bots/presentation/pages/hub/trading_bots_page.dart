@@ -202,7 +202,15 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
       confirmVariant: VitCtaButtonVariant.destructive,
       confirmKey: TradingBotsPage.deleteConfirmKey,
     );
-    if (confirmed && mounted) _deleteBot(botId);
+    if (!confirmed || !mounted) return;
+    _deleteBot(botId);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã xóa bot',
+      message: 'Bot đã dừng hoạt động và được xóa khỏi danh sách.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 
   Future<void> _openCreateSheet(TradeBotStrategy strategy) async {

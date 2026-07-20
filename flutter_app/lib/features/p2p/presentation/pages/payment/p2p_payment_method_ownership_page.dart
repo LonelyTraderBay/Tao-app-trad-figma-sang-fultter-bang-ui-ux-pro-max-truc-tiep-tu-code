@@ -143,47 +143,29 @@ class _P2PPaymentMethodOwnershipPageState
     P2PPaymentMethodOwnershipController controller,
   ) async {
     final preview = controller.submitPreview(_uploaded);
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showVitConfirmDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        surfaceTintColor: AppColors.surface,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-        title: Text(
-          preview.confirmTitle,
-          style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-        ),
-        content: Text(
-          preview.confirmMessage,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
-        actions: [
-          VitCtaButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            variant: VitCtaButtonVariant.secondary,
-            fullWidth: false,
-            height: AppSpacing.buttonCompact,
-            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
-            child: const Text('Hủy'),
-          ),
-          VitCtaButton(
-            key: P2PPaymentMethodOwnershipPage.confirmSubmitKey,
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            variant: VitCtaButtonVariant.primary,
-            fullWidth: false,
-            height: AppSpacing.buttonCompact,
-            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
-            child: const Text('Xác nhận'),
-          ),
-        ],
-      ),
+      title: preview.confirmTitle,
+      message: preview.confirmMessage,
+      confirmLabel: 'Xác nhận',
+      confirmKey: P2PPaymentMethodOwnershipPage.confirmSubmitKey,
     );
 
-    if (!context.mounted || confirmed != true) return;
+    if (!context.mounted || !confirmed) return;
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
     if (!context.mounted) return;
-    context.go(preview.saveRoute);
+    setState(() => _submitting = false);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã gửi xác minh sở hữu',
+      message: 'Tài liệu đang được xem xét. Kết quả sẽ được thông báo sau.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (context.mounted) context.go(preview.saveRoute);
+      },
+    );
   }
 }
 

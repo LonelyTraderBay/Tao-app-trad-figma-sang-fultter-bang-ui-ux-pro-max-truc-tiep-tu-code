@@ -102,8 +102,16 @@ void main() {
 
     await tester.tap(find.text('Nhận tất cả'));
     await tester.pumpAndSettle();
-    expect(find.byKey(LaunchpadBatchClaimPage.successKey), findsOneWidget);
     expect(find.text('Batch Claim thành công!'), findsOneWidget);
+    expect(
+      find.textContaining('Đã nhận phần thưởng từ 1 vị trí'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LaunchpadStakingPage), findsOneWidget);
   });
 
   testWidgets('SC-304 safe detail edge opens claim receipt', (tester) async {

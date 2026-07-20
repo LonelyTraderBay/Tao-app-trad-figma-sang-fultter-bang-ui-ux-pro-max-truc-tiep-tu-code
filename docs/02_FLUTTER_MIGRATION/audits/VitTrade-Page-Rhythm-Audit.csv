@@ -591,7 +591,6 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpa
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_notif_sound_footer.dart,standard,,0,,0,,0,0,pass
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_allocation.dart,standard,,0,,0,,0,0,pass
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_calculations.dart,standard,,0,,0,,0,0,pass
-launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_confirm_sheet.dart,standard,,0,,0,,0,0,pass
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_deviation.dart,standard,,0,,0,,0,0,pass
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_hero.dart,standard,,0,,0,,0,0,pass
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_rebalance_strategy.dart,standard,,0,,0,,0,0,pass

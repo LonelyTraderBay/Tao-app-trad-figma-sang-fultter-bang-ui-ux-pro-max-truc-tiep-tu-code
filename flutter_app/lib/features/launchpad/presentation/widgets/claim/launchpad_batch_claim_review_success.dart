@@ -126,69 +126,6 @@ class _ReviewTotalRow extends StatelessWidget {
   }
 }
 
-class _SuccessStep extends StatelessWidget {
-  const _SuccessStep({
-    required this.positions,
-    required this.summary,
-    required this.onDone,
-  });
-
-  final List<LaunchpadBatchClaimPositionDraft> positions;
-  final LaunchpadBatchClaimSummaryDraft summary;
-  final VoidCallback onDone;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      key: LaunchpadBatchClaimPage.successKey,
-      children: [
-        VitCard(
-          radius: VitCardRadius.large,
-          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
-          child: Column(
-            children: [
-              const Icon(
-                Icons.check_circle_outline_rounded,
-                color: AppColors.buy,
-                size: LaunchpadSpacingTokens.launchpadBox48,
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-              Text(
-                'Batch Claim thành công!',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-              Text(
-                'Đã nhận phần thưởng từ ${positions.length} vị trí',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-              Text(
-                '~${_formatUsd(summary.totalClaimableUsd)}',
-                style: AppTextStyles.pageTitle.copyWith(
-                  color: AppColors.buy,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        VitCtaButton(
-          variant: VitCtaButtonVariant.success,
-          onPressed: onDone,
-          child: const Text('Hoàn tất'),
-        ),
-      ],
-    );
-  }
-}
-
 LaunchpadBatchClaimSummaryDraft _summaryFor(
   List<LaunchpadBatchClaimPositionDraft> positions,
 ) {

@@ -153,46 +153,17 @@ class _P2PMerchantProfilePageState
     P2PMerchantProfileSnapshot snapshot,
   ) async {
     unawaited(HapticFeedback.lightImpact());
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showVitConfirmDialog(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppColors.surface,
-          surfaceTintColor: AppColors.transparent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-          title: Text(
-            'Chặn ${snapshot.merchant.name}?',
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-          ),
-          content: Text(
-            'Bạn sẽ không thể giao dịch với người này. Có thể bỏ chặn trong danh sách chặn.',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          actions: [
-            VitCtaButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              variant: VitCtaButtonVariant.secondary,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
-              child: const Text('Hủy'),
-            ),
-            VitCtaButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              variant: VitCtaButtonVariant.warning,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
-              child: const Text('Chặn'),
-            ),
-          ],
-        );
-      },
+      title: 'Chặn ${snapshot.merchant.name}?',
+      message:
+          'Bạn sẽ không thể giao dịch với người này. Có thể bỏ chặn trong '
+          'danh sách chặn.',
+      confirmLabel: 'Chặn',
+      confirmVariant: VitCtaButtonVariant.warning,
     );
 
-    if (!context.mounted || confirmed != true) return;
+    if (!context.mounted || !confirmed) return;
     unawaited(HapticFeedback.mediumImpact());
     context.go(snapshot.blacklistAddRoute);
   }

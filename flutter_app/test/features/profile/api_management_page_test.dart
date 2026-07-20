@@ -141,6 +141,29 @@ void main() {
     expect(find.text('Tài liệu API sẽ sớm ra mắt'), findsOneWidget);
   });
 
+  testWidgets('SC-163 confirms before deleting an API key', (tester) async {
+    await pumpApiManagement(tester);
+
+    await tester.tap(find.byKey(ApiManagementPage.deleteKey('key1')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xoá API Key?'), findsOneWidget);
+
+    await tester.tap(find.text('Xoá'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Đã xoá API key'), findsOneWidget);
+    expect(
+      find.text('Key "Trading Bot Alpha" đã bị xoá và ngừng hoạt động.'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Trading Bot Alpha'), findsNothing);
+  });
+
   testWidgets('SC-163 direct header back returns to profile parent', (
     tester,
   ) async {

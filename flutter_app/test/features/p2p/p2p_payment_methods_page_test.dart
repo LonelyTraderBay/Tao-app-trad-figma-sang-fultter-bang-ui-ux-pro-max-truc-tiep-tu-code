@@ -169,6 +169,10 @@ void main() {
     await tester.tap(find.text('Xóa'));
     await tester.pumpAndSettle();
 
+    expect(find.text('Đã xóa phương thức'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
     expect(find.text('ZaloPay'), findsNothing);
   });
 }

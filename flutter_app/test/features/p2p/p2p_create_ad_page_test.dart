@@ -128,6 +128,10 @@ void main() {
     await tester.tap(find.byKey(P2PCreateAdPage.confirmPublishKey));
     await tester.pumpAndSettle();
 
+    expect(find.text('Đã đăng quảng cáo'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
     expect(find.byType(P2PMyAdsPage), findsOneWidget);
     expect(find.text('Quảng cáo của tôi'), findsOneWidget);
   });

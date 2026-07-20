@@ -372,7 +372,6 @@ home,flutter_app/lib/features/home/presentation/widgets/home_status_content.dart
 launchpad,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart,5,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_contract_page.dart,6,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_detail_page.dart,3,0,0,D,0,0,0,pass,-
-launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_confirm.dart,1,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_hero.dart,1,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_quick_compare.dart,1,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_bridge_compare_route_list.dart,3,0,0,E,0,0,0,pass,-
@@ -383,7 +382,7 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchp
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_history_settings.dart,3,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_input.dart,2,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_quotes.dart,2,0,0,E,0,0,0,pass,-
-launchpad,flutter_app/lib/features/launchpad/presentation/widgets/claim/launchpad_batch_claim_review_success.dart,2,0,0,D,0,0,0,pass,-
+launchpad,flutter_app/lib/features/launchpad/presentation/widgets/claim/launchpad_batch_claim_review_success.dart,1,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/claim/launchpad_batch_claim_selection.dart,1,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/claim/launchpad_batch_claim_summary.dart,1,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/claim/launchpad_claim_receipt_hero_widgets.dart,1,0,0,D,0,0,0,pass,-
@@ -400,7 +399,7 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_abi_diff_entries.dart,2,0,0,E,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_abi_diff_summary.dart,3,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_address_book_cards.dart,2,0,0,E,0,0,0,pass,-
-launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_create_form.dart,5,0,0,C,0,0,0,pass,-
+launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_create_form.dart,4,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_history.dart,2,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_strategies.dart,1,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_summary.dart,1,0,0,C,0,0,0,pass,-
@@ -415,7 +414,7 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpa
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_gas_tracker_prices.dart,2,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_active_widgets.dart,1,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_create_fields.dart,1,0,0,C,0,0,0,pass,-
-launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_create_widgets.dart,2,0,0,C,0,0,0,pass,-
+launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_create_widgets.dart,1,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_header_widgets.dart,1,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_history_widgets.dart,1,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_preview_widgets.dart,1,0,0,C,0,0,0,pass,-
@@ -609,7 +608,6 @@ p2p,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_rate_widg
 p2p,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_add_page_sections.dart,2,0,0,C,0,0,0,pass,-
 p2p,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_verification_flow.dart,2,0,0,C,0,0,0,pass,-
 p2p,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_verification_methods.dart,2,0,0,C,0,0,0,pass,-
-p2p,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_methods_page_common.dart,1,0,0,D,0,0,0,pass,-
 p2p,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_methods_page_sections.dart,2,1,0,D,0,0,0,pass,-
 p2p,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_2fa_settings_page_common.dart,1,0,0,C,0,0,0,pass,-
 p2p,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_2fa_settings_page_sections.dart,5,0,0,D,0,0,0,pass,-
@@ -967,7 +965,6 @@ wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/asset_detail_
 wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_input_sections.dart,4,2,0,E,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_payment_sections.dart,4,1,0,E,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_result_sections.dart,3,0,0,E,0,0,0,pass,-
-wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_dust_converter_confirm.dart,1,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_dust_converter_hero.dart,3,1,0,E,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_dust_converter_targets.dart,1,0,0,E,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/history/transaction_detail_page_sections.dart,4,1,0,C,0,0,0,pass,-

@@ -113,25 +113,35 @@ void main() {
     expect(button.onPressed, isNotNull);
   });
 
-  testWidgets('SC-121 submit navigates back to trading bots', (tester) async {
-    await pumpEmergencyStop(tester);
+  testWidgets(
+    'SC-121 submit shows acknowledgement then returns to trading bots',
+    (tester) async {
+      await pumpEmergencyStop(tester);
 
-    await tester.tap(find.byKey(BotEmergencyStopPage.reasonKey('crash')));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(
-      find.byKey(BotEmergencyStopPage.confirmationKey),
-    );
-    await tester.tap(find.byKey(BotEmergencyStopPage.confirmationKey));
-    await tester.pumpAndSettle();
+      await tester.tap(find.byKey(BotEmergencyStopPage.reasonKey('crash')));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(BotEmergencyStopPage.confirmationKey),
+      );
+      await tester.tap(find.byKey(BotEmergencyStopPage.confirmationKey));
+      await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(BotEmergencyStopPage.submitKey));
-    await tester.pumpAndSettle();
+      await tester.tap(find.byKey(BotEmergencyStopPage.submitKey));
+      await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(BotEmergencyStopPage.dialogConfirmKey));
-    await tester.pumpAndSettle();
+      await tester.tap(find.byKey(BotEmergencyStopPage.dialogConfirmKey));
+      await tester.pumpAndSettle();
 
-    expect(find.byType(TradingBotsPage), findsOneWidget);
-  });
+      expect(find.text('Đã dừng khẩn cấp'), findsOneWidget);
+      expect(find.text('Đã dừng 3 bot đang chạy.'), findsOneWidget);
+      expect(find.byType(TradingBotsPage), findsNothing);
+
+      await tester.tap(find.text('Đã hiểu'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(TradingBotsPage), findsOneWidget);
+    },
+  );
 
   testWidgets('SC-121 first viewport keeps emergency action visible', (
     tester,

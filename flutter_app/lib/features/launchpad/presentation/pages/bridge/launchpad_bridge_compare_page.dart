@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -39,9 +41,6 @@ class LaunchpadBridgeComparePage extends ConsumerStatefulWidget {
   static const sortKeyPrefix = 'sc305_launchpad_bridge_compare_sort_';
   static const footerKey = Key('sc305_launchpad_bridge_compare_footer');
   static const confirmKey = Key('sc305_launchpad_bridge_compare_confirm');
-  static const confirmStateKey = Key(
-    'sc305_launchpad_bridge_compare_confirm_state',
-  );
   static const riskKey = Key('sc305_launchpad_bridge_compare_risk');
 
   static Key sortKey(String value) => Key('$sortKeyPrefix$value');
@@ -64,7 +63,6 @@ class _LaunchpadBridgeComparePageState
   var _sortMode = 'recommended';
   String? _selectedRouteId;
   String? _expandedRouteId;
-  var _confirmVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +150,6 @@ class _LaunchpadBridgeComparePageState
                             _sortMode = 'recommended';
                             _selectedRouteId = null;
                             _expandedRouteId = null;
-                            _confirmVisible = false;
                           });
                         },
                       ),
@@ -205,15 +202,9 @@ class _LaunchpadBridgeComparePageState
                     child: _SelectedRouteFooter(
                       route: selectedRoute,
                       outputToken: snapshot.comparison.outputToken,
-                      onConfirm: () => setState(() => _confirmVisible = true),
+                      onConfirm: () =>
+                          unawaited(_confirmRoute(selectedRoute, snapshot)),
                     ),
-                  ),
-                if (_confirmVisible && selectedRoute != null)
-                  _RouteConfirmOverlay(
-                    route: selectedRoute,
-                    comparison: snapshot.comparison,
-                    onClose: () => setState(() => _confirmVisible = false),
-                    onExecute: () => context.go(snapshot.bridgeOrderRoute),
                   ),
               ],
             );
@@ -253,5 +244,46 @@ class _LaunchpadBridgeComparePageState
   int _recommendedRank(LaunchpadBridgeRouteOptionDraft route) {
     if (route.recommended) return 0;
     return route.id.codeUnitAt(route.id.length - 1);
+  }
+
+  Future<void> _confirmRoute(
+    LaunchpadBridgeRouteOptionDraft route,
+    LaunchpadBridgeCompareSnapshot snapshot,
+  ) async {
+    final comparison = snapshot.comparison;
+    final confirmed = await showVitPreviewConfirmSheet(
+      context: context,
+      title: 'Xác nhận route',
+      confirmKey: LaunchpadBridgeComparePage.confirmKey,
+      confirmLabel: 'Xác nhận Bridge qua ${route.provider}',
+      items: [
+        VitFinancialSafetyItem(
+          label: 'Bạn gửi',
+          value:
+              '${_formatNumber(comparison.inputAmount)} '
+              '${comparison.inputToken} (${comparison.sourceChain})',
+        ),
+        VitFinancialSafetyItem(
+          label: 'Nhận',
+          value:
+              '${_formatNumber(route.outputAmount)} '
+              '${comparison.outputToken} (${comparison.targetChain})',
+          valueColor: AppColors.buy,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Price impact',
+          value: '${_trimDouble(route.priceImpact)}%',
+        ),
+        VitFinancialSafetyItem(label: 'Tổng phí', value: route.totalFeeUsd),
+        VitFinancialSafetyItem(
+          label: 'Security',
+          value: '${route.securityScore}/100',
+        ),
+      ],
+      footer: '${route.hops} hops · ${route.estimatedTime}',
+    );
+    if (!confirmed) return;
+    if (!mounted) return;
+    context.go(snapshot.bridgeOrderRoute);
   }
 }

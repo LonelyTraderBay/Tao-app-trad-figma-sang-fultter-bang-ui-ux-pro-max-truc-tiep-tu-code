@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_rebalance_strategy.dart';
 
 part '../../widgets/tools/launchpad_rebalance_calculations.dart';
-part '../../widgets/tools/launchpad_rebalance_confirm_sheet.dart';
 part '../../widgets/tools/launchpad_rebalance_hero.dart';
 part '../../widgets/tools/launchpad_rebalance_suggestions.dart';
 part '../../widgets/tools/launchpad_rebalance_summary.dart';
@@ -65,7 +65,6 @@ class _LaunchpadRebalancePageState
   // GD4-F4 bẫy 14: initState() không còn seed từ getter đồng bộ — hạt
   // giống 1 lần trong nhánh `data:` qua `_strategyId ??= ...`.
   String? _strategyId;
-  var _showConfirm = false;
 
   @override
   Widget build(BuildContext context) {
@@ -179,9 +178,7 @@ class _LaunchpadRebalancePageState
                           ),
                           VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: _showConfirm
-                                ? 'Rebalance confirmation open'
-                                : 'Rebalance preview required',
+                            title: 'Rebalance preview required',
                             message:
                                 'Target allocation, deviation, gas estimate, risk impact and confirmation are reviewed before execution.',
                             contractId: 'launchpad-rebalance-$strategyId',
@@ -229,28 +226,52 @@ class _LaunchpadRebalancePageState
                     backgroundColor: AppColors.surface.withValues(alpha: .94),
                     child: VitCtaButton(
                       key: LaunchpadRebalancePage.previewKey,
-                      onPressed: () => setState(() => _showConfirm = true),
+                      onPressed: () =>
+                          unawaited(_confirmRebalance(suggestions, totalGas)),
                       child: const Text('Xem lai & Thuc hien Rebalance'),
                     ),
                   ),
                 ),
-                if (_showConfirm)
-                  Positioned.fill(
-                    child: LaunchpadRebalanceConfirmSheet(
-                      sheetKey: LaunchpadRebalancePage.confirmSheetKey,
-                      confirmKey: LaunchpadRebalancePage.confirmKey,
-                      cancelKey: LaunchpadRebalancePage.cancelKey,
-                      suggestions: suggestions,
-                      totalGas: totalGas,
-                      bottomReserve: chromeReserve,
-                      onClose: () => setState(() => _showConfirm = false),
-                    ),
-                  ),
               ],
             );
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _confirmRebalance(
+    List<RebalanceSuggestion> suggestions,
+    double totalGas,
+  ) async {
+    final executable = suggestions
+        .where((item) => item.action != LaunchpadRebalanceAction.hold)
+        .toList();
+    await showVitPreviewConfirmSheet(
+      context: context,
+      title: 'Xác nhận Rebalance',
+      sheetKey: LaunchpadRebalancePage.confirmSheetKey,
+      confirmKey: LaunchpadRebalancePage.confirmKey,
+      cancelKey: LaunchpadRebalancePage.cancelKey,
+      confirmLabel: 'Xác nhận Rebalance (Mô phỏng)',
+      confirmVariant: VitCtaButtonVariant.success,
+      items: executable.isEmpty
+          ? const [
+              VitFinancialSafetyItem(
+                label: 'Trạng thái',
+                value: 'Danh mục đã cân bằng — không cần giao dịch',
+              ),
+            ]
+          : [
+              for (final suggestion in executable)
+                VitFinancialSafetyItem(
+                  label: launchpadRebalanceActionLabel(suggestion.action),
+                  value:
+                      '${suggestion.asset.symbol}  '
+                      '\$${suggestion.suggestedValue.toStringAsFixed(2)}',
+                ),
+            ],
+      footer: 'Gas tổng: ~\$${totalGas.toStringAsFixed(2)}',
     );
   }
 }

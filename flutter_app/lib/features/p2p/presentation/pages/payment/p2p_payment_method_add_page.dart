@@ -232,58 +232,46 @@ class _P2PPaymentMethodAddPageState
       account: _accountController.text,
       ownerName: _ownerController.text,
     );
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showVitPreviewConfirmSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        surfaceTintColor: AppColors.surface,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-        title: Text(
-          preview.confirmTitle,
-          style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
+      title: preview.confirmTitle,
+      confirmKey: P2PPaymentMethodAddPage.confirmSaveKey,
+      items: [
+        VitFinancialSafetyItem(
+          label: 'Phương thức',
+          value: _selectedMethod ?? '--',
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _ConfirmRow(label: 'Phương thức', value: _selectedMethod ?? '--'),
-            _ConfirmRow(label: 'Tài khoản', value: preview.maskedAccount),
-            _ConfirmRow(label: 'Chủ tài khoản', value: preview.ownerName),
-            _ConfirmRow(label: 'Sở hữu', value: preview.ownershipRiskMessage),
-            _ConfirmRow(label: 'Giới hạn', value: preview.limitMessage),
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            Text(
-              preview.confirmMessage,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ],
+        VitFinancialSafetyItem(
+          label: 'Tài khoản',
+          value: preview.maskedAccount,
         ),
-        actions: [
-          VitCtaButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            variant: VitCtaButtonVariant.secondary,
-            fullWidth: false,
-            height: AppSpacing.buttonCompact,
-            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
-            child: const Text('Hủy'),
-          ),
-          VitCtaButton(
-            key: P2PPaymentMethodAddPage.confirmSaveKey,
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            variant: VitCtaButtonVariant.primary,
-            fullWidth: false,
-            height: AppSpacing.buttonCompact,
-            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
-            child: const Text('Xác nhận'),
-          ),
-        ],
-      ),
+        VitFinancialSafetyItem(
+          label: 'Chủ tài khoản',
+          value: preview.ownerName,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Sở hữu',
+          value: preview.ownershipRiskMessage,
+        ),
+        VitFinancialSafetyItem(label: 'Giới hạn', value: preview.limitMessage),
+      ],
+      footer: preview.confirmMessage,
     );
 
-    if (!context.mounted || confirmed != true) return;
+    if (!context.mounted || !confirmed) return;
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
     if (!context.mounted) return;
-    context.go(preview.saveRoute);
+    setState(() => _submitting = false);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã thêm phương thức thanh toán',
+      message: 'Đã lưu ${preview.maskedAccount} (${preview.ownerName}).',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (context.mounted) context.go(preview.saveRoute);
+      },
+    );
   }
 }

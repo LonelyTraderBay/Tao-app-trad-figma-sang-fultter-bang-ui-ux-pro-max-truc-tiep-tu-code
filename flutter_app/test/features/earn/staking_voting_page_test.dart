@@ -135,6 +135,34 @@ void main() {
     expect(enabledSubmit.onPressed, isNotNull);
   });
 
+  testWidgets(
+    'SC-390 submitting a vote shows acknowledgement and returns to proposals',
+    (tester) async {
+      await pumpVoting(tester);
+
+      await tester.tap(find.byKey(StakingVotingPage.optionKey('yes')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(StakingVotingPage.submitKey));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Đã ghi nhận phiếu bầu'), findsOneWidget);
+      expect(
+        find.text(
+          'Bạn đã bỏ phiếu "Yes" cho đề xuất '
+          '"Lower ETH Staking Fees from 1.5% to 1%".',
+        ),
+        findsOneWidget,
+      );
+      expect(find.byType(StakingProposalsPage), findsNothing);
+
+      await tester.tap(find.text('Đã hiểu'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(StakingProposalsPage), findsOneWidget);
+    },
+  );
+
   testWidgets('SC-390 proposals vote edge opens voting detail', (tester) async {
     await pumpVoting(tester, initialLocation: AppRoutePaths.earnProposals);
 

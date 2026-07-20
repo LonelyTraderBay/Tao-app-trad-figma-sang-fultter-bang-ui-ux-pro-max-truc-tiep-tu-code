@@ -29,7 +29,6 @@ part '../widgets/api_management_key_controls.dart';
 part '../widgets/api_management_docs.dart';
 
 const _apiBackground = AppColors.bg;
-const _apiPanel = AppColors.surface;
 const _apiBorder = AppColors.cardBorder;
 const _apiPrimary = AppColors.primary;
 const _apiGreen = AppColors.buy;
@@ -205,45 +204,25 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
 
   Future<void> _confirmDelete(ProfileApiKey apiKey) async {
     unawaited(HapticFeedback.selectionClick());
-    final shouldDelete = await showDialog<bool>(
+    final confirmed = await showVitConfirmDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: _apiPanel,
-          title: const Text(
-            'Xo\u00E1 API Key?',
-            style: AppTextStyles.sectionTitleSm,
-          ),
-          content: Text(
-            'Thao t\u00E1c n\u00E0y kh\u00F4ng th\u1EC3 ho\u00E0n t\u00E1c. T\u1EA5t c\u1EA3 k\u1EBFt n\u1ED1i s\u1EED d\u1EE5ng key n\u00E0y s\u1EBD ng\u1EEBng ho\u1EA1t \u0111\u1ED9ng.',
-            style: AppTextStyles.body.copyWith(color: AppColors.text2),
-          ),
-          actions: [
-            VitCtaButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              variant: VitCtaButtonVariant.ghost,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              child: const Text('Hu\u1EF7'),
-            ),
-            VitCtaButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              variant: VitCtaButtonVariant.destructive,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              child: Text(
-                'Xo\u00E1',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+      title: 'Xo\u00E1 API Key?',
+      message:
+          'Thao t\u00E1c n\u00E0y kh\u00F4ng th\u1EC3 ho\u00E0n t\u00E1c. T\u1EA5t c\u1EA3 k\u1EBFt n\u1ED1i s\u1EED d\u1EE5ng key n\u00E0y '
+          's\u1EBD ng\u1EEBng ho\u1EA1t \u0111\u1ED9ng.',
+      confirmLabel: 'Xo\u00E1',
+      confirmVariant: VitCtaButtonVariant.destructive,
     );
-    if (shouldDelete != true || !mounted) return;
+    if (!confirmed || !mounted) return;
     setState(() => _keys = _keys.where((key) => key.id != apiKey.id).toList());
+    await showVitNoticeSheet(
+      context: context,
+      title: '\u0110\u00E3 xo\u00E1 API key',
+      message:
+          'Key "${apiKey.name}" \u0111\u00E3 b\u1ECB xo\u00E1 v\u00E0 ng\u1EEBng ho\u1EA1t \u0111\u1ED9ng.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 
   void _close() {

@@ -43,6 +43,7 @@ export 'package:vit_trade_flutter/shared/widgets/vit_metric_delta_pill.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_module_components.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_next_action_card.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
+export 'package:vit_trade_flutter/shared/widgets/vit_notice_sheet.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_preview_confirm_sheet.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_progress_bar.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_risk_disclaimer_note.dart';

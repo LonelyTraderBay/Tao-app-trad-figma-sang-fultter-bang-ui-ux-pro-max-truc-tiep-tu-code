@@ -170,15 +170,20 @@ void main() {
     expect(switchWidget.value, isFalse);
   });
 
-  testWidgets('SC-314 floating CTA records swap preview', (tester) async {
+  testWidgets('SC-314 floating CTA submits swap and shows acknowledgement', (
+    tester,
+  ) async {
     await pumpSwapAggregator(tester);
 
     await tester.tap(find.byKey(LaunchpadSwapAggregatorPage.ctaKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Swap 1000 USDT qua Uniswap V3'), findsOneWidget);
-    expect(find.text('Preview swap s\u1EB5n s\u00E0ng'), findsOneWidget);
-    expect(find.byType(VitHighRiskStatePanel), findsNWidgets(2));
+    expect(
+      find.text('\u0110\u00E3 t\u1EA1o y\u00EAu c\u1EA7u swap'),
+      findsOneWidget,
+    );
+    expect(find.text('Swap 1000 USDT qua Uniswap V3.'), findsOneWidget);
+    expect(find.byType(VitHighRiskStatePanel), findsOneWidget);
   });
 
   testWidgets('SC-314 header back returns to launchpad', (tester) async {

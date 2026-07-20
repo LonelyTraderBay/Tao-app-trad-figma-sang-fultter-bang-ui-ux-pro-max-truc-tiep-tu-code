@@ -133,6 +133,10 @@ void main() {
     await tester.tap(find.byKey(P2PPaymentMethodAddPage.confirmSaveKey));
     await tester.pumpAndSettle();
 
+    expect(find.text('Đã thêm phương thức thanh toán'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
     expect(find.text('Phương thức thanh toán'), findsOneWidget);
   });
 

@@ -79,7 +79,6 @@ class _LaunchpadLimitOrdersPageState
   var _orderSide = LaunchpadLimitOrderSide.buy;
   var _expiryDays = '7';
   var _partialFill = true;
-  String? _submissionMessage;
 
   @override
   void initState() {
@@ -201,16 +200,13 @@ class _LaunchpadLimitOrdersPageState
                                   amountController: _amountController,
                                   expiryDays: _expiryDays,
                                   partialFill: _partialFill,
-                                  submissionMessage: _submissionMessage,
                                   onSideChanged: (side) =>
                                       setState(() => _orderSide = side),
                                   onExpiryChanged: (days) =>
                                       setState(() => _expiryDays = days),
                                   onPartialFillChanged: (value) =>
                                       setState(() => _partialFill = value),
-                                  onInputChanged: () => setState(() {
-                                    _submissionMessage = null;
-                                  }),
+                                  onInputChanged: () => setState(() {}),
                                 ),
                               ],
                             ],
@@ -224,6 +220,8 @@ class _LaunchpadLimitOrdersPageState
             ),
             if (showCta)
               Positioned(
+                // notice-ack: allow-sticky-footer-form-cta — in-progress
+                // create-tab CTA footer, not a success toast overlay.
                 left: 0,
                 right: 0,
                 bottom: chromeReserve + safeBottom,
@@ -231,7 +229,7 @@ class _LaunchpadLimitOrdersPageState
                   backgroundColor: AppColors.surface.withValues(alpha: .94),
                   child: VitCtaButton(
                     key: LaunchpadLimitOrdersPage.ctaKey,
-                    onPressed: _submitOrder,
+                    onPressed: () => unawaited(_submitOrder()),
                     leading: const Icon(Icons.add_rounded),
                     child: const Text('Tao Limit Order'),
                   ),
@@ -243,11 +241,17 @@ class _LaunchpadLimitOrdersPageState
     );
   }
 
-  void _submitOrder() {
-    final side = _orderSide == LaunchpadLimitOrderSide.buy ? 'BUY' : 'SELL';
-    setState(() {
-      _submissionMessage =
-          'Limit order queued: $side ${_amountController.text.trim()} ${_tokenController.text.trim()} @ \$${_targetPriceController.text.trim()}';
-    });
+  Future<void> _submitOrder() async {
+    final side = _orderSide == LaunchpadLimitOrderSide.buy ? 'Mua' : 'Bán';
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã tạo lệnh giới hạn',
+      message:
+          '$side ${_amountController.text.trim()} '
+          '${_tokenController.text.trim()} tại giá '
+          '\$${_targetPriceController.text.trim()}.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 }

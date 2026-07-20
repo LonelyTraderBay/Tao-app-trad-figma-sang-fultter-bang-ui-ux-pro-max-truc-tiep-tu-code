@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -450,80 +449,47 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
     BuildContext context,
     P2PCreateAdPreview preview,
   ) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showVitPreviewConfirmSheet(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppColors.surface,
-          surfaceTintColor: AppColors.transparent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-          title: Text(
-            'Xác nhận đăng quảng cáo',
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              P2PCreateAdConfirmRow(label: 'Loại', value: preview.typeLabel),
-              P2PCreateAdConfirmRow(
-                label: 'Tài sản',
-                value: preview.totalAmountLabel,
-              ),
-              P2PCreateAdConfirmRow(
-                label: 'Giá',
-                value: '${preview.priceLabel}/$_asset',
-              ),
-              P2PCreateAdConfirmRow(
-                label: 'Thanh toán',
-                value: preview.paymentSummary,
-              ),
-              P2PCreateAdConfirmRow(
-                label: 'Limit',
-                value: preview.limitSummary,
-              ),
-              P2PCreateAdConfirmRow(
-                label: 'Fee',
-                value: preview.feeReviewLabel,
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              Text(
-                '${preview.escrowReviewLabel}\n${preview.riskReviewLabel}',
-                style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-              ),
-            ],
-          ),
-          actions: [
-            VitCtaButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              variant: VitCtaButtonVariant.secondary,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
-              child: const Text('Hủy'),
-            ),
-            VitCtaButton(
-              key: P2PCreateAdPage.confirmPublishKey,
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              variant: _adType == P2PTradeType.buy
-                  ? VitCtaButtonVariant.success
-                  : VitCtaButtonVariant.danger,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
-              child: const Text('Đăng'),
-            ),
-          ],
-        );
-      },
+      title: 'Xác nhận đăng quảng cáo',
+      confirmKey: P2PCreateAdPage.confirmPublishKey,
+      confirmLabel: 'Đăng',
+      confirmVariant: _adType == P2PTradeType.buy
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.danger,
+      items: [
+        VitFinancialSafetyItem(label: 'Loại', value: preview.typeLabel),
+        VitFinancialSafetyItem(
+          label: 'Tài sản',
+          value: preview.totalAmountLabel,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Giá',
+          value: '${preview.priceLabel}/$_asset',
+        ),
+        VitFinancialSafetyItem(
+          label: 'Thanh toán',
+          value: preview.paymentSummary,
+        ),
+        VitFinancialSafetyItem(label: 'Limit', value: preview.limitSummary),
+        VitFinancialSafetyItem(label: 'Fee', value: preview.feeReviewLabel),
+      ],
+      footer: '${preview.escrowReviewLabel}\n${preview.riskReviewLabel}',
     );
-    if (confirmed != true || !mounted) return;
+    if (!confirmed || !context.mounted) return;
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
-    if (!mounted) return;
     if (!context.mounted) return;
-    context.go(AppRoutePaths.p2pMyAds);
+    setState(() => _submitting = false);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã đăng quảng cáo',
+      message: 'Quảng cáo của bạn đã hiển thị trong danh sách.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+      onPrimary: () {
+        if (context.mounted) context.go(AppRoutePaths.p2pMyAds);
+      },
+    );
   }
 }

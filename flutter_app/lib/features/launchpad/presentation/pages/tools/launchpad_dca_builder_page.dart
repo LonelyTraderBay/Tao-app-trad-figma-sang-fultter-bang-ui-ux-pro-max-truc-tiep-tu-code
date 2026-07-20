@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -59,7 +61,6 @@ class _LaunchpadDcaBuilderPageState
   late final TextEditingController _startDateController;
   var _activeTab = LaunchpadDcaBuilderTab.strategies;
   var _frequency = LaunchpadDcaFrequency.weekly;
-  String? _submissionMessage;
 
   @override
   void initState() {
@@ -195,12 +196,9 @@ class _LaunchpadDcaBuilderPageState
                                   budgetController: _budgetController,
                                   startDateController: _startDateController,
                                   frequency: _frequency,
-                                  submissionMessage: _submissionMessage,
                                   onFrequencyChanged: (frequency) =>
                                       setState(() => _frequency = frequency),
-                                  onInputChanged: () => setState(() {
-                                    _submissionMessage = null;
-                                  }),
+                                  onInputChanged: () => setState(() {}),
                                 ),
                               ],
                             ],
@@ -214,6 +212,8 @@ class _LaunchpadDcaBuilderPageState
             ),
             if (showCta)
               Positioned(
+                // notice-ack: allow-sticky-footer-form-cta — in-progress
+                // create-tab CTA footer, not a success toast overlay.
                 left: 0,
                 right: 0,
                 bottom: navInset + safeBottom,
@@ -221,7 +221,7 @@ class _LaunchpadDcaBuilderPageState
                   backgroundColor: AppColors.surface.withValues(alpha: .94),
                   child: VitCtaButton(
                     key: LaunchpadDcaBuilderPage.ctaKey,
-                    onPressed: _submitStrategy,
+                    onPressed: () => unawaited(_submitStrategy()),
                     leading: const Icon(Icons.add_rounded),
                     child: const Text('Tao DCA Strategy'),
                   ),
@@ -233,10 +233,16 @@ class _LaunchpadDcaBuilderPageState
     );
   }
 
-  void _submitStrategy() {
-    setState(() {
-      _submissionMessage =
-          'DCA strategy queued: ${launchpadDcaFrequencyLabel(_frequency)} ${_amountController.text.trim()} USD vao ${_tokenController.text.trim()}';
-    });
+  Future<void> _submitStrategy() async {
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã tạo chiến lược DCA',
+      message:
+          '${launchpadDcaFrequencyLabel(_frequency)} '
+          '${_amountController.text.trim()} USD vào '
+          '${_tokenController.text.trim()}.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
   }
 }

@@ -93,6 +93,9 @@ void main() {
     await tester.tap(P2PPaymentMethodAddPage.confirmSaveKey.finder);
     await tester.pumpAndSettle();
 
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
+
     expect(P2PPaymentMethodAddPage.contentKey.finder, findsNothing);
   });
 }

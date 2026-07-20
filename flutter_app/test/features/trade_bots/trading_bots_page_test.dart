@@ -137,6 +137,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(TradingBotsPage.deleteConfirmKey));
     await tester.pumpAndSettle();
+    expect(find.text('Đã xóa bot'), findsOneWidget);
+    await tester.tap(find.text('Đã hiểu'));
+    await tester.pumpAndSettle();
     expect(find.text('Grid Bot'), findsNothing);
     expect(find.text('Bot của tôi (2)'), findsOneWidget);
   });
