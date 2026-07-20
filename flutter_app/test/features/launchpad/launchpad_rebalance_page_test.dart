@@ -146,7 +146,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(LaunchpadRebalancePage.confirmSheetKey), findsOneWidget);
-    expect(find.text('Xac nhan Rebalance'), findsOneWidget);
+    expect(find.text('Xác nhận Rebalance'), findsOneWidget);
     expect(find.byKey(LaunchpadRebalancePage.confirmKey), findsOneWidget);
 
     await tester.tap(find.byKey(LaunchpadRebalancePage.cancelKey));
