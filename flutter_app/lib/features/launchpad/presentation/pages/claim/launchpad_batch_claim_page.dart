@@ -81,7 +81,7 @@ class _LaunchpadBatchClaimPageState
                 semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
                 semanticIdentifier: 'SC-304',
                 header: VitHeader(
-                  title: 'Batch Claim',
+                  title: 'Nhận hàng loạt',
                   showBack: true,
                   onBack: () => context.go(AppRoutePaths.launchpadStaking),
                 ),
@@ -96,7 +96,7 @@ class _LaunchpadBatchClaimPageState
                 semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
                 semanticIdentifier: 'SC-304',
                 header: VitHeader(
-                  title: 'Batch Claim',
+                  title: 'Nhận hàng loạt',
                   showBack: true,
                   onBack: () => context.go(AppRoutePaths.launchpadStaking),
                 ),
@@ -241,7 +241,7 @@ class _LaunchpadBatchClaimPageState
   ) async {
     await showVitNoticeSheet(
       context: context,
-      title: 'Batch Claim thành công!',
+      title: 'Nhận hàng loạt thành công!',
       message:
           'Đã nhận phần thưởng từ $positionCount vị trí — '
           '~${_formatUsd(summary.totalClaimableUsd)}.',

@@ -60,9 +60,9 @@ void main() {
       expect(snapshot.defaultTab, 'overview');
       expect(snapshot.currentCategoryId, 'retail');
       expect(snapshot.categories.map((category) => category.label), [
-        'Retail Client',
-        'Professional Client',
-        'Eligible Counterparty',
+        'Khách hàng bán lẻ',
+        'Khách hàng chuyên nghiệp',
+        'Đối tác đủ điều kiện',
       ]);
       expect(snapshot.categories.first.protections.length, 8);
       expect(snapshot.categories.first.requirements.length, 3);
@@ -93,16 +93,15 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Client Categorization'), findsOneWidget);
-    expect(find.text('MiFID II Classification'), findsOneWidget);
-    expect(find.text('Maximum Protection Active'), findsOneWidget);
-    expect(find.text('MiFID II Categorization'), findsOneWidget);
-    expect(find.text('Client Categories'), findsOneWidget);
+    expect(find.text('Phân loại khách hàng'), findsOneWidget);
+    expect(find.text('Phân loại MiFID II'), findsWidgets);
+    expect(find.text('Đang áp dụng bảo vệ tối đa'), findsOneWidget);
+    expect(find.text('Hạng khách hàng'), findsOneWidget);
     expect(
       find.byKey(ClientCategorizationPage.categoryKey('retail')),
       findsOneWidget,
     );
-    expect(find.text('Professional Client'), findsOneWidget);
+    expect(find.text('Khách hàng chuyên nghiệp'), findsOneWidget);
   });
 
   testWidgets('SC-099 first viewport reaches classification review panel', (
@@ -117,7 +116,7 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.text('Client classification review'),
+      find.text('Rà soát phân loại khách hàng'),
       minVisibleHeight: 24,
       targetLabel: 'client classification review panel',
       reason:
@@ -170,21 +169,21 @@ void main() {
 
     await tester.tap(ClientCategorizationPage.tabKey('protections').asFinder());
     await tester.pumpAndSettle();
-    expect(find.text('Protection Comparison'), findsOneWidget);
-    expect(find.text('Full appropriateness test required'), findsOneWidget);
+    expect(find.text('So sánh bảo vệ'), findsOneWidget);
+    expect(find.text('Bắt buộc kiểm tra phù hợp đầy đủ'), findsOneWidget);
 
     await tester.tap(
       ClientCategorizationPage.tabKey('requirements').asFinder(),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Qualification Requirements'), findsOneWidget);
-    expect(find.text('Portfolio over EUR 500,000'), findsOneWidget);
+    expect(find.text('Yêu cầu đủ điều kiện'), findsOneWidget);
+    expect(find.text('Danh mục trên EUR 500.000'), findsOneWidget);
 
     await tester.tap(ClientCategorizationPage.tabKey('history').asFinder());
     await tester.pumpAndSettle();
-    expect(find.text('Category History'), findsOneWidget);
-    expect(find.text('Initial Categorization'), findsOneWidget);
-    expect(find.text('Opt-Up Requested'), findsOneWidget);
+    expect(find.text('Lịch sử hạng'), findsOneWidget);
+    expect(find.text('Phân loại ban đầu'), findsOneWidget);
+    expect(find.text('Đã gửi yêu cầu nâng hạng'), findsOneWidget);
   });
 
   testWidgets('SC-411 opt-up edge uses scoped request route', (tester) async {
@@ -195,7 +194,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ClientOptUpRequestPage), findsOneWidget);
-    expect(find.text('Client Opt-Up Request'), findsOneWidget);
+    expect(find.text('Yêu cầu nâng hạng khách hàng'), findsOneWidget);
   });
 
   testWidgets('SC-099 quick links resolve to disclosure and settings routes', (

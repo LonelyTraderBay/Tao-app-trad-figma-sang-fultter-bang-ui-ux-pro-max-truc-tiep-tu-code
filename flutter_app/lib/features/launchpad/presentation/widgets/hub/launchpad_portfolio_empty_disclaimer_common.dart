@@ -42,7 +42,7 @@ class _PortfolioDisclaimer extends StatelessWidget {
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
-            'Phân bổ thực tế phụ thuộc vào tổng số đăng ký. Token mở khóa theo lịch vesting của từng dự án.',
+            'Phân bổ thực tế phụ thuộc vào tổng số đăng ký. Token mở khóa theo lịch mở khóa của từng dự án.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               height: LaunchpadSpacingTokens.launchpadLineHeightShort,

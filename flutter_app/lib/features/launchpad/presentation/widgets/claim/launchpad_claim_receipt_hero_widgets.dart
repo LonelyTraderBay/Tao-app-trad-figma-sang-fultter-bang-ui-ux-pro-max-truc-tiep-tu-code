@@ -79,7 +79,7 @@ class _RewardHero extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Tiến độ vest',
+                  'Tiến độ mở khóa',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextMuted,
                     fontWeight: AppTextStyles.bold,
@@ -131,7 +131,7 @@ class _RewardHero extends StatelessWidget {
                 ),
               ),
               Text(
-                'Đã vest $vestedPct%',
+                'Đã mở $vestedPct%',
                 style: AppTextStyles.micro.copyWith(
                   color: receipt.accent.resolve(),
                   fontWeight: AppTextStyles.bold,

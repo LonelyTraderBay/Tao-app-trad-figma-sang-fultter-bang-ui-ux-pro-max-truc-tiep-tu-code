@@ -145,6 +145,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(LaunchpadPortfolioPage), findsOneWidget);
-    expect(find.text('Launchpad Portfolio'), findsWidgets);
+    expect(find.text('Danh mục Launchpad'), findsWidgets);
   });
 }

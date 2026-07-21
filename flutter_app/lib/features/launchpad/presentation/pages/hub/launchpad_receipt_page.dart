@@ -133,7 +133,7 @@ class LaunchpadReceiptPage extends ConsumerWidget {
                       if (!hasSubscription)
                         const _ReceiptErrorState()
                       else
-                        _ReceiptSuccess(snapshot: snapshot),
+                        ..._receiptSuccessChildren(context, snapshot),
                     ],
                   ),
                 ),

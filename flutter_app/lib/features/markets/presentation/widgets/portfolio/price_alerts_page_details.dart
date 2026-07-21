@@ -114,7 +114,7 @@ class _AlertCard extends StatelessWidget {
               VitIconButton(
                 key: PriceAlertsPage.deleteKey(alert.id),
                 icon: Icons.delete_outline_rounded,
-                tooltip: 'Delete price alert',
+                tooltip: 'Xóa cảnh báo giá',
                 variant: VitIconButtonVariant.danger,
                 size: VitIconButtonSize.sm,
                 onPressed: onDelete,

@@ -79,7 +79,7 @@ class _LaunchpadPortfolioPageState
           semanticLabel: 'Danh mục dự án Launchpad – vùng cuộn nội dung',
           semanticIdentifier: 'SC-296',
           header: VitHeader(
-            title: 'Launchpad Portfolio',
+            title: 'Danh mục Launchpad',
             subtitle: 'Các dự án đã tham gia',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.launchpad),
@@ -101,7 +101,7 @@ class _LaunchpadPortfolioPageState
                     loading: () => const [VitSkeletonList()],
                     error: (error, stackTrace) => [
                       VitErrorState(
-                        title: 'Không tải được portfolio',
+                        title: 'Không tải được danh mục',
                         message: 'Vui lòng kiểm tra kết nối và thử lại.',
                         actionLabel: 'Thử lại',
                         onAction: () =>

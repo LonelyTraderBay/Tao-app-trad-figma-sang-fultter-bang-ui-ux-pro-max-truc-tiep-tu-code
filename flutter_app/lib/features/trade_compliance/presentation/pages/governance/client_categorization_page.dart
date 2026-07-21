@@ -54,8 +54,8 @@ class _ClientCategorizationPageState
   Widget build(BuildContext context) {
     final async = ref.watch(tradeClientCategorizationProvider);
     return VitTradeHubScaffold(
-      title: 'Client Categorization',
-      subtitle: 'MiFID II Classification',
+      title: 'Phân loại khách hàng',
+      subtitle: 'Phân loại MiFID II',
       semanticLabel: 'Phân loại khách hàng theo quy định MiFID II',
       semanticIdentifier: 'SC-099',
       contentKey: ClientCategorizationPage.contentKey,
@@ -83,37 +83,37 @@ class _ClientCategorizationPageState
           );
           return [
             const VitTradeSection(
-              title: 'Review',
+              title: 'Rà soát',
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 density: VitDensity.tool,
-                title: 'Client classification review',
+                title: 'Rà soát phân loại khách hàng',
                 message:
-                    'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
+                    'Hạng hiện tại, thay đổi bảo vệ, bằng chứng đủ điều kiện, liên kết công bố và bước tuân thủ tiếp theo được rà soát trước khi đổi hạng.',
                 contractId: 'client-categorization-review',
               ),
             ),
             VitTradeSection(
-              title: 'Current category',
+              title: 'Hạng hiện tại',
               child: _CurrentCategoryCard(category: current),
             ),
             VitTradeComplianceSection(
-              title: 'Classification review',
+              title: 'Rà soát phân loại',
               statusPill: const VitStatusPill(
-                label: 'Compliance gated',
+                label: 'Có cổng tuân thủ',
                 status: VitStatusPillStatus.info,
                 size: VitStatusPillSize.sm,
               ),
               items: [
-                VitTradeComplianceItem(label: 'Category', value: current.label),
+                VitTradeComplianceItem(label: 'Hạng', value: current.label),
                 VitTradeComplianceItem(
-                  label: 'Options',
-                  value: '${snapshot.categories.length} tiers',
+                  label: 'Lựa chọn',
+                  value: '${snapshot.categories.length} bậc',
                 ),
               ],
             ),
             VitTradeSection(
-              title: 'Details',
+              title: 'Chi tiết',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -121,10 +121,10 @@ class _ClientCategorizationPageState
                   VitSegmentedTabBar(
                     tabs: [
                       for (final tab in const [
-                        ('overview', 'Overview'),
-                        ('protections', 'Protections'),
-                        ('requirements', 'Requirements'),
-                        ('history', 'History'),
+                        ('overview', 'Tổng quan'),
+                        ('protections', 'Bảo vệ'),
+                        ('requirements', 'Yêu cầu'),
+                        ('history', 'Lịch sử'),
                       ])
                         VitTabItem(
                           key: tab.$1,

@@ -116,7 +116,7 @@ void main() {
 
     await tester.tap(find.byKey(LaunchpadStakingPage.batchClaimKey));
     await tester.pumpAndSettle();
-    expect(find.text('Batch Claim'), findsOneWidget);
+    expect(find.text('Nhận hàng loạt'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded).first);
     await tester.pumpAndSettle();

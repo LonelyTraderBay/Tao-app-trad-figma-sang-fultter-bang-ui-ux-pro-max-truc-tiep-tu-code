@@ -38,7 +38,7 @@ void main() {
       snapshot.actionDraft,
       'POST /launchpad/subscribe|claim|bridge where applicable',
     );
-    expect(snapshot.title, 'Batch Claim');
+    expect(snapshot.title, 'Nhận hàng loạt');
     expect(snapshot.backRoute, AppRoutePaths.launchpadStaking);
     expect(
       snapshot.claimReceiptRoute,
@@ -68,7 +68,7 @@ void main() {
     expect(find.byType(LaunchpadBatchClaimPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Batch Claim'), findsOneWidget);
+    expect(find.text('Nhận hàng loạt'), findsOneWidget);
     expect(find.byKey(LaunchpadBatchClaimPage.heroKey), findsOneWidget);
     expect(find.text(r'$250.52'), findsOneWidget);
     expect(find.byKey(LaunchpadBatchClaimPage.gasKey), findsOneWidget);
@@ -97,12 +97,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadBatchClaimPage.reviewKey), findsOneWidget);
     expect(find.byKey(LaunchpadBatchClaimPage.reviewStateKey), findsOneWidget);
-    expect(find.text('Review truoc khi claim'), findsOneWidget);
-    expect(find.text('Xác nhận Batch Claim'), findsOneWidget);
+    expect(find.text('Rà soát trước khi nhận'), findsOneWidget);
+    expect(find.text('Xác nhận nhận hàng loạt'), findsOneWidget);
 
     await tester.tap(find.text('Nhận tất cả'));
     await tester.pumpAndSettle();
-    expect(find.text('Batch Claim thành công!'), findsOneWidget);
+    expect(find.text('Nhận hàng loạt thành công!'), findsOneWidget);
     expect(
       find.textContaining('Đã nhận phần thưởng từ 1 vị trí'),
       findsOneWidget,

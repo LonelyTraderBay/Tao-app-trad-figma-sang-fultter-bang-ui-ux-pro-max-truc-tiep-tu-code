@@ -11,7 +11,7 @@ class _HistoryTab extends StatelessWidget {
     String labelFor(String id) =>
         categories.firstWhere((item) => item.id == id).label;
     return VitPageSection(
-      label: 'Category History',
+      label: 'Lịch sử hạng',
       density: VitDensity.tool,
       children: [
         for (final entry in history)
@@ -46,7 +46,7 @@ class _HistoryTab extends StatelessWidget {
                       ),
                       if (entry.fromCategoryId != null)
                         Text(
-                          '${labelFor(entry.fromCategoryId!)} -> ${labelFor(entry.toCategoryId)}',
+                          '${labelFor(entry.fromCategoryId!)} → ${labelFor(entry.toCategoryId)}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
                           ),
@@ -76,17 +76,17 @@ class _HistoryTab extends StatelessWidget {
 
 String _historyActionLabel(String action) {
   return switch (action) {
-    'opt-up-requested' => 'Opt-Up Requested',
-    'opt-up-approved' => 'Opt-Up Approved',
-    'opt-down' => 'Opted Down',
-    _ => 'Initial Categorization',
+    'opt-up-requested' => 'Đã gửi yêu cầu nâng hạng',
+    'opt-up-approved' => 'Đã duyệt nâng hạng',
+    'opt-down' => 'Đã hạ hạng',
+    _ => 'Phân loại ban đầu',
   };
 }
 
 String _formatHistoryDate(String date) {
   return switch (date) {
-    '2026-03-08' => 'March 8, 2026',
-    '2025-12-15' => 'December 15, 2025',
+    '2026-03-08' => '8 tháng 3, 2026',
+    '2025-12-15' => '15 tháng 12, 2025',
     _ => date,
   };
 }

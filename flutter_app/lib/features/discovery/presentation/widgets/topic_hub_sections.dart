@@ -10,7 +10,7 @@ class _PredictionSection extends StatelessWidget {
     return _SectionShell(
       key: TopicHubPage.predictionsSectionKey,
       icon: Icons.track_changes_rounded,
-      title: 'Prediction Events',
+      title: 'Sự kiện dự đoán',
       count: snapshot.predictions.length,
       color: AppModuleAccents.predictions,
       actionLabel: 'Xem tất cả',
@@ -33,7 +33,7 @@ class _ArenaRoomsSection extends StatelessWidget {
     return _SectionShell(
       key: TopicHubPage.roomsSectionKey,
       icon: Icons.emoji_events_rounded,
-      title: 'Live Arena Rooms',
+      title: 'Phòng Arena trực tiếp',
       count: snapshot.arenaRooms.length,
       color: AppModuleAccents.arena,
       actionLabel: 'Xem tất cả',
@@ -56,7 +56,7 @@ class _ModesSection extends StatelessWidget {
     return _SectionShell(
       key: TopicHubPage.modesSectionKey,
       icon: Icons.bolt_rounded,
-      title: 'Featured Modes',
+      title: 'Chế độ nổi bật',
       count: snapshot.arenaModes.length,
       color: AppColors.buy,
       children: [
@@ -77,7 +77,7 @@ class _CreatorsSection extends StatelessWidget {
     return _SectionShell(
       key: TopicHubPage.creatorsSectionKey,
       icon: Icons.groups_rounded,
-      title: 'Top Creators',
+      title: 'Nhà sáng tạo hàng đầu',
       count: snapshot.creators.length,
       color: AppModuleAccents.markets,
       children: [

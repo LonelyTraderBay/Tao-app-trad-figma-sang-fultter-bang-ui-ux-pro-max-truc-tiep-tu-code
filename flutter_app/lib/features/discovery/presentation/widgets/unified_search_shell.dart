@@ -49,7 +49,7 @@ class _NoQueryState extends StatelessWidget {
       gap: VitContentGap.tight,
       children: [
         VitPageSection(
-          label: 'Trending',
+          label: 'Đang nổi',
           accentColor: AppModuleAccents.predictions,
           children: [
             Wrap(

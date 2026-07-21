@@ -16,7 +16,7 @@ class _PredictionResultCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const DiscoveryModuleBadge(
-            label: 'Prediction Market',
+            label: 'Thị trường dự đoán',
             icon: Icons.track_changes_rounded,
             color: AppModuleAccents.predictions,
           ),
@@ -40,7 +40,7 @@ class _PredictionResultCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x4),
               Text(
-                'Vol ${event.volumeLabel}',
+                'KL ${event.volumeLabel}',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const Spacer(),
@@ -81,7 +81,7 @@ class _ArenaModeResultCard extends StatelessWidget {
               if (mode.fairPlay) ...[
                 const SizedBox(width: AppSpacing.x3),
                 Text(
-                  'Fair Play',
+                  'Chơi công bằng',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.buy,
                     fontWeight: AppTextStyles.bold,
@@ -110,12 +110,12 @@ class _ArenaModeResultCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${mode.activeChallenges} challenges · ${mode.cloneCount} clones',
+                  '${mode.activeChallenges} thách đấu · ${mode.cloneCount} bản sao',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               const DiscoveryInlineCta(
-                label: 'Xem mode',
+                label: 'Xem chế độ',
                 color: AppModuleAccents.arena,
               ),
             ],

@@ -87,7 +87,7 @@ void main() {
     expect(find.text('Tìm kiếm'), findsOneWidget);
     expect(find.byKey(UnifiedSearchPage.searchKey), findsOneWidget);
     expect(find.byKey(UnifiedSearchPage.offlineKey), findsNothing);
-    expect(find.text('Trending'), findsOneWidget);
+    expect(find.text('Đang nổi'), findsOneWidget);
     expect(find.byKey(UnifiedSearchPage.trendingKey), findsOneWidget);
     expect(
       find.byKey(UnifiedSearchPage.trendingQueryKey('Bitcoin')),
@@ -99,9 +99,9 @@ void main() {
     );
     expect(find.byKey(UnifiedSearchPage.moduleKey('arena')), findsOneWidget);
     expect(find.byKey(UnifiedSearchPage.moduleKey('topics')), findsOneWidget);
-    expect(find.text('Prediction Markets'), findsOneWidget);
+    expect(find.text('Thị trường dự đoán'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
-    expect(find.text('Topic Hub'), findsOneWidget);
+    expect(find.text('Trung tâm chủ đề'), findsOneWidget);
   });
 
   testWidgets('SC-283 first viewport reaches search input', (tester) async {
@@ -137,9 +137,9 @@ void main() {
     await tester.enterText(find.byType(TextField).first, 'bitcoin');
     await tester.pumpAndSettle();
 
-    expect(find.text('Prediction Events'), findsOneWidget);
-    expect(find.text('Arena Rooms'), findsOneWidget);
-    expect(find.text('Trading Pairs'), findsOneWidget);
+    expect(find.text('Sự kiện dự đoán'), findsOneWidget);
+    expect(find.text('Phòng Arena'), findsOneWidget);
+    expect(find.text('Cặp giao dịch'), findsOneWidget);
     expect(find.text('Bitcoin ETF approval trước Q2?'), findsOneWidget);
     expect(
       find.byKey(UnifiedSearchPage.resultKey('pair', 'btcusdt')),
@@ -150,9 +150,9 @@ void main() {
     await tester.enterText(find.byType(TextField).first, 'arena');
     await tester.pumpAndSettle();
 
-    expect(find.text('Arena Modes'), findsOneWidget);
-    expect(find.text('Arena Rooms'), findsOneWidget);
-    expect(find.text('Creators'), findsOneWidget);
+    expect(find.text('Chế độ Arena'), findsOneWidget);
+    expect(find.text('Phòng Arena'), findsOneWidget);
+    expect(find.text('Nhà sáng tạo'), findsOneWidget);
     expect(find.text('Altcoin Battle'), findsOneWidget);
     expect(find.text('Minh Arena'), findsOneWidget);
   });

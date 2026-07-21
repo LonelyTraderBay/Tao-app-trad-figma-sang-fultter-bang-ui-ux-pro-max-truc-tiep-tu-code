@@ -275,7 +275,7 @@ final class DiscoveryArenaRoomDraft {
     required this.creatorName,
     required this.route,
     required this.searchTerms,
-    this.statusLabel = 'Live',
+    this.statusLabel = 'Trực tiếp',
   });
 
   final String id;

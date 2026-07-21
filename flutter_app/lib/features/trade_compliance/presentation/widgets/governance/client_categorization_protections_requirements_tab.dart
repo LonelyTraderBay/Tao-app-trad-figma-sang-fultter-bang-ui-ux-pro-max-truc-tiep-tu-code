@@ -8,7 +8,7 @@ class _ProtectionsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'Protection Comparison',
+      label: 'So sánh bảo vệ',
       density: VitDensity.tool,
       children: [
         for (final category in categories)
@@ -26,7 +26,7 @@ class _RequirementsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'Qualification Requirements',
+      label: 'Yêu cầu đủ điều kiện',
       density: VitDensity.tool,
       children: [
         for (final category in categories)

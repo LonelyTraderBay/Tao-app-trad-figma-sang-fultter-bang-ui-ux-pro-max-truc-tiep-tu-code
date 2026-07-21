@@ -60,7 +60,7 @@ class _ClaimSheet extends StatelessWidget {
                       ),
                       VitIconButton(
                         icon: Icons.close_rounded,
-                        tooltip: 'Close',
+                        tooltip: 'Đóng',
                         onPressed: onClose,
                         variant: VitIconButtonVariant.transparent,
                         size: VitIconButtonSize.md,
@@ -89,7 +89,7 @@ class _ClaimSheet extends StatelessWidget {
                     height: AppSpacing.pageRhythmStandardSectionGap,
                   ),
                   _DetailLine(row: _DetailRow('Đợt', entry.label)),
-                  _DetailLine(row: _DetailRow('Chain', receipt.chain)),
+                  _DetailLine(row: _DetailRow('Chuỗi', receipt.chain)),
                   const _DetailLine(row: _DetailRow('Gas ước tính', r'~$0.15')),
                   const SizedBox(
                     height: AppSpacing.pageRhythmStandardSectionGap,
@@ -97,9 +97,9 @@ class _ClaimSheet extends StatelessWidget {
                   VitHighRiskStatePanel(
                     key: LaunchpadClaimReceiptPage.claimSheetReviewStateKey,
                     state: VitHighRiskUiState.riskReview,
-                    title: 'Review claim receipt',
+                    title: 'Rà soát biên lai nhận thưởng',
                     message:
-                        'Check reward token, chain, gas, and claim amount.',
+                        'Kiểm tra token thưởng, chuỗi, gas và số lượng nhận.',
                     contractId: 'SC-302 / ${receipt.positionId}',
                   ),
                   const SizedBox(

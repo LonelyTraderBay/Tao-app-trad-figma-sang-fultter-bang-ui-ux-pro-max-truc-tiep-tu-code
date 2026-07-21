@@ -22,14 +22,27 @@ class _ClientOptUpRequestPageState
   bool _waiverAcknowledged = false;
   bool _submitted = false;
 
-  bool get _canSubmit => _criteriaConfirmed && _waiverAcknowledged;
+  bool get _canSubmit =>
+      _criteriaConfirmed && _waiverAcknowledged && !_submitted;
+
+  Future<void> _submitForReview() async {
+    setState(() => _submitted = true);
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã lưu yêu cầu rà soát',
+      message:
+          'Bộ phận tuân thủ phải rà soát trước khi thay đổi phân loại có hiệu lực.',
+      variant: VitBannerVariant.success,
+      ctaVariant: VitCtaButtonVariant.success,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(tradeClientCategorizationProvider);
     return VitTradeDetailScaffold(
-      title: 'Client Opt-Up Request',
-      subtitle: 'MiFID II Classification',
+      title: 'Yêu cầu nâng hạng khách hàng',
+      subtitle: 'Phân loại MiFID II',
       semanticLabel:
           'Yêu cầu nâng hạng lên khách hàng chuyên nghiệp (MiFID II)',
       semanticIdentifier: 'SC-411',
@@ -55,69 +68,26 @@ class _ClientOptUpRequestPageState
             (item) => item.id == 'professional',
           );
           return [
-            if (_submitted)
-              VitTradeSection(
-                title: 'Status',
-                child: VitCard(
-                  key: ClientOptUpRequestPage.successKey,
-                  density: VitDensity.tool,
-                  radius: VitCardRadius.tight,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.check_circle_outline,
-                        color: _clientGreen,
-                        size: 24,
-                      ),
-                      const SizedBox(width: AppSpacing.x3),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Review request saved',
-                              style: AppTextStyles.base.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: AppSpacing.pageRhythmCompactInnerGap,
-                            ),
-                            Text(
-                              'Compliance review is required before any categorization change takes effect.',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             VitTradeComplianceSection(
-              title: 'Opt-up review',
+              title: 'Rà soát nâng hạng',
               statusPill: const VitStatusPill(
-                label: 'No instant status change',
+                label: 'Không đổi hạng ngay',
                 status: VitStatusPillStatus.warning,
                 size: VitStatusPillSize.sm,
               ),
               items: [
                 VitTradeComplianceItem(
-                  label: 'Target',
+                  label: 'Mục tiêu',
                   value: professional.label,
                 ),
                 VitTradeComplianceItem(
-                  label: 'Criteria',
-                  value: '${professional.requirements.length} requirements',
+                  label: 'Tiêu chí',
+                  value: '${professional.requirements.length} yêu cầu',
                 ),
               ],
             ),
             VitTradeSection(
-              title: 'Request',
+              title: 'Yêu cầu',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -125,7 +95,7 @@ class _ClientOptUpRequestPageState
                     density: VitDensity.tool,
                     radius: VitCardRadius.tight,
                     child: VitPageSection(
-                      label: 'Professional Status Criteria',
+                      label: 'Tiêu chí khách hàng chuyên nghiệp',
                       density: VitDensity.tool,
                       children: [
                         for (final requirement in professional.requirements)
@@ -157,18 +127,18 @@ class _ClientOptUpRequestPageState
                       _OptUpChecklistTile(
                         key: ClientOptUpRequestPage.criteriaKey,
                         value: _criteriaConfirmed,
-                        title: 'I meet the professional client criteria',
+                        title: 'Tôi đáp ứng tiêu chí khách hàng chuyên nghiệp',
                         subtitle:
-                            'Evidence must be reviewed before status can change.',
+                            'Hồ sơ phải được rà soát trước khi hạng có thể thay đổi.',
                         onChanged: (value) =>
                             setState(() => _criteriaConfirmed = value),
                       ),
                       _OptUpChecklistTile(
                         key: ClientOptUpRequestPage.waiverKey,
                         value: _waiverAcknowledged,
-                        title: 'I understand protection changes',
+                        title: 'Tôi hiểu bảo vệ nhà đầu tư sẽ thay đổi',
                         subtitle:
-                            'Opting up can reduce retail investor protections.',
+                            'Nâng hạng có thể làm giảm bảo vệ dành cho khách hàng bán lẻ.',
                         onChanged: (value) =>
                             setState(() => _waiverAcknowledged = value),
                       ),
@@ -176,18 +146,16 @@ class _ClientOptUpRequestPageState
                   ),
                   VitCtaButton(
                     key: ClientOptUpRequestPage.submitKey,
-                    onPressed: _canSubmit
-                        ? () => setState(() => _submitted = true)
-                        : null,
+                    onPressed: _canSubmit ? _submitForReview : null,
                     density: VitDensity.tool,
-                    child: const Text('Submit for Review'),
+                    child: const Text('Gửi để rà soát'),
                   ),
                   const VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
                     density: VitDensity.tool,
-                    title: 'Opt-up request review',
+                    title: 'Rà soát yêu cầu nâng hạng',
                     message:
-                        'Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.',
+                        'Xác nhận tiêu chí, miễn trừ bảo vệ, biên lai tuân thủ và bước tiếp theo có hiệu lực chậm được rà soát trước khi đổi hạng.',
                     contractId: 'client-opt-up-review',
                   ),
                 ],

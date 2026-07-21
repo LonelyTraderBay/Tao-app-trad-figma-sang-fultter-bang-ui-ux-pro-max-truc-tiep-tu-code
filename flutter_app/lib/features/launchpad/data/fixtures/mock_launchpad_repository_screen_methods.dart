@@ -62,7 +62,7 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
     return const LaunchpadPortfolioSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-portfolio',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
-      title: 'Launchpad Portfolio',
+      title: 'Danh mục Launchpad',
       subtitle: 'Các dự án đã tham gia',
       backRoute: '/launchpad',
       launchpadRoute: '/launchpad',
@@ -174,7 +174,7 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
     return const LaunchpadBatchClaimSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-batch-claim',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
-      title: 'Batch Claim',
+      title: 'Nhận hàng loạt',
       backRoute: '/launchpad/staking',
       claimReceiptRoute: '/launchpad/claim-receipt/pos001',
       positions: _batchClaimPositions,

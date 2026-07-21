@@ -18,14 +18,14 @@ class _PredictionEventCard extends StatelessWidget {
           Row(
             children: [
               const DiscoveryModuleBadge(
-                label: 'Prediction Market',
+                label: 'Thị trường dự đoán',
                 icon: Icons.track_changes_rounded,
                 color: AppModuleAccents.predictions,
               ),
               if (event.isTrending) ...[
                 const SizedBox(width: AppSpacing.x3),
                 Text(
-                  'Trending',
+                  'Đang nổi',
                   style: AppTextStyles.micro.copyWith(
                     color: AppModuleAccents.arena,
                     fontWeight: AppTextStyles.bold,
@@ -56,7 +56,7 @@ class _PredictionEventCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Text(
-                  'Vol ${event.volumeLabel}',
+                  'KL ${event.volumeLabel}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
@@ -79,7 +79,7 @@ class _ArenaRoomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = room.statusLabel == 'Live'
+    final statusColor = room.statusLabel == 'Trực tiếp'
         ? AppColors.buy
         : AppModuleAccents.arena;
     return VitCard(
@@ -93,7 +93,7 @@ class _ArenaRoomCard extends StatelessWidget {
           Row(
             children: [
               const DiscoveryModuleBadge(
-                label: 'Arena Points only',
+                label: 'Chỉ điểm Arena',
                 icon: Icons.stars_rounded,
                 color: AppModuleAccents.arena,
               ),
@@ -113,7 +113,7 @@ class _ArenaRoomCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${room.entryPoints} pts',
+                '${room.entryPoints} điểm',
                 style: AppTextStyles.micro.copyWith(
                   color: AppModuleAccents.arena,
                   fontWeight: AppTextStyles.bold,
@@ -129,7 +129,7 @@ class _ArenaRoomCard extends StatelessWidget {
                 ),
               ),
               const DiscoveryInlineCta(
-                label: 'Xem room',
+                label: 'Xem phòng',
                 color: AppModuleAccents.arena,
               ),
             ],
@@ -187,14 +187,14 @@ class _ArenaModeCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  '${mode.activeChallenges} challenges · ${mode.cloneCount} clones',
+                  '${mode.activeChallenges} thách đấu · ${mode.cloneCount} bản sao',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
           const DiscoveryInlineCta(
-            label: 'Xem mode',
+            label: 'Xem chế độ',
             color: AppModuleAccents.arena,
           ),
         ],
@@ -238,7 +238,7 @@ class _CreatorChip extends StatelessWidget {
                 ),
               ),
               Text(
-                'Trust ${creator.trustScore}%',
+                'Uy tín ${creator.trustScore}%',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
@@ -327,7 +327,7 @@ class _DisclosureCard extends StatelessWidget {
       padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: VitRiskDisclaimerNote(
         message:
-            'Lưu ý: Prediction Markets sử dụng USDT thật (vị thế thực). Arena Challenges chỉ dùng Arena Points (không phải tài sản tài chính). Topic Hub là trang khám phá, 2 module hoàn toàn riêng biệt.\n$notes',
+            'Lưu ý: Thị trường dự đoán sử dụng USDT thật (vị thế thực). Thách đấu Arena chỉ dùng Điểm Arena (không phải tài sản tài chính). Trung tâm chủ đề là trang khám phá, hai module hoàn toàn riêng biệt.\n$notes',
       ),
     );
   }
