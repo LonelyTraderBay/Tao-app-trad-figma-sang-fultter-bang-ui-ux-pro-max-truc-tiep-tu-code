@@ -7,7 +7,7 @@ alwaysApply: true
 
 Headroom saves context via MCP — it does **not** compress Cursor subscription LLM traffic.
 
-Configured in **Workspace MCP** (project `.cursor/mcp.json`). Do not duplicate in Home config.
+Configured in **Home MCP** (`~/.cursor/mcp.json`) — shared across all projects. Do not duplicate in the project `.cursor/mcp.json` (kept empty).
 
 ## Daily
 

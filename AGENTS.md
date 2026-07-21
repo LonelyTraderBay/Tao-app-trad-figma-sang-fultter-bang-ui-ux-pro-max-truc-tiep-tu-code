@@ -269,8 +269,8 @@ Cursor subscription ($200) is the default agent surface. Optimize quota with:
 
 - Daily session: `.\scripts\Start-CursorSession.ps1` (Headroom proxy + GitNexus status).
 - MCP scope split (no duplicate server names):
-  - **Home** (`~/.cursor/mcp.json`): `gitnexus`, `dart` — must be Connected.
-  - **Workspace** (project `.cursor/mcp.json`): `headroom` only — must be Connected.
+ - **Home** (`~/.cursor/mcp.json`): `gitnexus`, `dart`, `headroom` — must be Connected.
+ - **Workspace** (project `.cursor/mcp.json`): empty — no project-level servers.
 - Model: Cursor **Auto** only — do not switch models manually or suggest tier changes.
 - When stuck: smaller scope, new chat, or GitNexus trace — not a different model.
 - Docs: load **one** execution prompt + **one** plan per task via `docs/INDEX.md`.

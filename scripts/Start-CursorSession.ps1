@@ -22,8 +22,7 @@ gitnexus status 2>&1
 
 Write-Host ''
 Write-Host '=== Checklist ===' -ForegroundColor Cyan
-Write-Host '  [ ] Home MCP: gitnexus + dart Connected'
-Write-Host '  [ ] Workspace MCP: headroom Connected (project .cursor/mcp.json)'
+Write-Host '  [ ] Home MCP: gitnexus + dart + headroom Connected (~/.cursor/mcp.json)'
 Write-Host '  [ ] Model: Cursor Auto (Agent dropdown - khong chon Sonnet/Opus thu cong)'
 Write-Host '  [ ] Batch: 5-10 files per turn; new chat after each batch'
 Write-Host '  [ ] Docs: one prompt + one plan via docs/INDEX.md'
