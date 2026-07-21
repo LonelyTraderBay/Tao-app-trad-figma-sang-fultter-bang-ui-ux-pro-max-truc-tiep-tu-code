@@ -40,7 +40,8 @@ void main() {
       expect(snapshot.selectedTopic.id, 'crypto');
       expect(snapshot.predictions, isNotEmpty);
       expect(snapshot.arenaRooms, isNotEmpty);
-      expect(snapshot.contractNotes, contains('Prediction positions'));
+      expect(snapshot.contractNotes, contains('vị thế Prediction'));
+      expect(snapshot.contractNotes, contains('Điểm Arena'));
     });
   });
 }
