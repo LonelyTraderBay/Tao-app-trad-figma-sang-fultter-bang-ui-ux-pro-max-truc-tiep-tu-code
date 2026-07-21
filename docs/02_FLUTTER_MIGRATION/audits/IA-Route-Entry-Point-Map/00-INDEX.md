@@ -1,4 +1,15 @@
-﻿# IA Route Entry Point Map — Index
+# IA Route Entry Point Map — Index
+
+Generated: 2026-07-13 · **Readiness pack updated: 2026-07-21**
+
+## Readiness status (2026-07-21)
+
+| Gate | Result |
+|------|--------|
+| Evidence pack | **COMPLETE** |
+| Route + navigation audits | **PASS** |
+| Implementation unblock | **CONDITIONAL** — see [UI-UX-Pre-Implementation-Gate.md](./UI-UX-Pre-Implementation-Gate.md) |
+| Master plan | [UI-UX-REORG-MASTER-PLAN.md](./UI-UX-REORG-MASTER-PLAN.md) |
 
 Generated: 2026-07-13  
 Source: ``Flutter-Route-Coverage-Truth-Table.md`` (413 ``real_page`` routes)  
