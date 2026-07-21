@@ -1,4 +1,4 @@
-﻿lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|$title has no data
+lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|$title has no data
 lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|No rows are available for the selected scope.
 lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|The admin data source did not return a view.
 lib/features/admin/presentation/widgets/analytics_dashboard_common.dart|The event stream is quiet for the selected period.
@@ -85,7 +85,7 @@ lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_pa
 lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_sections.dart|Question ${current + 1} of $total
 lib/features/earn/presentation/widgets/staking/staking_transaction_reporting_sheet_widgets.dart|Once you choose a method for a tax year, use it consistently. Consult a tax professional for guidance.
 lib/features/earn/presentation/widgets/staking/staking_validator_health_monitor_page_sections.dart|View Details
-lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart|Loading Â· Empty Â· Error Â· Offline
+lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart|Loading · Empty · Error · Offline
 lib/features/launchpad/presentation/pages/tools/launchpad_notif_sound_page.dart|Sound, vibration, do-not-disturb, alert categories and delivery preferences are reviewed before saving.
 lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart|Target allocation, deviation, gas estimate, risk impact and confirmation are reviewed before execution.
 lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_history_settings.dart|${history[i].amount.toStringAsFixed(0)} ${history[i].from}
@@ -109,7 +109,7 @@ lib/features/markets/presentation/pages/tools/market_movers_page.dart|Filter chi
 lib/features/markets/presentation/pages/tools/market_movers_page.dart|Market movers data reviewed
 lib/features/markets/presentation/pages/tools/market_movers_page.dart|Mover rows preserve pair identity, movement, volume, and next navigation.
 lib/features/markets/presentation/pages/tools/market_movers_page.dart|Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.
-lib/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart|@ \$${formatMarketDepthPrice(order.price)}  â‰ˆ ${formatMarketDepthCompact(order.usdValue, prefix: r
+lib/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart|@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r
 lib/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart|Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.
 lib/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart|Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.
 lib/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart|Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.
@@ -281,7 +281,7 @@ lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_widgets.
 lib/features/trade_copy/presentation/widgets/hub/copy_trading_list.dart|$message Preview, fees, allocation limit and confirmation are reviewed before copying.
 lib/features/trade_copy/presentation/widgets/provider/provider_application_steps.dart|Preview fee, disclosure, copier impact, limits, and next step before submitting this provider application.
 lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_common.dart|Send announcement to all followers
-lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_details.dart|This Month \$${snapshot.stats.monthlyFeesEarned.toStringAsFixed(0)} Â· All-Time \$${snapshot.stats.allTimeFeesEarned.toStringAsFixed(0)}
+lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_details.dart|This Month \$${snapshot.stats.monthlyFeesEarned.toStringAsFixed(0)} · All-Time \$${snapshot.stats.allTimeFeesEarned.toStringAsFixed(0)}
 lib/features/trade_copy/presentation/widgets/safety/copy_audit_log_events.dart|Your Price
 lib/features/trade_copy/presentation/widgets/safety/copy_safety_enforcement_common.dart|All actions are logged. If you believe an action was unfair, contact support.
 lib/features/trade_copy/presentation/widgets/safety/copy_safety_enforcement_common.dart|All copies would be stopped and positions queued for close in the backend flow.
@@ -303,7 +303,7 @@ lib/features/trade_terminal/presentation/widgets/tools/advanced_analytics_page_s
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${order.amount.toStringAsFixed(1)} BTC @ \$${_formatMoney(order.price)}
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${order.remaining.toStringAsFixed(1)} @ \$${_formatMoney(order.price)}
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${orders.length} open orders selected for batch action.
-lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|BTC/USDT DOM Â· click price level to place instant order.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|BTC/USDT DOM · click price level to place instant order.
 lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|Place Buy Order
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|${fill.amount.toStringAsFixed(1)} BTC @ \$${formatExecutionQualityMoney(fill.price)}
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|Save Slippage Settings

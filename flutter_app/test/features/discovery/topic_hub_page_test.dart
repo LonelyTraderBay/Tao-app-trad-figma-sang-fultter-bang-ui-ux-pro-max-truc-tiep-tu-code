@@ -124,10 +124,7 @@ void main() {
     expect(find.byKey(TopicHubPage.roomsSectionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.modesSectionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.creatorsSectionKey), findsOneWidget);
-    expect(
-      find.text('Bitcoin đạt \$150K trước tháng 7/2026?'),
-      findsOneWidget,
-    );
+    expect(find.text('Bitcoin đạt \$150K trước tháng 7/2026?'), findsOneWidget);
     expect(find.text('BTC \$70K? — Tuần 9'), findsOneWidget);
     expect(find.text('Dự đoán BTC hàng tuần'), findsOneWidget);
     expect(find.text('CryptoMaster_VN'), findsWidgets);
@@ -189,10 +186,7 @@ void main() {
     expect(find.text('Trung tâm chủ đề'), findsOneWidget);
     expect(find.byKey(TopicHubPage.topicKey('crypto')), findsOneWidget);
     expect(find.text('Crypto'), findsWidgets);
-    expect(
-      find.text('Bitcoin đạt \$150K trước tháng 7/2026?'),
-      findsOneWidget,
-    );
+    expect(find.text('Bitcoin đạt \$150K trước tháng 7/2026?'), findsOneWidget);
 
     await tester.tap(find.byKey(TopicHubPage.searchActionKey));
     await tester.pumpAndSettle();

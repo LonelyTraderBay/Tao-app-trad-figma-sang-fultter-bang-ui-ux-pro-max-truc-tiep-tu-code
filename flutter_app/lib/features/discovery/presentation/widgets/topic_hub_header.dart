@@ -128,10 +128,7 @@ class _TopicHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              VitAccentIconBox(
-                icon: _iconForTopic(topic),
-                color: accent,
-              ),
+              VitAccentIconBox(icon: _iconForTopic(topic), color: accent),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
