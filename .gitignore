@@ -21,6 +21,9 @@ flutter_app/*.log
 .DS_Store
 Thumbs.db
 
+# Local linked worktrees (never commit gitlinks / machine paths)
+.worktrees/
+
 # Claude Code — track harness; ignore runtime / machine-local only
 .claude/worktrees/
 .claude/data/

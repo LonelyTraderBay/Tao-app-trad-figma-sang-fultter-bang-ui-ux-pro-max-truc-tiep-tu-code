@@ -96,15 +96,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     };
   }
 
-  List<HomeQuickAction> _gridQuickActions(List<HomeQuickAction> actions) {
-    return actions
-        .where(
-          (action) =>
-              !_homeDiscoveryQuickActionRoutes.contains(action.routePath),
-        )
-        .toList(growable: false);
-  }
-
   HomeDensityVariant _homeDensityVariant(double screenWidth) {
     return screenWidth <= HomeSpacingTokens.homeQuickActionDensityBreakpoint
         ? HomeDensityVariant.compact
@@ -177,7 +168,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             homeVariant,
           );
           final visibleAnnouncements = _visibleAnnouncements(snapshot);
-          final gridQuickActions = _gridQuickActions(snapshot.quickActions);
+          final gridQuickActions = snapshot.quickActions;
           final moreQuickActions = gridQuickActions
               .skip(homePrimaryQuickActionCount)
               .toList(growable: false);
@@ -222,21 +213,23 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onNavigate: _go,
                   ),
                 HomeProductsSection(
-                  actions: gridQuickActions,
-                  maxVisibleItems: homePrimaryQuickActionCount,
-                  moreActions: moreQuickActions,
+                  quickActions: gridQuickActions,
+                  maxVisibleQuickActions: homePrimaryQuickActionCount,
+                  moreQuickActions: moreQuickActions,
+                  productGroups: snapshot.productGroups,
                   onNavigate: _go,
                   onMore: moreQuickActions.isEmpty
                       ? null
                       : () => _showMoreProducts(moreQuickActions, homeDensity),
                   density: homeDensity,
                 ),
+                _HomeDiscoverySection(onNavigate: _go),
+                // D3: «Gần đây» dưới Discovery (không chen giữa products).
                 HomeRecentProductsSection(
                   recentProducts: snapshot.recentProducts,
                   onNavigate: _go,
                   density: homeDensity,
                 ),
-                _HomeDiscoverySection(onNavigate: _go),
                 _MarketSection(
                   activeTab: _marketTab,
                   pairs: controller.tabPairs(_marketTab),

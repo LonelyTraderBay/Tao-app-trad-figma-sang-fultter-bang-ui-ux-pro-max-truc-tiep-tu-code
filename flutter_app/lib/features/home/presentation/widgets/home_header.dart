@@ -30,6 +30,11 @@ class HomeHeader extends StatelessWidget {
           badgeCount: notifications,
           onPressed: () => onNavigate('/notifications'),
         ),
+        VitHeaderActionItem(
+          type: VitHeaderActionType.news,
+          tooltip: 'Tin tức',
+          onPressed: () => onNavigate('/news'),
+        ),
       ],
     );
   }

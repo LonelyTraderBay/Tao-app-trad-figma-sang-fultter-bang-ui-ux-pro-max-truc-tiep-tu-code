@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.da
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/pair_detail_page.dart';
+import 'package:vit_trade_flutter/features/news/presentation/pages/news_page.dart';
 import 'package:vit_trade_flutter/features/notifications/presentation/pages/notifications_page.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
@@ -81,6 +82,14 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(NotificationsPage), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byTooltip('Tin tức'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(NewsPage), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.chevron_left_rounded));
       await tester.pumpAndSettle();

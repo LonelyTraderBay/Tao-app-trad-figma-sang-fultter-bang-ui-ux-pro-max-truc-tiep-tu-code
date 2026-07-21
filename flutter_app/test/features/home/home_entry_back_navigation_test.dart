@@ -63,22 +63,23 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('Home product navigation pushes so Convert back returns Home', (
-    tester,
-  ) async {
-    await pumpApp(tester);
+  testWidgets(
+    'Home product navigation pushes so Chuyển đổi back returns Home',
+    (tester) async {
+      await pumpApp(tester);
 
-    final convertCard = find.text('Convert');
-    await tester.ensureVisible(convertCard);
-    await tester.tap(convertCard);
-    await tester.pumpAndSettle();
+      final convertCard = find.text('Chuyển đổi').first;
+      await tester.ensureVisible(convertCard);
+      await tester.tap(convertCard);
+      await tester.pumpAndSettle();
 
-    expect(find.byType(ConvertPage), findsOneWidget);
+      expect(find.byType(ConvertPage), findsOneWidget);
 
-    await tapHeaderBack(tester);
+      await tapHeaderBack(tester);
 
-    expect(find.byType(HomePage), findsOneWidget);
-  });
+      expect(find.byType(HomePage), findsOneWidget);
+    },
+  );
 
   for (final routeCase in _homeEntryCases) {
     testWidgets('${routeCase.label} returns to Home when pushed from Home', (

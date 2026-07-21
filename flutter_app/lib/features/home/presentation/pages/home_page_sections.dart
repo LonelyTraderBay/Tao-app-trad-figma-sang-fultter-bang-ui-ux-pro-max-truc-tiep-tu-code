@@ -15,9 +15,9 @@ class _HomeDiscoverySection extends StatelessWidget {
           bottomGap: AppSpacing.pageRhythmCompactInnerGap,
         ),
         VitDiscoveryActionCard(
-          title: 'Prediction Markets',
-          badgeLabel: 'Prediction Market',
-          subtitle: 'Thị trường xác suất, vị thế và portfolio',
+          title: 'Thị trường dự đoán',
+          badgeLabel: 'Ví / PnL',
+          subtitle: 'Thị trường xác suất, vị thế và danh mục',
           actionLabel: 'Khám phá thị trường',
           icon: Icons.adjust_rounded,
           accentColor: AppColors.accent,
@@ -32,9 +32,9 @@ class _HomeDiscoverySection extends StatelessWidget {
         ),
         const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
         VitDiscoveryActionCard(
-          title: 'Open Arena',
-          badgeLabel: 'Arena Points only',
-          subtitle: 'Tạo mode chơi, mở room, dùng Arena Points',
+          title: 'Arena',
+          badgeLabel: 'Chỉ điểm Arena',
+          subtitle: 'Tạo chế độ chơi, mở phòng, dùng điểm Arena',
           actionLabel: 'Vào Arena',
           icon: Icons.sports_esports_outlined,
           accentColor: AppColors.riskWarning,
@@ -51,10 +51,10 @@ class _HomeDiscoverySection extends StatelessWidget {
         const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
         const VitRiskDisclaimerNote(
           message:
-              'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
+              'Dự đoán dùng vị thế thật. Arena chỉ dùng điểm (không phải tiền thật).',
           semanticsLabel:
-              'Lưu ý rủi ro: Predictions sử dụng vị thế thực. Arena sử dụng '
-              'Points (không phải tiền thật).',
+              'Lưu ý rủi ro: Dự đoán dùng vị thế thật. Arena chỉ dùng điểm '
+              '(không phải tiền thật).',
         ),
       ],
     );

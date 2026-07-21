@@ -33,49 +33,37 @@ void main() {
       expect(snapshot.nextAction?.stateLabel, 'Next');
       expect(
         snapshot.recentProducts.map((product) => product.routePath),
-        equals([
-          '/trade/btcusdt',
-          '/p2p',
-          '/earn/staking',
-          '/trade/copy-trading',
-        ]),
+        equals(['/trade/btcusdt', '/p2p', '/earn', '/trade/copy-trading']),
       );
       expect(
-        quickActions.map((action) => action.routePath).take(12),
+        quickActions.map((action) => action.routePath),
         equals([
           '/trade/btcusdt',
           '/trade/convert',
           '/wallet',
           '/p2p',
           '/dca',
-          '/earn/staking',
+          '/earn',
           '/earn/savings',
           '/launchpad',
-          '/markets/predictions',
-          '/arena',
           '/rewards',
-          '/support',
         ]),
       );
       expect(
-        quickActions.map((action) => action.routePath).skip(12),
-        equals([
-          '/trade/margin',
-          '/trade/bots',
-          '/trade/copy-trading',
-          '/topics',
-          '/referral',
-        ]),
+        snapshot.productGroups.map((group) => group.id),
+        equals(['trading', 'pro', 'yield', 'explore']),
       );
       expect(
-        quickActions
-            .take(12)
-            .every((action) => action.stateLabel?.isNotEmpty ?? false),
+        quickActions.every((action) => action.stateLabel?.isNotEmpty ?? false),
         isTrue,
       );
       expect(
         quickActions.any((action) => action.routePath == '/support'),
-        isTrue,
+        isFalse,
+      );
+      expect(
+        quickActions.any((action) => action.routePath == '/referral'),
+        isFalse,
       );
       expect(controller.hotPairs.every((pair) => pair.isFavorite), isTrue);
       expect(controller.gainers.first.change24h, greaterThanOrEqualTo(0));

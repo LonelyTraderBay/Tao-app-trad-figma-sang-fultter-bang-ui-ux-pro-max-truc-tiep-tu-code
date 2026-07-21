@@ -61,7 +61,5 @@ class HomePage extends ConsumerStatefulWidget {
 
 enum HomeDensityVariant { compact, comfortable }
 
-const _homeDiscoveryQuickActionRoutes = {'/markets/predictions', '/arena'};
-
 const double _framedScrollClearance = AppSpacing.buttonStandard + AppSpacing.x7;
 const double _nativeScrollClearance = AppSpacing.buttonStandard + AppSpacing.x5;

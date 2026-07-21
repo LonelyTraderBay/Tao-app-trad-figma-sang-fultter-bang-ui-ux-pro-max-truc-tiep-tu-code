@@ -59,6 +59,19 @@ final class HomeQuickAction {
   final String? riskBadge;
 }
 
+/// Named product strip on Home (Giao dịch / Pro / Sinh lời / Khám phá).
+final class HomeProductGroup {
+  const HomeProductGroup({
+    required this.id,
+    required this.title,
+    required this.actions,
+  });
+
+  final String id;
+  final String title;
+  final List<HomeQuickAction> actions;
+}
+
 /// The single "continue where you left off" suggestion card on the home
 /// screen.
 final class HomeNextAction {
@@ -141,6 +154,7 @@ final class HomeSnapshot {
     required this.notifications,
     required this.announcements,
     required this.quickActions,
+    this.productGroups = const [],
     this.nextAction,
     required this.recentProducts,
     required this.pairs,
@@ -156,7 +170,12 @@ final class HomeSnapshot {
   final List<double> portfolioTrend7d;
   final int notifications;
   final List<HomeAnnouncement> announcements;
+
+  /// Compact «Hành động nhanh» strip (+ sheet overflow). No Support/Referral.
   final List<HomeQuickAction> quickActions;
+
+  /// Grouped product strips (Giao dịch / Pro / Sinh lời / Khám phá).
+  final List<HomeProductGroup> productGroups;
   final HomeNextAction? nextAction;
   final List<HomeRecentProduct> recentProducts;
   final List<HomeCryptoPair> pairs;

@@ -52,6 +52,8 @@ class ProfilePage extends ConsumerStatefulWidget {
   static const predictionCardKey = Key('sc156_profile_prediction_card');
   static const arenaCardKey = Key('sc156_profile_arena_card');
   static const productHubKey = Key('sc156_profile_product_hub');
+  static const kycBannerKey = Key('sc156_profile_kyc_banner');
+  static const legalScaffoldKey = Key('sc156_profile_legal_scaffold');
   static Key productShortcutKey(String id) => Key('sc156_profile_product_$id');
   static Key menuKey(String id) => Key('sc156_profile_menu_$id');
 
@@ -118,7 +120,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               onOpenPredictions: () =>
                   context.go(AppRoutePaths.profilePredictions),
               onOpenArena: () => context.go(AppRoutePaths.profileArena),
-              onOpenActivity: () => context.go(AppRoutePaths.profileActivity),
+              onOpenKyc: () => context.go(AppRoutePaths.profileKyc),
               onLogout: () async {
                 await ref.read(authSessionControllerProvider.notifier).logout();
                 if (context.mounted) context.go(AppRoutePaths.authLogin);

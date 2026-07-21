@@ -42,7 +42,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('SC-007 keeps advanced products in the more sheet', (
+  testWidgets('SC-007 keeps advanced quick actions in the more sheet', (
     tester,
   ) async {
     await pumpHome(tester);
@@ -56,13 +56,12 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(HomePage.moreProductsSheetKey), findsOneWidget);
-    expect(find.text('Tiết kiệm'), findsOneWidget);
-    expect(find.text('Launchpad'), findsOneWidget);
-    expect(find.text('Margin'), findsOneWidget);
-    expect(find.text('Bot'), findsOneWidget);
-    expect(find.text('Copy Trade'), findsOneWidget);
-    expect(find.text('Khám phá'), findsOneWidget);
-    expect(find.text('Giới thiệu'), findsOneWidget);
+    expect(find.text('Thêm hành động'), findsOneWidget);
+    expect(find.text('Tiết kiệm'), findsWidgets);
+    expect(find.text('Launchpad'), findsWidgets);
+    expect(find.text('Phần thưởng'), findsWidgets);
+    expect(find.text('Hỗ trợ'), findsNothing);
+    expect(find.text('Giới thiệu'), findsNothing);
   });
 
   testWidgets('SC-007 flags leveraged products with a risk badge', (
@@ -70,19 +69,11 @@ void main() {
   ) async {
     await pumpHome(tester);
 
-    final moreProducts = find.descendant(
-      of: find.byKey(HomePage.productsSectionKey),
-      matching: find.textContaining('Xem thêm'),
-    );
-    await tester.ensureVisible(moreProducts);
-    await tester.tap(moreProducts);
-    await tester.pumpAndSettle();
-
     expect(find.bySemanticsLabel(RegExp('Margin.*Rủi ro cao')), findsOneWidget);
     expect(find.bySemanticsLabel(RegExp('Bot.*Rủi ro cao')), findsOneWidget);
     expect(
       find.bySemanticsLabel(RegExp('Launchpad.*Rủi ro cao')),
-      findsOneWidget,
+      findsWidgets,
     );
   });
 

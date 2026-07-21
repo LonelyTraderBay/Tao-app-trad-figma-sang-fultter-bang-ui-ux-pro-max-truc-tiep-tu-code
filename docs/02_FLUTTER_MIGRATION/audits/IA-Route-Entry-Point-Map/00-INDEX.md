@@ -6,10 +6,13 @@ Generated: 2026-07-13 · **Readiness pack updated: 2026-07-21**
 
 | Gate | Result |
 |------|--------|
-| Evidence pack | **COMPLETE** |
+| Evidence pack | **SPEC DEPTH READY FOR P1** |
 | Route + navigation audits | **PASS** |
 | Implementation unblock | **CONDITIONAL** — see [UI-UX-Pre-Implementation-Gate.md](./UI-UX-Pre-Implementation-Gate.md) |
-| Master plan | [UI-UX-REORG-MASTER-PLAN.md](./UI-UX-REORG-MASTER-PLAN.md) |
+| **Execution playbook (chi tiết + tiến độ)** | [UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) |
+| Short outline | [UI-UX-REORG-MASTER-PLAN.md](./UI-UX-REORG-MASTER-PLAN.md) |
+
+> **Bắt đầu từ đây:** P0 **done** — mở [playbook](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) → **STEP-P1.1** (Home product groups). Khuyến nghị **new chat** khi sang code (playbook §0.5 #4). D1–D6 đã khóa.
 
 Generated: 2026-07-13  
 Source: ``Flutter-Route-Coverage-Truth-Table.md`` (413 ``real_page`` routes)  
@@ -37,7 +40,7 @@ Phân loại + **Menu UI đề xuất** theo quy tắc IA (chỉnh tay khi produ
 | **Home → Sản phẩm Sinh lời** | Earn, Savings, DCA |
 | **Home → Sản phẩm Khám phá** | Launchpad, Rewards, Topics |
 | **Home → Discovery** | Card Predictions & Arena (tách biệt product) |
-| **Trade hub → *** | Tab Lệnh, Vị thế, công cụ trong Trade |
+| **Trade terminal → *** | Spot terminal + Orders/Positions secondary (không phải tab hub) |
 | **Earn / Savings hub → *** | Tile/tab trong hub Sinh lời |
 | **Profile → *** | KYC, Bảo mật, Hỗ trợ, Pháp lý, Portfolio nâng cao |
 | **— Flow / deep link** | Không menu — contextual navigation |
@@ -106,8 +109,8 @@ Phân loại + **Menu UI đề xuất** theo quy tắc IA (chỉnh tay khi produ
 | EP-23 | Referral `/referral` | Profile → Giới thiệu |
 | EP-24 | Support `/support` | Profile → Hỗ trợ |
 | EP-25 | Pair detail `/markets/pair/:id` | *(tap cặp — không menu)* |
-| EP-26 | Orders `/trade/orders` | Trade hub → Lệnh |
-| EP-27 | Positions `/trade/positions` | Trade hub → Vị thế |
+| EP-26 | Orders `/trade/orders` | Trade terminal → header Lệnh (D5) |
+| EP-27 | Positions `/trade/positions` | Trade terminal → header Vị thế (D5) |
 | EP-28 | Staking dashboard `/earn/dashboard` | Earn hub dashboard |
 | EP-29 | Savings portfolio `/earn/savings/portfolio` | Savings hub portfolio |
 | EP-30 | News `/news` | Home header → Tin tức |
@@ -137,5 +140,29 @@ Phân loại + **Menu UI đề xuất** theo quy tắc IA (chỉnh tay khi produ
 - [16-admin-dev.md](./16-admin-dev.md) — 5 routes
 - [99-ALL-ROUTES.md](./99-ALL-ROUTES.md) — **413 routes (master)**
 - [17-HOME-PROFILE-MENU-WIREFRAME.md](./17-HOME-PROFILE-MENU-WIREFRAME.md) — **wireframe text Home & Profile**
+
+## Wireframes, specs & planning (readiness pack)
+
+- [18-APP-SHELL-BOTTOM-NAV-SPEC.md](./18-APP-SHELL-BOTTOM-NAV-SPEC.md)
+- [19-MARKETS-HUB-WIREFRAME.md](./19-MARKETS-HUB-WIREFRAME.md)
+- [20-TRADE-HUB-WIREFRAME.md](./20-TRADE-HUB-WIREFRAME.md)
+- [21-WALLET-HUB-WIREFRAME.md](./21-WALLET-HUB-WIREFRAME.md)
+- [22-EARN-SAVINGS-HUB-WIREFRAME.md](./22-EARN-SAVINGS-HUB-WIREFRAME.md)
+- [23-P2P-HUB-WIREFRAME.md](./23-P2P-HUB-WIREFRAME.md)
+- [24-PREDICTIONS-ARENA-DISCOVERY-WIREFRAME.md](./24-PREDICTIONS-ARENA-DISCOVERY-WIREFRAME.md)
+- [25-AUTH-ONBOARDING-SHELL-SPEC.md](./25-AUTH-ONBOARDING-SHELL-SPEC.md)
+- [26-CROSS-SHELL-NAV-EDGE-MATRIX.md](./26-CROSS-SHELL-NAV-EDGE-MATRIX.md)
+- [UX-Evidence-Matrix.csv](./UX-Evidence-Matrix.csv)
+- [Pre-Implementation-Baseline-Snapshot.md](./Pre-Implementation-Baseline-Snapshot.md)
+- [Reachability-Gap-Report.md](./Reachability-Gap-Report.md)
+- [Button-Wiring-Baseline-Ledger.md](./Button-Wiring-Baseline-Ledger.md)
+- [Sparse-Screen-Watchlist.md](./Sparse-Screen-Watchlist.md)
+- [Hub-Content-Contract.md](./Hub-Content-Contract.md)
+- [State-Coverage-by-Archetype.md](./State-Coverage-by-Archetype.md)
+- [Visual-QA-Route-Manifest.md](./Visual-QA-Route-Manifest.md)
+- [Home-Profile-IA-Delta-Checklist.md](./Home-Profile-IA-Delta-Checklist.md)
+- [UI-UX-Pre-Implementation-Gate.md](./UI-UX-Pre-Implementation-Gate.md)
+- [UI-UX-REORG-MASTER-PLAN.md](./UI-UX-REORG-MASTER-PLAN.md) — outline ngắn
+- [UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) — **kế hoạch chi tiết + tracker tiến độ (51 STEP)**
 
 > **Lưu ý:** **33** dòng GIỮ trong bảng route ↔ **35 EP** khái niệm (EP-10 Futures và EP-25 Pair không có route tĩnh). Menu UI chỉ hiển thị trên **GIỮ** + **HUB** + **GOM** — **ẨN** không xuất hiện menu.
