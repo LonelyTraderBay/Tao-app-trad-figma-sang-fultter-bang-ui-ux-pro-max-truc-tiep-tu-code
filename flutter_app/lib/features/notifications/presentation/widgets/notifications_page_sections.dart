@@ -253,7 +253,7 @@ class _DeleteButton extends StatelessWidget {
     return VitIconButton(
       key: NotificationsPage.deleteKey(id),
       icon: Icons.delete_outline_rounded,
-      tooltip: 'Delete notification',
+      tooltip: 'Xóa thông báo',
       size: VitIconButtonSize.md,
       variant: VitIconButtonVariant.danger,
       onPressed: onDelete,

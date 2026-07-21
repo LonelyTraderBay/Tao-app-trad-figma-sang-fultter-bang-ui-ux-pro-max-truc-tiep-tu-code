@@ -115,36 +115,37 @@ class _ReceiptDetailsCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Tx Hash',
+                  'Mã giao dịch',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
-              VitCard(
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
+              InkWell(
+                borderRadius: AppRadii.smRadius,
                 onTap: () {
                   unawaited(
                     Clipboard.setData(ClipboardData(text: subscription.txHash)),
                   );
                   unawaited(HapticFeedback.selectionClick());
                 },
-                child: Row(
-                  children: [
-                    Text(
-                      subscription.txHash,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        fontFeatures: AppTextStyles.tabularFigures,
+                child: Padding(
+                  padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
+                  child: Row(
+                    children: [
+                      Text(
+                        subscription.txHash,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    const Icon(
-                      Icons.copy_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconSm,
-                    ),
-                  ],
+                      const SizedBox(width: AppSpacing.x2),
+                      const Icon(
+                        Icons.copy_rounded,
+                        color: AppColors.text3,
+                        size: AppSpacing.iconSm,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -208,7 +209,7 @@ class _ReceiptNextSteps extends StatelessWidget {
     'Đơn đăng ký đã được ghi nhận thành công.',
     'Token sẽ được phân bổ theo tỷ lệ sau khi kết thúc vòng mở bán.',
     'Phần USDT không được phân bổ sẽ được hoàn trả tự động.',
-    'Theo dõi lịch vesting trong tab Portfolio.',
+    'Theo dõi lịch mở khóa trong tab Danh mục.',
   ];
 
   @override
@@ -290,7 +291,7 @@ class _ReceiptDisclosure extends StatelessWidget {
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
-            'Phân bổ thực tế có thể khác dự kiến nếu tổng đăng ký vượt hard cap. Hiệu suất quá khứ không đảm bảo kết quả tương lai.',
+            'Phân bổ thực tế có thể khác dự kiến nếu tổng đăng ký vượt trần huy động. Hiệu suất quá khứ không đảm bảo kết quả tương lai.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               height: LaunchpadSpacingTokens.launchpadLineHeightShort,

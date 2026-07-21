@@ -40,7 +40,7 @@ void main() {
       snapshot.actionDraft,
       'POST /launchpad/subscribe|claim|bridge where applicable',
     );
-    expect(snapshot.title, 'Launchpad Portfolio');
+    expect(snapshot.title, 'Danh mục Launchpad');
     expect(snapshot.subtitle, 'Các dự án đã tham gia');
     expect(snapshot.backRoute, AppRoutePaths.launchpad);
     expect(snapshot.launchpadRoute, AppRoutePaths.launchpad);
@@ -71,7 +71,7 @@ void main() {
     expect(find.byType(LaunchpadPortfolioPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Launchpad Portfolio'), findsWidgets);
+    expect(find.text('Danh mục Launchpad'), findsWidgets);
     expect(find.text('Các dự án đã tham gia'), findsOneWidget);
     expect(find.byKey(LaunchpadPortfolioPage.heroKey), findsOneWidget);
     expect(find.text('Tổng đã đầu tư'), findsOneWidget);

@@ -83,7 +83,7 @@ void main() {
     );
     expect(find.byKey(LaunchpadClaimReceiptPage.detailsKey), findsOneWidget);
     expect(find.text('Chi tiết vị trí'), findsOneWidget);
-    expect(find.text('Lịch vesting'), findsOneWidget);
+    expect(find.text('Lịch mở khóa'), findsOneWidget);
   });
 
   testWidgets('SC-302 first viewport reaches claimable reward', (tester) async {
@@ -92,7 +92,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-302 LaunchpadClaimReceiptPage',
-      semanticLabel: 'Chi tiết phần thưởng và lịch vesting',
+      semanticLabel: 'Chi tiết phần thưởng và lịch mở khóa',
     );
     expectActionableInFirstViewport(
       tester,
@@ -107,7 +107,7 @@ void main() {
   ) async {
     await pumpClaimReceipt(tester);
 
-    await tester.tap(find.text('Vesting'));
+    await tester.tap(find.text('Mở khóa'));
     await tester.pumpAndSettle();
 
     expect(find.text('Lịch trình mở khóa'), findsOneWidget);
@@ -137,7 +137,7 @@ void main() {
       find.byKey(LaunchpadClaimReceiptPage.claimSheetReviewStateKey),
       findsOneWidget,
     );
-    expect(find.text('Review claim receipt'), findsOneWidget);
+    expect(find.text('Rà soát biên lai nhận thưởng'), findsOneWidget);
     expect(find.text('Nhận phần thưởng'), findsOneWidget);
     expect(find.text('Xác nhận nhận 462.5 NEXA'), findsOneWidget);
   });

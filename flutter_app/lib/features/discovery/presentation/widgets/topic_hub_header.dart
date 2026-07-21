@@ -128,7 +128,7 @@ class _TopicHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              _HeroIcon(topic: topic),
+              VitAccentIconBox(icon: _iconForTopic(topic), color: accent),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
@@ -153,7 +153,7 @@ class _TopicHero extends StatelessWidget {
               Expanded(
                 child: _HeroStat(
                   value: snapshot.predictions.length,
-                  label: 'Events',
+                  label: 'Sự kiện',
                   color: AppModuleAccents.predictions,
                 ),
               ),
@@ -161,7 +161,7 @@ class _TopicHero extends StatelessWidget {
               Expanded(
                 child: _HeroStat(
                   value: snapshot.arenaRooms.length,
-                  label: 'Rooms',
+                  label: 'Phòng',
                   color: AppModuleAccents.arena,
                 ),
               ),
@@ -169,7 +169,7 @@ class _TopicHero extends StatelessWidget {
               Expanded(
                 child: _HeroStat(
                   value: snapshot.arenaModes.length,
-                  label: 'Modes',
+                  label: 'Chế độ',
                   color: AppColors.buy,
                 ),
               ),
@@ -177,39 +177,13 @@ class _TopicHero extends StatelessWidget {
               Expanded(
                 child: _HeroStat(
                   value: snapshot.creators.length,
-                  label: 'Creators',
+                  label: 'Nhà sáng tạo',
                   color: AppModuleAccents.markets,
                 ),
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _HeroIcon extends StatelessWidget {
-  const _HeroIcon({required this.topic});
-
-  final DiscoveryTopicDraft topic;
-
-  @override
-  Widget build(BuildContext context) {
-    final accent = _accentForTopic(topic);
-    return SizedBox(
-      width: AppSpacing.ctaHeight,
-      height: AppSpacing.ctaHeight,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: accent.withValues(alpha: .14),
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-        ),
-        child: Center(
-          child: Icon(_iconForTopic(topic), color: accent, size: 23),
-        ),
       ),
     );
   }

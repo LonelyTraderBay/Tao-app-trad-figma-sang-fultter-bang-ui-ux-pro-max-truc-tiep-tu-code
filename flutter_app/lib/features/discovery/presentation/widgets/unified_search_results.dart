@@ -40,7 +40,7 @@ class _ResultsState extends StatelessWidget {
         if (results.predictions.isNotEmpty)
           _ResultSection(
             icon: Icons.track_changes_rounded,
-            label: 'Prediction Events',
+            label: 'Sự kiện dự đoán',
             count: results.predictions.length,
             color: AppModuleAccents.predictions,
             children: [
@@ -51,7 +51,7 @@ class _ResultsState extends StatelessWidget {
         if (results.arenaModes.isNotEmpty)
           _ResultSection(
             icon: Icons.bolt_rounded,
-            label: 'Arena Modes',
+            label: 'Chế độ Arena',
             count: results.arenaModes.length,
             color: AppModuleAccents.arena,
             children: [
@@ -62,7 +62,7 @@ class _ResultsState extends StatelessWidget {
         if (results.arenaRooms.isNotEmpty)
           _ResultSection(
             icon: Icons.groups_rounded,
-            label: 'Arena Rooms',
+            label: 'Phòng Arena',
             count: results.arenaRooms.length,
             color: AppModuleAccents.arena,
             children: [
@@ -73,7 +73,7 @@ class _ResultsState extends StatelessWidget {
         if (results.creators.isNotEmpty)
           _ResultSection(
             icon: Icons.person_rounded,
-            label: 'Creators',
+            label: 'Nhà sáng tạo',
             count: results.creators.length,
             color: AppColors.buy,
             children: [
@@ -84,7 +84,7 @@ class _ResultsState extends StatelessWidget {
         if (results.tradingPairs.isNotEmpty)
           _ResultSection(
             icon: Icons.bar_chart_rounded,
-            label: 'Trading Pairs',
+            label: 'Cặp giao dịch',
             count: results.tradingPairs.length,
             color: AppModuleAccents.markets,
             children: [

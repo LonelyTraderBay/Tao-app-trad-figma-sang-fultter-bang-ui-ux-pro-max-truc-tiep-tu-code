@@ -18,7 +18,7 @@ class _OverviewTab extends StatelessWidget {
       density: VitDensity.tool,
       children: [
         VitPageSection(
-          label: 'Client Categories',
+          label: 'Hạng khách hàng',
           density: VitDensity.tool,
           children: [
             for (final category in categories)
@@ -29,7 +29,7 @@ class _OverviewTab extends StatelessWidget {
           ],
         ),
         const VitPageSection(
-          label: 'Want Professional Status?',
+          label: 'Muốn hạng chuyên nghiệp?',
           density: VitDensity.tool,
           children: [_OptUpCard()],
         ),
@@ -111,15 +111,15 @@ class _CategoryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _MetricBox(
-                  label: 'Protections',
-                  value: '${category.protections.length} active',
+                  label: 'Bảo vệ',
+                  value: '${category.protections.length} đang áp dụng',
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MetricBox(
-                  label: 'Requirements',
-                  value: '${category.requirements.length} criteria',
+                  label: 'Yêu cầu',
+                  value: '${category.requirements.length} tiêu chí',
                 ),
               ),
             ],
@@ -163,14 +163,14 @@ class _OptUpCard extends StatelessWidget {
                   density: VitDensity.tool,
                   children: [
                     Text(
-                      'Request Professional Client Status',
+                      'Yêu cầu hạng khách hàng chuyên nghiệp',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
                     Text(
-                      'If you meet the criteria, you can request to be treated as a professional client with reduced regulatory requirements.',
+                      'Nếu bạn đáp ứng tiêu chí, có thể yêu cầu được đối xử như khách hàng chuyên nghiệp với yêu cầu quy định giảm.',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -200,7 +200,7 @@ class _OptUpCard extends StatelessWidget {
                       style: AppTextStyles.micro.copyWith(color: _clientAmber),
                       children: [
                         TextSpan(
-                          text: 'Warning: ',
+                          text: 'Cảnh báo: ',
                           style: AppTextStyles.micro.copyWith(
                             color: _clientAmber,
                             fontWeight: AppTextStyles.bold,
@@ -208,7 +208,7 @@ class _OptUpCard extends StatelessWidget {
                         ),
                         const TextSpan(
                           text:
-                              'Opting up means you waive certain investor protections. This cannot be reversed easily.',
+                              'Nâng hạng nghĩa là bạn từ bỏ một số bảo vệ nhà đầu tư. Việc đảo ngược không dễ.',
                         ),
                       ],
                     ),
@@ -224,7 +224,7 @@ class _OptUpCard extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right_rounded),
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyClientOptUpRequest),
-            child: const Text('Start Opt-Up Application'),
+            child: const Text('Bắt đầu đơn nâng hạng'),
           ),
         ],
       ),

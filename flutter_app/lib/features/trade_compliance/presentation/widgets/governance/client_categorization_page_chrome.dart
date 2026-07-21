@@ -48,7 +48,7 @@ class _CurrentCategoryCard extends StatelessWidget {
                           width: TradeSpacingTokens.tradeBotDisclosureGap,
                         ),
                         VitStatusPill(
-                          label: 'CURRENT',
+                          label: 'HIỆN TẠI',
                           status: style.color == _clientAmber
                               ? VitStatusPillStatus.warning
                               : style.color == _clientPrimary
@@ -97,14 +97,14 @@ class _CurrentCategoryCard extends StatelessWidget {
                     density: VitDensity.tool,
                     children: [
                       Text(
-                        'Maximum Protection Active',
+                        'Đang áp dụng bảo vệ tối đa',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
                       Text(
-                        'You have full MiFID II retail investor protections',
+                        'Bạn đang có đầy đủ bảo vệ nhà đầu tư bán lẻ theo MiFID II',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
                           fontWeight: AppTextStyles.bold,
@@ -147,14 +147,14 @@ class _InfoNotice extends StatelessWidget {
               density: VitDensity.tool,
               children: [
                 Text(
-                  'MiFID II Categorization',
+                  'Phân loại MiFID II',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 Text(
-                  'Your client category determines the level of regulatory protection you receive. Retail clients have maximum protection.',
+                  'Hạng khách hàng quyết định mức bảo vệ quy định bạn nhận được. Khách hàng bán lẻ được bảo vệ tối đa.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
@@ -181,7 +181,7 @@ class _QuickLinks extends StatelessWidget {
             key: ClientCategorizationPage.disclosuresKey,
             icon: Icons.description_outlined,
             iconColor: _clientPrimary,
-            label: 'Disclosures',
+            label: 'Công bố',
             onTap: () =>
                 context.go(AppRoutePaths.tradeCopyRegulatoryDisclosures),
           ),
@@ -192,7 +192,7 @@ class _QuickLinks extends StatelessWidget {
             key: ClientCategorizationPage.settingsKey,
             icon: Icons.settings_outlined,
             iconColor: _clientGreen,
-            label: 'Settings',
+            label: 'Cài đặt',
             onTap: () => context.go(AppRoutePaths.settingsSecurity),
           ),
         ),

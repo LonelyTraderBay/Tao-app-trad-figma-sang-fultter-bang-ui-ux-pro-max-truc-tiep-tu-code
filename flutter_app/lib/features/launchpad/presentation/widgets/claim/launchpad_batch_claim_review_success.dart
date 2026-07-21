@@ -30,7 +30,7 @@ class _ReviewStep extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
-                'Xác nhận Batch Claim',
+                'Xác nhận nhận hàng loạt',
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
@@ -58,9 +58,9 @@ class _ReviewStep extends StatelessWidget {
         VitHighRiskStatePanel(
           key: LaunchpadBatchClaimPage.reviewStateKey,
           state: VitHighRiskUiState.riskReview,
-          title: 'Review truoc khi claim',
+          title: 'Rà soát trước khi nhận',
           message:
-              'Kiem tra token, chain, gas va tong gia tri truoc khi xac nhan batch claim.',
+              'Kiểm tra token, chuỗi, gas và tổng giá trị trước khi xác nhận nhận hàng loạt.',
           contractId:
               'SC-304 / ${positions.length} positions / ${summary.chains.join(', ')}',
         ),

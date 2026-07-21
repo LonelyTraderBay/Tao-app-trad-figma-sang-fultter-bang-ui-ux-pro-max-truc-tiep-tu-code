@@ -90,7 +90,6 @@ lib/features/launchpad/presentation/pages/tools/launchpad_notif_sound_page.dart|
 lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart|Target allocation, deviation, gas estimate, risk impact and confirmation are reviewed before execution.
 lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_history_settings.dart|${history[i].amount.toStringAsFixed(0)} ${history[i].from}
 lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_history_settings.dart|${history[i].from} \u2192 ${history[i].to}
-lib/features/launchpad/presentation/widgets/claim/launchpad_claim_receipt_claim_sheet_widgets.dart|Check reward token, chain, gas, and claim amount.
 lib/features/launchpad/presentation/widgets/tools/launchpad_address_book_sheet_common.dart|Address mutation se can KYC submission-step va preview confirm truoc khi ghi len backend.
 lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_create_form.dart|Check token, amount, budget, start date, and cadence.
 lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_strategies.dart|${strategy.executedOrders} orders - \$${strategy.amount.toStringAsFixed(0)}/order
@@ -111,7 +110,6 @@ lib/features/markets/presentation/pages/tools/market_movers_page.dart|Market mov
 lib/features/markets/presentation/pages/tools/market_movers_page.dart|Mover rows preserve pair identity, movement, volume, and next navigation.
 lib/features/markets/presentation/pages/tools/market_movers_page.dart|Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.
 lib/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart|@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r
-lib/features/markets/presentation/widgets/portfolio/price_alerts_page_details.dart|Delete price alert
 lib/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart|Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.
 lib/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart|Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.
 lib/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart|Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.
@@ -231,11 +229,6 @@ lib/features/trade_compliance/presentation/pages/execution/execution_venue_analy
 lib/features/trade_compliance/presentation/pages/execution/market_data_analytics_page.dart|Market Data
 lib/features/trade_compliance/presentation/pages/execution/slippage_monitoring_page.dart|Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.
 lib/features/trade_compliance/presentation/pages/governance/audit_trail_page.dart|Confirm record scope, retention limits, client identifiers, and next steps before exporting audit evidence.
-lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Compliance review is required before any categorization change takes effect.
-lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.
-lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Evidence must be reviewed before status can change.
-lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Submit for Review
-lib/features/trade_compliance/presentation/pages/governance/client_categorization_page.dart|Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.
 lib/features/trade_compliance/presentation/pages/governance/product_governance_page.dart|${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.
 lib/features/trade_compliance/presentation/pages/governance/product_governance_page.dart|Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.
 lib/features/trade_compliance/presentation/pages/governance/regulatory_inspection_ready_page.dart|Confirm report scope, access limits, retained records, and next steps before sharing compliance material.
@@ -271,10 +264,6 @@ lib/features/trade_compliance/presentation/widgets/execution/live_market_tabs.da
 lib/features/trade_compliance/presentation/widgets/execution/market_data_analytics_funding_traders.dart|Shifted ${data.change24h.toStringAsFixed(1)}% to Long
 lib/features/trade_compliance/presentation/widgets/execution/market_data_analytics_funding_traders.dart|of top traders are long
 lib/features/trade_compliance/presentation/widgets/execution/market_data_analytics_open_interest.dart|Total Open Interest
-lib/features/trade_compliance/presentation/widgets/governance/client_categorization_overview_tab.dart|If you meet the criteria, you can request to be treated as a professional client with reduced regulatory requirements.
-lib/features/trade_compliance/presentation/widgets/governance/client_categorization_overview_tab.dart|Opting up means you waive certain investor protections. This cannot be reversed easily.
-lib/features/trade_compliance/presentation/widgets/governance/client_categorization_page_chrome.dart|You have full MiFID II retail investor protections
-lib/features/trade_compliance/presentation/widgets/governance/client_categorization_page_chrome.dart|Your client category determines the level of regulatory protection you receive. Retail clients have maximum protection.
 lib/features/trade_compliance/presentation/widgets/governance/product_governance_products.dart|Open target market definition
 lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart|View all reports
 lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_filters.dart|Search by transaction ID or instrument...

@@ -61,7 +61,7 @@ final class MockDiscoveryRepository implements DiscoveryRepository {
           ? '/api/mobile/discovery/topic-${topic.id}'
           : '/api/mobile/discovery/topics',
       actionDraft: 'read-only or local navigation action',
-      title: 'Topic Hub',
+      title: 'Trung tâm chủ đề',
       searchRoute: '/search',
       predictionsRoute: '/markets/predictions',
       arenaRoute: '/arena',
@@ -75,7 +75,7 @@ final class MockDiscoveryRepository implements DiscoveryRepository {
       arenaModes: content.arenaModes,
       creators: content.creators,
       contractNotes:
-          'Topic is discovery context only; Prediction positions and Arena Points remain separate module contracts.',
+          'Chủ đề chỉ là ngữ cảnh khám phá; vị thế Prediction và Điểm Arena vẫn thuộc hợp đồng module riêng.',
       supportedStates: const {
         DiscoveryScreenState.onlineLive,
         DiscoveryScreenState.loading,

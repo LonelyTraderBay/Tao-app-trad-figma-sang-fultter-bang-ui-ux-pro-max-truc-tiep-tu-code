@@ -86,7 +86,7 @@ class _LaunchpadClaimReceiptPageState
     return claimReceiptAsync.when(
       loading: () => VitPageLayout(
         variant: VitPageVariant.flush,
-        semanticLabel: 'Chi tiết phần thưởng và lịch vesting',
+        semanticLabel: 'Chi tiết phần thưởng và lịch mở khóa',
         semanticIdentifier: 'SC-302',
         child: Material(
           type: MaterialType.transparency,
@@ -107,7 +107,7 @@ class _LaunchpadClaimReceiptPageState
       ),
       error: (error, stackTrace) => VitPageLayout(
         variant: VitPageVariant.flush,
-        semanticLabel: 'Chi tiết phần thưởng và lịch vesting',
+        semanticLabel: 'Chi tiết phần thưởng và lịch mở khóa',
         semanticIdentifier: 'SC-302',
         child: Material(
           type: MaterialType.transparency,
@@ -137,7 +137,7 @@ class _LaunchpadClaimReceiptPageState
         final receipt = snapshot.receipt;
         return VitPageLayout(
           variant: VitPageVariant.flush,
-          semanticLabel: 'Chi tiết phần thưởng và lịch vesting',
+          semanticLabel: 'Chi tiết phần thưởng và lịch mở khóa',
           semanticIdentifier: 'SC-302',
           child: Material(
             type: MaterialType.transparency,
@@ -149,7 +149,7 @@ class _LaunchpadClaimReceiptPageState
                   header: VitHeader(
                     title: snapshot.title,
                     subtitle:
-                        '${receipt.projectSymbol} · Vesting & nhận thưởng',
+                        '${receipt.projectSymbol} · Lịch mở khóa & nhận thưởng',
                     showBack: true,
                     onBack: () => goBackOrFallback(
                       context,
@@ -180,7 +180,7 @@ class _LaunchpadClaimReceiptPageState
                                     key: 'overview',
                                     label: 'Tổng quan',
                                   ),
-                                  VitTabItem(key: 'vesting', label: 'Vesting'),
+                                  VitTabItem(key: 'vesting', label: 'Mở khóa'),
                                   VitTabItem(key: 'history', label: 'Lịch sử'),
                                 ],
                                 activeKey: _activeTab.id,

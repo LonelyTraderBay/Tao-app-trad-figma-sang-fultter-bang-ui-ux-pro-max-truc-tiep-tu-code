@@ -162,7 +162,7 @@ void main() {
     await pumpLaunchpad(tester);
     await tester.tap(find.byKey(LaunchpadPage.portfolioActionKey));
     await tester.pumpAndSettle();
-    expect(find.text('Launchpad Portfolio'), findsOneWidget);
+    expect(find.text('Danh mục Launchpad'), findsOneWidget);
 
     await pumpLaunchpad(tester);
     await tester.ensureVisible(find.byKey(LaunchpadPage.stakingKey));

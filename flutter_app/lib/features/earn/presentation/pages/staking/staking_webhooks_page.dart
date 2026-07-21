@@ -256,7 +256,7 @@ class _WebhookCard extends StatelessWidget {
               VitIconButton(
                 key: StakingWebhooksPage.webhookDeleteKey(webhook.id),
                 icon: Icons.delete_outline_rounded,
-                tooltip: 'Delete webhook',
+                tooltip: 'Xóa webhook',
                 variant: VitIconButtonVariant.danger,
                 size: VitIconButtonSize.sm,
                 onPressed: () {

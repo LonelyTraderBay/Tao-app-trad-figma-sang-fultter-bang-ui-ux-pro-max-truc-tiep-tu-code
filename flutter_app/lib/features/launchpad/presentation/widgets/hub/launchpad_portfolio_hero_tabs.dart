@@ -110,7 +110,7 @@ class _PortfolioHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
-            'Phân bổ phụ thuộc tổng đăng ký. Token mở khóa theo lịch vesting từng dự án.',
+            'Phân bổ phụ thuộc tổng đăng ký. Token mở khóa theo lịch mở khóa từng dự án.',
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,

@@ -107,7 +107,7 @@ class _BatchPositionCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${position.chain} · APY ${_trimDouble(position.apy)}% · ${_formatNumber(position.stakedAmount)} ${position.stakeToken} staked',
+                            '${position.chain} · APY ${_trimDouble(position.apy)}% · ${_formatNumber(position.stakedAmount)} ${position.stakeToken} đã stake',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
@@ -321,7 +321,7 @@ class _ChainWarning extends StatelessWidget {
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Text(
-                'Các vị trí trên nhiều chain (${summary.chains.join(', ')}). Batch claim sẽ gửi giao dịch riêng cho mỗi chain.',
+                'Các vị trí trên nhiều chuỗi (${summary.chains.join(', ')}). Nhận hàng loạt sẽ gửi giao dịch riêng cho mỗi chuỗi.',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),

@@ -69,7 +69,7 @@ void main() {
 
     expect(snapshot.endpoint, '/api/mobile/discovery/topics');
     expect(snapshot.actionDraft, 'read-only or local navigation action');
-    expect(snapshot.title, 'Topic Hub');
+    expect(snapshot.title, 'Trung tâm chủ đề');
     expect(snapshot.searchRoute, AppRoutePaths.search);
     expect(snapshot.predictionsRoute, AppRoutePaths.marketsPredictions);
     expect(snapshot.arenaRoute, AppRoutePaths.arena);
@@ -79,7 +79,8 @@ void main() {
     expect(snapshot.arenaRooms.length, 2);
     expect(snapshot.arenaModes.length, 2);
     expect(snapshot.creators.length, 2);
-    expect(snapshot.contractNotes, contains('Prediction positions'));
+    expect(snapshot.contractNotes, contains('vị thế Prediction'));
+    expect(snapshot.contractNotes, contains('Điểm Arena'));
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -111,24 +112,21 @@ void main() {
     expect(find.byType(TopicHubPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Topic Hub'), findsOneWidget);
+    expect(find.text('Trung tâm chủ đề'), findsOneWidget);
     expect(find.byKey(TopicHubPage.searchActionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.topicRailKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.topicKey('crypto')), findsOneWidget);
     expect(find.byKey(TopicHubPage.offlineKey), findsNothing);
     expect(find.byKey(TopicHubPage.heroKey), findsOneWidget);
     expect(find.text('Crypto'), findsWidgets);
-    expect(find.text('Bitcoin, Ethereum, altcoins, DeFi'), findsOneWidget);
+    expect(find.text('Bitcoin, Ethereum, altcoin, DeFi'), findsOneWidget);
     expect(find.byKey(TopicHubPage.predictionsSectionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.roomsSectionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.modesSectionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.creatorsSectionKey), findsOneWidget);
-    expect(
-      find.text('Bitcoin reaches \$150K before July 2026?'),
-      findsOneWidget,
-    );
+    expect(find.text('Bitcoin đạt \$150K trước tháng 7/2026?'), findsOneWidget);
     expect(find.text('BTC \$70K? — Tuần 9'), findsOneWidget);
-    expect(find.text('BTC Weekly Predict'), findsOneWidget);
+    expect(find.text('Dự đoán BTC hàng tuần'), findsOneWidget);
     expect(find.text('CryptoMaster_VN'), findsWidgets);
     expect(find.byKey(TopicHubPage.createRoomKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.disclosureKey), findsOneWidget);
@@ -149,7 +147,7 @@ void main() {
     await tester.tap(find.byKey(TopicHubPage.topicKey('macro')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Macro'), findsWidgets);
+    expect(find.text('Vĩ mô'), findsWidgets);
     expect(find.text('Kinh tế vĩ mô, lãi suất, GDP, CPI'), findsOneWidget);
     expect(find.text('Fed rate cut trong kỳ họp tới?'), findsOneWidget);
   });
@@ -185,13 +183,10 @@ void main() {
     await pumpTopicCrypto(tester);
 
     expect(find.byType(TopicHubPage), findsOneWidget);
-    expect(find.text('Topic Hub'), findsOneWidget);
+    expect(find.text('Trung tâm chủ đề'), findsOneWidget);
     expect(find.byKey(TopicHubPage.topicKey('crypto')), findsOneWidget);
     expect(find.text('Crypto'), findsWidgets);
-    expect(
-      find.text('Bitcoin reaches \$150K before July 2026?'),
-      findsOneWidget,
-    );
+    expect(find.text('Bitcoin đạt \$150K trước tháng 7/2026?'), findsOneWidget);
 
     await tester.tap(find.byKey(TopicHubPage.searchActionKey));
     await tester.pumpAndSettle();

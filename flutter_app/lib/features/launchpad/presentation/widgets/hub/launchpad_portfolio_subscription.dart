@@ -206,7 +206,7 @@ class _VestingProgress extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Vesting',
+                'Lịch mở khóa',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),

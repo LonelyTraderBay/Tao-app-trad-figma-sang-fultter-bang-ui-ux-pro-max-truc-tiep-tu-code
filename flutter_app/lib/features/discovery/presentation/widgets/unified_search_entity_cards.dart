@@ -18,7 +18,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
           Row(
             children: [
               const DiscoveryModuleBadge(
-                label: 'Arena Points only',
+                label: 'Chỉ điểm Arena',
                 icon: Icons.stars_rounded,
                 color: AppModuleAccents.arena,
               ),
@@ -41,7 +41,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${room.entryPoints} pts entry',
+                '${room.entryPoints} điểm vào',
                 style: AppTextStyles.caption.copyWith(
                   color: AppModuleAccents.arena,
                   fontWeight: AppTextStyles.bold,
@@ -49,7 +49,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x4),
               Text(
-                '${room.slotsFilled}/${room.slotsTotal} slots (${room.fillPercent}%)',
+                '${room.slotsFilled}/${room.slotsTotal} chỗ (${room.fillPercent}%)',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
@@ -63,7 +63,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               ),
               const Spacer(),
               const DiscoveryInlineCta(
-                label: 'Xem room',
+                label: 'Xem phòng',
                 color: AppModuleAccents.arena,
               ),
             ],
@@ -124,14 +124,14 @@ class _CreatorResultCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Trust ${creator.trustScore}% · ${creator.modesCreated} modes',
+                  'Tin cậy ${creator.trustScore}% · ${creator.modesCreated} chế độ',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
           const DiscoveryInlineCta(
-            label: 'Xem creator',
+            label: 'Xem nhà sáng tạo',
             color: AppColors.text2,
           ),
         ],
@@ -158,7 +158,7 @@ class _TradingPairResultCard extends StatelessWidget {
       child: Row(
         children: [
           const DiscoveryModuleBadge(
-            label: 'Spot Trading',
+            label: 'Giao dịch Spot',
             icon: Icons.bar_chart_rounded,
             color: AppModuleAccents.markets,
           ),

@@ -395,7 +395,7 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_performance_overview.dart,3,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_performance_projects.dart,2,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_portfolio_subscription.dart,1,0,0,C,0,0,0,pass,-
-launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_receipt_details_next_steps.dart,4,0,0,D,0,0,0,pass,-
+launchpad,flutter_app/lib/features/launchpad/presentation/widgets/hub/launchpad_receipt_details_next_steps.dart,3,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_abi_diff_entries.dart,2,0,0,E,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_abi_diff_summary.dart,3,0,0,C,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_address_book_cards.dart,2,0,0,E,0,0,0,pass,-
@@ -816,7 +816,7 @@ trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/co
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart,1,1,0,D,0,0,0,pass,-
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/disclosures/kid_generator_page.dart,4,2,0,C,0,0,0,pass,-
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/execution/execution_venue_analysis_page.dart,1,0,0,C,0,0,0,pass,-
-trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart,3,0,0,C,0,0,0,pass,-
+trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart,2,0,0,C,0,0,0,pass,-
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/governance/product_governance_page.dart,1,0,0,C,0,0,0,pass,-
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/pages/governance/target_market_definition_page.dart,1,0,0,C,0,0,0,pass,-
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/client_money/arm_integration_providers.dart,4,1,0,C,0,0,0,pass,-

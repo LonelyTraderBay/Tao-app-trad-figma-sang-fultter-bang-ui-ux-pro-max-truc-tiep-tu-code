@@ -131,9 +131,9 @@ class _ReceiptDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      _DetailRow('Pool', receipt.projectName),
+      _DetailRow('Quỹ', receipt.projectName),
       _DetailRow(
-        'Token stake',
+        'Token đã stake',
         '${_formatNumber(receipt.stakedAmount)} ${receipt.stakeToken}',
       ),
       _DetailRow(
@@ -141,18 +141,18 @@ class _ReceiptDetailsCard extends StatelessWidget {
         '${_formatNumber(receipt.poolApy)}%',
         color: AppColors.buy,
       ),
-      _DetailRow('Reward token', receipt.rewardToken),
+      _DetailRow('Token thưởng', receipt.rewardToken),
       _DetailRow('Giá token', _formatUsd(receipt.rewardTokenPrice)),
       _DetailRow(
-        'Tổng earned',
+        'Tổng đã nhận',
         '${_formatNumber(receipt.totalEarned)} ${receipt.rewardToken}',
       ),
       _DetailRow(
-        'Giá trị earned',
+        'Giá trị đã nhận',
         _formatUsd(receipt.totalEarned * receipt.rewardTokenPrice),
       ),
-      _DetailRow('Chain', receipt.chain),
-      _DetailRow('Contract', _truncateAddress(receipt.contractAddress)),
+      _DetailRow('Chuỗi', receipt.chain),
+      _DetailRow('Hợp đồng', _truncateAddress(receipt.contractAddress)),
     ];
 
     return VitCard(
@@ -212,7 +212,7 @@ class _VestingPreviewCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
-                  'Lịch vesting',
+                  'Lịch mở khóa',
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,

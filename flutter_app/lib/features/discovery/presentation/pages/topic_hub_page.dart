@@ -89,14 +89,14 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
 
     return snapshotAsync.when(
       loading: () => _TopicHubScaffold(
-        title: 'Topic Hub',
+        title: 'Trung tâm chủ đề',
         rail: const SizedBox.shrink(),
         offlineBanner: null,
         bottomInset: bottomInset,
         body: const VitSkeletonList(key: TopicHubPage.loadingKey),
       ),
       error: (error, stackTrace) => _TopicHubScaffold(
-        title: 'Topic Hub',
+        title: 'Trung tâm chủ đề',
         rail: const SizedBox.shrink(),
         offlineBanner: null,
         bottomInset: bottomInset,
