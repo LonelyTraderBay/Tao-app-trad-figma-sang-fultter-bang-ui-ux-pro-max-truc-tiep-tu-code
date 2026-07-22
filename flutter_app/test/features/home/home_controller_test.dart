@@ -43,10 +43,10 @@ void main() {
           '/wallet',
           '/p2p',
           '/dca',
+          '/rewards',
           '/earn',
           '/earn/savings',
           '/launchpad',
-          '/rewards',
         ]),
       );
       expect(

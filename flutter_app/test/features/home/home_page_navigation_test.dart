@@ -58,6 +58,8 @@ void main() {
 
     expect(tickerSol, findsOneWidget);
 
+    await tester.drag(find.byKey(HomePage.contentKey), const Offset(0, -220));
+    await tester.pumpAndSettle();
     await tester.tap(tickerSol);
     await tester.pumpAndSettle();
 

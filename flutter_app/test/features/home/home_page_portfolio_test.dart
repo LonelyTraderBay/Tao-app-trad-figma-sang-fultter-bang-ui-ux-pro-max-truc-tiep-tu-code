@@ -47,6 +47,21 @@ void main() {
   ) async {
     await pumpHome(tester);
 
+    expect(
+      find.descendant(
+        of: find.byKey(HomePage.productsSectionKey),
+        matching: find.text('DCA'),
+      ),
+      findsWidgets,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(HomePage.productsSectionKey),
+        matching: find.text('Phần thưởng'),
+      ),
+      findsWidgets,
+    );
+
     final moreProducts = find.descendant(
       of: find.byKey(HomePage.productsSectionKey),
       matching: find.textContaining('Xem thêm'),
@@ -59,7 +74,14 @@ void main() {
     expect(find.text('Thêm hành động'), findsOneWidget);
     expect(find.text('Tiết kiệm'), findsWidgets);
     expect(find.text('Launchpad'), findsWidgets);
-    expect(find.text('Phần thưởng'), findsWidgets);
+    expect(find.text('Margin'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(HomePage.moreProductsSheetKey),
+        matching: find.text('Phần thưởng'),
+      ),
+      findsNothing,
+    );
     expect(find.text('Hỗ trợ'), findsNothing);
     expect(find.text('Giới thiệu'), findsNothing);
   });
@@ -68,6 +90,14 @@ void main() {
     tester,
   ) async {
     await pumpHome(tester);
+
+    final moreProducts = find.descendant(
+      of: find.byKey(HomePage.productsSectionKey),
+      matching: find.textContaining('Xem thêm'),
+    );
+    await tester.ensureVisible(moreProducts);
+    await tester.tap(moreProducts);
+    await tester.pumpAndSettle();
 
     expect(find.bySemanticsLabel(RegExp('Margin.*Rủi ro cao')), findsOneWidget);
     expect(find.bySemanticsLabel(RegExp('Bot.*Rủi ro cao')), findsOneWidget);

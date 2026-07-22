@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dar
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+/// Flat catalog sheet — no group headers on Home or in this sheet.
 class HomeMoreProductsSheet extends StatelessWidget {
   const HomeMoreProductsSheet({
     super.key,
