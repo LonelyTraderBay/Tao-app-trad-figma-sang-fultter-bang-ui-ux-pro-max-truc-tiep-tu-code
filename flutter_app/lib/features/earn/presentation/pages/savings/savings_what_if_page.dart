@@ -215,7 +215,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
         title: 'Chọn kịch bản',
         variant: VitSectionHeaderVariant.accentBar,
         accentColor: AppModuleAccents.earn,
-        bottomGap: AppSpacing.x3,
+        bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       ),
       _ScenarioList(
         scenarios: snapshot.scenarios,
@@ -239,7 +239,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
         title: 'Danh mục hiện tại',
         variant: VitSectionHeaderVariant.accentBar,
         accentColor: AppModuleAccents.earn,
-        bottomGap: AppSpacing.x3,
+        bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       ),
       _PortfolioList(positions: snapshot.portfolio),
       EarnWarningBanner(text: snapshot.disclaimer),

@@ -201,7 +201,7 @@ earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_recommenda
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_redeem_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_risk_assessment_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_smart_suggestions_page.dart,standard,standard,0,,0,,0,0,pass
-earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_what_if_page.dart,standard,standard,0,,1,section_header_missing_inner_gap:2,2,2,warn
+earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_what_if_page.dart,standard,standard,0,,0,,2,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/staking/auto_compound_settings_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/staking/staking_analytics_page.dart,standard,standard,0,,0,,0,0,pass
@@ -344,7 +344,7 @@ earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_common_widgets.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_models.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_painters.dart,standard,,0,,0,,0,0,pass
-earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_results.dart,standard,,0,,1,section_header_missing_inner_gap:2,2,2,warn
+earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_results.dart,standard,,0,,0,,2,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_stress.dart,standard,,0,,0,,1,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_stress_components.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_advanced_orders_guidance.dart,standard,,0,,0,,0,0,pass
