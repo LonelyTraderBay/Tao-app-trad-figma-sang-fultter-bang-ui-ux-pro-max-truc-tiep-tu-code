@@ -971,7 +971,7 @@ support,flutter_app/lib/features/support/presentation/widgets/help_center_hero_a
 support,flutter_app/lib/features/support/presentation/widgets/help_center_hero_actions.dart,90,help_center_hero_actions.dart,Chat hỗ trợ | Gửi ticket,context.go,ticketRoute,,,dynamic_route_expression
 support,flutter_app/lib/features/support/presentation/widgets/support_quick_contacts_tabs.dart,101,support_quick_contacts_tabs.dart,Trợ giúp | Hệ thống,context.go,snapshot.helpRoute,,,dynamic_route_expression
 support,flutter_app/lib/features/support/presentation/widgets/support_quick_contacts_tabs.dart,112,support_quick_contacts_tabs.dart,Trợ giúp | Hệ thống,context.go,snapshot.announcementsRoute,,,dynamic_route_expression
-trade,flutter_app/lib/features/trade/presentation/pages/convert/convert_page.dart,275,convert_page.dart,,context.push,AppRoutePaths.tradeSettings,/trade/settings,TradeSettingsPage (/trade/settings),
+trade,flutter_app/lib/features/trade/presentation/pages/convert/convert_page.dart,276,convert_page.dart,,context.push,AppRoutePaths.tradeSettings,/trade/settings,TradeSettingsPage (/trade/settings),
 trade,flutter_app/lib/features/trade/presentation/pages/hub/order_receipt_page.dart,56,order_receipt_page.dart,Lệnh đã gửi,context.go,AppRoutePaths.tradePair('btcusdt'),/trade/btcusdt,TradePage (/trade/:pairId),
 trade,flutter_app/lib/features/trade/presentation/widgets/convert/convert_page_widgets.dart,144,convert_page_widgets.dart,,Navigator.of(context).pop,asset.symbol,,,back_or_close_modal
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/order_receipt_page_common.dart,94,order_receipt_page_common.dart,,context.go,supportRoute,,,dynamic_route_expression

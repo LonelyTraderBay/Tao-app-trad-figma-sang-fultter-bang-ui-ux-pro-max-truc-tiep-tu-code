@@ -38,7 +38,7 @@ failed=0
 | HEB-027 | Matrix source | `lib/features/home/presentation/pages/home_page_sections.dart` | PASS | line 64 | Market section pair source is present. |
 | HEB-C01 | Home outbound | `lib/features/home/presentation/pages/home_page_state.dart` | PASS | line 18 | Home feature/product entries preserve route history. |
 | HEB-C02A | Trade pair entry | `lib/features/trade/presentation/widgets/hub/trade_page_state.dart` | PASS | line 131 | Home opens /trade/:pair with Home history; direct entry falls back to Trade. |
-| HEB-C02B | Convert entry | `lib/features/trade/presentation/pages/convert/convert_page.dart` | PASS | line 144 | Convert pops to Home when Home-pushed and falls back to Trade directly. |
+| HEB-C02B | Convert entry | `lib/features/trade/presentation/pages/convert/convert_page.dart` | PASS | line 145 | Convert pops to Home when Home-pushed and falls back to Trade directly. |
 | HEB-C02C | Margin entry | `lib/features/trade/presentation/pages/margin/margin_trading_page.dart` | PASS | line 83 | Margin keeps Trade as direct parent fallback. |
 | HEB-C02D | Bot entry | `lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` | PASS | line 84 | Bot keeps Trade as direct parent fallback. |
 | HEB-C02E | Copy Trade entry | `lib/features/trade_copy/presentation/pages/hub/copy_trading_page.dart` | PASS | line 62 | Copy Trade keeps Trade as direct parent fallback. |
