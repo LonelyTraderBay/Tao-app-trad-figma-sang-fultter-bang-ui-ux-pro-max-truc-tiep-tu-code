@@ -85,7 +85,7 @@ class _QuickNavigation extends StatelessWidget {
       ),
       _QuickNavItem(
         buttonKey: MarketOverviewPage.quickHeatmapKey,
-        label: 'Heatmap',
+        label: 'Biểu đồ nhiệt',
         icon: Icons.bar_chart_rounded,
         color: _marketPrimary,
         route: AppRoutePaths.marketsHeatmap,

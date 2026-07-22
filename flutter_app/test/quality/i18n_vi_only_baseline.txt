@@ -97,10 +97,6 @@ lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_active_
 lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_history_widgets.dart|${_formatAmount(order.amount)} ${order.symbol}
 lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_preview_widgets.dart|Create a limit order to get started
 lib/features/launchpad/presentation/widgets/tools/launchpad_risk_report_common.dart|Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.
-lib/features/markets/presentation/pages/hub/market_overview_page.dart|Global cap and breadth metrics stay above exploratory market tools.
-lib/features/markets/presentation/pages/hub/market_overview_page.dart|Global stats, movers, sectors, heatmap links, empty, and refresh states remain visible.
-lib/features/markets/presentation/pages/hub/market_overview_page.dart|Market overview data reviewed
-lib/features/markets/presentation/pages/hub/market_overview_page.dart|Tools remain grouped below market context so scanning is not interrupted.
 lib/features/markets/presentation/pages/hub/watchlist_page.dart|Note editing and remove actions preserve the selected pair context.
 lib/features/markets/presentation/pages/hub/watchlist_page.dart|Search, add, note, remove, empty, and refresh states remain visible for tracked pairs.
 lib/features/markets/presentation/pages/hub/watchlist_page.dart|Toolbar search and add-pair actions stay above watched assets.
