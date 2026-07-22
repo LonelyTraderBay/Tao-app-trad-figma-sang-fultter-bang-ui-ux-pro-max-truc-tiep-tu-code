@@ -14,8 +14,8 @@ sheet_result_baseline=9
 
 | Classification | Count |
 | --- | ---: |
-| parent_route_only | 466 |
-| history_then_fallback | 62 |
+| parent_route_only | 465 |
+| history_then_fallback | 63 |
 
 ## Strict Issue Counts
 
@@ -350,7 +350,7 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart` | 150 | `_LaunchpadWebhooksPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.launchpad` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart` | 164 | `_LaunchpadWebhooksPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.launchpad` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart` | 196 | `_LaunchpadWebhooksPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart` | 75 | `MarketOverviewPage` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.markets` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart` | 75 | `MarketOverviewPage` | `VitHeader` | history_then_fallback | history_then_fallback | `AppRoutePaths.markets` | no | - | Uses shared back-navigation helper. |
 | `flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart` | 167 | `_WatchlistPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.markets` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` | 174 | `_MarketDepthScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/markets/presentation/pages/pair/market_heatmap_page.dart` | 62 | `_MarketHeatmapPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.markets` | no | - | Back goes to an explicit parent route. |

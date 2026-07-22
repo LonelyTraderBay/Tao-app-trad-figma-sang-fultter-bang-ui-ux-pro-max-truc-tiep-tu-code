@@ -67,7 +67,7 @@ class _MarketCapHero extends StatelessWidget {
             children: [
               Expanded(
                 child: _HeroMetric(
-                  label: 'BTC Dominance',
+                  label: 'Tỷ trọng BTC',
                   value: '${stats.btcDominance.toStringAsFixed(1)}%',
                   valueColor: _btcOrange,
                 ),
@@ -77,7 +77,7 @@ class _MarketCapHero extends StatelessWidget {
               ),
               Expanded(
                 child: _HeroMetric(
-                  label: 'ETH Dominance',
+                  label: 'Tỷ trọng ETH',
                   value: '${stats.ethDominance.toStringAsFixed(1)}%',
                   valueColor: _ethPrimary,
                 ),
@@ -161,7 +161,7 @@ class _StatsGrid extends StatelessWidget {
           children: [
             Expanded(
               child: _StatCard(
-                label: 'DeFi TVL',
+                label: 'TVL DeFi',
                 value: formatMarketCompact(stats.defiTVL, prefix: r'$'),
                 change: stats.defiTVLChange24h,
                 icon: Icons.layers_rounded,
@@ -171,7 +171,7 @@ class _StatsGrid extends StatelessWidget {
             const SizedBox(width: MarketsSpacingTokens.marketAnalyticsGap),
             Expanded(
               child: _StatCard(
-                label: 'Stablecoin Vol',
+                label: 'KL Stablecoin',
                 value: formatMarketCompact(
                   stats.stablecoinVolume24h,
                   prefix: r'$',
@@ -318,7 +318,7 @@ class _SentimentGrid extends StatelessWidget {
                 const _MiniHeader(
                   icon: Icons.speed_rounded,
                   color: AppColors.primarySoft,
-                  label: 'Fear & Greed',
+                  label: 'Sợ hãi & Tham lam',
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Expanded(

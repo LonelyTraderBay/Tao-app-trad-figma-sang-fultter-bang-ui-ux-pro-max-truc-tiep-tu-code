@@ -75,10 +75,10 @@ void main() {
     expect(find.text('Tổng quan thị trường'), findsOneWidget);
     expect(find.text('Tổng vốn hóa thị trường'), findsOneWidget);
     expect(find.text(r'$2,456.79B'), findsOneWidget);
-    expect(find.text('Fear & Greed'), findsOneWidget);
+    expect(find.text('Sợ hãi & Tham lam'), findsOneWidget);
     expect(find.text('Biến động thị trường'), findsOneWidget);
     expect(find.text('Ngành'), findsOneWidget);
-    expect(find.text('Heatmap'), findsOneWidget);
+    expect(find.text('Biểu đồ nhiệt'), findsNWidgets(2));
   });
 
   testWidgets('SC-009 first viewport reaches market navigation cards', (
@@ -149,7 +149,7 @@ void main() {
 
     expect(find.text('Danh sách theo dõi'), findsOneWidget);
     expect(find.text('Cảnh báo giá'), findsOneWidget);
-    expect(find.text('Biểu đồ nhiệt'), findsOneWidget);
+    expect(find.text('Biểu đồ nhiệt'), findsNWidgets(2));
     expect(find.text('Danh sách thị trường'), findsOneWidget);
 
     await tester.tap(find.byKey(MarketOverviewPage.watchlistToolKey));

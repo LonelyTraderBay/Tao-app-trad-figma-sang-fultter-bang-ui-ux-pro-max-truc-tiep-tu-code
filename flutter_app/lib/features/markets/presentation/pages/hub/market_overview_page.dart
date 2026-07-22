@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/app/theme/market_icon_tokens.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,7 +25,6 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_formatters.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_body_review_widgets.dart';
 
 part 'market_overview_page_hero_stats_widgets.dart';
 part 'market_overview_page_movers_sectors_widgets.dart';
@@ -76,7 +76,11 @@ class MarketOverviewPage extends ConsumerWidget {
             title: 'Tổng quan thị trường',
             subtitle: 'Dữ liệu tham khảo · Cập nhật $lastUpdatedLabel',
             showBack: true,
-            onBack: () => context.go(AppRoutePaths.markets),
+            onBack: () => goBackOrFallback(
+              context,
+              fallbackPath: AppRoutePaths.markets,
+              mode: BackNavigationMode.historyThenFallback,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,13 +90,11 @@ class MarketOverviewPage extends ConsumerWidget {
                   behavior: ScrollConfiguration.of(
                     context,
                   ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
+                  child: VitInsetScrollView(
                     key: contentKey,
-                    padding: MarketsSpacingTokens.marketScrollPadding(
-                      bottomInset,
-                    ),
+                    bottomInset: bottomInset,
                     child: VitPageContent(
-                      rhythm: VitPageRhythm.compact,
+                      rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
                       children: overviewAsync.when(
                         loading: () => const [VitSkeletonList()],
@@ -117,18 +119,6 @@ class MarketOverviewPage extends ConsumerWidget {
                           _SectorPerformance(sectors: snapshot.sectors),
                           _FearGreedHistory(points: snapshot.fearGreedHistory),
                           const _MarketTools(),
-                          const MarketBodyReviewSection(
-                            title: 'Overview state review',
-                            message: 'Market overview data reviewed',
-                            detail:
-                                'Global stats, movers, sectors, heatmap links, empty, and refresh states remain visible.',
-                            primary:
-                                'Global cap and breadth metrics stay above exploratory market tools.',
-                            secondary:
-                                'Gainers, losers, and sectors preserve direction before pair navigation.',
-                            tertiary:
-                                'Tools remain grouped below market context so scanning is not interrupted.',
-                          ),
                         ],
                       ),
                     ),

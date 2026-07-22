@@ -145,6 +145,9 @@ const tierProductRouteOverrides = <String, String>{
   'AppRouteNames.sc244P2PInsuranceFundAlias': 'standard',
   'AppRouteNames.sc241P2PInsurancePolicy': 'standard',
   'AppRouteNames.sc135Wallet': 'compact',
+  // SC-009 is L2-with-back (not Markets tab root); standard rhythm matches
+  // Page-Rhythm-Standard for detail/overview drill-in pages.
+  'AppRouteNames.sc009MarketOverview': 'standard',
 };
 
 final flushChartWidgetPatterns = RegExp(

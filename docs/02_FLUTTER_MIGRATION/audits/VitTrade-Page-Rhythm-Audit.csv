@@ -616,7 +616,7 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpa
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_webhooks_subscription_detail.dart,standard,,0,,0,,0,0,pass
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_webhooks_subscription_list.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart,compact,compact,0,,0,,0,0,pass
-markets,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart,compact,compact,0,,0,,0,0,pass
+markets,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart,compact,standard,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart,compact,compact,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart,flush,flush,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/pair/market_heatmap_page.dart,compact,compact,0,,0,,0,0,pass
