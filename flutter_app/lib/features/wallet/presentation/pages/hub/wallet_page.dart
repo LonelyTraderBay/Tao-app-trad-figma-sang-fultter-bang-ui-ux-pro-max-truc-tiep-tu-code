@@ -68,9 +68,9 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  WalletSpacingTokens.walletBottomInsetVisualChrome
+                  WalletSpacingTokens.walletVisualChromePad
             : DeviceMetrics.nativeBottomChrome +
-                  WalletSpacingTokens.walletBottomInsetNativeChrome) +
+                  WalletSpacingTokens.walletNativeChromePad) +
         MediaQuery.paddingOf(context).bottom +
         AppSpacing.searchBarCompactHeight;
     final showBack = context.canPop();

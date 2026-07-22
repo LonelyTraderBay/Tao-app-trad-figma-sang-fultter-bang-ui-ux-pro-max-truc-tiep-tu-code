@@ -15,8 +15,8 @@ final class HomeSpacingTokens {
   static const int homeQuickActionCompactCount = 6;
   static const double homeQuickActionDensityBreakpoint = 480;
   static const double homeAnnouncementAutoHideScrollOffset = 96;
-  static const double homeAnnouncementDotRadius = 3;
-  static const double homeActionRowGap = 8;
+  static const double homeAnnouncementDotRadius = AppSpacing.x1;
+  static const double homeActionRowGap = AppSpacing.x3;
   static const double homePortfolioActionSpacing = 10;
   static const double homeRecentProductWidth = 146;
 
@@ -35,7 +35,7 @@ final class HomeSpacingTokens {
   static const double homeRankedRowItemGap = 12;
   static const double homeRankedRowBadgePaddingHorizontal = 12;
   static const double homeRankedRowBadgePaddingVertical = 6;
-  static const double homeScrollShowThreshold = 8;
+  static const double homeScrollShowThreshold = AppSpacing.x3;
   static const double homeScrollHideThreshold = 24;
   static const double homeBottomSheetScrollInset = 16;
   static const double homeBottomSheetScrollInsetVisual = 40;

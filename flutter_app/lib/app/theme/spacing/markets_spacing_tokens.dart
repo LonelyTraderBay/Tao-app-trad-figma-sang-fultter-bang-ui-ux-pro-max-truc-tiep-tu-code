@@ -73,8 +73,8 @@ final class MarketsSpacingTokens {
   );
   static const double marketPairGap = 12;
   static const double marketPairMicroGap = 4;
-  static const double marketPairPriceGap = 5;
-  static const double marketPairFavoriteGap = 8;
+  static const double marketPairPriceGap = AppSpacing.x2;
+  static const double marketPairFavoriteGap = AppSpacing.x3;
   static const double marketPairSparklineWidth = 70;
   static const double marketPairSparklineHeight = 32;
   static const double marketPairPriceColumnWidth = 74;
@@ -82,7 +82,7 @@ final class MarketsSpacingTokens {
   static const double marketPairFavoriteHeight = 32;
   static const double marketPairFavoriteRadius = 18;
   static const double marketPairFavoriteIcon = 18;
-  static const double marketPairAvatar = 34;
+  static const double marketPairAvatar = AppSpacing.x6;
   static const double marketPairAvatarBorder = 1.5;
   static const EdgeInsets marketPairChangePadding = EdgeInsets.symmetric(
     horizontal: 8,
@@ -108,7 +108,7 @@ final class MarketsSpacingTokens {
     horizontal: AppSpacing.x3,
   );
   static const EdgeInsets marketFilterSheetPadding = EdgeInsets.all(12);
-  static const double marketFilterGap = 8;
+  static const double marketFilterGap = AppSpacing.x3;
   static const double marketCategoryGap = 9;
   static const double marketCategoryHeight = 38;
   static const double marketTimeframeLabelGap = 10;
@@ -117,15 +117,15 @@ final class MarketsSpacingTokens {
   static const EdgeInsets marketCategoryDropdownPadding = EdgeInsets.symmetric(
     horizontal: 14,
   );
-  static const double marketFilterChipMinHeight = 34;
+  static const double marketFilterChipMinHeight = AppSpacing.x6;
   static const double marketCategoryChipMinHeight = 36;
   static const EdgeInsets marketFilterChipPadding = EdgeInsets.symmetric(
     horizontal: 13,
     vertical: 8,
   );
   static const double marketToolsHeight = 36;
-  static const double marketToolHeight = 34;
-  static const double marketToolGap = 8;
+  static const double marketToolHeight = AppSpacing.x6;
+  static const double marketToolGap = AppSpacing.x3;
   static const EdgeInsets marketToolPadding = EdgeInsets.symmetric(
     horizontal: 12,
   );
@@ -142,7 +142,7 @@ final class MarketsSpacingTokens {
   static const double marketMoverIcon = 14;
   static const double marketMoverIconGap = 6;
   static const double marketMoverHeaderGap = 10;
-  static const double marketMoverRowGap = 8;
+  static const double marketMoverRowGap = AppSpacing.x3;
   static const double marketMoverRowHeight = 65;
   static const EdgeInsets marketMoverRowPadding = EdgeInsets.symmetric(
     horizontal: 10,
@@ -152,7 +152,7 @@ final class MarketsSpacingTokens {
   static const double marketMoverSparklineWidth = 66;
   static const double marketMoverSparklineHeight = 30;
   static const double marketMoverPriceColumnWidth = 74;
-  static const double marketMoverIdentityBadgeGap = 5;
+  static const double marketMoverIdentityBadgeGap = AppSpacing.x2;
   static const double marketMoverMetricGap = 7;
   static const EdgeInsets marketMoverRankBadgePadding = EdgeInsets.symmetric(
     horizontal: 5,
@@ -175,12 +175,12 @@ final class MarketsSpacingTokens {
     horizontal: 12,
   );
   static const EdgeInsets watchlistEmptyPadding = EdgeInsets.only(top: 70);
-  static const double watchlistTinyGap = 3;
+  static const double watchlistTinyGap = AppSpacing.x1;
   static const double watchlistPairTextGap = 4;
-  static const double watchlistStatGap = 5;
+  static const double watchlistStatGap = AppSpacing.x2;
   static const double watchlistSmallGap = 6;
   static const double watchlistCountGap = 7;
-  static const double watchlistActionGap = 8;
+  static const double watchlistActionGap = AppSpacing.x3;
   @Deprecated('Use AppSpacing.pageRhythmStandardInnerGap or AppSpacing.x3')
   static const double watchlistSectionGap = 12;
   static const double watchlistSparklineHeight = 42;
@@ -195,7 +195,7 @@ final class MarketsSpacingTokens {
   static const double watchlistAddButton = 40;
   static const double watchlistAddIcon = 22;
   static const double watchlistCountIcon = 15;
-  static const double marketDiscoverLabelGap = 8;
+  static const double marketDiscoverLabelGap = AppSpacing.x3;
   static const double marketDiscoverAccentWidth = 4;
   static const double marketDiscoverAccentHeight = 17;
   static const double marketDiscoverLabelTextGap = 7;
@@ -211,23 +211,23 @@ final class MarketsSpacingTokens {
     horizontal: 6,
     vertical: 2,
   );
-  static const double marketDiscoverSubtitleGap = 5;
+  static const double marketDiscoverSubtitleGap = AppSpacing.x2;
   static const double marketDiscoverChevron = 16;
-  static const double marketAnalyticsTinyGap = 3;
+  static const double marketAnalyticsTinyGap = AppSpacing.x1;
   static const double marketAnalyticsMicroGap = 4;
   static const double marketAnalyticsSmallGap = 6;
-  static const double marketAnalyticsCompactGap = 8;
+  static const double marketAnalyticsCompactGap = AppSpacing.x3;
   static const double marketAnalyticsMediumGap = 10;
   static const double marketAnalyticsGap = 12;
   static const double marketAnalyticsBreadthGap = 9;
-  static const double marketAnalyticsFooterGap = 13;
+  static const double marketAnalyticsFooterGap = AppSpacing.x4;
   static const double marketAnalyticsLargeGap = 16;
   static const double marketAnalyticsHeroHeight = 170;
   static const double marketAnalyticsStatCardHeight = 96;
   static const double marketAnalyticsSentimentCardHeight = 183;
   static const double marketAnalyticsStatIcon = 14;
   static const double marketAnalyticsTrendIcon = 12;
-  static const double marketAnalyticsBreadthDot = 8;
+  static const double marketAnalyticsBreadthDot = AppSpacing.x3;
   static const double marketAnalyticsBreadthTrackHeight = 6;
   static const double marketAnalyticsGaugeWidth = 120;
   static const double marketAnalyticsGaugeHeight = 64;
@@ -237,7 +237,7 @@ final class MarketsSpacingTokens {
   static const double marketOverviewMoverHeaderIcon = 14;
   static const double marketOverviewMoverChevron = 15;
   static const double marketOverviewMoverAvatar = 25;
-  static const double marketOverviewMoverPriceWidth = 34;
+  static const double marketOverviewMoverPriceWidth = AppSpacing.x6;
   static const double marketOverviewMoverChangeWidth = 58;
   static const double marketOverviewSectorRowHeight = 61;
   static const double marketOverviewSectorGlyph = 18;
@@ -253,7 +253,7 @@ final class MarketsSpacingTokens {
       AppSpacing.hairlineStroke;
   static const double marketAdvancedActionMinHeight = 30;
   static const double marketAdvancedChipRemoveIcon = 12;
-  static const double marketAdvancedSignalAccentWidth = 3;
+  static const double marketAdvancedSignalAccentWidth = AppSpacing.x1;
   static const double marketAdvancedSignalAccentHeight = 14;
   static const int marketAdvancedGridColumns = 3;
   static const double marketAdvancedGridAspectRatio = .92;
@@ -264,12 +264,12 @@ final class MarketsSpacingTokens {
   static const double marketAdvancedToolIcon = 25;
   static const double marketAdvancedTipIcon = 18;
   static const double marketAdvancedDisclaimerIcon = 14;
-  static const double marketAdvancedSignalBarHeight = 8;
+  static const double marketAdvancedSignalBarHeight = AppSpacing.x3;
   static const double marketHeatmapSectionGap = 28;
   static const double marketHeatmapSummaryGap = 12;
   static const double marketHeatmapSummaryHeight = 62;
   static const double marketHeatmapControlsHeight = 42;
-  static const double marketHeatmapFilterHeight = 34;
+  static const double marketHeatmapFilterHeight = AppSpacing.x6;
   static const double marketHeatmapLegendDot = 12;
   static const double marketHeatmapAvatar = 40;
   static const double marketHeatmapDetailButtonHeight = 36;
@@ -288,13 +288,13 @@ final class MarketsSpacingTokens {
   static const double marketDepthAvatar = 40;
   static const double marketDepthTrendIcon = 12;
   static const double marketDepthChartHeight = 200;
-  static const double marketDepthPainterPadding = 8;
+  static const double marketDepthPainterPadding = AppSpacing.x3;
   static const double marketDepthPainterDash = 4;
-  static const double marketDepthPainterDashGap = 8;
+  static const double marketDepthPainterDashGap = AppSpacing.x3;
   static const double marketDepthStroke = AppSpacing.borderWidth;
   static const double marketDepthDashedStroke = AppSpacing.dividerHairline;
   static const double marketDepthLegendDot = 12;
-  static const double marketDepthRatioBarHeight = 21;
+  static const double marketDepthRatioBarHeight = AppSpacing.x5;
   static const double marketDepthOrderRowHeight = 28;
   static const double marketDepthWhaleIconBox = 40;
   static const double marketSocialTabsHeight = 54;
@@ -304,11 +304,11 @@ final class MarketsSpacingTokens {
   static const double marketSocialTinyGap = 2;
   static const double marketSocialSmallGap = 4;
   static const double marketSocialCompactGap = 6;
-  static const double marketSocialGap = 8;
+  static const double marketSocialGap = AppSpacing.x3;
   static const double marketSocialMediumGap = 10;
   static const double marketSocialLargeGap = 14;
   static const double marketSocialFilterHeight = 36;
-  static const double marketSocialCategoryHeight = 34;
+  static const double marketSocialCategoryHeight = AppSpacing.x6;
   static const double marketSocialTinyBadgeHeight = 16;
   static const double marketSocialTinyBadgeHeightMd = 18;
   static const double marketSocialTinyBadgeHeightLg = 20;
@@ -318,7 +318,7 @@ final class MarketsSpacingTokens {
   static const double marketSocialStatusBarHeight = 12;
   static const double marketSocialLegendDot = 10;
   static const double marketSocialResultIcon = 16;
-  static const double marketSocialSectionBarWidth = 3;
+  static const double marketSocialSectionBarWidth = AppSpacing.x1;
   static const double marketSocialSectionBarHeight = 16;
   static const double marketSocialEmptyHeight = 180;
   static const double marketSocialEmptyIcon = 32;
@@ -328,36 +328,36 @@ final class MarketsSpacingTokens {
   static const double marketDerivativesPageGap = 10;
   static const double marketDerivativesHeroLabelGap = 10;
   static const double marketDerivativesHeroValueGap = 10;
-  static const double marketDerivativesHeroDeltaBottom = 5;
+  static const double marketDerivativesHeroDeltaBottom = AppSpacing.x2;
   static const int marketDerivativesStatGridColumns = 2;
-  static const double marketDerivativesStatGridGap = 8;
+  static const double marketDerivativesStatGridGap = AppSpacing.x3;
   static const double marketDerivativesStatGridAspectRatio = 2;
   static const double marketDerivativesStatIconBox = 24;
   static const double marketDerivativesStatIcon = 14;
   static const double marketDerivativesSplitBarHeight = 6;
   static const double marketDerivativesSplitBarCompactHeight = 4;
   static const double marketDerivativesSplitLabelGap = 6;
-  static const double marketDerivativesMetricGap = 3;
+  static const double marketDerivativesMetricGap = AppSpacing.x1;
   static const double marketDerivativesTimelineTimeWidth = 48;
-  static const double marketDerivativesTimelineTimeGap = 8;
-  static const double marketDerivativesTimelineItemGap = 8;
+  static const double marketDerivativesTimelineTimeGap = AppSpacing.x3;
+  static const double marketDerivativesTimelineItemGap = AppSpacing.x3;
   static const double marketDerivativesTimelineDividerHeight = 18;
   static const double marketDerivativesTimelineBarHeight = 12;
   static const double marketDerivativesLegendDot = 10;
   static const double marketDerivativesLegendGap = 7;
   static const double marketDerivativesLegendItemGap = 18;
   static const double marketDerivativesPairAvatarSm = 30;
-  static const double marketDerivativesPairAvatarMd = 34;
+  static const double marketDerivativesPairAvatarMd = AppSpacing.x6;
   static const double marketDerivativesPairGap = 12;
   static const double marketDerivativesOiRowGap = 2;
-  static const double marketDerivativesSummaryLabelGap = 8;
+  static const double marketDerivativesSummaryLabelGap = AppSpacing.x3;
   static const double marketDerivativesSummarySplitGap = 14;
   static const double marketDerivativesLiquidationRowGap = 7;
   static const double marketDerivativesRiskIcon = 18;
   static const double marketDerivativesRiskIconGap = 10;
   static const double marketDerivativesRiskTitleGap = 4;
   static const double marketDerivativesRiskLineHeight = 1.45;
-  static const double marketDerivativesSortGap = 8;
+  static const double marketDerivativesSortGap = AppSpacing.x3;
   static const double marketDerivativesLeverageGap = 7;
   static const double marketDerivativesPerpetualMetaGap = 14;
   static const double marketDerivativesPerpetualSplitGap = 12;
@@ -406,23 +406,23 @@ final class MarketsSpacingTokens {
   static const double tokenUnlocksExpandedMetricGap = 12;
   static const double tokenUnlocksPriceWarningGap = 12;
   static const double tokenUnlocksPriceWarningIcon = 14;
-  static const double tokenUnlocksPriceWarningIconGap = 8;
+  static const double tokenUnlocksPriceWarningIconGap = AppSpacing.x3;
   static const double tokenUnlocksImpactTitleGap = 12;
-  static const double tokenUnlocksImpactStatGap = 8;
+  static const double tokenUnlocksImpactStatGap = AppSpacing.x3;
   static const double tokenUnlocksImpactStatValueGap = 4;
   static const double tokenUnlocksCategoryGap = 12;
   static const double tokenUnlocksCategoryDot = 10;
-  static const double tokenUnlocksCategoryDotGap = 8;
+  static const double tokenUnlocksCategoryDotGap = AppSpacing.x3;
   static const double tokenUnlocksCategoryProgressGap = 6;
-  static const double tokenUnlocksCategoryProgressHeight = 5;
+  static const double tokenUnlocksCategoryProgressHeight = AppSpacing.x2;
   static const double tokenUnlocksDilutionRankWidth = 14;
   static const double tokenUnlocksDilutionRankGap = 10;
   static const double tokenUnlocksDilutionRowGap = 2;
   static const double tokenUnlocksWarningIcon = 18;
   static const double tokenUnlocksWarningIconGap = 12;
-  static const double tokenUnlocksWarningTitleGap = 3;
+  static const double tokenUnlocksWarningTitleGap = AppSpacing.x1;
   static const double tokenUnlocksWarningLineHeight = 1.55;
-  static const double tokenUnlocksScheduleGap = 8;
+  static const double tokenUnlocksScheduleGap = AppSpacing.x3;
   static const double tokenUnlocksScheduleSupplyGap = 14;
   static const double tokenUnlocksScheduleProgressGap = 6;
   static const double tokenUnlocksScheduleTitleGap = 14;
@@ -431,12 +431,12 @@ final class MarketsSpacingTokens {
   static const double tokenUnlocksVestingIconOpen = 12;
   static const double tokenUnlocksVestingIconLocked = 9;
   static const double tokenUnlocksVestingContentGap = 12;
-  static const double tokenUnlocksVestingBottomGap = 13;
+  static const double tokenUnlocksVestingBottomGap = AppSpacing.x4;
   static const double tokenUnlocksTinyBadgeLineHeight = 1.2;
-  static const double tokenUnlocksSectionBarWidth = 3;
+  static const double tokenUnlocksSectionBarWidth = AppSpacing.x1;
   static const double tokenUnlocksSectionBarHeight = 14;
-  static const double tokenUnlocksSectionHeaderGap = 8;
-  static const double tokenUnlocksEmptyIcon = 34;
+  static const double tokenUnlocksSectionHeaderGap = AppSpacing.x3;
+  static const double tokenUnlocksEmptyIcon = AppSpacing.x6;
   static const double tokenUnlocksEmptyGap = 12;
   static const EdgeInsets tokenUnlocksHeroPadding = EdgeInsets.all(16);
   static const EdgeInsets tokenUnlocksFilterPadding = EdgeInsets.symmetric(
@@ -487,21 +487,21 @@ final class MarketsSpacingTokens {
   static const double socialSentimentHeroScoreGap = 6;
   static const double socialSentimentHeroScoreBottom = 6;
   static const double socialSentimentHeroGaugeGap = 12;
-  static const double socialSentimentHeroGaugeHeight = 8;
+  static const double socialSentimentHeroGaugeHeight = AppSpacing.x3;
   static const double socialSentimentHeroLegendGap = 4;
-  static const double socialSentimentStatGap = 8;
+  static const double socialSentimentStatGap = AppSpacing.x3;
   static const double socialSentimentStatIcon = 12;
   static const double socialSentimentStatIconGap = 6;
-  static const double socialSentimentStatValueGap = 8;
+  static const double socialSentimentStatValueGap = AppSpacing.x3;
   static const double socialSentimentStatSubGap = 2;
   static const double socialSentimentDominanceTitleGap = 10;
   static const double socialSentimentDominanceBarHeight = 20;
   static const double socialSentimentDominanceLegendGap = 16;
   static const double socialSentimentLegendDot = 10;
   static const double socialSentimentLegendGap = 6;
-  static const double socialSentimentTimelineRowGap = 3;
+  static const double socialSentimentTimelineRowGap = AppSpacing.x1;
   static const double socialSentimentTimelineTimeWidth = 56;
-  static const double socialSentimentTimelineTimeGap = 8;
+  static const double socialSentimentTimelineTimeGap = AppSpacing.x3;
   static const double socialSentimentTimelineScoreGap = 10;
   static const double socialSentimentTimelineScoreWidth = 24;
   static const double socialSentimentTimelineBarHeight = 6;
@@ -511,19 +511,19 @@ final class MarketsSpacingTokens {
   static const double socialSentimentAvatarMd = 36;
   static const double socialSentimentRowGap = 12;
   static const double socialSentimentStatusDot = 10;
-  static const double socialSentimentStatusShadowBlur = 8;
-  static const double socialSentimentSortGap = 8;
+  static const double socialSentimentStatusShadowBlur = AppSpacing.x3;
+  static const double socialSentimentSortGap = AppSpacing.x3;
   static const double socialSentimentSplitBarHeight = 6;
   static const double socialSentimentTokenMetricGap = 10;
-  static const double socialSentimentTopicGap = 8;
+  static const double socialSentimentTopicGap = AppSpacing.x3;
   static const int socialSentimentHeatmapCrossAxisCount = 4;
   static const double socialSentimentHeatmapGap = 6;
   static const double socialSentimentHeatmapAspectRatio = .95;
-  static const double socialSentimentLeaderboardGap = 8;
+  static const double socialSentimentLeaderboardGap = AppSpacing.x3;
   static const double socialSentimentLeaderboardRowGap = 4;
   static const double socialSentimentLeaderboardRankWidth = 16;
   static const double socialSentimentVelocitySymbolWidth = 44;
-  static const double socialSentimentVelocityBarHeight = 5;
+  static const double socialSentimentVelocityBarHeight = AppSpacing.x2;
   static const double socialSentimentVelocityGap = 10;
   static const double socialSentimentVelocityValueWidth = 52;
   static const EdgeInsets socialSentimentHeroPadding = EdgeInsets.all(16);
@@ -571,9 +571,9 @@ final class MarketsSpacingTokens {
   static const double tokenInfoHeroAvatarGap = 12;
   static const double tokenInfoHeroSubtitleGap = 2;
   static const double tokenInfoHeroPriceGap = 16;
-  static const double tokenInfoInfoIcon = 13;
+  static const double tokenInfoInfoIcon = AppSpacing.x4;
   static const double tokenInfoInfoIconGap = 9;
-  static const double tokenInfoSupplyProgressGap = 8;
+  static const double tokenInfoSupplyProgressGap = AppSpacing.x3;
   static const double tokenInfoSupplyProgressHeight = 6;
   static const double tokenInfoMetricGap = 12;
   static const double tokenInfoDonutSize = 80;
@@ -581,27 +581,27 @@ final class MarketsSpacingTokens {
   static const double tokenInfoDonutInset = 9;
   static const double tokenInfoDistributionGap = 18;
   static const double tokenInfoDistributionDot = 10;
-  static const double tokenInfoDistributionDotGap = 8;
+  static const double tokenInfoDistributionDotGap = AppSpacing.x3;
   static const double tokenInfoRecordCardGap = 12;
-  static const double tokenInfoRecordIcon = 13;
+  static const double tokenInfoRecordIcon = AppSpacing.x4;
   static const double tokenInfoRecordIconGap = 6;
   static const double tokenInfoRecordValueGap = 10;
-  static const double tokenInfoRecordDeltaGap = 8;
+  static const double tokenInfoRecordDeltaGap = AppSpacing.x3;
   static const double tokenInfoChartIconBox = 42;
   static const double tokenInfoChartIconGap = 12;
   static const double tokenInfoChartSubtitleGap = 2;
   static const double tokenInfoOnchainIcon = 16;
-  static const double tokenInfoOnchainIconGap = 8;
+  static const double tokenInfoOnchainIconGap = AppSpacing.x3;
   static const double tokenInfoOnchainTitleGap = 14;
   static const double tokenInfoMiniStatGap = 10;
   static const double tokenInfoMiniStatValueGap = 4;
   static const double tokenInfoProjectTitleGap = 10;
-  static const double tokenInfoProjectLinkGap = 8;
+  static const double tokenInfoProjectLinkGap = AppSpacing.x3;
   static const double tokenInfoProjectLinkIcon = 18;
   static const double tokenInfoProjectLinkIconGap = 10;
   static const double tokenInfoProjectLinkOpenIcon = 15;
   static const double tokenInfoDisclaimerIcon = 14;
-  static const double tokenInfoDisclaimerIconGap = 8;
+  static const double tokenInfoDisclaimerIconGap = AppSpacing.x3;
   static const double tokenInfoDisclaimerLineHeight = 1.35;
   static const EdgeInsets tokenInfoTabPadding = EdgeInsets.symmetric(
     vertical: 14,
@@ -636,7 +636,7 @@ final class MarketsSpacingTokens {
   static const double marketCorrelationsTabsHeight = 54;
   static const double marketCorrelationsTabIndicatorHeight =
       AppSpacing.hairlineStroke;
-  static const double marketCorrelationsChipGap = 8;
+  static const double marketCorrelationsChipGap = AppSpacing.x3;
   static const double marketCorrelationsTimeframeChipHeight = 36;
   static const double marketCorrelationsSortChipHeight = 32;
   static const double marketCorrelationsMatrixGap = 12;
@@ -645,33 +645,33 @@ final class MarketsSpacingTokens {
   static const double marketCorrelationsLegendDot = 10;
   static const double marketCorrelationsInfoIcon = 14;
   static const double marketCorrelationsInfoIconGap = 12;
-  static const double marketCorrelationsInfoTitleGap = 3;
+  static const double marketCorrelationsInfoTitleGap = AppSpacing.x1;
   static const double marketCorrelationsBodyLineHeight = 1.55;
   static const double marketCorrelationsInsightGap = 10;
   static const double marketCorrelationsInsightValueGap = 6;
   static const double marketCorrelationsInsightSubGap = 2;
   static const double marketCorrelationsRecommendationIcon = 16;
   static const double marketCorrelationsRecommendationIconGap = 12;
-  static const double marketCorrelationsRecommendationTitleGap = 5;
+  static const double marketCorrelationsRecommendationTitleGap = AppSpacing.x2;
   static const double marketCorrelationsHeroLabelGap = 6;
-  static const double marketCorrelationsHeroMetaGap = 8;
+  static const double marketCorrelationsHeroMetaGap = AppSpacing.x3;
   static const double marketCorrelationsHeroPillGap = 12;
   static const double marketCorrelationsHeroProgressGap = 12;
-  static const double marketCorrelationsHeroProgressHeight = 8;
-  static const double marketCorrelationsHeroScaleGap = 5;
+  static const double marketCorrelationsHeroProgressHeight = AppSpacing.x3;
+  static const double marketCorrelationsHeroScaleGap = AppSpacing.x2;
   static const double marketCorrelationsMetricGap = 10;
-  static const double marketCorrelationsMetricValueGap = 5;
+  static const double marketCorrelationsMetricValueGap = AppSpacing.x2;
   static const double marketCorrelationsTimelineRowGap = 12;
   static const double marketCorrelationsScoreLabelWidth = 30;
   static const double marketCorrelationsScoreValueWidth = 30;
-  static const double marketCorrelationsScoreBarHeight = 8;
+  static const double marketCorrelationsScoreBarHeight = AppSpacing.x3;
   static const double marketCorrelationsScoreGap = 10;
   static const double marketCorrelationsDisclaimerIcon = 12;
-  static const double marketCorrelationsDisclaimerIconGap = 8;
+  static const double marketCorrelationsDisclaimerIconGap = AppSpacing.x3;
   static const double marketCorrelationsRankWidth = 18;
   static const double marketCorrelationsRankGap = 10;
   static const double marketCorrelationsAssetDot = 24;
-  static const double marketCorrelationsAssetDotGap = 5;
+  static const double marketCorrelationsAssetDotGap = AppSpacing.x2;
   static const double marketCorrelationsPairGap = 12;
   static const EdgeInsets marketCorrelationsTimeframeChipPadding =
       EdgeInsets.symmetric(horizontal: 14);
@@ -711,13 +711,13 @@ final class MarketsSpacingTokens {
   static const double portfolioTrackerHeroTogglePadding = 4;
   static const double portfolioTrackerHeroToggleIcon = 16;
   static const double portfolioTrackerHeroPnlIcon = 15;
-  static const double portfolioTrackerHeroPnlIconGap = 8;
-  static const double portfolioTrackerQuickStatGap = 8;
-  static const double portfolioTrackerMiniStatValueGap = 5;
+  static const double portfolioTrackerHeroPnlIconGap = AppSpacing.x3;
+  static const double portfolioTrackerQuickStatGap = AppSpacing.x3;
+  static const double portfolioTrackerMiniStatValueGap = AppSpacing.x2;
   static const double portfolioTrackerAllocationTitleGap = 14;
   static const double portfolioTrackerDonutSize = 120;
   static const double portfolioTrackerDonutGap = 28;
-  static const double portfolioTrackerLegendGap = 8;
+  static const double portfolioTrackerLegendGap = AppSpacing.x3;
   static const double portfolioTrackerLegendDot = 10;
   static const double portfolioTrackerSectionGap = 4;
   static const double portfolioTrackerSectionHeaderGap = 6;
@@ -727,14 +727,14 @@ final class MarketsSpacingTokens {
   static const double portfolioTrackerHoldingRowGap = 12;
   static const double portfolioTrackerHoldingSparklineWidth = 54;
   static const double portfolioTrackerHoldingSparklineHeight = 22;
-  static const double portfolioTrackerHoldingSparklineGap = 8;
+  static const double portfolioTrackerHoldingSparklineGap = AppSpacing.x3;
   static const double portfolioTrackerHoldingValueWidth = 86;
   static const double portfolioTrackerRiskTitleGap = 12;
-  static const double portfolioTrackerRiskProgressLabelGap = 5;
-  static const double portfolioTrackerRiskProgressHeight = 5;
-  static const double portfolioTrackerRiskCopyGap = 8;
+  static const double portfolioTrackerRiskProgressLabelGap = AppSpacing.x2;
+  static const double portfolioTrackerRiskProgressHeight = AppSpacing.x2;
+  static const double portfolioTrackerRiskCopyGap = AppSpacing.x3;
   static const double portfolioTrackerRiskLineHeight = 1.45;
-  static const double portfolioTrackerChipGap = 8;
+  static const double portfolioTrackerChipGap = AppSpacing.x3;
   static const double portfolioTrackerHoldingDetailGap = 14;
   static const double portfolioTrackerHoldingMetricGap = 2;
   static const double portfolioTrackerChartTitleGap = 12;
@@ -743,11 +743,11 @@ final class MarketsSpacingTokens {
   static const double portfolioTrackerPnlAvatarGap = 12;
   static const double portfolioTrackerPnlProgressGap = 6;
   static const double portfolioTrackerPnlProgressHeight = 4;
-  static const double portfolioTrackerSummaryGap = 8;
+  static const double portfolioTrackerSummaryGap = AppSpacing.x3;
   static const double portfolioTrackerSummaryValueGap = 4;
-  static const double portfolioTrackerAllocationDonutInset = 8;
+  static const double portfolioTrackerAllocationDonutInset = AppSpacing.x3;
   static const double portfolioTrackerAllocationDonutStroke = 16;
-  static const double portfolioTrackerPerformanceTopPadding = 8;
+  static const double portfolioTrackerPerformanceTopPadding = AppSpacing.x3;
   static const double portfolioTrackerPerformanceBottomPadding = 24;
   static const double portfolioTrackerPerformanceLineStroke = 2;
   static const double portfolioTrackerPerformanceLastPoint = 4;
@@ -783,17 +783,17 @@ final class MarketsSpacingTokens {
   static const double marketScreenerVisualBottomExtra = 54;
   static const double marketScreenerPageGap = 16;
   static const double marketScreenerPresetHeight = 36;
-  static const double marketScreenerPresetGap = 8;
+  static const double marketScreenerPresetGap = AppSpacing.x3;
   static const double marketScreenerPresetIcon = 14;
-  static const double marketScreenerPresetIconGap = 8;
+  static const double marketScreenerPresetIconGap = AppSpacing.x3;
   static const double marketScreenerPresetLineHeight = 1.0;
   static const double marketScreenerAdvancedTitleGap = 12;
-  static const double marketScreenerAdvancedCategoryGap = 8;
+  static const double marketScreenerAdvancedCategoryGap = AppSpacing.x3;
   static const double marketScreenerAdvancedRangeGap = 12;
   static const double marketScreenerAdvancedRangeRowGap = 10;
   static const double marketScreenerResetIcon = 14;
   static const double marketScreenerResetHeight = 32;
-  static const double marketScreenerCategoryChipHeight = 34;
+  static const double marketScreenerCategoryChipHeight = AppSpacing.x6;
   static const double marketScreenerCategoryChipLineHeight = 1.0;
   static const double marketScreenerInputVerticalPadding = 10;
   static const double marketScreenerSortHeight = 38;
@@ -812,9 +812,9 @@ final class MarketsSpacingTokens {
   static const double marketScreenerSparklineHeight = 24;
   static const double marketScreenerSparklineGap = 16;
   static const double marketScreenerValueWidth = 82;
-  static const double marketScreenerTextGap = 5;
+  static const double marketScreenerTextGap = AppSpacing.x2;
   static const double marketScreenerTrendIcon = 12;
-  static const double marketScreenerTrendGap = 3;
+  static const double marketScreenerTrendGap = AppSpacing.x1;
   static const double marketScreenerRowTitleLineHeight = 1.1;
   static const double marketScreenerRowMetaLineHeight = 1.3;
   static const double marketScreenerTrendLineHeight = 1.2;
@@ -855,32 +855,32 @@ final class MarketsSpacingTokens {
   static const double marketNewsBreakingTimeGap = 10;
   static const double marketNewsBreakingTitleGap = 10;
   static const double marketNewsBreakingTitleLineHeight = 1.38;
-  static const double marketNewsBreakingDot = 8;
+  static const double marketNewsBreakingDot = AppSpacing.x3;
   static const double marketNewsBreakingDotGap = 6;
-  static const double marketNewsBreakingTokenGap = 8;
-  static const double marketNewsFilterGap = 8;
+  static const double marketNewsBreakingTokenGap = AppSpacing.x3;
+  static const double marketNewsFilterGap = AppSpacing.x3;
   static const double marketNewsSentimentIcon = 12;
-  static const double marketNewsSentimentIconGap = 5;
+  static const double marketNewsSentimentIconGap = AppSpacing.x2;
   static const double marketNewsFeedGap = 6;
   static const double marketNewsCardIcon = 40;
-  static const double marketNewsCardIconGlyph = 21;
+  static const double marketNewsCardIconGlyph = AppSpacing.x5;
   static const double marketNewsCardIconGap = 12;
-  static const double marketNewsCardTagGap = 5;
+  static const double marketNewsCardTagGap = AppSpacing.x2;
   static const double marketNewsCardTitleGap = 6;
   static const double marketNewsCardTitleLineHeight = 1.35;
-  static const double marketNewsSaveGap = 8;
+  static const double marketNewsSaveGap = AppSpacing.x3;
   static const double marketNewsSavePadding = 4;
   static const double marketNewsSaveIcon = 18;
   static const double marketNewsTagSpacing = 6;
   static const double marketNewsTagRunSpacing = 4;
-  static const double marketNewsTagIcon = 8;
+  static const double marketNewsTagIcon = AppSpacing.x3;
   static const double marketNewsTagIconGap = 2;
   static const double marketNewsMetaIcon = 10;
   static const double marketNewsMetaIconGap = 4;
   static const double marketNewsMetaSeparatorGap = 7;
   static const double marketNewsExpandedSummaryLineHeight = 1.55;
   static const double marketNewsExpandedGap = 12;
-  static const double marketNewsExpandedTokenGap = 8;
+  static const double marketNewsExpandedTokenGap = AppSpacing.x3;
   static const double marketNewsExpandedTokenIconGap = 4;
   static const double marketNewsExpandedTokenIcon = 14;
   static const double marketNewsEmptyVerticalPadding = 48;
@@ -941,29 +941,29 @@ final class MarketsSpacingTokens {
   static const double marketCalendarPageGap = 16;
   static EdgeInsets marketCalendarScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
-  static const double marketCalendarGroupGap = 8;
-  static const double marketCalendarDateHeaderGap = 8;
+  static const double marketCalendarGroupGap = AppSpacing.x3;
+  static const double marketCalendarDateHeaderGap = AppSpacing.x3;
   static const double marketCalendarEventIcon = 36;
   static const double marketCalendarEventIconGlyph = 18;
   static const double marketCalendarEventIconGap = 12;
   static const double marketCalendarBadgeSpacing = 6;
   static const double marketCalendarBadgeRunSpacing = 4;
   static const double marketCalendarEventTitleGap = 6;
-  static const double marketCalendarEventMetaGap = 8;
-  static const double marketCalendarEventTimeIcon = 13;
-  static const double marketCalendarEventTimeGap = 5;
+  static const double marketCalendarEventMetaGap = AppSpacing.x3;
+  static const double marketCalendarEventTimeIcon = AppSpacing.x4;
+  static const double marketCalendarEventTimeGap = AppSpacing.x2;
   static const double marketCalendarEventImpactGap = 6;
-  static const double marketCalendarEventCountdownGap = 8;
-  static const double marketCalendarEventSourceGap = 8;
+  static const double marketCalendarEventCountdownGap = AppSpacing.x3;
+  static const double marketCalendarEventSourceGap = AppSpacing.x3;
   static const double marketCalendarEventTitleLineHeight = 1.25;
   static const double marketCalendarEventDescriptionLineHeight = 1.5;
   static const double marketCalendarViewTabHeight = 54;
   static const double marketCalendarViewUnderlineHeight =
       AppSpacing.hairlineStroke;
-  static const double marketCalendarStatsGap = 8;
+  static const double marketCalendarStatsGap = AppSpacing.x3;
   static const double marketCalendarMiniStatHeight = 73;
-  static const double marketCalendarMiniStatValueGap = 8;
-  static const double marketCalendarFilterGap = 8;
+  static const double marketCalendarMiniStatValueGap = AppSpacing.x3;
+  static const double marketCalendarFilterGap = AppSpacing.x3;
   static const double marketCalendarFilterChipHeight = 36;
   static const double marketCalendarImpactDot = 6;
   static const double marketCalendarMonthTitleGap = 16;
@@ -975,9 +975,9 @@ final class MarketsSpacingTokens {
   static const double marketCalendarEventDot = AppSpacing.hairlineStroke * 2;
   static const double marketCalendarEventDotGap = AppSpacing.hairlineStroke;
   static const double marketCalendarLegendSpacing = 12;
-  static const double marketCalendarLegendRunSpacing = 8;
-  static const double marketCalendarLegendDot = 8;
-  static const double marketCalendarLegendGap = 5;
+  static const double marketCalendarLegendRunSpacing = AppSpacing.x3;
+  static const double marketCalendarLegendDot = AppSpacing.x3;
+  static const double marketCalendarLegendGap = AppSpacing.x2;
   static const double marketCalendarDayBorderWidth = 1.5;
   static const EdgeInsets marketCalendarEventCardPadding = EdgeInsets.all(14);
   static const EdgeInsets marketCalendarEventExpandedPadding =
@@ -999,7 +999,7 @@ final class MarketsSpacingTokens {
   static EdgeInsets marketSectorsScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
   static const double marketSectorCardIcon = 42;
-  static const double marketSectorCardIconGlyph = 21;
+  static const double marketSectorCardIconGlyph = AppSpacing.x5;
   static const double marketSectorDetailIcon = 46;
   static const double marketSectorDetailIconGlyph = 24;
   static const double marketSectorDistributionIcon = 26;
@@ -1009,26 +1009,26 @@ final class MarketsSpacingTokens {
   static const double marketSectorDistributionHeight = 132;
   static const double marketSectorDistributionBarHeight = 12;
   static const double marketSectorDominanceHeight = 6;
-  static const double marketSectorLegendDot = 8;
+  static const double marketSectorLegendDot = AppSpacing.x3;
   static const double marketSectorControlHeight = 32;
-  static const double marketSectorControlChipGap = 8;
+  static const double marketSectorControlChipGap = AppSpacing.x3;
   static const double marketSectorControlGroupGap = 10;
   static const double marketSectorControlChipPadX = 10;
   static const double marketSectorComparisonCellWidth = 54;
-  static const double marketSectorComparisonRowHeight = 34;
-  static const double marketSectorComparisonMarker = 8;
+  static const double marketSectorComparisonRowHeight = AppSpacing.x6;
+  static const double marketSectorComparisonMarker = AppSpacing.x3;
   static const double marketSectorCardHeaderGap = 12;
   static const double marketSectorTitleGap = 4;
   static const double marketSectorCardSectionGap = 16;
   static const double marketSectorMetricGap = 14;
   static const double marketSectorMetricInlineGap = 6;
   static const double marketSectorDominanceLabelGap = 6;
-  static const double marketSectorChipGap = 8;
+  static const double marketSectorChipGap = AppSpacing.x3;
   static const double marketSectorDistributionHeaderGap = 10;
   static const double marketSectorDistributionBarGap = 14;
-  static const double marketSectorLegendGap = 5;
+  static const double marketSectorLegendGap = AppSpacing.x2;
   static const double marketSectorComparisonHeaderGap = 10;
-  static const double marketSectorComparisonMarkerGap = 8;
+  static const double marketSectorComparisonMarkerGap = AppSpacing.x3;
   static const double marketSectorTopCoinPriceGap = 10;
   static const double marketSectorLineHeightTight = 1.0;
   static const double marketSectorLineHeightCompact = 1.1;
@@ -1047,11 +1047,11 @@ final class MarketsSpacingTokens {
   );
   static const double priceAlertsNativeBottomExtra = AppSpacing.contentPad;
   static const double priceAlertsVisualBottomExtra = 48;
-  static const double priceAlertsSectionGap = 13;
+  static const double priceAlertsSectionGap = AppSpacing.x4;
   static const double priceAlertsCardGap = 12;
   static const double priceAlertsAddNoticeGap = 10;
   static const double priceAlertsBottomReviewGap = 16;
-  static const double priceAlertsFilterGap = 8;
+  static const double priceAlertsFilterGap = AppSpacing.x3;
   static const double priceAlertsFilterHeight = 36;
   static const double priceAlertsStatGap = 12;
   static const double priceAlertsStatHeight = 72;
@@ -1060,21 +1060,21 @@ final class MarketsSpacingTokens {
   static const double priceAlertsHeaderGap = 10;
   static const double priceAlertsTrendIcon = 14;
   static const double priceAlertsTrendGap = 4;
-  static const double priceAlertsToggleIcon = 34;
-  static const double priceAlertsActionGap = 8;
+  static const double priceAlertsToggleIcon = AppSpacing.x6;
+  static const double priceAlertsActionGap = AppSpacing.x3;
   static const double priceAlertsDeleteIcon = 16;
   static const double priceAlertsProgressGap = 9;
   static const double priceAlertsProgressHeight = 7;
   static const double priceAlertsTargetGap = 17;
   static const double priceAlertsTargetWidth = 60;
-  static const double priceAlertsTriggeredGap = 13;
+  static const double priceAlertsTriggeredGap = AppSpacing.x4;
   static const double priceAlertsTriggeredDividerGap = 11;
   static const double priceAlertsTriggeredIcon = 15;
   static const double priceAlertsTriggeredIconGap = 7;
-  static const double priceAlertsEmptyIcon = 34;
+  static const double priceAlertsEmptyIcon = AppSpacing.x6;
   static const double priceAlertsEmptyGap = 10;
   static const double priceAlertsAddIcon = 18;
-  static const double priceAlertsAddGap = 8;
+  static const double priceAlertsAddGap = AppSpacing.x3;
   static const double comparisonToolNativeBottomExtra = AppSpacing.contentPad;
   static const double comparisonToolVisualBottomExtra = 54;
   static const double comparisonToolPageGap = 18;
@@ -1085,8 +1085,8 @@ final class MarketsSpacingTokens {
   static const double comparisonToolAddGap = 6;
   static const double comparisonToolTokenAvatar = 28;
   static const double comparisonToolTokenTextGap = 9;
-  static const double comparisonToolTokenMetricGap = 5;
-  static const double comparisonToolRemoveGap = 8;
+  static const double comparisonToolTokenMetricGap = AppSpacing.x2;
+  static const double comparisonToolRemoveGap = AppSpacing.x3;
   static const double comparisonToolRemoveIcon = 14;
   static const double comparisonToolSparklineHeight = 48;
   static const double comparisonToolSparklineGap = 14;
@@ -1099,19 +1099,19 @@ final class MarketsSpacingTokens {
   static const double comparisonToolDistributionHeight = 24;
   static const double comparisonToolDistributionGap = 12;
   static const double comparisonToolDistributionLegendGap = 14;
-  static const double comparisonToolDistributionLegendRunGap = 8;
+  static const double comparisonToolDistributionLegendRunGap = AppSpacing.x3;
   static const double comparisonToolLegendDot = 10;
   static const double comparisonToolLegendGap = 6;
-  static const double comparisonToolMarketCapRowGap = 5;
+  static const double comparisonToolMarketCapRowGap = AppSpacing.x2;
   static const double comparisonToolMarketCapBarHeight = 6;
   static const double comparisonToolNeedIcon = 42;
   static const double comparisonToolNeedGap = 12;
   static const double comparisonToolPickerSearchHeight = 40;
   static const double comparisonToolPickerIcon = 15;
   static const double comparisonToolPickerGap = 12;
-  static const double comparisonToolPickerSearchIconGap = 8;
-  static const double comparisonToolPickerQuickHeight = 34;
-  static const double comparisonToolPickerQuickGap = 8;
+  static const double comparisonToolPickerSearchIconGap = AppSpacing.x3;
+  static const double comparisonToolPickerQuickHeight = AppSpacing.x6;
+  static const double comparisonToolPickerQuickGap = AppSpacing.x3;
   static const double comparisonToolPickerListGap = 10;
   static const double comparisonToolPickerListMaxHeight = 190;
   static const double comparisonToolPickerRowHeight = 40;
@@ -1336,9 +1336,9 @@ final class MarketsSpacingTokens {
   );
   static const double pairHeaderLogo = 28;
   static const double pairHeaderSymbolGap = 9;
-  static const double pairHeaderChevronGap = 5;
+  static const double pairHeaderChevronGap = AppSpacing.x2;
   static const double pairHeaderChevron = 17;
-  static const double pairHeaderTrailingGap = 8;
+  static const double pairHeaderTrailingGap = AppSpacing.x3;
   // A11Y-2: 2 md-size action buttons at their 44dp tap target width, plus
   // the gap — was hardcoded to fit the old 40dp visual width (88), which
   // overflowed by 8dp once the tap target grew.
@@ -1363,7 +1363,7 @@ final class MarketsSpacingTokens {
     AppSpacing.contentPad,
     8,
   );
-  static const double pairViewTabGap = 8;
+  static const double pairViewTabGap = AppSpacing.x3;
   static const double pairViewTabHeight = 38;
   static const EdgeInsets pairViewTabPadding = EdgeInsets.symmetric(
     horizontal: 8,
@@ -1381,7 +1381,7 @@ final class MarketsSpacingTokens {
   static const EdgeInsets pairIndicatorListPadding = EdgeInsets.symmetric(
     horizontal: AppSpacing.contentPad,
   );
-  static const double pairIndicatorGap = 8;
+  static const double pairIndicatorGap = AppSpacing.x3;
   static const double pairIndicatorChipHeight = 36;
   static const EdgeInsets pairIndicatorChipPadding = EdgeInsets.symmetric(
     horizontal: AppSpacing.x4,
@@ -1421,7 +1421,7 @@ final class MarketsSpacingTokens {
     16,
   );
   static const double pairTradeCtaGap = 12;
-  static const double pairTradeButtonHeight = 55;
+  static const double pairTradeButtonHeight = AppSpacing.x7;
   static const EdgeInsets pairOrderPanelPadding = EdgeInsets.fromLTRB(
     AppSpacing.contentPad,
     4,

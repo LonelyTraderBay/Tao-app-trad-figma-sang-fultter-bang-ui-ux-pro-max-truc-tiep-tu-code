@@ -487,6 +487,26 @@ SourceBundle _readSourceBundle(
 
   addPrimary(pageFile);
 
+  // Trade shells own VitPageLayout/VitPageContent in trade_core. Append that
+  // source for body grading only — do not export it into source_files, or the
+  // density audit will count shared-shell markers against every trade page.
+  var tradeShellLayoutOverlay = '';
+  final primaryJoined = primarySources.join('\n');
+  if (RegExp(
+    r'VitTrade(Detail|Hub|Workspace)Scaffold\(|VitTradeSimpleShell\(',
+  ).hasMatch(primaryJoined)) {
+    final layoutFile = File(
+      _joinPath(
+        appRoot.path,
+        'lib/features/trade_core/presentation/widgets/trade_module_layout.dart'
+            .replaceAll('/', Platform.pathSeparator),
+      ),
+    );
+    if (layoutFile.existsSync()) {
+      tradeShellLayoutOverlay = layoutFile.readAsStringSync();
+    }
+  }
+
   if (entry.pageClass == 'RewardsHubPage') {
     widgetFiles.add(
       File(
@@ -528,7 +548,11 @@ SourceBundle _readSourceBundle(
   }.toList()..sort();
 
   return SourceBundle(
-    source: [...primarySources, ...widgetSources].join('\n'),
+    source: [
+      ...primarySources,
+      ...widgetSources,
+      if (tradeShellLayoutOverlay.isNotEmpty) tradeShellLayoutOverlay,
+    ].join('\n'),
     files: files,
     unresolved: false,
   );

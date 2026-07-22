@@ -411,6 +411,7 @@ class _AutoExecuteToggleRow extends StatelessWidget {
           button: true,
           checked: autoExecute,
           child: VitCard(
+            // card-tile: allow-start — toggle control surface, not horizontal strip tile
             onTap: () => onAutoExecuteChanged(!autoExecute),
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,

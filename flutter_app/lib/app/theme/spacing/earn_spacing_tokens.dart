@@ -181,7 +181,7 @@ final class EarnSpacingTokens {
   static const double earnWithdrawalInfoIcon = earnTermsHeroIcon;
   static const double earnWithdrawalInfoLineHeight = 1.6;
   static const double earnWithdrawalProcessIconBox = 42;
-  static const double earnWithdrawalProcessIcon = 21;
+  static const double earnWithdrawalProcessIcon = AppSpacing.x5;
   static const double earnWithdrawalProcessLineHeight =
       ArenaSpacingTokens.arenaReportActionLineHeight;
   static const double earnWithdrawalTimelineMinHeight = 122;
@@ -211,7 +211,7 @@ final class EarnSpacingTokens {
   static const double earnWithdrawalNoticeLineHeight =
       ArenaSpacingTokens.arenaGuideAccordionBodyLineHeight;
   static const double earnWithdrawalBulletTopPadding = 7;
-  static const double earnWithdrawalBulletSize = 5;
+  static const double earnWithdrawalBulletSize = AppSpacing.x2;
   static const double earnWithdrawalBulletLineHeight =
       ArenaSpacingTokens.arenaReportActionLineHeight;
   static const double earnWithdrawalBadgePadV =
@@ -270,7 +270,7 @@ final class EarnSpacingTokens {
       ArenaSpacingTokens.arenaCreatorAvatar;
   static const double savingsWhatIfLegendDot = 9;
   static const double savingsWhatIfAssetBadge = 31;
-  static const double savingsWhatIfAssetFontSize = 8;
+  static const double savingsWhatIfAssetFontSize = AppSpacing.x3;
   static const double savingsWhatIfStressLabelWidth = 88;
   static const double savingsWhatIfStressProgressHeight = AppSpacing.x2;
   static const double savingsWhatIfStressValueWidth = 52;

@@ -23,8 +23,8 @@ const _tabActivity = 'Ho\u1EA1t \u0111\u1ED9ng';
 
 double _managerScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? WalletSpacingTokens.walletBottomInsetVisualChrome
-          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletVisualChromePad
+          : WalletSpacingTokens.walletNativeChromePad) +
       MediaQuery.paddingOf(context).bottom;
 }
 

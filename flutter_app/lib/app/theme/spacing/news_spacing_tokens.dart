@@ -17,7 +17,7 @@ final class NewsSpacingTokens {
   static const double newsEmptyIconSize = 48;
   static const double newsChevronIconSize = 22;
   static const double newsCalendarIconSize = 10;
-  static const double newsSheetCalendarIconSize = 13;
+  static const double newsSheetCalendarIconSize = AppSpacing.x4;
   static const double newsSectionIconSize = 15;
   static const double newsTagIconSize = 11;
   static const double newsLineHeightTight = 1;

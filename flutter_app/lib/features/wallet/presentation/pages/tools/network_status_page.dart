@@ -43,8 +43,8 @@ const _networkCompactStatPadding = WalletSpacingTokens.walletNetworkStatPadding;
 
 double _networkScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? WalletSpacingTokens.walletBottomInsetVisualChrome
-          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletVisualChromePad
+          : WalletSpacingTokens.walletNativeChromePad) +
       MediaQuery.paddingOf(context).bottom;
 }
 

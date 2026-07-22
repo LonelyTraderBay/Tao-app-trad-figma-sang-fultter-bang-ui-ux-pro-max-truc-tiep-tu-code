@@ -177,8 +177,8 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
 
   double _scrollBottomInset(BuildContext context, ShellRenderMode mode) {
     return (mode.usesVisualQaFrame
-            ? WalletSpacingTokens.walletBottomInsetVisualChrome
-            : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+            ? WalletSpacingTokens.walletVisualChromePad
+            : WalletSpacingTokens.walletNativeChromePad) +
         MediaQuery.paddingOf(context).bottom;
   }
 

@@ -45,91 +45,79 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotOptimizationProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    const stickyFooterHeight =
-        TradeSpacingTokens.tradeBotSheetActionHeight + AppSpacing.x3;
-    final scrollEndClearance =
-        tradeScrollBottomInset(context, shellRenderMode: mode) +
-        stickyFooterHeight;
+    final shellInset = tradeScrollBottomInset(context, shellRenderMode: mode);
 
-    return Stack(
-      children: [
-        VitTradeDetailScaffold(
-          title: 'Tối ưu tham số',
-          subtitle: 'Tối ưu tham số chiến lược bot',
-          semanticLabel: 'Tối ưu hóa tham số chiến lược bot',
-          semanticIdentifier: 'SC-127',
-          contentKey: BotOptimizationPage.contentKey,
-          shellRenderMode: widget.shellRenderMode,
-          bottomInset: scrollEndClearance,
-          activeProductId: 'bots',
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.tradeBots,
-            mode: BackNavigationMode.historyThenFallback,
+    return VitTradeDetailScaffold(
+      title: 'Tối ưu tham số',
+      subtitle: 'Tối ưu tham số chiến lược bot',
+      semanticLabel: 'Tối ưu hóa tham số chiến lược bot',
+      semanticIdentifier: 'SC-127',
+      contentKey: BotOptimizationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      bottomInset: AppSpacing.x3,
+      activeProductId: 'bots',
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.tradeBots,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      footer: Padding(
+        padding: EdgeInsetsDirectional.only(bottom: shellInset),
+        child: _StartFooter(onStart: () => _handleStart()),
+      ),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu tối ưu hóa',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotOptimizationProvider),
           ),
-          children: snapshotAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được dữ liệu tối ưu hóa',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () => ref.invalidate(tradeBotOptimizationProvider),
-              ),
-            ],
-            data: (snapshot) => [
-              if (_lastResult != null) _QueuedCard(result: _lastResult!),
-              VitBotSubpageHero(
-                primaryLabel: 'Mục tiêu',
-                primaryValue: _selectedTarget.toUpperCase(),
-                secondaryLabel: 'Kết quả',
-                secondaryValue: _lastResult == null ? '—' : 'Sẵn sàng',
-                secondaryColor: _lastResult == null
-                    ? AppColors.text3
-                    : _optimizationPrimary,
-              ),
-              const VitTradeSection(title: 'Tổng quan', child: _IntroCard()),
-              VitTradeSection(
-                title: 'Mục tiêu tối ưu',
-                child: _TargetCard(
-                  targets: snapshot.targets,
-                  selectedId: _selectedTarget,
-                  onChanged: (id) => setState(() => _selectedTarget = id),
-                ),
-              ),
-              VitTradeSection(
-                title: 'Khoảng tham số',
-                child: _RangeCard(
-                  ranges: snapshot.parameterRanges,
-                  gridCount: _gridCount,
-                  gridRange: _gridRange,
-                  onGridCountChanged: (value) =>
-                      setState(() => _gridCount = value),
-                  onGridRangeChanged: (value) =>
-                      setState(() => _gridRange = value),
-                ),
-              ),
-              VitTradeSection(
-                title: 'Cách hoạt động',
-                child: _HowItWorksCard(steps: snapshot.steps),
-              ),
-              const VitBotRiskReviewFooter(
-                title: 'Cần xem lại tối ưu hoá',
-                message:
-                    'Chỉ số mục tiêu, khoảng tham số, trạng thái hàng chờ, xem trước kết quả và bước hoàn tác tiếp theo được xem lại trước khi thay đổi bot.',
-                contractId: 'bot-optimization-review',
-                statusLabel: 'Xếp hàng chờ trước khi áp dụng',
-              ),
-            ],
+        ],
+        data: (snapshot) => [
+          if (_lastResult != null) _QueuedCard(result: _lastResult!),
+          VitBotSubpageHero(
+            primaryLabel: 'Mục tiêu',
+            primaryValue: _selectedTarget.toUpperCase(),
+            secondaryLabel: 'Kết quả',
+            secondaryValue: _lastResult == null ? '—' : 'Sẵn sàng',
+            secondaryColor: _lastResult == null
+                ? AppColors.text3
+                : _optimizationPrimary,
           ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: tradeScrollBottomInset(context, shellRenderMode: mode),
-          child: _StartFooter(onStart: () => _handleStart()),
-        ),
-      ],
+          const VitTradeSection(title: 'Tổng quan', child: _IntroCard()),
+          VitTradeSection(
+            title: 'Mục tiêu tối ưu',
+            child: _TargetCard(
+              targets: snapshot.targets,
+              selectedId: _selectedTarget,
+              onChanged: (id) => setState(() => _selectedTarget = id),
+            ),
+          ),
+          VitTradeSection(
+            title: 'Khoảng tham số',
+            child: _RangeCard(
+              ranges: snapshot.parameterRanges,
+              gridCount: _gridCount,
+              gridRange: _gridRange,
+              onGridCountChanged: (value) => setState(() => _gridCount = value),
+              onGridRangeChanged: (value) => setState(() => _gridRange = value),
+            ),
+          ),
+          VitTradeSection(
+            title: 'Cách hoạt động',
+            child: _HowItWorksCard(steps: snapshot.steps),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Cần xem lại tối ưu hoá',
+            message:
+                'Chỉ số mục tiêu, khoảng tham số, trạng thái hàng chờ, xem trước kết quả và bước hoàn tác tiếp theo được xem lại trước khi thay đổi bot.',
+            contractId: 'bot-optimization-review',
+            statusLabel: 'Xếp hàng chờ trước khi áp dụng',
+          ),
+        ],
+      ),
     );
   }
 

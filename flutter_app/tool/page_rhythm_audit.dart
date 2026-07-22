@@ -19,7 +19,6 @@ void main(List<String> args) {
     final relative = entity.path.replaceAll('\\', '/').split('/lib/').last;
 
     if (!relative.contains('/presentation/')) continue;
-    if (relative.contains('/dev/')) continue;
 
     final source = entity.readAsStringSync();
     final hasVitPageContent = source.contains('VitPageContent');

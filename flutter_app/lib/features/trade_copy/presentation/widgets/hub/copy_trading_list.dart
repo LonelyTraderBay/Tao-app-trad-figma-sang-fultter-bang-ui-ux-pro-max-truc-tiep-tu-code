@@ -446,20 +446,25 @@ class _CopyAvatarBadge extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: -AppSpacing.dividerHairline,
-            bottom: AppSpacing.hairlineStroke,
-            // card-tile: allow-start — fixed surface, not horizontal strip tile
-            child: VitCard(
-              width: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
-              height: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
-              alignment: Alignment.center,
-              radius: VitCardRadius.tight,
-              borderColor: tier.color,
-              child: Icon(
-                tier.icon,
-                color: tier.color,
-                size: TradeSpacingTokens.copyTradingV2TraderTierBadgeIcon,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Transform.translate(
+              offset: const Offset(
+                AppSpacing.dividerHairline,
+                -AppSpacing.hairlineStroke,
+              ),
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
+              child: VitCard(
+                width: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
+                height: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
+                alignment: Alignment.center,
+                radius: VitCardRadius.tight,
+                borderColor: tier.color,
+                child: Icon(
+                  tier.icon,
+                  color: tier.color,
+                  size: TradeSpacingTokens.copyTradingV2TraderTierBadgeIcon,
+                ),
               ),
             ),
           ),

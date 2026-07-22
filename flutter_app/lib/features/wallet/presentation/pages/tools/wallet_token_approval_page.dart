@@ -58,8 +58,8 @@ class _WalletTokenApprovalPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? WalletSpacingTokens.walletBottomInsetVisualChrome
-            : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+            ? WalletSpacingTokens.walletVisualChromePad
+            : WalletSpacingTokens.walletNativeChromePad) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(

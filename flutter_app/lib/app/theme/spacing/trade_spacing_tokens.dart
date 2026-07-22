@@ -73,7 +73,7 @@ final class TradeSpacingTokens {
     tradeHorizontalPadding,
     AppSpacing.rowGap,
   );
-  static const double tradeDataTabsHeight = 34;
+  static const double tradeDataTabsHeight = AppSpacing.x6;
   static const double tradeChartHeight = 122;
   static const double tradeChartOverlayInset = 10;
   static const double tradeChartOverlayTop = 12;
@@ -890,7 +890,7 @@ final class TradeSpacingTokens {
     AppSpacing.rowGap,
   );
   static const double tradeHistoryFilterGap = 10;
-  static const double tradeHistoryFilterHeight = 34;
+  static const double tradeHistoryFilterHeight = AppSpacing.x6;
   static const double tradeHistoryFilterWidth = 58;
   static const double tradeHistoryFilterCompactWidth = 61;
   static const EdgeInsets tradeHistoryFilterPaddingCompact =
@@ -919,7 +919,7 @@ final class TradeSpacingTokens {
     38,
   );
   static const double tradeReceiptHeroIconBox = 64;
-  static const double tradeReceiptHeroIcon = 34;
+  static const double tradeReceiptHeroIcon = AppSpacing.x6;
   static const double tradeReceiptHeroGlowSpread = 12;
   static const double tradeReceiptHeroTitleGap = 22;
   static const double tradeReceiptHeroSubtitleGap = 4;
@@ -933,7 +933,7 @@ final class TradeSpacingTokens {
     17,
   );
   static const double tradeReceiptHeaderGap = 10;
-  static const double tradeReceiptSectionGap = 13;
+  static const double tradeReceiptSectionGap = AppSpacing.x4;
   static const double tradeReceiptDividerGap = 15;
   static const double tradeReceiptSmallDividerGap = 4;
   static const double tradeReceiptTotalGap = 9;
@@ -1000,7 +1000,7 @@ final class TradeSpacingTokens {
       TradeBotsSpacingTokens.tradeBotFooterBottomInsetNative;
   static const double tradeBotPageTopGap = 14;
   static const double tradeBotContentGap = 18;
-  static const double tradeBotSmallGap = 8;
+  static const double tradeBotSmallGap = AppSpacing.x3;
   static const double tradeBotTinyGap = TradeBotsSpacingTokens.tradeBotTinyGap;
   static const double tradeBotRowGap = 10;
   static const double tradeBotCardGap = 12;
@@ -2147,8 +2147,8 @@ final class TradeSpacingTokens {
   static const double tradeToolContentGap = 24;
   static const double tradeToolReviewGap = 22;
   static const double tradeToolCardGap = 12;
-  static const double tradeToolInlineGap = 8;
-  static const double tradeToolTinyGap = 5;
+  static const double tradeToolInlineGap = AppSpacing.x3;
+  static const double tradeToolTinyGap = AppSpacing.x2;
   static const double tradeToolMicroGap = 2;
   static const double tradeToolIconGap = 10;
   static const double tradeToolSectionHeaderGap = 12;
@@ -2162,7 +2162,7 @@ final class TradeSpacingTokens {
   static const double tradeToolExportSummaryHeight = 132;
   static const double tradeToolFormatHeight = 118;
   static const double tradeToolIncludeRowHeight = 41;
-  static const double tradeToolProgressHeight = 8;
+  static const double tradeToolProgressHeight = AppSpacing.x3;
   static const double tradeToolIconTileSm = 40;
   static const double tradeToolIconTileMd = 48;
   static const double tradeToolAlertIcon = 17;

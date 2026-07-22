@@ -46,7 +46,7 @@ final class ProfileSpacingTokens {
   static const double profileProductGridGap = 10;
   static const double profileProductTileHeight = 74;
   static const EdgeInsets profileProductTilePadding = EdgeInsets.all(12);
-  static const double profileProductIconBox = 34;
+  static const double profileProductIconBox = AppSpacing.x6;
   static const double profileProductIcon = 19;
   static const double profileProductGap = 10;
   static const double profileProductLabelGap = 7;
@@ -110,7 +110,7 @@ final class ProfileSpacingTokens {
         AppSpacing.contentPad,
         bottomInset,
       );
-  static const double settingsSectionTitleGap = 8;
+  static const double settingsSectionTitleGap = AppSpacing.x3;
   static const double settingsCurrencyToLanguageGap = 27;
   static const double settingsSectionGap = 28;
   static const double settingsNotificationsToInfoGap = 26;
@@ -121,7 +121,7 @@ final class ProfileSpacingTokens {
     16,
     15,
   );
-  static const double settingsCurrencyIcon = 21;
+  static const double settingsCurrencyIcon = AppSpacing.x5;
   static const double settingsCurrencyIconGap = 16;
   static const double settingsCurrencyTitleGap = 12;
   static const double settingsCurrencyChipGap = AppSpacing.x2;
@@ -302,7 +302,7 @@ final class ProfileSpacingTokens {
   static const double profileApiKeySecretGap = 12;
   static const double profileApiSecretRowsGap = AppSpacing.x2;
   static const double profileApiPermissionGap = 12;
-  static const double profileApiUsageGap = 13;
+  static const double profileApiUsageGap = AppSpacing.x4;
   static const double profileApiActionsGapTop = 14;
   static const double profileApiActionGap = 10;
   static const double profileApiIconBox = 40;
@@ -343,7 +343,7 @@ final class ProfileSpacingTokens {
   static const double profileApiDocsIconBox = 40;
   static const double profileApiDocsIcon = AppSpacing.iconMd;
   static const double profileApiDocsGap = 12;
-  static const double profileApiDocsTitleGap = 5;
+  static const double profileApiDocsTitleGap = AppSpacing.x2;
   static const double profileApiDocsChevron = 18;
   static const double profileApiCreateBottomInsetVisual = 120;
   static const double profileApiCreateBottomInsetNative = 32;
@@ -371,7 +371,7 @@ final class ProfileSpacingTokens {
       EdgeInsets.fromLTRB(16, 13, 16, 13);
   static const double profileApiCreatePermissionIconBox = 40;
   static const double profileApiCreatePermissionIcon = 18;
-  static const double profileApiCreatePermissionIconGap = 13;
+  static const double profileApiCreatePermissionIconGap = AppSpacing.x4;
   static const double profileApiCreatePermissionDescriptionGap = AppSpacing.x2;
   static const double profileApiCreatePermissionTrailingGap = 10;
   static const double profileApiCreatePermissionCheck = 24;
@@ -433,7 +433,7 @@ final class ProfileSpacingTokens {
     20,
     37,
   );
-  static const double profileActivityCardGap = 13;
+  static const double profileActivityCardGap = AppSpacing.x4;
   static const double profileActivityFilterHeight = 148;
   static const EdgeInsets profileActivityFilterPadding = EdgeInsets.fromLTRB(
     20,
@@ -444,7 +444,7 @@ final class ProfileSpacingTokens {
   static const double profileActivitySuspiciousHeight = 64;
   static const EdgeInsets profileActivitySuspiciousPadding =
       EdgeInsets.fromLTRB(12, 10, 12, 10);
-  static const double profileActivityFilterGap = 13;
+  static const double profileActivityFilterGap = AppSpacing.x4;
   static const double profileActivityFilterRailHeight = 30;
   static const double profileActivityFilterChipGap = 12;
   static const double profileActivityFilterChipHeight = 30;
@@ -467,7 +467,7 @@ final class ProfileSpacingTokens {
   static const double profileActivityDescriptionGap = AppSpacing.x2;
   static const double profileActivityWarningGap = AppSpacing.x2;
   static const double profileActivityWarningIcon = 17;
-  static const double profileActivityDetailsGap = 13;
+  static const double profileActivityDetailsGap = AppSpacing.x4;
   static const double profileActivityDividerTopGap = AppSpacing.x2;
   static const double profileActivityDividerBottomGap = 11;
   static const double profileActivityDetailsHeight = 108;
@@ -480,7 +480,7 @@ final class ProfileSpacingTokens {
   static const double profileActivityDetailsColumnGap = 16;
   static const double profileActivityDetailsRowGap = 14;
   static const double profileActivityDetailIcon = 12;
-  static const double profileActivityDetailIconGap = 5;
+  static const double profileActivityDetailIconGap = AppSpacing.x2;
   static const double profileActivityDetailValueGap = AppSpacing.x2;
   static const double profileActivityStatusHeight = 22;
   static const EdgeInsets profileActivityStatusPadding = EdgeInsets.symmetric(
@@ -506,10 +506,10 @@ final class ProfileSpacingTokens {
       );
   static const double profileSubAccountSummaryRiskGap = 18;
   static const double profileSubAccountRiskCreateGap = 26;
-  static const double profileSubAccountCreateFormGap = 13;
+  static const double profileSubAccountCreateFormGap = AppSpacing.x4;
   static const double profileSubAccountAccountsHeaderGap = 24;
   static const double profileSubAccountAccountsListGap = 10;
-  static const double profileSubAccountCardGap = 13;
+  static const double profileSubAccountCardGap = AppSpacing.x4;
   static const double profileSubAccountInfoNoteGap = 25;
   static const EdgeInsets profileSubAccountSummaryPadding = EdgeInsets.all(20);
   static const double profileSubAccountSummaryIcon = 18;
@@ -524,7 +524,7 @@ final class ProfileSpacingTokens {
   static const double profileSubAccountSummaryMetricValueGap = AppSpacing.x3;
   static const EdgeInsets profileSubAccountCardTapPadding = EdgeInsets.all(16);
   static const double profileSubAccountAvatarSize = 45;
-  static const double profileSubAccountAvatarGap = 13;
+  static const double profileSubAccountAvatarGap = AppSpacing.x4;
   static const double profileSubAccountTitlePillGap = 7;
   static const double profileSubAccountStatusTopGap = 9;
   static const double profileSubAccountStatusIcon = 12;
@@ -550,12 +550,12 @@ final class ProfileSpacingTokens {
   static const double profileSubAccountDetailsDividerHeight =
       AppSpacing.dividerHairline;
   static const double profileSubAccountDetailsTopGap = 14;
-  static const double profileSubAccountDetailsMetricGap = 13;
+  static const double profileSubAccountDetailsMetricGap = AppSpacing.x4;
   static const double profileSubAccountDetailLabelGap = 7;
   static const double profileSubAccountPermissionLabelGap = AppSpacing.x3;
   static const double profileSubAccountPermissionGap = 7;
-  static const double profileSubAccountEmailGap = 13;
-  static const double profileSubAccountActionsGap = 13;
+  static const double profileSubAccountEmailGap = AppSpacing.x4;
+  static const double profileSubAccountActionsGap = AppSpacing.x4;
   static const double profileSubAccountActionGap = AppSpacing.x3;
   static const double profileSubAccountActionHeight = 36;
   static const double profileSubAccountActionIcon = 14;
@@ -652,7 +652,7 @@ final class ProfileSpacingTokens {
   static const double profileDevicesCurrentHeaderGap = 10;
   static const double profileDevicesOtherHeaderGap = 26;
   static const double profileDevicesOtherListGap = 10;
-  static const double profileDevicesCardGap = 13;
+  static const double profileDevicesCardGap = AppSpacing.x4;
   static const double profileDevicesFooterSummaryGap = 27;
   static const EdgeInsets profileDevicesSummaryPadding = EdgeInsets.fromLTRB(
     16,
@@ -674,7 +674,7 @@ final class ProfileSpacingTokens {
   static const double profileDevicesIcon = AppSpacing.iconMd;
   static const double profileDevicesIconGap = 12;
   static const double profileDevicesActionTopGap = 14;
-  static const double profileDevicesActionDividerGap = 13;
+  static const double profileDevicesActionDividerGap = AppSpacing.x4;
   static const double profileDevicesActionGap = 9;
   static const EdgeInsets profileDevicesLogoutButtonPadding =
       EdgeInsets.symmetric(horizontal: 14);
@@ -687,6 +687,6 @@ final class ProfileSpacingTokens {
   static const double profileDevicesBrowserGap = 7;
   static const double profileDevicesMetaGap = AppSpacing.x2;
   static const double profileDevicesMetaSpacing = 11;
-  static const double profileDevicesMetaRunSpacing = 5;
+  static const double profileDevicesMetaRunSpacing = AppSpacing.x2;
   static const double profileDevicesIpGap = 7;
 }

@@ -85,22 +85,14 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextField(
-                          key: inputKey,
+                        child: VitInput(
+                          fieldKey: inputKey,
                           controller: controller,
                           onChanged: (_) => onChanged(),
-                          minLines: 1,
-                          maxLines: 2,
-                          style: AppTextStyles.caption.copyWith(
+                          semanticLabel: 'Tin nhắn hỗ trợ tranh chấp P2P',
+                          hintText: 'Nhập tin nhắn cho hỗ trợ...',
+                          textStyle: AppTextStyles.caption.copyWith(
                             color: AppColors.text1,
-                          ),
-                          decoration: InputDecoration(
-                            isDense: true,
-                            border: InputBorder.none,
-                            hintText: 'Nhập tin nhắn cho hỗ trợ...',
-                            hintStyle: AppTextStyles.caption.copyWith(
-                              color: AppColors.text3,
-                            ),
                           ),
                         ),
                       ),

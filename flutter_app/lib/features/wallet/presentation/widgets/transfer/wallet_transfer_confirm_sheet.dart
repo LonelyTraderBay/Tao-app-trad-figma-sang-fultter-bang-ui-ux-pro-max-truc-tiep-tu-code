@@ -62,9 +62,9 @@ class TransferConfirmSheet extends StatelessWidget {
             valueColor: _transferGreen,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.rowGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           const _ConfirmNote(),
-          const SizedBox(height: AppSpacing.rowGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Row(
             children: [
               Expanded(

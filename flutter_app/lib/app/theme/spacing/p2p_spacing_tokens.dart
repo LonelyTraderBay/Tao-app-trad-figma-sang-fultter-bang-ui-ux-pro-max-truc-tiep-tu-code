@@ -165,7 +165,7 @@ final class P2PSpacingTokens {
   static const double p2pHomeTextTightLineHeight = 1;
   static const double p2pHomeTinyIcon = 11;
   static const double p2pHomeSmallIcon = 12;
-  static const double p2pHomeVerifiedIcon = 13;
+  static const double p2pHomeVerifiedIcon = AppSpacing.x4;
   static const double p2pHomeInlineIcon = 14;
   static const double p2pHomeAccentIcon = 17;
   static const double p2pHomeActionIcon = 18;
@@ -425,7 +425,7 @@ final class P2PSpacingTokens {
   static const double p2pBlacklistAvatarBadgeOffset = -2;
   static const double p2pBlacklistAvatarBorder = AppSpacing.borderWidth;
   static const double p2pBlacklistAvatarBadgeBorder = AppSpacing.hairlineStroke;
-  static const double p2pBlacklistAvatarBadgeIcon = 8;
+  static const double p2pBlacklistAvatarBadgeIcon = AppSpacing.x3;
   static const double p2pBlacklistActionHeight = 40;
   static const double p2pBlacklistNoteFieldHeight = 110;
   static const EdgeInsetsDirectional p2pBlacklistListCardPadding =
@@ -570,7 +570,7 @@ final class P2PSpacingTokens {
   static const double p2pChatSystemMessageMaxWidth = 340;
   static const double p2pChatMessageMaxWidth = 300;
   static const double p2pChatTinyIcon = 10;
-  static const double p2pChatCloseIcon = 13;
+  static const double p2pChatCloseIcon = AppSpacing.x4;
   static const double p2pChatReadIcon = 12;
   static const double p2pChatRoundIconButtonSize = 40;
   static const double p2pExpressBottomInsetVisual = AppSpacing.x6;
@@ -1008,14 +1008,14 @@ final class P2PSpacingTokens {
   static const double p2pInsuranceScoreMicroLineHeight = 1.35;
   static const double p2pInsuranceScoreRingBox = 124;
   static const double p2pInsuranceScoreRingTrack = 116;
-  static const double p2pInsuranceScoreRingStroke = 8;
-  static const double p2pInsuranceScoreFactorIconBox = 34;
+  static const double p2pInsuranceScoreRingStroke = AppSpacing.x3;
+  static const double p2pInsuranceScoreFactorIconBox = AppSpacing.x6;
   static const double p2pInsuranceScoreFactorRailIndent = 46;
   static const EdgeInsets p2pInsuranceScoreFactorRailPadding = EdgeInsets.only(
     left: p2pInsuranceScoreFactorRailIndent,
   );
   static const double p2pInsuranceScoreFactorStatusWidth = 62;
-  static const double p2pInsuranceScoreProgressHeight = 5;
+  static const double p2pInsuranceScoreProgressHeight = AppSpacing.x2;
   static const double p2pInsuranceScoreHeaderIcon = AppSpacing.iconSm;
   static const double p2pInsuranceScoreSmallIcon = 16;
   static const double p2pInsuranceScoreFactorIcon = 17;
@@ -1134,7 +1134,7 @@ final class P2PSpacingTokens {
   static const double p2pFraudActionIcon = AppSpacing.iconSm;
   static const double p2pFraudChecklistBox = 22;
   static const double p2pFraudChecklistCheckIcon = 14;
-  static const double p2pFraudDetailIcon = 13;
+  static const double p2pFraudDetailIcon = AppSpacing.x4;
   static const double p2pFraudBodyLineHeight = 1.45;
   static const double p2pFraudDisclosureLineHeight = 1.5;
   static EdgeInsets p2pSecurityCenterScrollPadding(double bottomInset) =>
@@ -1299,9 +1299,9 @@ final class P2PSpacingTokens {
   static const double p2pSecurityDetailsTinyIcon = 14;
   static const double p2pSecurityDetailsMetaIcon = 11;
   static const double p2pSecurityDetailsInlineIcon = 12;
-  static const double p2pSecurityDetailsCheckIcon = 13;
+  static const double p2pSecurityDetailsCheckIcon = AppSpacing.x4;
   static const double p2pSecurityDetailsSmallBullet = 4;
-  static const double p2pSecurityDetailsBullet = 5;
+  static const double p2pSecurityDetailsBullet = AppSpacing.x2;
   static const double p2pSecurityDetailsHeroLineHeight = 1.12;
   static const double p2pSecurityDetailsBodyLineHeight = 1.55;
   static const double p2pSecurityDetailsCaptionLineHeight = 1.45;
@@ -1404,7 +1404,7 @@ final class P2PSpacingTokens {
   static const double p2pDocumentIconBox = AppSpacing.inputHeight;
   static const double p2pDocumentHeroIconBox = AppSpacing.x7;
   static const double p2pDocumentBullet = AppSpacing.x2;
-  static const double p2pDocumentTinyIcon = 13;
+  static const double p2pDocumentTinyIcon = AppSpacing.x4;
   static const double p2pDocumentDownloadIcon = 14;
   static const double p2pDocumentSmallIcon = 15;
   static const double p2pDocumentInlineIcon = 16;
@@ -1549,7 +1549,7 @@ final class P2PSpacingTokens {
   static const double p2pMerchantCommerceOnlineDot = AppSpacing.x4;
   static const double p2pMerchantCommerceOnlineBorderWidth = 2;
   static const double p2pMerchantCommerceRatingIcon = 14;
-  static const double p2pMerchantCommerceSmallIcon = 13;
+  static const double p2pMerchantCommerceSmallIcon = AppSpacing.x4;
   static const double p2pMerchantCommerceTinyIcon = 10;
   static const double p2pMerchantCommerceDividerHeight =
       WalletSpacingTokens.walletHistoryDividerHeight;
@@ -1631,10 +1631,10 @@ final class P2PSpacingTokens {
       AppSpacing.buttonHero * 1.55;
   static const double p2pTrustProgressInputHeight = AppSpacing.inputHeight;
   static const double p2pTrustProgressTourMaxHeight = 956;
-  static const double p2pTrustProgressTourStepHeight = 3;
+  static const double p2pTrustProgressTourStepHeight = AppSpacing.x1;
   static const double p2pTrustProgressIconBox = 44;
   static const double p2pTrustProgressIconBoxLarge = 56;
-  static const double p2pTrustProgressIcon = 21;
+  static const double p2pTrustProgressIcon = AppSpacing.x5;
   static const double p2pTrustProgressIconLarge = AppSpacing.x7;
   static const double p2pTrustProgressBadgeSize = AppSpacing.x4 + AppSpacing.x2;
   static const double p2pTrustProgressBadgeInset = -3;
@@ -1788,7 +1788,7 @@ final class P2PSpacingTokens {
   static const double p2pOrderTimelineIcon = 15;
   static const double p2pOrderSmallPillIcon = 11;
   static const double p2pOrderQuickActionIcon = 12;
-  static const double p2pOrderSmallButtonIcon = 13;
+  static const double p2pOrderSmallButtonIcon = AppSpacing.x4;
   static const double p2pOrderTimelineEventIcon = 18;
   static const double p2pOrderRatingStarIcon =
       AppSpacing.iconLg + AppSpacing.x2;
@@ -1851,7 +1851,7 @@ final class P2PSpacingTokens {
   static const double p2pComplianceHeroIcon = 26;
   static const double p2pComplianceChannelButtonHeight = 46;
   static const double p2pComplianceChannelIcon = 17;
-  static const double p2pComplianceChecklistIcon = 13;
+  static const double p2pComplianceChecklistIcon = AppSpacing.x4;
   static const double p2pComplianceDismissButton =
       AppSpacing.x6 + AppSpacing.x2;
   static const double p2pComplianceMetaIcon = 11;
@@ -1886,7 +1886,7 @@ final class P2PSpacingTokens {
     horizontal: AppSpacing.x3,
     vertical: AppSpacing.x2,
   );
-  static const double p2pPaymentVerifiedIcon = 13;
+  static const double p2pPaymentVerifiedIcon = AppSpacing.x4;
   static const EdgeInsets p2pPaymentSetDefaultPadding = EdgeInsets.symmetric(
     horizontal: AppSpacing.x3,
     vertical: AppSpacing.x1,

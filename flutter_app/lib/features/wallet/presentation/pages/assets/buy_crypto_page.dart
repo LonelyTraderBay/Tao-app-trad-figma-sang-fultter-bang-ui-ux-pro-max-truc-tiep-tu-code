@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/assets/wallet_buy_crypto_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -54,12 +53,6 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
   @override
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(walletBuyCryptoProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 32
-            : DeviceMetrics.nativeBottomChrome + 32) +
-        MediaQuery.paddingOf(context).bottom;
 
     return snapshotAsync.when(
       loading: () => VitWalletDetailScaffold(
@@ -68,7 +61,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
         semanticLabel: 'Mua tiền mã hoá',
         semanticIdentifier: 'SC-145',
         contentKey: BuyCryptoPage.contentKey,
-        bottomInset: bottomInset,
+        shellRenderMode: widget.shellRenderMode,
         onBack: () => context.go(AppRoutePaths.wallet),
         children: const [VitSkeletonList()],
       ),
@@ -78,7 +71,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
         semanticLabel: 'Mua tiền mã hoá',
         semanticIdentifier: 'SC-145',
         contentKey: BuyCryptoPage.contentKey,
-        bottomInset: bottomInset,
+        shellRenderMode: widget.shellRenderMode,
         onBack: () => context.go(AppRoutePaths.wallet),
         children: [
           VitErrorState(
@@ -117,7 +110,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
           semanticLabel: 'Mua tiền mã hoá',
           semanticIdentifier: 'SC-145',
           contentKey: BuyCryptoPage.contentKey,
-          bottomInset: bottomInset,
+          shellRenderMode: widget.shellRenderMode,
           onBack: () => _confirming
               ? setState(() => _confirming = false)
               : context.go(AppRoutePaths.wallet),

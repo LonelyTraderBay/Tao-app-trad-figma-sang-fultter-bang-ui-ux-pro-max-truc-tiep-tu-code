@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
@@ -25,58 +24,15 @@ class StakingValidatorSelectionSearchAndFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: DecoratedBox(
-            decoration: const ShapeDecoration(
-              color: AppColors.surface3,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
-            ),
-            child: Padding(
-              padding: EarnSpacingTokens.earnHorizontalPaddingX4,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.search_rounded,
-                    color: AppColors.text3,
-                    size: EarnSpacingTokens.stakingValidatorSelectionSearchIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: TextField(
-                      key: StakingValidatorSelectionKeys.search,
-                      controller: controller,
-                      onChanged: onQueryChanged,
-                      style: AppTextStyles.body,
-                      decoration: InputDecoration(
-                        hintText: 'Tìm validator...',
-                        hintStyle: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                        border: InputBorder.none,
-                        isDense: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        VitIconButton(
-          key: StakingValidatorSelectionKeys.filterButton,
-          icon: Icons.filter_alt_outlined,
-          tooltip: 'Bo loc validator',
-          onPressed: onFilter,
-          variant: filterActive
-              ? VitIconButtonVariant.primary
-              : VitIconButtonVariant.ghost,
-          size: VitIconButtonSize.lg,
-        ),
-      ],
+    return VitSearchBar(
+      controller: controller,
+      fieldKey: StakingValidatorSelectionKeys.search,
+      filterKey: StakingValidatorSelectionKeys.filterButton,
+      placeholder: 'Tìm validator...',
+      variant: VitSearchBarVariant.compact,
+      filterActive: filterActive,
+      onChanged: onQueryChanged,
+      onFilterTap: onFilter,
     );
   }
 }

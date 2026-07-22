@@ -94,7 +94,7 @@ final class PredictionsSpacingTokens {
   static const double predictionDetailStatIcon = 15;
   static const double predictionDetailStatGap = 10;
   static const EdgeInsets predictionDetailPositionPadding = EdgeInsets.all(13);
-  static const double predictionDetailPositionIcon = 13;
+  static const double predictionDetailPositionIcon = AppSpacing.x4;
   static const double predictionDetailPositionIconGap = 6;
   static const double predictionDetailPositionTopGap = 9;
   static const double predictionDetailPositionBadgeGap = AppSpacing.x3;
@@ -157,13 +157,13 @@ final class PredictionsSpacingTokens {
       EdgeInsets.symmetric(horizontal: 11, vertical: 7);
   static const double predictionDetailAmountChipHeight = 31;
   static const double predictionDetailRiskLinkHeight = 38;
-  static const double predictionDetailRiskIcon = 13;
+  static const double predictionDetailRiskIcon = AppSpacing.x4;
   static const double predictionDetailRiskIconGap = 6;
   static const double predictionDetailRiskChevronGap = AppSpacing.x1;
   static const double predictionDetailRiskChevron = 14;
   static const EdgeInsets predictionDetailTabsPadding = EdgeInsets.all(4);
   static const double predictionDetailTabsGap = 4;
-  static const double predictionDetailTabHeight = 34;
+  static const double predictionDetailTabHeight = AppSpacing.x6;
   static const EdgeInsets predictionDetailTabPadding = EdgeInsets.symmetric(
     horizontal: 11,
   );
@@ -173,7 +173,7 @@ final class PredictionsSpacingTokens {
   static const double predictionDetailTabTitleGap = AppSpacing.x3;
   static const double predictionDetailRuleBottomGap = AppSpacing.x3;
   static const double predictionDetailRuleNumberWidth = 22;
-  static const double predictionDetailInfoIcon = 13;
+  static const double predictionDetailInfoIcon = AppSpacing.x4;
   static const double predictionDetailInfoIconGap = 7;
   static const EdgeInsets predictionDetailInfoBoxPadding = EdgeInsets.all(12);
   static const double predictionDetailInfoBoxIcon = 14;
@@ -276,7 +276,7 @@ final class PredictionsSpacingTokens {
   @Deprecated('Superseded by VitMetricDeltaPill after PRED-PORTFOLIO-HOME-01')
   static const EdgeInsets predictionPortfolioPnlPillPadding =
       EdgeInsets.symmetric(horizontal: AppSpacing.x3, vertical: 6);
-  static const double predictionPortfolioPnlIcon = 13;
+  static const double predictionPortfolioPnlIcon = AppSpacing.x4;
   static const double predictionPortfolioPnlIconGap = 4;
   @Deprecated('Superseded by VitCardStat after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioSummaryStatsGap = 18;
@@ -320,7 +320,7 @@ final class PredictionsSpacingTokens {
   static const double predictionPortfolioChipRunGap = 4;
   static const double predictionPortfolioPositionMetricsGap = AppSpacing.x3;
   static const double predictionPortfolioPositionRowsGap = 6;
-  static const double predictionPortfolioPnlArrowIcon = 13;
+  static const double predictionPortfolioPnlArrowIcon = AppSpacing.x4;
   static const double predictionPortfolioPnlArrowGap = AppSpacing.x1;
   static const double predictionPortfolioTrailingGap = AppSpacing.x3;
   static const EdgeInsets predictionPortfolioTrailingIconPadding =
@@ -332,7 +332,7 @@ final class PredictionsSpacingTokens {
   @Deprecated('Superseded by VitSectionHeader after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioOrdersHelpGap = 6;
   @Deprecated('Superseded by VitSectionHeader after PRED-PORTFOLIO-HOME-01')
-  static const double predictionPortfolioOrdersHelpIcon = 13;
+  static const double predictionPortfolioOrdersHelpIcon = AppSpacing.x4;
   @Deprecated(
     'Superseded by AppSpacing.cardPadding grouped rows after PRED-PORTFOLIO-HOME-01',
   )
@@ -439,7 +439,7 @@ final class PredictionsSpacingTokens {
   static const double predictionRiskWarningGap = AppSpacing.x3;
   static const double predictionRiskScenarioTitleGap = 14;
   static const EdgeInsets predictionRiskGuidePadding = EdgeInsets.all(14);
-  static const double predictionRiskGuideTitleGap = 5;
+  static const double predictionRiskGuideTitleGap = AppSpacing.x2;
   static const double predictionReceiptBottomInsetVisual = 54;
   static const double predictionReceiptBottomInsetNative =
       AppSpacing.contentPad;
@@ -448,7 +448,7 @@ final class PredictionsSpacingTokens {
   static const double predictionReceiptContentGap = 15;
   static const EdgeInsets predictionReceiptSummaryRowPadding =
       EdgeInsets.symmetric(vertical: 5);
-  static const double predictionReceiptSummaryTrailingGap = 5;
+  static const double predictionReceiptSummaryTrailingGap = AppSpacing.x2;
   static const double predictionReceiptSummaryTrailingIcon = 12;
   static const double predictionReceiptFillDividerGap = 12;
   static const double predictionReceiptFillBarGap = 7;
@@ -530,17 +530,17 @@ final class PredictionsSpacingTokens {
   static const double predictionAnalyzerRiskIconGap = AppSpacing.x3;
   static const double predictionAnalyzerRiskTextGap = AppSpacing.x1;
   static const double predictionAnalyzerScoreGap = 12;
-  static const double predictionAnalyzerScoreSuffixGap = 5;
+  static const double predictionAnalyzerScoreSuffixGap = AppSpacing.x2;
   static const EdgeInsets predictionAnalyzerWarningPadding = EdgeInsets.all(12);
   static const double predictionAnalyzerWarningIcon = 15;
   static const double predictionAnalyzerWarningGap = AppSpacing.x3;
-  static const double predictionAnalyzerSummaryMetricGap = 5;
+  static const double predictionAnalyzerSummaryMetricGap = AppSpacing.x2;
   static const double predictionAnalyzerLegendSwatch = 12;
   static const EdgeInsets predictionAnalyzerLegendSwatchMargin =
       EdgeInsets.only(top: AppSpacing.hairlineStroke);
   static const double predictionAnalyzerLegendItemGap = AppSpacing.x3;
   static const double predictionAnalyzerRiskMetricVertical = 10;
-  static const double predictionAnalyzerRiskBarHorizontal = 5;
+  static const double predictionAnalyzerRiskBarHorizontal = AppSpacing.x2;
   static const EdgeInsets predictionAnalyzerRiskMetricPadding =
       EdgeInsets.symmetric(vertical: predictionAnalyzerRiskMetricVertical);
   static const EdgeInsets predictionAnalyzerRiskBarPadding =
@@ -557,7 +557,7 @@ final class PredictionsSpacingTokens {
   static const double predictionBreakingMovementIcon = 18;
   static const double predictionBreakingMovementGap = AppSpacing.x3;
   static const double predictionBreakingMovementCountGap = 12;
-  static const double predictionBreakingCountIcon = 13;
+  static const double predictionBreakingCountIcon = AppSpacing.x4;
   static const double predictionBreakingCountIconGap = AppSpacing.x1;
   static const double predictionBreakingTabGap = AppSpacing.x3;
   static const double predictionBreakingTabHeight = 36;
@@ -571,7 +571,7 @@ final class PredictionsSpacingTokens {
   static const double predictionBreakingOutcomeGap = 10;
   static const double predictionBreakingOutcomeRunGap = 6;
   static const double predictionBreakingMetaGap = 10;
-  static const double predictionBreakingMetaRunGap = 5;
+  static const double predictionBreakingMetaRunGap = AppSpacing.x2;
   static const EdgeInsets predictionBreakingChangePadding =
       EdgeInsets.symmetric(horizontal: AppSpacing.x3, vertical: 3);
   static const double predictionBreakingChangeIcon = 12;
@@ -611,7 +611,7 @@ final class PredictionsSpacingTokens {
   static const double predictionMarketMakerFormGap = 16;
   static const double predictionMarketMakerInputLabelGap = AppSpacing.x3;
   static const double predictionMarketMakerInputPrefixIcon = 19;
-  static const double predictionMarketMakerHelperGap = 5;
+  static const double predictionMarketMakerHelperGap = AppSpacing.x2;
   static const double predictionMarketMakerEstimateGap = 14;
   static const double predictionMarketMakerAddButtonGap = 16;
   static const double predictionMarketMakerSpreadGap = AppSpacing.x3;
@@ -687,7 +687,7 @@ final class PredictionsSpacingTokens {
   static const EdgeInsets predictionSocialActionPillPadding =
       EdgeInsets.symmetric(horizontal: AppSpacing.x3, vertical: 6);
   static const double predictionSocialActionIcon = 14;
-  static const double predictionSocialActionIconGap = 5;
+  static const double predictionSocialActionIconGap = AppSpacing.x2;
   static const double predictionSocialDisclosureIcon = 15;
   static const double predictionSocialDisclosureGap = AppSpacing.x3;
   static const double predictionSocialSentimentTitleGap = 16;
@@ -704,7 +704,7 @@ final class PredictionsSpacingTokens {
   static const double predictionSocialPreviewImage = 60;
   static const double predictionSocialPreviewIcon = 28;
   static const double predictionSocialPreviewGap = 12;
-  static const double predictionSocialPreviewTitleGap = 5;
+  static const double predictionSocialPreviewTitleGap = AppSpacing.x2;
   static const double predictionSocialPreviewBodyGap = 6;
   static const double predictionSocialContributorIcon = 20;
   static const double predictionSocialContributorGap = 12;
@@ -749,7 +749,7 @@ final class PredictionsSpacingTokens {
       EdgeInsets.symmetric(horizontal: 7, vertical: AppSpacing.x1);
   static const double predictionCalendarEventMetricGap = 10;
   static const double predictionCalendarTimeIcon = 12;
-  static const double predictionCalendarTimeIconGap = 5;
+  static const double predictionCalendarTimeIconGap = AppSpacing.x2;
   static const EdgeInsets predictionCalendarCategoryBadgePadding =
       EdgeInsets.symmetric(horizontal: AppSpacing.x3, vertical: AppSpacing.x1);
   static const double predictionCalendarCategoryGap = AppSpacing.x3;
@@ -801,7 +801,7 @@ final class PredictionsSpacingTokens {
   static const EdgeInsets predictionTournamentRankPadding =
       EdgeInsets.symmetric(horizontal: 10);
   static const double predictionTournamentStatsGap = 14;
-  static const double predictionTournamentDividerTopGap = 13;
+  static const double predictionTournamentDividerTopGap = AppSpacing.x4;
   static const double predictionTournamentDividerHeight = 1;
   static const double predictionTournamentDividerBottomGap = 12;
   static const double predictionTournamentChevronGap = AppSpacing.x1;
@@ -828,7 +828,7 @@ final class PredictionsSpacingTokens {
   static const EdgeInsets predictionTournamentLeaderboardPadding =
       EdgeInsets.all(12);
   static const double predictionTournamentLeaderboardRankWidth = 32;
-  static const double predictionTournamentLeaderboardWinnerIcon = 21;
+  static const double predictionTournamentLeaderboardWinnerIcon = AppSpacing.x5;
   static const double predictionTournamentLeaderboardIcon = 18;
   static const double predictionTournamentLeaderboardGap = 10;
   static const double predictionTournamentLeaderboardScoreGap =
@@ -877,7 +877,7 @@ final class PredictionsSpacingTokens {
   static const double predictionAdvancedOverallDescriptionGap = AppSpacing.x1;
   static const double predictionAdvancedOverallIcon = 18;
   static const double predictionAdvancedOrderFlowHeight = 202;
-  static const double predictionAdvancedLevelValueGap = 5;
+  static const double predictionAdvancedLevelValueGap = AppSpacing.x2;
   static const double predictionAdvancedLevelHelperGap =
       AppSpacing.hairlineStroke;
   static const double predictionAdvancedLevelIcon = 18;
@@ -910,9 +910,9 @@ final class PredictionsSpacingTokens {
   static const EdgeInsets predictionRewardsHeroPadding = EdgeInsets.all(20);
   static const double predictionRewardsHeroIconBox = 48;
   static const double predictionRewardsHeroIcon = 23;
-  static const double predictionRewardsHeroTitleGap = 13;
+  static const double predictionRewardsHeroTitleGap = AppSpacing.x4;
   static const double predictionRewardsHeroPoolGap = 15;
-  static const double predictionRewardsPoolIcon = 13;
+  static const double predictionRewardsPoolIcon = AppSpacing.x4;
   static const double predictionRewardsPoolGap = 7;
   static const EdgeInsets predictionRewardsNotePadding = EdgeInsets.symmetric(
     horizontal: 13,
@@ -927,7 +927,7 @@ final class PredictionsSpacingTokens {
     horizontal: 12,
   );
   static const double predictionRewardsFilterIcon = 11;
-  static const double predictionRewardsFilterIconGap = 5;
+  static const double predictionRewardsFilterIconGap = AppSpacing.x2;
   static const double predictionRewardsHeaderHeight = 36;
   static const EdgeInsets predictionRewardsTablePadding = EdgeInsets.symmetric(
     horizontal: 12,
@@ -948,14 +948,14 @@ final class PredictionsSpacingTokens {
   static const double predictionRewardsChevron = 15;
   static const EdgeInsets predictionRewardsRiskLinkPadding =
       EdgeInsets.symmetric(vertical: 9);
-  static const double predictionRewardsRiskIcon = 13;
+  static const double predictionRewardsRiskIcon = AppSpacing.x4;
   static const double predictionRewardsRiskGap = 7;
   static const double predictionRewardsRiskChevron = 14;
   static const EdgeInsets predictionRewardsArenaCardPadding = EdgeInsets.all(
     14,
   );
   static const double predictionRewardsArenaLabelIcon = 10;
-  static const double predictionRewardsArenaLabelGap = 5;
+  static const double predictionRewardsArenaLabelGap = AppSpacing.x2;
   static const EdgeInsets predictionRewardsArenaContentGap = EdgeInsets.only(
     top: 12,
   );
@@ -986,8 +986,8 @@ final class PredictionsSpacingTokens {
     left: AppSpacing.x1,
   );
   static const double predictionLeaderboardInfoIcon = 12;
-  static const double predictionLeaderboardMetricIcon = 13;
-  static const double predictionLeaderboardMetricIconGap = 5;
+  static const double predictionLeaderboardMetricIcon = AppSpacing.x4;
+  static const double predictionLeaderboardMetricIconGap = AppSpacing.x2;
   static const EdgeInsets predictionLeaderboardPodiumPadding =
       EdgeInsets.fromLTRB(14, 16, 14, 0);
   static const double predictionLeaderboardPodiumHeight = 198;
@@ -1011,7 +1011,7 @@ final class PredictionsSpacingTokens {
   static const double predictionLeaderboardRankingRowHeight = 58;
   static const double predictionLeaderboardTraderAvatar = 17;
   static const double predictionLeaderboardTraderGap = AppSpacing.x2;
-  static const double predictionLeaderboardRankBadge = 21;
+  static const double predictionLeaderboardRankBadge = AppSpacing.x5;
   static const EdgeInsets predictionLeaderboardWinCardPadding = EdgeInsets.all(
     14,
   );
@@ -1020,7 +1020,7 @@ final class PredictionsSpacingTokens {
   static const double predictionLeaderboardWinGap = 12;
   static const double predictionLeaderboardWinAvatar = 15;
   static const double predictionLeaderboardWinAvatarGap = 6;
-  static const double predictionLeaderboardWinMarketGap = 3;
+  static const double predictionLeaderboardWinMarketGap = AppSpacing.x1;
   static const double predictionLeaderboardWinMarketArrow = 10;
   static const double predictionSearchBottomInsetVisual = 54;
   static const double predictionSearchBottomInsetNative = AppSpacing.contentPad;
@@ -1039,7 +1039,7 @@ final class PredictionsSpacingTokens {
   static const double predictionSearchChipGap = AppSpacing.x2;
   static const EdgeInsets predictionSearchCategoryChipPadding =
       EdgeInsets.symmetric(horizontal: 12, vertical: AppSpacing.x2);
-  static const double predictionSearchSortChipHeight = 34;
+  static const double predictionSearchSortChipHeight = AppSpacing.x6;
   static const EdgeInsets predictionSearchSortChipPadding =
       EdgeInsets.symmetric(horizontal: 12);
   static const double predictionSearchSortIcon = 12;
@@ -1083,11 +1083,11 @@ final class PredictionsSpacingTokens {
     top: 14,
   );
   static const double predictionActivityStatsGap = 12;
-  static const double predictionActivityStatHeight = 55;
+  static const double predictionActivityStatHeight = AppSpacing.x7;
   static const EdgeInsets predictionActivityStatValueGap = EdgeInsets.only(
     top: AppSpacing.x1,
   );
-  static const double predictionActivityFilterIcon = 13;
+  static const double predictionActivityFilterIcon = AppSpacing.x4;
   static const double predictionActivityFilterGap = AppSpacing.x2;
   static const double predictionActivityAmountChipGap = 6;
   static const double predictionActivityAmountChipHeight = 28;
@@ -1100,8 +1100,8 @@ final class PredictionsSpacingTokens {
   static const double predictionActivityAvatarBox = 38;
   static const double predictionActivityAvatarText = 17;
   static const double predictionActivityRowGap = 12;
-  static const double predictionActivityActorSpacing = 5;
-  static const double predictionActivityActorRunSpacing = 3;
+  static const double predictionActivityActorSpacing = AppSpacing.x2;
+  static const double predictionActivityActorRunSpacing = AppSpacing.x1;
   static const EdgeInsets predictionActivityEventGap = EdgeInsets.only(
     top: AppSpacing.x1,
   );
@@ -1132,10 +1132,10 @@ final class PredictionsSpacingTokens {
   static const double predictionDataMetricValueGap = 6;
   static const double predictionDataCompactLineHeight = 1.1;
   static const double predictionDataMetricLineHeight = 1.2;
-  static const double predictionDataMetricIconGap = 5;
+  static const double predictionDataMetricIconGap = AppSpacing.x2;
   static const double predictionDataMetricIcon = 12;
   static const double predictionDataHeaderWrapGap = AppSpacing.x2;
-  static const double predictionDataHeaderRunGap = 5;
+  static const double predictionDataHeaderRunGap = AppSpacing.x2;
   static const double predictionDataSmallTopGap = AppSpacing.x1;
   static const double predictionDataSourceMetricsGap = 15;
   static const double predictionDataSourceUrlGap = 12;
@@ -1163,7 +1163,7 @@ final class PredictionsSpacingTokens {
   static const double predictionDataApiKeyIcon = 15;
   static const double predictionDataApiKeyGap = AppSpacing.x2;
   static const double predictionDataApiKeyBoxTopGap = 14;
-  static const double predictionDataPermissionsTopGap = 13;
+  static const double predictionDataPermissionsTopGap = AppSpacing.x4;
   static const double predictionDataPermissionLabelGap = 7;
   static const double predictionDataChipGap = 6;
   static const double predictionDataLastUsedGap = 12;

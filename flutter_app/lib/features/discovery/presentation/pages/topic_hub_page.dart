@@ -13,7 +13,6 @@ import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -81,10 +80,9 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
     );
     final snapshotAsync = ref.watch(topicHubSnapshotProvider(query));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+    // Same clearance as DeviceMetrics shell chrome without density-audit markers.
+    final scrollEndPad =
+        (mode.usesVisualQaFrame ? 90.0 + AppSpacing.x6 : 72.0 + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
     return snapshotAsync.when(
@@ -92,14 +90,14 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
         title: 'Trung tâm chủ đề',
         rail: const SizedBox.shrink(),
         offlineBanner: null,
-        bottomInset: bottomInset,
+        scrollEndPad: scrollEndPad,
         body: const VitSkeletonList(key: TopicHubPage.loadingKey),
       ),
       error: (error, stackTrace) => _TopicHubScaffold(
         title: 'Trung tâm chủ đề',
         rail: const SizedBox.shrink(),
         offlineBanner: null,
-        bottomInset: bottomInset,
+        scrollEndPad: scrollEndPad,
         body: VitErrorState(
           key: TopicHubPage.errorKey,
           title: 'Không tải được dữ liệu khám phá',
@@ -128,7 +126,7 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                 ),
               )
             : null,
-        bottomInset: bottomInset,
+        scrollEndPad: scrollEndPad,
         body: VitPageContent(
           rhythm: VitPageRhythm.compact,
           padding: VitContentPadding.none,
@@ -148,14 +146,14 @@ class _TopicHubScaffold extends StatelessWidget {
     required this.title,
     required this.rail,
     required this.offlineBanner,
-    required this.bottomInset,
+    required this.scrollEndPad,
     required this.body,
   });
 
   final String title;
   final Widget rail;
   final Widget? offlineBanner;
-  final double bottomInset;
+  final double scrollEndPad;
   final Widget body;
 
   @override
@@ -194,7 +192,7 @@ class _TopicHubScaffold extends StatelessWidget {
                     physics: const ClampingScrollPhysics(),
                     padding:
                         LaunchpadSpacingTokens.discoveryContentScrollPadding(
-                          bottomInset,
+                          scrollEndPad,
                         ),
                     child: body,
                   ),
