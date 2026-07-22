@@ -107,7 +107,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Dispute Resolution'), findsOneWidget);
+    expect(find.text('Giải quyết tranh chấp'), findsOneWidget);
     expect(find.text('Fair Dispute Resolution'), findsOneWidget);
     expect(find.text('Complaint Type'), findsOneWidget);
     expect(find.text('Execution Issue'), findsOneWidget);
@@ -128,7 +128,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'DisputeResolutionPage',
-      semanticLabel: 'Giải quyết khiếu nại',
+      semanticLabel: 'Giải quyết tranh chấp',
     );
     expectFirstViewportVisible(
       tester,

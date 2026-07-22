@@ -42,7 +42,6 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
       semanticIdentifier: 'SC-128',
       contentKey: BotPortfolioDashboardPage.contentKey,
       shellRenderMode: shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

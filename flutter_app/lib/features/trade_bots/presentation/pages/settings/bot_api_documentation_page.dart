@@ -60,7 +60,6 @@ class _BotApiDocumentationPageState
       semanticIdentifier: 'SC-134',
       contentKey: BotApiDocumentationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

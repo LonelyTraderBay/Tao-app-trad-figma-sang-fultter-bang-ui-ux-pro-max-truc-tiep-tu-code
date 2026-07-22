@@ -65,7 +65,6 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
           semanticIdentifier: 'SC-133',
           contentKey: BotTaxReportingPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
-          activeProductId: 'bots',
           onBack: () => goBackOrFallback(
             context,
             fallbackPath: AppRoutePaths.tradeBots,

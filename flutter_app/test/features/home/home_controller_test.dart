@@ -47,12 +47,13 @@ void main() {
           '/earn/savings',
           '/launchpad',
           '/rewards',
+          '/trade/margin',
+          '/trade/copy-trading',
+          '/trade/bots',
+          '/topics',
         ]),
       );
-      expect(
-        snapshot.productGroups.map((group) => group.id),
-        equals(['trading', 'pro', 'yield', 'explore']),
-      );
+      expect(snapshot.productGroups, isEmpty);
       expect(
         quickActions.every((action) => action.stateLabel?.isNotEmpty ?? false),
         isTrue,

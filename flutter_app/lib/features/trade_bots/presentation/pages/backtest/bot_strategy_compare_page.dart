@@ -52,7 +52,6 @@ class _BotStrategyComparePageState
       semanticIdentifier: 'SC-126',
       contentKey: BotStrategyComparePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

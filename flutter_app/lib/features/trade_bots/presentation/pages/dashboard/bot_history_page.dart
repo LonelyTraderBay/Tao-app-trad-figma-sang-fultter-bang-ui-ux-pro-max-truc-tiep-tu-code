@@ -54,7 +54,6 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
       semanticIdentifier: 'SC-123',
       contentKey: BotHistoryPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

@@ -60,7 +60,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
 
     return VitTradeHubScaffold(
       title: 'Hồ sơ trader',
-      subtitle: 'Copy · Trade',
+      subtitle: 'Sao chép giao dịch',
       semanticLabel: 'Hồ sơ trader',
       semanticIdentifier: 'SC-087',
       contentKey: TraderProfilePage.contentKey,

@@ -61,7 +61,6 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
           contentKey: BotOptimizationPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           bottomInset: scrollEndClearance,
-          activeProductId: 'bots',
           onBack: () => goBackOrFallback(
             context,
             fallbackPath: AppRoutePaths.tradeBots,

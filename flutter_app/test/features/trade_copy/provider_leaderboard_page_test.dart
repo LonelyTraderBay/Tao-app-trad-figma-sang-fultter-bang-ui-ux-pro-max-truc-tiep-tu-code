@@ -78,7 +78,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Leaderboard'), findsOneWidget);
+    expect(find.text('Bảng xếp hạng'), findsOneWidget);
     expect(find.text('Survivorship Bias Warning'), findsOneWidget);
     expect(find.text('ROI'), findsWidgets);
     expect(find.text('Risk Level'), findsOneWidget);
@@ -97,7 +97,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ProviderLeaderboardPage',
-      semanticLabel: 'Bảng xếp hạng provider',
+      semanticLabel: 'Bảng xếp hạng nhà cung cấp',
     );
     expectFirstViewportVisible(
       tester,

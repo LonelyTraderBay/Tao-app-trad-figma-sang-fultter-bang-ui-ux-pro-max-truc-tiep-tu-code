@@ -22,6 +22,17 @@ Not backed by a dedicated automated guardrail — unlike [Top-Header-Standard.md
 
 When adding a new `trade` screen: if it's an entry point users can scroll for a while and return to, use `VitTradeHubScaffold`. If it's a step inside a flow that already has a root (a detail, a confirmation, a log), use `VitTradeDetailScaffold` so the title/context never scrolls away mid-flow.
 
+## 1.1 Title / subtitle archetypes (L1 product switcher)
+
+Shared product tabs (`Giao ngay` · `Phái sinh` · `Ký quỹ` · `Chuyển đổi` · `Bot`) use one of two header copy patterns. All user-facing strings are **vi-VN** (no English titles like `Convert / Swap`).
+
+| Archetype | Pages | Title | Subtitle | Header actions |
+| --- | --- | --- | --- | --- |
+| **L1 Instrument** | Spot, Futures, Margin | `{pair.symbol}` | Product name VI (`Giao dịch Spot`, `Hợp đồng tương lai`, `Giao dịch ký quỹ`) | **Lệnh + Vị thế** (D5) on all three |
+| **L1 Product hub** | Convert, Bot hub | Product name VI (`Chuyển đổi`, `Bot giao dịch`) | One-line purpose VI | Convert: settings; Bot: none |
+
+L2 trade utility pages that keep product tabs use a screen-name title and a short VI context subtitle — **no English crumbs** (`· Trade`). Copy Trading stays **out** of the L1 tab bar (ARCH-A2); Bot sub-pages keep tabs **off**.
+
 **Known tool gaps, fixed (2026-07-12):**
 
 - `tool/top_header_visual_archetype_audit.dart`'s `_extraSourceForPageGroup` used to pull in the *entire* `trade_module_layout.dart` file as extra classification source for any page matching `'VitTradeDetailScaffold('` — but that file also defines `VitTradeHubScaffold`, whose body contains `VitAutoHideHeaderScaffold(`, so the classifier true-positived on borrowed text from the *other* class. Fixed by extracting only the matched shell class's own body (brace-matched) instead of the whole file. 7 of the 8 `VitTradeDetailScaffold` pages above now correctly show `fixed_vit_header`; `total_routed_screens=414`, `strict_visual_issues=0`, `screen_level_mismatches=0` unchanged. One residual gap remains and is intentionally left as-is: `ClientOptUpRequestPage` (grouped via `client_categorization_page.dart`, which also defines a routed class delegating header rendering through a third helper) still shows `auto_hide_header` — a per-routed-class fix for it was tried and reverted because it regressed an unrelated `markets` page (`PairDetailPage`) that delegates to a differently-named helper class; documented as a code comment in the tool.

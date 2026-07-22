@@ -146,13 +146,15 @@ void main() {
     expect(find.text('Hành động nhanh'), findsOneWidget);
     expect(find.byTooltip('Tin tức'), findsOneWidget);
     expect(find.byKey(HomePage.marketTickerKey), findsOneWidget);
-    expect(find.text('Giao dịch'), findsWidgets);
-    expect(find.text('Sinh lời'), findsOneWidget);
-    expect(find.text('Khám phá'), findsOneWidget);
-    expect(find.text('Staking'), findsWidgets);
+    // Bottom-nav Trade label — not a Home product-group header.
+    expect(find.text('Giao dịch'), findsOneWidget);
+    expect(find.text('Sinh lời'), findsNothing);
+    expect(find.text('Khám phá'), findsNothing);
+    expect(find.text('Pro'), findsNothing);
+    expect(find.text('Staking'), findsNothing);
     expect(find.text('Hỗ trợ'), findsNothing);
     expect(find.text('Giới thiệu'), findsNothing);
-    expect(find.text('Margin'), findsOneWidget);
+    expect(find.text('Margin'), findsNothing);
     expect(find.text('Dự đoán'), findsNothing);
     expect(find.text('Thị trường dự đoán'), findsOneWidget);
     expect(find.text('Arena'), findsOneWidget);

@@ -89,7 +89,6 @@ class _BotPerformanceAnalyticsPageState
       semanticIdentifier: 'SC-124',
       contentKey: BotPerformanceAnalyticsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

@@ -47,8 +47,8 @@ void main() {
         expect(announcement.type, HomeAnnouncementType.campaign);
         expect(announcement.routePath, '/trade/btcusdt');
 
-        expect(snapshot.quickActions, hasLength(9));
-        expect(snapshot.productGroups, hasLength(4));
+        expect(snapshot.quickActions, hasLength(13));
+        expect(snapshot.productGroups, isEmpty);
         final quickAction = snapshot.quickActions.first;
         expect(quickAction.icon, 'quickBuy');
         expect(quickAction.label, 'Mua nhanh');

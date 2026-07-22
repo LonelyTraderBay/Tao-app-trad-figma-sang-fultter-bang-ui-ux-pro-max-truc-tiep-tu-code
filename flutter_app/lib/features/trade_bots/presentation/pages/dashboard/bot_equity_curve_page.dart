@@ -56,7 +56,6 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
       semanticIdentifier: 'SC-130',
       contentKey: BotEquityCurvePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

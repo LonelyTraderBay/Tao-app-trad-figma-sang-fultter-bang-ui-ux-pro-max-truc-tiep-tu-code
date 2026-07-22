@@ -209,7 +209,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                   quickActions: gridQuickActions,
                   maxVisibleQuickActions: homePrimaryQuickActionCount,
                   moreQuickActions: moreQuickActions,
-                  productGroups: snapshot.productGroups,
                   onNavigate: _go,
                   onMore: moreQuickActions.isEmpty
                       ? null

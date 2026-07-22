@@ -56,7 +56,6 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
       semanticIdentifier: 'SC-118',
       contentKey: BotRiskDisclosurePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

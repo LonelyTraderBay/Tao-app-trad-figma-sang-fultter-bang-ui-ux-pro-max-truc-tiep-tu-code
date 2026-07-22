@@ -65,7 +65,6 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
       semanticIdentifier: 'SC-132',
       contentKey: BotFaqPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

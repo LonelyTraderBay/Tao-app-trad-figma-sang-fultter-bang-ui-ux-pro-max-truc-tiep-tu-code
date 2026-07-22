@@ -13,7 +13,6 @@ class HomeProductsSection extends StatelessWidget {
     required this.quickActions,
     required this.maxVisibleQuickActions,
     required this.moreQuickActions,
-    required this.productGroups,
     required this.onNavigate,
     required this.onMore,
     required this.density,
@@ -22,7 +21,6 @@ class HomeProductsSection extends StatelessWidget {
   final List<HomeQuickAction> quickActions;
   final int maxVisibleQuickActions;
   final List<HomeQuickAction> moreQuickActions;
-  final List<HomeProductGroup> productGroups;
   final ValueChanged<String> onNavigate;
   final VoidCallback? onMore;
   final VitDensity density;
@@ -50,20 +48,6 @@ class HomeProductsSection extends StatelessWidget {
           onNavigate: onNavigate,
           density: density,
         ),
-        for (final group in productGroups) ...[
-          const SizedBox(height: AppSpacing.pageRhythmCompactSectionGap),
-          VitSectionHeader(
-            title: group.title,
-            bottomGap: AppSpacing.pageRhythmCompactInnerGap,
-            density: density,
-          ),
-          HomeQuickActionsGrid(
-            actions: group.actions,
-            maxVisibleItems: group.actions.length,
-            onNavigate: onNavigate,
-            density: density,
-          ),
-        ],
       ],
     );
   }

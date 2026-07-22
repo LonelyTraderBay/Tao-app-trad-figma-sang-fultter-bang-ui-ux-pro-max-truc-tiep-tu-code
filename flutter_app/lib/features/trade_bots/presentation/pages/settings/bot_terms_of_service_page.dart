@@ -89,7 +89,6 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
       semanticIdentifier: 'SC-117',
       contentKey: BotTermsOfServicePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

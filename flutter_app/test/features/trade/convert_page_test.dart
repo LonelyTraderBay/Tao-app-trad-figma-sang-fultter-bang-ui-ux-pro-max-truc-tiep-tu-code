@@ -110,7 +110,8 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Convert / Swap'), findsOneWidget);
+    expect(find.text('Chuyển đổi'), findsWidgets);
+    expect(find.text('Đổi tài sản nhanh'), findsOneWidget);
     expect(find.text('Chế độ Pro'), findsNothing);
     expect(find.text('USDT/BTC'), findsWidgets);
     expect(find.text('1 USDT = 0.000015 BTC'), findsWidgets);
@@ -126,7 +127,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-056 ConvertPage',
-      semanticLabel: 'Chuyển đổi tài sản (Convert)',
+      semanticLabel: 'Chuyển đổi tài sản',
     );
     expectFirstViewportVisible(
       tester,

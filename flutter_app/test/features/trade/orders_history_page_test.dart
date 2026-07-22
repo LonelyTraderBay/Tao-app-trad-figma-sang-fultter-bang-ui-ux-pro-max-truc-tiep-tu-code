@@ -72,7 +72,7 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Lịch sử lệnh'), findsOneWidget);
-    expect(find.text('Lệnh · Trade'), findsOneWidget);
+    expect(find.text('Lịch sử lệnh · Spot'), findsOneWidget);
     expect(find.textContaining('Lệnh mở'), findsOneWidget);
     expect(find.textContaining('(4)'), findsWidgets);
     expect(find.text('BTC/USDT'), findsWidgets);

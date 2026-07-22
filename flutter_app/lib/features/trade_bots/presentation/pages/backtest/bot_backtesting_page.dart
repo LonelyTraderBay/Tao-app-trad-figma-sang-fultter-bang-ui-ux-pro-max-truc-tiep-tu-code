@@ -75,7 +75,6 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
       contentKey: BotBacktestingPage.contentKey,
       shellRenderMode: mode,
       bottomInset: scrollEndClearance,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

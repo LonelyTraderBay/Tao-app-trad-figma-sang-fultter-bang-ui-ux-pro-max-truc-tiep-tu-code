@@ -249,7 +249,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ConvertPage), findsOneWidget);
-    expect(find.text('Convert / Swap'), findsOneWidget);
+    expect(find.text('Chuyển đổi'), findsWidgets);
+    expect(find.text('Đổi tài sản nhanh'), findsOneWidget);
   });
 
   testWidgets('SC-048 360px simple layout stays usable', (tester) async {

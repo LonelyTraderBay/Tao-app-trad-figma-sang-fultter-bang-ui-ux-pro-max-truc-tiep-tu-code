@@ -59,7 +59,8 @@ final class HomeQuickAction {
   final String? riskBadge;
 }
 
-/// Named product strip on Home (Giao dịch / Pro / Sinh lời / Khám phá).
+/// Optional grouped product catalog (legacy / API). Home scroll uses a single
+/// [HomeSnapshot.quickActions] source + sheet — keep empty on SC-007.
 final class HomeProductGroup {
   const HomeProductGroup({
     required this.id,
@@ -171,10 +172,10 @@ final class HomeSnapshot {
   final int notifications;
   final List<HomeAnnouncement> announcements;
 
-  /// Compact «Hành động nhanh» strip (+ sheet overflow). No Support/Referral.
+  /// Single product source: compact strip (+ sheet overflow). No Support/Referral.
   final List<HomeQuickAction> quickActions;
 
-  /// Grouped product strips (Giao dịch / Pro / Sinh lời / Khám phá).
+  /// Unused on Home scroll (Option A). Prefer empty; catalog lives in [quickActions].
   final List<HomeProductGroup> productGroups;
   final HomeNextAction? nextAction;
   final List<HomeRecentProduct> recentProducts;

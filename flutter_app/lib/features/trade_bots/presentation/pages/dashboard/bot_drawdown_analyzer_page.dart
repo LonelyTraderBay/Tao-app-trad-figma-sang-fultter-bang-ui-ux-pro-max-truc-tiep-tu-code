@@ -46,7 +46,6 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
       semanticIdentifier: 'SC-129',
       contentKey: BotDrawdownAnalyzerPage.contentKey,
       shellRenderMode: shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

@@ -55,7 +55,6 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
       semanticIdentifier: 'SC-131',
       contentKey: BotGuidePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,

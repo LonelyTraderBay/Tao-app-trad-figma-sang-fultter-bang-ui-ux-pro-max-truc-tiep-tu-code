@@ -82,7 +82,6 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
       contentKey: BotEmergencyStopPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       bottomInset: scrollEndClearance,
-      activeProductId: 'bots',
       onBack: _goBack,
       footer: _StickyActions(
         bottomPadding:

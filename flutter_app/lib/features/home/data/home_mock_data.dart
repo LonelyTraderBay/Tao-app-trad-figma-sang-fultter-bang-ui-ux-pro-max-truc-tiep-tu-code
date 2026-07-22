@@ -33,7 +33,7 @@ class HomeMockData {
     notifications: notifications,
     announcements: announcements,
     quickActions: quickActions,
-    productGroups: productGroups,
+    productGroups: [],
     nextAction: nextAction,
     recentProducts: recentProducts,
     pairs: pairs,
@@ -60,7 +60,8 @@ class HomeMockData {
     ),
   ];
 
-  /// Compact «Hành động nhanh»: 4 ô visible; phần còn lại vào sheet (≤9 tổng).
+  /// Compact «Hành động nhanh»: 4 ô visible; phần còn lại vào sheet.
+  /// Một nguồn sản phẩm — không nhân đôi bằng productGroups trên scroll.
   /// Không gồm Support / Referral / Discovery (Predictions, Arena).
   static const quickActions = [
     HomeQuickAction(
@@ -127,112 +128,35 @@ class HomeMockData {
       accentKey: 'medalGold',
       stateLabel: 'Phần thưởng',
     ),
-  ];
-
-  static const productGroups = [
-    HomeProductGroup(
-      id: 'trading',
-      title: 'Giao dịch',
-      actions: [
-        HomeQuickAction(
-          icon: 'margin',
-          label: 'Margin',
-          routePath: '/trade/margin',
-          accentKey: 'riskHigh',
-          stateLabel: 'Pro',
-          riskBadge: 'Rủi ro cao',
-        ),
-        HomeQuickAction(
-          icon: 'convert',
-          label: 'Chuyển đổi',
-          routePath: '/trade/convert',
-          accentKey: 'trade',
-          stateLabel: 'Core',
-        ),
-        HomeQuickAction(
-          icon: 'p2p',
-          label: 'P2P',
-          routePath: '/p2p',
-          accentKey: 'successBright',
-          stateLabel: 'Escrow',
-        ),
-      ],
+    HomeQuickAction(
+      icon: 'margin',
+      label: 'Margin',
+      routePath: '/trade/margin',
+      accentKey: 'riskHigh',
+      stateLabel: 'Pro',
+      riskBadge: 'Rủi ro cao',
     ),
-    HomeProductGroup(
-      id: 'pro',
-      title: 'Pro',
-      actions: [
-        HomeQuickAction(
-          icon: 'copyTrade',
-          label: 'Copy Trade',
-          routePath: '/trade/copy-trading',
-          accentKey: 'accentDark',
-          stateLabel: 'Social',
-        ),
-        HomeQuickAction(
-          icon: 'bot',
-          label: 'Bot',
-          routePath: '/trade/bots',
-          accentKey: 'caution',
-          stateLabel: 'Auto',
-          riskBadge: 'Rủi ro cao',
-        ),
-      ],
+    HomeQuickAction(
+      icon: 'copyTrade',
+      label: 'Copy Trade',
+      routePath: '/trade/copy-trading',
+      accentKey: 'accentDark',
+      stateLabel: 'Social',
     ),
-    HomeProductGroup(
-      id: 'yield',
-      title: 'Sinh lời',
-      actions: [
-        HomeQuickAction(
-          icon: 'staking',
-          label: 'Staking',
-          routePath: '/earn',
-          accentKey: 'buy',
-          stateLabel: 'Earn',
-        ),
-        HomeQuickAction(
-          icon: 'savings',
-          label: 'Tiết kiệm',
-          routePath: '/earn/savings',
-          accentKey: 'buy',
-          stateLabel: 'Yield',
-        ),
-        HomeQuickAction(
-          icon: 'dca',
-          label: 'DCA',
-          routePath: '/dca',
-          accentKey: 'caution',
-          stateLabel: 'DCA',
-        ),
-      ],
+    HomeQuickAction(
+      icon: 'bot',
+      label: 'Bot',
+      routePath: '/trade/bots',
+      accentKey: 'caution',
+      stateLabel: 'Auto',
+      riskBadge: 'Rủi ro cao',
     ),
-    HomeProductGroup(
-      id: 'explore',
-      title: 'Khám phá',
-      actions: [
-        HomeQuickAction(
-          icon: 'launchpad',
-          label: 'Launchpad',
-          routePath: '/launchpad',
-          accentKey: 'riskHigh',
-          stateLabel: 'Token mới',
-          riskBadge: 'Rủi ro cao',
-        ),
-        HomeQuickAction(
-          icon: 'rewards',
-          label: 'Phần thưởng',
-          routePath: '/rewards',
-          accentKey: 'medalGold',
-          stateLabel: 'Phần thưởng',
-        ),
-        HomeQuickAction(
-          icon: 'discover',
-          label: 'Chủ đề',
-          routePath: '/topics',
-          accentKey: 'discovery',
-          stateLabel: 'Chủ đề',
-        ),
-      ],
+    HomeQuickAction(
+      icon: 'discover',
+      label: 'Chủ đề',
+      routePath: '/topics',
+      accentKey: 'discovery',
+      stateLabel: 'Chủ đề',
     ),
   ];
 

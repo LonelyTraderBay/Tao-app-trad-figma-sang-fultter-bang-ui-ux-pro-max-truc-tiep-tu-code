@@ -8,7 +8,7 @@ class _FearGreedHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'Lịch sử Fear & Greed (7 ngày)',
+      label: 'Lịch sử sợ hãi & tham lam (7 ngày)',
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(

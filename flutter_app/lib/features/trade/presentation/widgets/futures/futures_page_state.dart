@@ -96,7 +96,7 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     return VitTradeSimpleShell(
       title: pair.symbol,
       subtitle: 'Hợp đồng tương lai',
-      semanticLabel: 'Giao dịch hợp đồng tương lai (Futures)',
+      semanticLabel: 'Giao dịch hợp đồng tương lai',
       semanticIdentifier: 'SC-057',
       contentKey: const Key('sc057_futures_scroll_content'),
       shellRenderMode: mode,
@@ -107,6 +107,21 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
         fallbackPath: AppRoutePaths.tradePair(widget.pairId),
         mode: BackNavigationMode.historyThenFallback,
       ),
+      // D5: persistent Lệnh + Vị thế (đồng bộ Spot).
+      headerActions: [
+        VitHeaderActionItem(
+          type: VitHeaderActionType.history,
+          size: VitHeaderActionSize.sm,
+          tooltip: 'Lệnh',
+          onPressed: () => context.push(AppRoutePaths.tradeOrdersHistory),
+        ),
+        VitHeaderActionItem(
+          type: VitHeaderActionType.portfolio,
+          size: VitHeaderActionSize.sm,
+          tooltip: 'Vị thế',
+          onPressed: () => context.push(AppRoutePaths.tradePositions),
+        ),
+      ],
       activeProductId: 'futures',
       productPair: pair,
       quickNavKey: FuturesPage.quickNavKey,

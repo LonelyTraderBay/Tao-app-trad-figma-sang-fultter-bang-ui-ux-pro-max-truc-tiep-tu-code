@@ -63,7 +63,6 @@ class _BotSecuritySettingsPageState
       semanticIdentifier: 'SC-122',
       contentKey: BotSecuritySettingsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
-      activeProductId: 'bots',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.tradeBots,
