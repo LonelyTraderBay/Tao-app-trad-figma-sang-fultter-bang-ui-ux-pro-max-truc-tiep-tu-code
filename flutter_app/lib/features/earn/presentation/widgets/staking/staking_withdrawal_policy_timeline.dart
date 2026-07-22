@@ -46,7 +46,8 @@ class _ProcessCard extends StatelessWidget {
         children: [
           for (final step in steps) ...[
             _ProcessStepRow(step: step),
-            if (step != steps.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (step != steps.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

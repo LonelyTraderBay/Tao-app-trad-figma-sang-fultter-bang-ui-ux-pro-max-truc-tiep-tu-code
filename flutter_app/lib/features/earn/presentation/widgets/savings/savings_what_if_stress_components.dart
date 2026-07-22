@@ -58,7 +58,8 @@ class _StressBars extends StatelessWidget {
               ),
             ],
           ),
-          if (entry != results.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (entry != results.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

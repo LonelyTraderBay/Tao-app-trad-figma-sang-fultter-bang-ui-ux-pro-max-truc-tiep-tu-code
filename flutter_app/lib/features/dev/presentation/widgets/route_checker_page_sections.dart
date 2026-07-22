@@ -186,7 +186,8 @@ class _RouteList extends StatelessWidget {
             tested: testedRoutes.contains(route.path),
             onTap: () => onTapRoute(route),
           ),
-          if (route != routes.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (route != routes.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

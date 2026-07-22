@@ -147,7 +147,8 @@ class _RiskMetricCard extends StatelessWidget {
               ],
             ),
           ),
-          if (metric != metrics.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (metric != metrics.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

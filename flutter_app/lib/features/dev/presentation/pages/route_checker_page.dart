@@ -119,7 +119,9 @@ class _RouteCheckerState extends ConsumerState<RouteChecker> {
                     const VitOfflineBanner(
                       detail: 'Local route checks still work offline.',
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     ..._liveSections(
                       snapshot: snapshot,
                       filteredRoutes: filteredRoutes,

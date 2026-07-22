@@ -73,7 +73,8 @@ class _StressTab extends StatelessWidget {
         ),
         for (final entry in results) ...[
           _StressRankCard(entry: entry),
-          if (entry != results.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (entry != results.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(

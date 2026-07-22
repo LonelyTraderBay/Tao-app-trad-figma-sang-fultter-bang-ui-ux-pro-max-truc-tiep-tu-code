@@ -104,7 +104,9 @@ class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
                   const VitOfflineBanner(
                     detail: 'Showing last captured session.',
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   ..._liveSections(snapshot),
                 ],
               ),

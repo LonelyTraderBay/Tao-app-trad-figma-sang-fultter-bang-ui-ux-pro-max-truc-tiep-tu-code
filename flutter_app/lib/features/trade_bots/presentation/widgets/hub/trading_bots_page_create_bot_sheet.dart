@@ -262,7 +262,9 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                       value: _values[param.key] ?? param.defaultValue,
                     ),
                     if (param != strategy.params.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                 ],
               ),

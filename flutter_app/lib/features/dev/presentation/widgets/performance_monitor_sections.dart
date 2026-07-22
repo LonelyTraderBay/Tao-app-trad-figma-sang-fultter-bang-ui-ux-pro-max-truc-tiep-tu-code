@@ -233,7 +233,8 @@ class _LazyChunksCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (chunk != chunks.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (chunk != chunks.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

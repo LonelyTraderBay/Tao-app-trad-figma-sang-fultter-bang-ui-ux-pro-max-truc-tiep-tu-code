@@ -113,7 +113,9 @@ class _MissingScreensShowcasePageState
                   const VitOfflineBanner(
                     detail: 'Cached routes remain navigable offline.',
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   ..._liveSections(snapshot),
                 ],
               ),
