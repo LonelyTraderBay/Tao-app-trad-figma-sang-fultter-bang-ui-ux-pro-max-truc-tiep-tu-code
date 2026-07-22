@@ -725,7 +725,6 @@ markets,root_page,flutter_app/lib/features/markets/presentation/pages/tools/mark
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/tools/market_movers_page.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/tools/market_screener_page.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/tools/market_sectors_page.dart,0,0,0,0,0,0,0,0,no,-
-markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_body_review_widgets.dart,0,0,0,0,0,0,0,0,no,-
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_formatters.dart,0,0,0,0,0,0,0,0,no,-
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_common.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_discover.dart,0,0,0,0,0,0,0,0,no,-
