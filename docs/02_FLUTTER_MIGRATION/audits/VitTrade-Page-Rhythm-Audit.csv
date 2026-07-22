@@ -194,7 +194,7 @@ earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_history_pa
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_ladder_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_notification_preferences_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_notifications_page.dart,standard,standard,0,,0,,0,0,pass
-earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart,standard,compact,0,,0,,0,0,pass
+earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_product_detail_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_receipt_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_recommendations_page.dart,standard,standard,0,,0,,0,0,pass

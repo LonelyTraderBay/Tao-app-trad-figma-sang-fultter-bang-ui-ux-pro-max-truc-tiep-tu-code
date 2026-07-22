@@ -137,7 +137,7 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
                         bottomInset,
                       ),
                       child: VitPageContent(
-                        rhythm: VitPageRhythm.compact,
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.defaultGap,
                         children: [
