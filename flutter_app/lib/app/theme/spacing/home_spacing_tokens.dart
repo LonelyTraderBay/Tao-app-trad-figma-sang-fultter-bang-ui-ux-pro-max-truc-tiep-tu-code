@@ -11,8 +11,7 @@ final class HomeSpacingTokens {
   static const double skeletonLineWidthLg = 220;
   static const double skeletonLineHeightSm = 10;
 
-  static const int homeQuickActionCompactCount = 6;
-  static const int homeQuickActionStandardCount = 9;
+  static const int homeQuickActionCompactCount = 4;
   static const double homeQuickActionDensityBreakpoint = 480;
   static const double homeAnnouncementAutoHideScrollOffset = 96;
   static const double homeAnnouncementDotRadius = 3;

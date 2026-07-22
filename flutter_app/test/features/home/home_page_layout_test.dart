@@ -48,7 +48,6 @@ void main() {
     expect(source, contains('VitHeroGlow'));
     expect(source, contains('VitInsetScrollView'));
     expect(source, contains('HomeDensityVariant'));
-    expect(source, contains('_homeDiscoveryQuickActionRoutes'));
     expect(source, contains('RefreshIndicator'));
     expect(source, contains('VitSkeleton'));
     expect(source, contains('VitErrorState'));
@@ -144,58 +143,59 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.text('Sản phẩm'), findsOneWidget);
-    expect(find.text('Staking'), findsOneWidget);
+    expect(find.text('Hành động nhanh'), findsOneWidget);
+    expect(find.byTooltip('Tin tức'), findsOneWidget);
+    expect(find.byKey(HomePage.marketTickerKey), findsOneWidget);
+    expect(find.text('Giao dịch'), findsWidgets);
+    expect(find.text('Sinh lời'), findsOneWidget);
+    expect(find.text('Khám phá'), findsOneWidget);
+    expect(find.text('Staking'), findsWidgets);
     expect(find.text('Hỗ trợ'), findsNothing);
-    expect(find.text('Margin'), findsNothing);
+    expect(find.text('Giới thiệu'), findsNothing);
+    expect(find.text('Margin'), findsOneWidget);
     expect(find.text('Dự đoán'), findsNothing);
-    expect(find.text('Arena'), findsNothing);
-    expect(find.text('Prediction Markets'), findsOneWidget);
-    expect(find.text('Open Arena'), findsOneWidget);
+    expect(find.text('Thị trường dự đoán'), findsOneWidget);
+    expect(find.text('Arena'), findsOneWidget);
+    expect(find.text('Prediction Markets'), findsNothing);
+    expect(find.text('Open Arena'), findsNothing);
     expect(find.text('Thị trường'), findsWidgets);
     expect(find.text('BTC/USDT'), findsWidgets);
     expect(find.text('Trang chủ'), findsOneWidget);
-    expect(find.text('Giao dịch'), findsOneWidget);
   });
 
-  testWidgets('SC-007 orders products before recent surfaces', (tester) async {
+  testWidgets('SC-007 orders products before discovery before recent', (
+    tester,
+  ) async {
     await pumpHome(tester);
 
     final productsTop = tester.getTopLeft(
       find.byKey(HomePage.productsSectionKey),
     );
-    final recentTop = tester.getTopLeft(
-      find.byKey(HomePage.recentProductsSectionKey),
-    );
-
-    expect(productsTop.dy, lessThan(recentTop.dy));
-  });
-
-  testWidgets('SC-007 uses uniform section gap between home blocks', (
-    tester,
-  ) async {
-    await pumpHome(tester);
-
-    final productsBottom = tester.getBottomLeft(
-      find.byKey(HomePage.productsSectionKey),
-    );
-    final recentTop = tester.getTopLeft(
-      find.byKey(HomePage.recentProductsSectionKey),
-    );
-    final recentBottom = tester.getBottomLeft(
-      find.byKey(HomePage.recentProductsSectionKey),
-    );
     final discoveryTop = tester.getTopLeft(find.text('Dự đoán & Thách đấu'));
+    final recentTop = tester.getTopLeft(
+      find.byKey(HomePage.recentProductsSectionKey),
+    );
 
-    expect(
-      recentTop.dy - productsBottom.dy,
-      closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
-    );
-    expect(
-      discoveryTop.dy - recentBottom.dy,
-      closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
-    );
+    expect(productsTop.dy, lessThan(discoveryTop.dy));
+    expect(discoveryTop.dy, lessThan(recentTop.dy));
   });
+
+  testWidgets(
+    'SC-007 uses uniform section gap between products and discovery',
+    (tester) async {
+      await pumpHome(tester);
+
+      final productsBottom = tester.getBottomLeft(
+        find.byKey(HomePage.productsSectionKey),
+      );
+      final discoveryTop = tester.getTopLeft(find.text('Dự đoán & Thách đấu'));
+
+      expect(
+        discoveryTop.dy - productsBottom.dy,
+        closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
+      );
+    },
+  );
 
   testWidgets('SC-007 first viewport keeps key actions above bottom nav', (
     tester,
@@ -217,7 +217,10 @@ void main() {
       tester.getBottomLeft(find.byKey(HomePage.marketTickerKey)).dy,
       lessThan(navTop),
     );
-    expect(tester.getTopLeft(find.text('Sản phẩm')).dy, lessThan(navTop));
+    expect(
+      tester.getTopLeft(find.text('Hành động nhanh')).dy,
+      lessThan(navTop),
+    );
   });
 
   testWidgets(

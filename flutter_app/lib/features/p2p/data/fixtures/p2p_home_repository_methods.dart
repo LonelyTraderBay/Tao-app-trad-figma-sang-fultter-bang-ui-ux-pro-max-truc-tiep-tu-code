@@ -36,7 +36,7 @@ mixin _MockP2PRepositoryHomeMethods on _MockP2PRepositoryBase {
         P2PScreenState.offline,
       ],
       title: 'P2P',
-      subtitle: 'Lv.3 · P2P Trading',
+      subtitle: 'Cấp 3 · Giao dịch P2P',
       defaultTradeType: P2PTradeType.buy,
       selectedTradeType: tradeType,
       selectedAsset: asset,
@@ -53,7 +53,8 @@ mixin _MockP2PRepositoryHomeMethods on _MockP2PRepositoryBase {
       tradingLevelRoute: '/p2p/trading-level',
       emptyTitle: 'Không tìm thấy offer',
       emptySubtitle: 'Thử thay đổi bộ lọc hoặc tài sản.',
-      contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+      contractNotes:
+          'Giao dịch P2P luôn qua ký quỹ escrow; kiểm tra KYC, phương thức thanh toán và trạng thái đơn trước khi chuyển tiền.',
       highRiskContractId: HighRiskFlowContractIds.p2pEscrowOrder,
     );
   }

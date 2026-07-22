@@ -3,9 +3,9 @@
 Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 
 ```text
-total_routed_screens=415
+total_routed_screens=413
 fixed_vit_header_remaining=21
-auto_hide_header=382
+auto_hide_header=380
 custom_scroll_header=1
 no_top_header=11
 unresolved=0
@@ -56,7 +56,6 @@ unresolved=0
 | arena | `AppRoutePaths.arenaStudioPresets` | `ArenaUniversalPresetLibraryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/arena/presentation/pages/studio/arena_universal_preset_library_page.dart` |
 | arena | `AppRoutePaths.arenaStudioSmartRules` | `ArenaSmartRuleBuilderPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/arena/presentation/pages/studio/arena_smart_rule_builder_page.dart` |
 | arena | `AppRoutePaths.arenaVerified` | `VerifiedChallengesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/arena/presentation/pages/challenge/verified_challenges_page.dart` |
-| arena | `AppRoutePaths.profileArena` | `MyArenaPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/arena/presentation/pages/hub/my_arena_page.dart` |
 | auth | `AppRoutePaths.auth2faSetup` | `TwoFASetupPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/two_fa_setup_page.dart` |
 | auth | `AppRoutePaths.authForgotPassword` | `ForgotPasswordPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/forgot_password_page.dart` |
 | auth | `AppRoutePaths.authLogin` | `LoginPage` | no_top_header | no_top_header | `flutter_app/lib/features/auth/presentation/pages/login_page.dart` |
@@ -306,7 +305,6 @@ unresolved=0
 | predictions | `AppRoutePaths.marketsPredictionsSearch` | `PredictionsSearchPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsSocial` | `PredictionSocialPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_social_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsTournaments` | `PredictionTournamentsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_tournaments_page.dart` |
-| predictions | `AppRoutePaths.profilePredictions` | `PredictionsPortfolioPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart` |
 | profile | `AppRoutePaths.profile` | `ProfilePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
 | profile | `AppRoutePaths.profileActivity` | `ActivityLogPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | profile | `AppRoutePaths.profileApi` | `ApiManagementPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/api_management_page.dart` |

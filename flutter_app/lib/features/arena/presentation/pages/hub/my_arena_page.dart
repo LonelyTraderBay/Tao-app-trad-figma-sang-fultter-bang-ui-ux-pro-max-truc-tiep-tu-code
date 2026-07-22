@@ -150,7 +150,7 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                                   context.goHaptic(AppRoutePaths.arenaStudio),
                               density: VitDensity.compact,
                               leading: const Icon(Icons.auto_awesome_rounded),
-                              child: const Text('Tạo challenge mới'),
+                              child: const Text('Tạo thách đấu mới'),
                             ),
                             _QuickLinks(
                               onLeaderboard: () => context.goHaptic(

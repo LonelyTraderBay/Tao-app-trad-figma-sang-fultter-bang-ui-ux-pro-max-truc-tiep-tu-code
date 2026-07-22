@@ -310,7 +310,7 @@ class _DurationLegendRow extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: AppRadii.pillRadius,
                 child: SizedBox(
-                  height: AppSpacing.x2,
+                  height: AppSpacing.pageRhythmCompactInnerGap,
                   child: LinearProgressIndicator(
                     value: barFactor.clamp(0, 1),
                     backgroundColor: _chartTrack,

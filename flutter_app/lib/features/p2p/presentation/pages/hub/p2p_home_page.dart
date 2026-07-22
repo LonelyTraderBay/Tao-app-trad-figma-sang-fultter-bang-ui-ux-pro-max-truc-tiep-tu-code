@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -27,6 +28,7 @@ import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 part '../../widgets/hub/p2p_home_page_state.dart';
 part '../../widgets/hub/p2p_home_offer_list.dart';
 part '../../widgets/hub/p2p_home_page_common.dart';
+part '../../widgets/hub/p2p_home_tools.dart';
 
 const double _p2pHomeVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -47,6 +49,8 @@ class P2PHomePage extends ConsumerStatefulWidget {
   static const filterKey = Key('sc282_p2p_home_filter');
   static const myOrdersKey = Key('sc282_p2p_home_my_orders');
   static const createKey = Key('sc282_p2p_home_create');
+  static const toolsKey = Key('sc282_p2p_home_tools');
+  static const toolsSheetKey = Key('sc282_p2p_home_tools_sheet');
   static const emptyKey = Key('sc282_p2p_home_empty');
   static const kycBannerKey = Key('sc282_p2p_home_kyc_banner');
   static const guideLinkKey = Key('sc282_p2p_home_guide');
@@ -57,6 +61,7 @@ class P2PHomePage extends ConsumerStatefulWidget {
   static Key assetKey(String asset) => Key('sc282_p2p_home_asset_$asset');
   static Key fiatKey(String fiat) => Key('sc282_p2p_home_fiat_$fiat');
   static Key actionKey(String id) => Key('sc282_p2p_home_action_$id');
+  static Key toolKey(String id) => Key('sc282_p2p_home_tool_$id');
   static Key adKey(String id) => Key('sc282_p2p_home_ad_$id');
   static Key adMenuKey(String id) => Key('sc282_p2p_home_ad_menu_$id');
 

@@ -228,19 +228,24 @@ class WalletToolGrid extends StatelessWidget {
     super.key,
     required this.tools,
     required this.onNavigate,
+    this.onShowMore,
   });
 
   final List<WalletTool> tools;
   final ValueChanged<String> onNavigate;
+  final VoidCallback? onShowMore;
 
   @override
   Widget build(BuildContext context) {
-    if (tools.isEmpty) {
+    if (tools.isEmpty && onShowMore == null) {
       return const VitEmptyState(
         title: 'Kh\u00F4ng c\u00F3 c\u00F4ng c\u1EE5 v\u00ED',
         icon: Icons.grid_view_rounded,
       );
     }
+
+    final showMore = onShowMore != null;
+    final itemCount = tools.length + (showMore ? 1 : 0);
 
     return VitActionTileGrid(
       density: VitDensity.compact,
@@ -248,10 +253,21 @@ class WalletToolGrid extends StatelessWidget {
       crossAxisSpacing: _walletToolGridGap,
       mainAxisSpacing: _walletToolGridGap,
       childAspectRatio: _walletToolGridAspectRatio,
-      itemCount: tools.length,
+      itemCount: itemCount,
       itemBuilder: (context, index, density) {
+        if (showMore && index == tools.length) {
+          return VitServiceTile(
+            key: const Key('sc135_wallet_more_actions'),
+            density: density,
+            icon: Icons.more_horiz_rounded,
+            label: 'Th\u00EAm',
+            accentColor: AppColors.text3,
+            onTap: () => onShowMore?.call(),
+          );
+        }
         final tool = tools[index];
         return VitServiceTile(
+          key: Key('sc135_wallet_action_${tool.id}'),
           density: density,
           icon: _toolIcon(tool.iconKey),
           label: tool.label,

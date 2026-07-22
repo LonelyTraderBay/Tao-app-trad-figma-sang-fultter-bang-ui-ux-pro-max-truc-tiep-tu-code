@@ -148,10 +148,16 @@ IconData _actionIcon(String key) => switch (key) {
 };
 
 IconData _toolIcon(String key) => switch (key) {
+  'history' => Icons.schedule_rounded,
+  'address' => Icons.menu_book_outlined,
+  'health' => Icons.health_and_safety_outlined,
   'pending' => Icons.south_west_rounded,
   'limits' => Icons.speed_rounded,
   'dust' => Icons.auto_awesome_rounded,
   'network' => Icons.wifi_rounded,
+  'gas' => Icons.local_gas_station_outlined,
+  'multi' => Icons.account_tree_outlined,
+  'approval' => Icons.verified_user_outlined,
   _ => Icons.account_balance_wallet_outlined,
 };
 

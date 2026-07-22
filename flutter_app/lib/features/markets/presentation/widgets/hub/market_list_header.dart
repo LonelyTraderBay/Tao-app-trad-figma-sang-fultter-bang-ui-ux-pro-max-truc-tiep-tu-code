@@ -20,6 +20,7 @@ class MarketListHeader extends StatelessWidget {
       title: 'Th\u1ECB tr\u01B0\u1EDDng',
       subtitle:
           'Theo d\u00F5i th\u1ECB tr\u01B0\u1EDDng \u00B7 C\u1EADp nh\u1EADt $lastUpdatedLabel',
+      // STEP-P2.2: keep HUB chrome only — «Ngành» is ẨN (deep link / overflow).
       actions: [
         VitHeaderActionItem(
           type: VitHeaderActionType.overview,
@@ -32,12 +33,6 @@ class MarketListHeader extends StatelessWidget {
           size: VitHeaderActionSize.sm,
           tooltip: 'Bi\u1EBFn \u0111\u1ED9ng',
           onPressed: () => onNavigate('/markets/movers'),
-        ),
-        VitHeaderActionItem(
-          type: VitHeaderActionType.sectors,
-          size: VitHeaderActionSize.sm,
-          tooltip: 'Ng\u00E0nh',
-          onPressed: () => onNavigate('/markets/sectors'),
         ),
       ],
     );

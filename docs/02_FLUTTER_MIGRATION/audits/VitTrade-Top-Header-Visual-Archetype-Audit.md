@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/top_header_visual_archetype_audit.dart`.
 
 ```text
-total_routed_screens=415
+total_routed_screens=413
 strict_visual_issues=0
 screen_level_mismatches=0
 uses_vit_top_chrome=63
@@ -37,8 +37,8 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 181 |
-| L2_utilityDetail | 70 |
+| L2_detail | 180 |
+| L2_utilityDetail | 69 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
 | L1_utilityHub | 25 |
@@ -56,7 +56,7 @@ hard_coded_offline_banner=0
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 394 |
+| detail | 392 |
 | rootModule | 11 |
 | instrument | 6 |
 | fullscreenTool | 2 |
@@ -91,7 +91,7 @@ hard_coded_offline_banner=0
 | arena | `'/arena/mode/:modeId'` | `ArenaModeDetailPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/challenge/arena_mode_detail_page.dart` |
 | arena | `'/arena/report/:caseId'` | `ArenaReportCasePage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/governance/arena_report_case_page.dart` |
 | arena | `'/arena/trust/:userId'` | `ArenaTrustBreakdownPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/governance/arena_trust_breakdown_page.dart` |
-| arena | `AppRoutePaths.arena` | `ArenaHomePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page.dart` |
+| arena | `AppRoutePaths.arena` | `ArenaHomePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page.dart` |
 | arena | `AppRoutePaths.arenaBlocked` | `ArenaBlockedUsersPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/governance/arena_blocked_users_page.dart` |
 | arena | `AppRoutePaths.arenaBridge` | `ArenaPredictionBridgeFoundationPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/bridge/arena_prediction_bridge_foundation_page.dart` |
 | arena | `AppRoutePaths.arenaEcosystem` | `ConnectedEcosystemProductionPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/bridge/connected_ecosystem_production_page.dart` |
@@ -109,7 +109,6 @@ hard_coded_offline_banner=0
 | arena | `AppRoutePaths.arenaStudioPresets` | `ArenaUniversalPresetLibraryPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/studio/arena_universal_preset_library_page.dart` |
 | arena | `AppRoutePaths.arenaStudioSmartRules` | `ArenaSmartRuleBuilderPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/studio/arena_smart_rule_builder_page.dart` |
 | arena | `AppRoutePaths.arenaVerified` | `VerifiedChallengesPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/challenge/verified_challenges_page.dart` |
-| arena | `AppRoutePaths.profileArena` | `MyArenaPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/arena/presentation/pages/hub/my_arena_page.dart` |
 | auth | `AppRoutePaths.auth2faSetup` | `TwoFASetupPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L1_authFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/auth/presentation/pages/two_fa_setup_page.dart` |
 | auth | `AppRoutePaths.authForgotPassword` | `ForgotPasswordPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L1_authFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/auth/presentation/pages/forgot_password_page.dart` |
 | auth | `AppRoutePaths.authLogin` | `LoginPage` | no_top_header | no_top_header | authOnboarding | L0_authEntry | authOnboarding | no | no | no | `-` | Auth entry screen intentionally owns its onboarding chrome. | none | none | none | 0 | Auth entry screen intentionally owns its onboarding chrome. | - | `flutter_app/lib/features/auth/presentation/pages/login_page.dart` |
@@ -242,7 +241,7 @@ hard_coded_offline_banner=0
 | markets | `'/pair/:pairId'` | `PairDetailPage` | fixed_vit_header | vit_top_chrome_instrument | instrument | L2_instrumentDetail | instrument | no | yes | yes | `_PairHeader;_TradeHeader` | - | none | none | none | 3 | - | - | `flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart` |
 | markets | `'/pair/:pairId/depth'` | `MarketDepthPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` |
 | markets | `'/pair/:pairId/info'` | `TokenInfoPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/research/token_info_page.dart` |
-| markets | `AppRoutePaths.markets` | `MarketListPage` | custom_scroll_header | vit_top_chrome_rootModule | rootModule | L1_primaryTabRoot | rootModule | no | no | yes | `MarketListHeader` | - | none | none | none | 3 | - | - | `flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart` |
+| markets | `AppRoutePaths.markets` | `MarketListPage` | custom_scroll_header | vit_top_chrome_rootModule | rootModule | L1_primaryTabRoot | rootModule | no | no | yes | `MarketListHeader` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart` |
 | markets | `AppRoutePaths.marketsAdvancedCharts` | `AdvancedChartsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page.dart` |
 | markets | `AppRoutePaths.marketsAlerts` | `PriceAlertsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart` |
 | markets | `AppRoutePaths.marketsCalendar` | `MarketCalendarPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/tools/market_calendar_page.dart` |
@@ -283,7 +282,7 @@ hard_coded_offline_banner=0
 | p2p | `'/p2p/payment-method/verification/:methodId'` | `P2PPaymentMethodVerificationPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_verification_page.dart` |
 | p2p | `'/p2p/report/:merchantId'` | `P2PReportMerchantPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_report_merchant_page.dart` |
 | p2p | `'/p2p/tax-report/detailed/:year'` | `P2PTaxReportingPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_tax_reporting_page.dart` |
-| p2p | `AppRoutePaths.p2p` | `P2PHomePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | yes | yes | `-` | - | content | state_driven | offlineWithCache | 2 | - | - | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` |
+| p2p | `AppRoutePaths.p2p` | `P2PHomePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | yes | yes | `-` | - | content | state_driven | offlineWithCache | 3 | - | - | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` |
 | p2p | `AppRoutePaths.p2pAchievements` | `P2PAchievementsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_achievements_page.dart` |
 | p2p | `AppRoutePaths.p2pBlacklist` | `P2PBlacklistPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_blacklist_page.dart` |
 | p2p | `AppRoutePaths.p2pBlacklistAdd` | `P2PBlacklistAddPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_blacklist_add_page.dart` |
@@ -345,7 +344,7 @@ hard_coded_offline_banner=0
 | predictions | `'/markets/predictions/event/:eventId'` | `PredictionEventDetailPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_entityDetail | detail | no | no | yes | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart` |
 | predictions | `'/markets/predictions/receipt/:receiptId'` | `PredictionOrderReceiptPage` | auto_hide_header | vit_top_chrome_detail | detail | L3_transactionFlow | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart` |
 | predictions | `'/markets/predictions/tournament/:tournamentId'` | `PredictionTournamentDetailPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_tournaments_page.dart` |
-| predictions | `AppRoutePaths.marketsPredictions` | `PredictionsHomePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_home_page.dart` |
+| predictions | `AppRoutePaths.marketsPredictions` | `PredictionsHomePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_home_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsActivity` | `PredictionsGlobalActivityPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/predictions_global_activity_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsBreaking` | `PredictionsBreakingPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_detail | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_breaking_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsDataIntegration` | `PredictionDataIntegrationPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_data_integration_page.dart` |
@@ -359,7 +358,6 @@ hard_coded_offline_banner=0
 | predictions | `AppRoutePaths.marketsPredictionsSearch` | `PredictionsSearchPage` | auto_hide_header | vit_top_chrome_detail | detail | L1_utilityHub | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsSocial` | `PredictionSocialPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_social_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsTournaments` | `PredictionTournamentsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_tournaments_page.dart` |
-| predictions | `AppRoutePaths.profilePredictions` | `PredictionsPortfolioPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart` |
 | profile | `AppRoutePaths.profile` | `ProfilePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_primaryTabRoot | rootModule | no | no | yes | `-` | - | content | state_driven | offlineNoCache | 0 | - | - | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
 | profile | `AppRoutePaths.profileActivity` | `ActivityLogPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | profile | `AppRoutePaths.profileApi` | `ApiManagementPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/profile/presentation/pages/api_management_page.dart` |
@@ -383,10 +381,10 @@ hard_coded_offline_banner=0
 | support | `AppRoutePaths.support` | `SupportPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L1_utilityHub | detail | no | yes | no | `-` | - | content | state_driven | offlineWithCache | 0 | - | - | `flutter_app/lib/features/support/presentation/pages/support_page.dart` |
 | support | `AppRoutePaths.supportAnnouncements` | `AnnouncementsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L1_utilityHub | detail | no | yes | no | `-` | - | content | state_driven | offlineWithCache | 0 | - | - | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` |
 | support | `AppRoutePaths.supportHelp` | `HelpCenterPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L1_utilityHub | detail | no | yes | no | `-` | - | content | state_driven | offlineWithCache | 0 | - | - | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` |
-| trade | `'/trade/:pairId'` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
+| trade | `'/trade/:pairId'` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
 | trade | `'/trade/:pairId/futures'` | `FuturesPage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/futures/futures_page.dart` |
 | trade | `'/trade/:pairId/futures/leverage'` | `LeveragePage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/futures/leverage_page.dart` |
-| trade | `AppRoutePaths.trade` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
+| trade | `AppRoutePaths.trade` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
 | trade | `AppRoutePaths.tradeConvert` | `ConvertPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | content | state_driven | offlineNoCache | 1 | - | - | `flutter_app/lib/features/trade/presentation/pages/convert/convert_page.dart` |
 | trade | `AppRoutePaths.tradeExport` | `TradeHistoryExportPage` | fixed_vit_header | vit_header_default_title_subtitle | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart` |
 | trade | `AppRoutePaths.tradeMargin` | `MarginTradingPage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart` |

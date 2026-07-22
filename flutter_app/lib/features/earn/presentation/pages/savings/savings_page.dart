@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -21,6 +23,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/earn/domain/earn_hub_tools_catalog.dart';
 part '../../widgets/savings/savings_home_hero.dart';
 part '../../widgets/savings/savings_home_products.dart';
 part '../../widgets/savings/savings_home_positions.dart';
@@ -39,6 +42,9 @@ class SavingsPage extends ConsumerStatefulWidget {
   static const productDetailButtonKey = Key('sc329_product_detail_button');
   static const guideButtonKey = Key('sc329_guide_button');
   static const exportButtonKey = Key('sc329_export_button');
+  static const toolsSectionKey = Key('sc329_tools_section');
+  static const moreToolsKey = Key('sc329_more_tools');
+  static const moreToolsSheetKey = Key('sc329_more_tools_sheet');
   static const dcaInsightKey = Key('sc329_dca_insight');
   static const exportInsightKey = Key('sc329_export_insight');
   static const backtestInsightKey = Key('sc329_backtest_insight');
@@ -158,10 +164,9 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
                             ),
                           ] else
                             _SavingsPositions(positions: snapshot.positions),
-                          _InsightList(insights: snapshot.insights),
-                          _ToolboxButton(
-                            guideRoute: snapshot.guideRoute,
-                            exportRoute: snapshot.exportRoute,
+                          _SavingsToolsSection(
+                            tools: EarnHubToolsCatalog.savingsTools,
+                            onNavigate: (route) => context.go(route),
                           ),
                           const _YieldDisclaimer(),
                         ],

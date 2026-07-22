@@ -9,8 +9,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_tax_guide_calculator.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_tax_guide_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_tax_guide_header.dart';
@@ -21,7 +20,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
@@ -94,10 +92,10 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
           data: (snapshot) {
             final activeTab = _activeTab ?? snapshot.defaultTab;
             final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-            final bottomInset =
+            final scrollEndPadding =
                 (mode.usesVisualQaFrame
-                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
-                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                    ? SharedSpacingTokens.bottomNavVisualClearance
+                    : SharedSpacingTokens.bottomNavNativeClearance) +
                 MediaQuery.paddingOf(context).bottom;
 
             return VitAutoHideHeaderScaffold(
@@ -114,8 +112,8 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      padding: EarnSpacingTokens.earnBottomInsetPadding(
-                        bottomInset,
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndPadding,
                       ),
                       child: VitPageContent(
                         rhythm: VitPageRhythm.standard,

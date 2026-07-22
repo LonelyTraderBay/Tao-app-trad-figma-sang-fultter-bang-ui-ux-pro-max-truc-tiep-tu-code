@@ -23,7 +23,7 @@ class HomeMoreProductsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSheetPanel(
       key: HomePage.moreProductsSheetKey,
-      title: 'Thêm sản phẩm',
+      title: 'Thêm hành động',
       child: VitActionTileGrid(
         density: density,
         crossAxisSpacing: AppSpacing.x3,

@@ -16,7 +16,7 @@ import '../../helpers/first_viewport_test_utils.dart';
 void main() {
   Future<void> pumpMyArena(
     WidgetTester tester, {
-    String initialLocation = AppRoutePaths.profileArena,
+    String initialLocation = AppRoutePaths.arenaMy,
   }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
@@ -86,30 +86,29 @@ void main() {
     );
   });
 
-  testWidgets('SC-168 renders My Arena with profile bottom nav active', (
-    tester,
-  ) async {
-    await pumpMyArena(tester);
+  testWidgets('SC-168 redirects to canonical My Arena route', (tester) async {
+    await pumpMyArena(tester, initialLocation: AppRoutePaths.profileArena);
 
     expect(find.byType(MyArenaPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(
-      find.byKey(const Key('vit_bottom_nav_active_profile')),
+      find.byKey(const Key('vit_bottom_nav_active_trade')),
       findsOneWidget,
     );
     expect(find.text('S\u00E2n ch\u01A1i c\u1EE7a t\u00F4i'), findsOneWidget);
-    expect(find.text('Arena Points'), findsOneWidget);
+    expect(find.text('Điểm Arena'), findsOneWidget);
+    expect(find.text('Chỉ điểm Arena'), findsOneWidget);
     expect(find.text('2.2K'), findsOneWidget);
-    expect(find.text('T\u1EA1o challenge m\u1EDBi'), findsOneWidget);
+    expect(find.text('Tạo thách đấu mới'), findsOneWidget);
     expect(find.text('BTC \$70K? - Tu\u1EA7n 9'), findsOneWidget);
   });
 
   testWidgets('SC-205 renders My Arena at arena route with trade nav active', (
     tester,
   ) async {
-    await pumpMyArena(tester, initialLocation: AppRoutePaths.arenaMy);
+    await pumpMyArena(tester);
 
     expect(find.byType(MyArenaPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
@@ -121,27 +120,28 @@ void main() {
       findsNothing,
     );
     expect(find.text('S\u00E2n ch\u01A1i c\u1EE7a t\u00F4i'), findsOneWidget);
-    expect(find.text('Arena Points'), findsOneWidget);
+    expect(find.text('Điểm Arena'), findsOneWidget);
+    expect(find.text('Chỉ điểm Arena'), findsOneWidget);
     expect(find.text('2.2K'), findsOneWidget);
-    expect(find.text('T\u1EA1o challenge m\u1EDBi'), findsOneWidget);
+    expect(find.text('Tạo thách đấu mới'), findsOneWidget);
     expect(find.text('BTC \$70K? - Tu\u1EA7n 9'), findsOneWidget);
   });
 
-  testWidgets('SC-168 first viewport reaches create challenge action', (
+  testWidgets('SC-168 redirect reaches canonical create challenge action', (
     tester,
   ) async {
-    await pumpMyArena(tester);
+    await pumpMyArena(tester, initialLocation: AppRoutePaths.profileArena);
 
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'Profile MyArenaPage',
+      routeName: 'Arena MyArenaPage',
       semanticLabel:
           'Sân chơi của tôi - quản lý phòng, thử thách đã tham gia và lịch sử trong Open Arena',
     );
     expectActionableInFirstViewport(
       tester,
       find.byKey(MyArenaPage.createChallengeKey),
-      routeName: 'Profile MyArenaPage',
+      routeName: 'Arena MyArenaPage',
       actionLabel: 'create challenge action',
     );
   });
@@ -149,7 +149,7 @@ void main() {
   testWidgets('SC-205 first viewport reaches create challenge action', (
     tester,
   ) async {
-    await pumpMyArena(tester, initialLocation: AppRoutePaths.arenaMy);
+    await pumpMyArena(tester);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -165,7 +165,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-168 switches local tabs with stable mock data', (
+  testWidgets('SC-205 switches local tabs with stable mock data', (
     tester,
   ) async {
     await pumpMyArena(tester);
@@ -212,7 +212,7 @@ void main() {
     expect(find.text('An to\u00E0n & Quy t\u1EAFc Arena'), findsOneWidget);
   });
 
-  testWidgets('SC-168 canonical route edges open real or preview routes', (
+  testWidgets('SC-205 canonical route edges open real or preview routes', (
     tester,
   ) async {
     await pumpMyArena(tester);

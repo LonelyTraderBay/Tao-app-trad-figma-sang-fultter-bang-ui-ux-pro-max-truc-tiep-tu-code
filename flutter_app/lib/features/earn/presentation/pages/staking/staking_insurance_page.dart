@@ -11,8 +11,8 @@ import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
@@ -101,10 +101,10 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
           ),
           data: (snapshot) {
             final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-            final bottomInset =
+            final scrollEndPadding =
                 (mode.usesVisualQaFrame
-                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
-                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                    ? SharedSpacingTokens.bottomNavVisualClearance
+                    : SharedSpacingTokens.bottomNavNativeClearance) +
                 MediaQuery.paddingOf(context).bottom;
 
             return VitAutoHideHeaderScaffold(
@@ -121,8 +121,8 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      padding: EarnSpacingTokens.earnBottomInsetPadding(
-                        bottomInset,
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndPadding,
                       ),
                       child: VitPageContent(
                         rhythm: VitPageRhythm.standard,

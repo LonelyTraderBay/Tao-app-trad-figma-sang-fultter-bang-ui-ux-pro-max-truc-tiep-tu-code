@@ -95,14 +95,20 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                       VitHeaderActionItem(
                         key: P2PHomePage.createKey,
                         type: VitHeaderActionType.add,
-                        tooltip: 'Đăng offer',
+                        tooltip: 'Tạo tin',
                         onPressed: () => context.go(snapshot.createRoute),
                       ),
                       VitHeaderActionItem(
                         key: P2PHomePage.myOrdersKey,
                         type: VitHeaderActionType.history,
-                        tooltip: 'Đơn P2P của tôi',
+                        tooltip: 'Đơn của tôi',
                         onPressed: () => context.go(snapshot.myOrdersRoute),
+                      ),
+                      VitHeaderActionItem(
+                        key: P2PHomePage.toolsKey,
+                        type: VitHeaderActionType.more,
+                        tooltip: 'Công cụ',
+                        onPressed: _showToolsSheet,
                       ),
                     ],
                   ),
@@ -131,9 +137,9 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                             if (snapshot.highRiskContractId != null)
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'P2P escrow states active',
+                                title: 'Ký quỹ escrow đang bảo vệ P2P',
                                 message:
-                                    'Offer browse, order placement, payment proof, and dispute flows are tracked as one P2P escrow contract.',
+                                    'Danh sách tin, tạo đơn, bằng chứng thanh toán và tranh chấp được theo dõi trong cùng hợp đồng an toàn P2P.',
                                 contractId: snapshot.highRiskContractId,
                               ),
                             if (showOfflineWithCache) ...[
@@ -263,6 +269,25 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
     }).toList();
   }
 
+  void _showToolsSheet() {
+    final rootContext = context;
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        builder: (sheetContext) {
+          return _P2PHomeToolsSheet(
+            onNavigate: (route) {
+              Navigator.of(sheetContext).pop();
+              rootContext.go(route);
+            },
+          );
+        },
+      ),
+    );
+  }
+
   List<String> _paymentMethods(List<P2PAdDraft> ads) {
     final methods = <String>{};
     for (final ad in ads) {
@@ -330,7 +355,7 @@ class _QuickHub extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Escrow bảo vệ mọi giao dịch',
+                      'Ký quỹ escrow bảo vệ giao dịch',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,

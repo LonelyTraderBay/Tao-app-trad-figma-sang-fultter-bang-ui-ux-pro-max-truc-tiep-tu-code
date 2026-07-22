@@ -67,7 +67,7 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
                       DesignSystemPositiveBadge(label: demo.badge!),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 const DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.surface2,

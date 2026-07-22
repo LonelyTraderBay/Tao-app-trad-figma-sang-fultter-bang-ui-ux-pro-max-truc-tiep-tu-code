@@ -91,13 +91,27 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Prediction Markets'), findsOneWidget);
+    expect(find.text('Dự đoán thị trường'), findsOneWidget);
     expect(find.text('Tìm sự kiện...'), findsOneWidget);
     expect(find.text('Xu hướng'), findsOneWidget);
     expect(find.text('Live Crypto'), findsWidgets);
     expect(find.text('Vị thế của tôi'), findsOneWidget);
     expect(find.text('Biến động 24h'), findsOneWidget);
-    expect(find.text('Arena Points only'), findsOneWidget);
+    expect(find.text('Chỉ điểm Arena'), findsOneWidget);
+    expect(find.byKey(PredictionsHomePage.toolsSectionKey), findsOneWidget);
+    expect(
+      find.byKey(PredictionsHomePage.toolKey('portfolio')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(PredictionsHomePage.toolKey('portfolio_analyzer')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(PredictionsHomePage.toolKey('leaderboard')),
+      findsOneWidget,
+    );
+    expect(find.byKey(PredictionsHomePage.toolKey('calendar')), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
   });
@@ -174,6 +188,12 @@ void main() {
 
       await tester.tap(find.byIcon(Icons.chevron_left_rounded));
       await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(PredictionsHomePage.portfolioHeaderKey));
+      await tester.pumpAndSettle();
+      expect(find.text('Prediction Portfolio'), findsOneWidget);
+
+      await pumpPredictions(tester);
 
       await tester.tap(find.byKey(PredictionsHomePage.breakingMoversKey));
       await tester.pumpAndSettle();

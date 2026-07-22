@@ -65,7 +65,7 @@ class _PhaseStats extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           GridView.count(
             crossAxisCount: AdminSpacingTokens.devRouteGridColumns,
             shrinkWrap: true,
@@ -132,7 +132,7 @@ class _PhaseStatTile extends StatelessWidget {
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             ClipRRect(
               borderRadius: AppRadii.xlRadius,
               child: ColoredBox(

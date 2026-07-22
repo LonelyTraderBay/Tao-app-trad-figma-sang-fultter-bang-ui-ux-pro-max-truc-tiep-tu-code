@@ -44,9 +44,9 @@ class DesignSystemHero extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(snapshot.heroTitle, style: AppTextStyles.sectionTitleMd),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 snapshot.heroDescription,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),

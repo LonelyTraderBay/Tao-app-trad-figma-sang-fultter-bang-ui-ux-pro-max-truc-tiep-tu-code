@@ -99,7 +99,7 @@ class _RewardHero extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: SizedBox(
-              height: AppSpacing.x3,
+              height: AppSpacing.pageRhythmStandardInnerGap,
               child: Stack(
                 fit: StackFit.expand,
                 children: [

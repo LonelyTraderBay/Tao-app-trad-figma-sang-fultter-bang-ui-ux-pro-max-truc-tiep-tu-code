@@ -116,7 +116,7 @@ class _VitalRow extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitProgressBar(
             progress: metric.progress,
             color: toneColor,
@@ -171,7 +171,7 @@ class _MemoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitProgressBar(
             progress: memory.progress,
             color: AppColors.buy,
@@ -213,7 +213,7 @@ class _LazyChunksCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final chunk in chunks) ...[
             DecoratedBox(
               decoration: const ShapeDecoration(
@@ -233,7 +233,8 @@ class _LazyChunksCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (chunk != chunks.last) const SizedBox(height: AppSpacing.x2),
+            if (chunk != chunks.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

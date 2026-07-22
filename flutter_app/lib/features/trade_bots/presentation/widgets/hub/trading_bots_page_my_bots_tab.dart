@@ -110,7 +110,8 @@ class _MyBotsTab extends StatelessWidget {
             onSettings: onSettings,
             onOpen: onOpenBot,
           ),
-          if (bot != bots.last) const SizedBox(height: AppSpacing.rowGap),
+          if (bot != bots.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

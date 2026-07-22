@@ -56,6 +56,9 @@ final class ProfileUser {
   final String kycLevel;
   final String kycStatus;
   final String joinDate;
+
+  /// D2: show KYC upgrade banner when status is not fully verified.
+  bool get kycNeedsAction => !kycStatus.contains('Đã xác minh');
 }
 
 /// Data for the edit-profile screen: the editable [user] fields.

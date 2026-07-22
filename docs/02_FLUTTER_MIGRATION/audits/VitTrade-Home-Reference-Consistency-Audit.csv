@@ -457,6 +457,7 @@ earn,feature_widget,flutter_app/lib/features/earn/presentation/widgets/staking/s
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_hero_tabs.dart,0,0,0,0,0,0,0,0,no,-
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_positions_common.dart,0,0,0,0,0,0,0,0,no,-
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_products.dart,0,0,0,0,0,0,0,0,no,-
+earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_tools.dart,0,0,0,0,0,0,0,0,no,-
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_calendar_grid.dart,0,0,0,0,0,0,0,0,no,-
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_events_common.dart,0,0,0,0,0,0,0,0,no,-
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_summary_tabs.dart,0,0,0,0,0,0,0,0,no,-
@@ -920,6 +921,7 @@ p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_guide_vi
 p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_offer_list.dart,0,0,0,0,0,0,0,0,no,-
 p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_common.dart,0,0,0,0,0,0,0,0,no,-
 p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart,0,0,0,0,0,0,0,0,no,-
+p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_tools.dart,0,0,0,0,0,0,0,0,no,-
 p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_hours_common.dart,0,0,0,0,0,0,0,0,no,-
 p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_trade_security.dart,0,0,0,0,0,0,0,0,no,-
 p2p,root_page,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_trading_level_cards.dart,0,0,0,0,0,0,0,0,no,-
@@ -1101,6 +1103,7 @@ profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_
 profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_api_key_create_result.dart,0,0,0,0,0,0,0,0,no,-
 profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_home_arena_stats.dart,0,0,0,0,0,0,0,0,no,-
 profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_home_hero.dart,0,0,0,0,0,0,0,0,no,-
+profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_home_legal_accordion.dart,0,0,0,0,0,0,0,0,no,-
 profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_home_menu_actions.dart,0,0,0,0,0,0,0,0,no,-
 profile,root_page,flutter_app/lib/features/profile/presentation/widgets/profile_home_vip_prediction.dart,0,0,0,0,0,0,0,0,no,-
 profile,feature_widget,flutter_app/lib/features/profile/presentation/widgets/profile_icon_registry.dart,0,0,0,0,0,0,0,0,no,-

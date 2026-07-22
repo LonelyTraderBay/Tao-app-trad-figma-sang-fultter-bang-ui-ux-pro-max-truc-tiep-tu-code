@@ -23,11 +23,13 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/profile/domain/profile_legal_catalog.dart';
 
 part '../widgets/profile_home_hero.dart';
 part '../widgets/profile_home_vip_prediction.dart';
 part '../widgets/profile_home_arena_stats.dart';
 part '../widgets/profile_home_menu_actions.dart';
+part '../widgets/profile_home_legal_accordion.dart';
 
 const _profileBackground = AppColors.bg;
 const _profilePanel2 = AppColors.surface2;
@@ -52,8 +54,13 @@ class ProfilePage extends ConsumerStatefulWidget {
   static const predictionCardKey = Key('sc156_profile_prediction_card');
   static const arenaCardKey = Key('sc156_profile_arena_card');
   static const productHubKey = Key('sc156_profile_product_hub');
+  static const kycBannerKey = Key('sc156_profile_kyc_banner');
+  static const legalScaffoldKey = Key('sc156_profile_legal_scaffold');
+  static const legalSearchKey = Key('sc156_profile_legal_search');
   static Key productShortcutKey(String id) => Key('sc156_profile_product_$id');
   static Key menuKey(String id) => Key('sc156_profile_menu_$id');
+  static Key legalGroupKey(String id) => Key('sc156_profile_legal_group_$id');
+  static Key legalItemKey(String id) => Key('sc156_profile_legal_item_$id');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -116,8 +123,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               },
               onOpenVip: () => context.go(AppRoutePaths.profileVip),
               onOpenPredictions: () =>
-                  context.go(AppRoutePaths.profilePredictions),
-              onOpenArena: () => context.go(AppRoutePaths.profileArena),
+                  context.go(AppRoutePaths.marketsPredictionsPortfolio),
+              onOpenArena: () => context.go(AppRoutePaths.arenaMy),
               onOpenActivity: () => context.go(AppRoutePaths.profileActivity),
               onLogout: () async {
                 await ref.read(authSessionControllerProvider.notifier).logout();

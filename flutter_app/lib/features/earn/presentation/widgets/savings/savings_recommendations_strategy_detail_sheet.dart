@@ -85,9 +85,9 @@ class _StrategyDetailSheet extends StatelessWidget {
         for (final item in strategy.allocation) ...[
           _AllocationDetailRow(item: item, amount: amount),
           if (item != strategy.allocation.last)
-            const SizedBox(height: AppSpacing.rowGap),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
-        const SizedBox(height: AppSpacing.rowGap),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _AllocationBar(allocation: strategy.allocation),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _BulletSection(

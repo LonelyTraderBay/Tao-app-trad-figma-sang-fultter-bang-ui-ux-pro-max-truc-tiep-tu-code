@@ -5,12 +5,21 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_dashboard_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_express_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_guide_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_home_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_notifications_settings_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_contribution_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_login_history_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -43,7 +52,7 @@ void main() {
       'POST /p2p/* workflow action where applicable',
     );
     expect(snapshot.title, 'P2P');
-    expect(snapshot.subtitle, 'Lv.3 · P2P Trading');
+    expect(snapshot.subtitle, 'Cấp 3 · Giao dịch P2P');
     expect(snapshot.assets, ['USDT', 'BTC', 'ETH', 'BNB', 'SOL']);
     expect(snapshot.fiatCurrencies, ['VND', 'USD']);
     expect(snapshot.quickActions.map((action) => action.route), [
@@ -56,7 +65,7 @@ void main() {
     expect(snapshot.platformStats.escrowProtected, 45200000000);
     expect(snapshot.myOrdersRoute, AppRoutePaths.p2pMyOrders);
     expect(snapshot.tradingLevelRoute, AppRoutePaths.p2pTradingLevel);
-    expect(snapshot.contractNotes, contains('P2P requires escrow'));
+    expect(snapshot.contractNotes, contains('ký quỹ escrow'));
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -76,12 +85,20 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.byKey(P2PHomePage.offlineKey), findsNothing);
     expect(find.text('P2P'), findsOneWidget);
-    expect(find.text('Lv.3 · P2P Trading'), findsOneWidget);
+    expect(find.text('Cấp 3 · Giao dịch P2P'), findsOneWidget);
+    expect(find.byKey(P2PHomePage.createKey), findsOneWidget);
+    expect(find.byKey(P2PHomePage.myOrdersKey), findsOneWidget);
+    expect(find.byKey(P2PHomePage.toolsKey), findsOneWidget);
+    expect(find.byTooltip('Tạo tin'), findsOneWidget);
+    expect(find.byTooltip('Đơn của tôi'), findsOneWidget);
+    expect(find.byTooltip('Công cụ'), findsOneWidget);
     expect(find.byKey(P2PHomePage.quickHubKey), findsOneWidget);
     expect(find.text('Thao tác nhanh'), findsOneWidget);
-    expect(find.text('Escrow bảo vệ mọi giao dịch'), findsOneWidget);
-    expect(find.text('Express Trade'), findsOneWidget);
-    expect(find.text('Đăng offer'), findsOneWidget);
+    expect(find.text('Ký quỹ escrow bảo vệ giao dịch'), findsOneWidget);
+    expect(find.text('Express nhanh'), findsOneWidget);
+    expect(find.text('Tạo tin'), findsOneWidget);
+    expect(find.text('Express Trade'), findsNothing);
+    expect(find.text('Đăng offer'), findsNothing);
     expect(find.text('₫45.20B'), findsOneWidget);
     expect(find.text('94.5%'), findsOneWidget);
     expect(find.byKey(P2PHomePage.kycBannerKey), findsOneWidget);
@@ -91,6 +108,7 @@ void main() {
     );
     expect(find.text('Xác minh KYC'), findsOneWidget);
     expect(find.byKey(P2PHomePage.escrowDisclaimerKey), findsOneWidget);
+    expect(find.textContaining('ký quỹ escrow'), findsWidgets);
     expect(find.byKey(P2PHomePage.tradeTabsKey), findsOneWidget);
     expect(find.text('MUA'), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
@@ -203,6 +221,68 @@ void main() {
     await tester.tap(find.text('Elite').first);
     await tester.pumpAndSettle();
     expect(find.text('VIPTrader_HN'), findsOneWidget);
+  });
+
+  testWidgets('SC-282 tools sheet lists all P2P hub entries', (tester) async {
+    await pumpHome(tester);
+
+    await tester.tap(find.byKey(P2PHomePage.toolsKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(P2PHomePage.toolsSheetKey), findsOneWidget);
+    expect(find.text('Công cụ P2P'), findsOneWidget);
+
+    const tools = [
+      ('express', 'Express nhanh'),
+      ('dashboard', 'Bảng điều khiển'),
+      ('guide', 'Hướng dẫn'),
+      ('compliance_overview', 'Tuân thủ tổng quan'),
+      ('insurance_contribution_history', 'Đóng góp bảo hiểm'),
+      ('payment_method_history', 'Lịch sử phương thức'),
+      ('security_login_history', 'Lịch sử đăng nhập'),
+      ('notifications', 'Thông báo P2P'),
+      ('fund_lock_history', 'Lịch sử khóa quỹ'),
+      ('wallet_history', 'Lịch sử ví P2P (alias)'),
+      ('ad_analytics', 'Phân tích tin'),
+    ];
+
+    for (final (id, label) in tools) {
+      expect(find.byKey(P2PHomePage.toolKey(id)), findsOneWidget);
+      expect(find.text(label), findsWidgets);
+    }
+  });
+
+  testWidgets('SC-282 tools sheet routes to existing P2P hubs', (tester) async {
+    Future<void> expectToolRoute(String id, Type pageType) async {
+      await pumpHome(tester);
+      await tester.tap(find.byKey(P2PHomePage.toolsKey));
+      await tester.pumpAndSettle();
+
+      final tool = find.byKey(P2PHomePage.toolKey(id));
+      await tester.ensureVisible(tool);
+      await tester.tap(tool);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(pageType), findsOneWidget);
+    }
+
+    await expectToolRoute('express', P2PExpressPage);
+    await expectToolRoute('dashboard', P2PDashboardPage);
+    await expectToolRoute('guide', P2PGuidePage);
+    await expectToolRoute('compliance_overview', P2PComplianceOverviewPage);
+    await expectToolRoute(
+      'insurance_contribution_history',
+      P2PContributionHistoryPage,
+    );
+    await expectToolRoute(
+      'payment_method_history',
+      P2PPaymentMethodHistoryPage,
+    );
+    await expectToolRoute('security_login_history', P2PLoginHistoryPage);
+    await expectToolRoute('notifications', P2PNotificationsSettingsPage);
+    await expectToolRoute('fund_lock_history', P2PFundLockHistoryPage);
+    await expectToolRoute('wallet_history', P2PFundLockHistoryPage);
+    await expectToolRoute('ad_analytics', P2PAdAnalyticsPage);
   });
 
   testWidgets('SC-282 primary navigation edges are wired', (tester) async {

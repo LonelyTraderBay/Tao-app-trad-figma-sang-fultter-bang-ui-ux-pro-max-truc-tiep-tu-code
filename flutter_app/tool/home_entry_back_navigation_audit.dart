@@ -279,8 +279,8 @@ const _homeMatrixSourceRules = [
     id: 'HEB-030',
     area: 'Matrix source',
     file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["id: 'staking-eth'", "routePath: '/earn/staking'"],
-    notes: 'Recent Staking source is present.',
+    requiredSnippets: ["routePath: '/earn'"],
+    notes: 'Earn/Staking Home entry source is present (canonical /earn).',
   ),
   HomeEntryBackRule(
     id: 'HEB-007',
@@ -293,8 +293,8 @@ const _homeMatrixSourceRules = [
     id: 'HEB-008',
     area: 'Matrix source',
     file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["label: 'Convert'", "routePath: '/trade/convert'"],
-    notes: 'Quick action Convert source is present.',
+    requiredSnippets: ["label: 'Chuyển đổi'", "routePath: '/trade/convert'"],
+    notes: 'Quick action Chuyển đổi (Convert) source is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-009',
@@ -345,8 +345,8 @@ const _homeMatrixSourceRules = [
     id: 'HEB-015',
     area: 'Matrix source',
     file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["label: 'Staking'", "routePath: '/earn/staking'"],
-    notes: 'Quick action Staking source is present.',
+    requiredSnippets: ["label: 'Staking'", "routePath: '/earn'"],
+    notes: 'Quick action Staking → /earn source is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-016',
@@ -365,16 +365,16 @@ const _homeMatrixSourceRules = [
   HomeEntryBackRule(
     id: 'HEB-018',
     area: 'Matrix source',
-    file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["routePath: '/markets/predictions'"],
-    notes: 'Quick action Predictions source is present.',
+    file: 'lib/features/home/presentation/pages/home_page_sections.dart',
+    requiredSnippets: ["onTap: () => onNavigate('/markets/predictions')"],
+    notes: 'Discovery Predictions entry (not Home quick action) is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-019',
     area: 'Matrix source',
-    file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["label: 'Arena'", "routePath: '/arena'"],
-    notes: 'Quick action Arena source is present.',
+    file: 'lib/features/home/presentation/pages/home_page_sections.dart',
+    requiredSnippets: ["onTap: () => onNavigate('/arena')"],
+    notes: 'Discovery Arena entry (not Home quick action) is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-020',
@@ -387,8 +387,10 @@ const _homeMatrixSourceRules = [
     id: 'HEB-021',
     area: 'Matrix source',
     file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["routePath: '/support'"],
-    notes: 'Quick action Support source is present.',
+    requiredSnippets: [
+      'Không gồm Support / Referral / Discovery (Predictions, Arena).',
+    ],
+    notes: 'Support removed from Home quick actions (Profile menu only).',
   ),
   HomeEntryBackRule(
     id: 'HEB-022',
@@ -401,8 +403,10 @@ const _homeMatrixSourceRules = [
     id: 'HEB-023',
     area: 'Matrix source',
     file: 'lib/features/home/data/home_mock_data.dart',
-    requiredSnippets: ["routePath: '/referral'"],
-    notes: 'Quick action Referral source is present.',
+    requiredSnippets: [
+      'Không gồm Support / Referral / Discovery (Predictions, Arena).',
+    ],
+    notes: 'Referral removed from Home quick actions (Profile menu only).',
   ),
   HomeEntryBackRule(
     id: 'HEB-024',

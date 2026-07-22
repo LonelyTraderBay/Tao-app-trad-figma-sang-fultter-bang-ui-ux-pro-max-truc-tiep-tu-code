@@ -352,6 +352,8 @@ const List<WalletRecentAddress> _walletRecentAddresses = [
   ),
 ];
 
+/// Hero primary CTAs + overflow «Thêm» (D6: history/address/health are
+/// visible tools — not buried here).
 const List<WalletAction> _walletActions = [
   WalletAction(
     id: 'deposit',
@@ -382,11 +384,53 @@ const List<WalletAction> _walletActions = [
     iconKey: 'transfer',
   ),
   WalletAction(
-    id: 'history',
-    label: 'Lịch sử',
-    route: '/wallet/history',
-    colorHex: 0xFF94A3B8,
-    iconKey: 'history',
+    id: 'pending',
+    label: 'Nạp đang chờ',
+    route: '/wallet/pending-deposits',
+    colorHex: 0xFFF59E0B,
+    iconKey: 'pending',
+  ),
+  WalletAction(
+    id: 'limits',
+    label: 'Hạn mức rút',
+    route: '/wallet/limits',
+    colorHex: 0xFF3B82F6,
+    iconKey: 'limits',
+  ),
+  WalletAction(
+    id: 'dust',
+    label: 'Dọn dust',
+    route: '/wallet/dust-converter',
+    colorHex: 0xFF8B5CF6,
+    iconKey: 'dust',
+  ),
+  WalletAction(
+    id: 'network',
+    label: 'Trạng thái mạng',
+    route: '/wallet/network-status',
+    colorHex: 0xFF10B981,
+    iconKey: 'network',
+  ),
+  WalletAction(
+    id: 'gas',
+    label: 'Tối ưu gas',
+    route: '/wallet/gas-optimizer',
+    colorHex: 0xFFF97316,
+    iconKey: 'gas',
+  ),
+  WalletAction(
+    id: 'multi',
+    label: 'Quản lý ví',
+    route: '/wallet/multi-manager',
+    colorHex: 0xFF6366F1,
+    iconKey: 'multi',
+  ),
+  WalletAction(
+    id: 'approval',
+    label: 'Phê duyệt token',
+    route: '/wallet/token-approval',
+    colorHex: 0xFFEC4899,
+    iconKey: 'approval',
   ),
 ];
 
@@ -399,34 +443,28 @@ const WalletDcaSnapshot _walletDca = WalletDcaSnapshot(
   nextTrade: '47 giờ • 500.000',
 );
 
+/// D6 locked visible hub tools (history / address-book / health-score).
 const List<WalletTool> _walletTools = [
   WalletTool(
-    id: 'pending',
-    label: 'Nạp đang chờ',
-    route: '/wallet/pending-deposits',
-    colorHex: 0xFFF59E0B,
-    iconKey: 'pending',
+    id: 'history',
+    label: 'Lịch sử',
+    route: '/wallet/history',
+    colorHex: 0xFF94A3B8,
+    iconKey: 'history',
   ),
   WalletTool(
-    id: 'limits',
-    label: 'Hạn mức rút',
-    route: '/wallet/limits',
+    id: 'addressBook',
+    label: 'Sổ địa chỉ',
+    route: '/wallet/address-book',
     colorHex: 0xFF3B82F6,
-    iconKey: 'limits',
+    iconKey: 'address',
   ),
   WalletTool(
-    id: 'dust',
-    label: 'Dọn dust',
-    route: '/wallet/dust-converter',
-    colorHex: 0xFF8B5CF6,
-    iconKey: 'dust',
-  ),
-  WalletTool(
-    id: 'network',
-    label: 'Trạng thái mạng',
-    route: '/wallet/network-status',
+    id: 'healthScore',
+    label: 'Sức khỏe ví',
+    route: '/wallet/health-score',
     colorHex: 0xFF10B981,
-    iconKey: 'network',
+    iconKey: 'health',
   ),
 ];
 

@@ -138,8 +138,8 @@ the `02_FLUTTER_MIGRATION/` top level — verified against the tools' own
 
 | Resource | Purpose |
 | --- | --- |
-| `~/.cursor/mcp.json` (Home) | `gitnexus`, `dart` |
-| [.cursor/mcp.json](../.cursor/mcp.json) (Workspace) | `headroom` only |
+| `~/.cursor/mcp.json` (Home) | `gitnexus`, `dart`, `headroom` |
+| [.cursor/mcp.json](../.cursor/mcp.json) (Workspace) | empty — no project servers |
 | [.cursor/rules/](../.cursor/rules/) | Cursor agent rules |
 | [scripts/Start-CursorSession.ps1](../scripts/Start-CursorSession.ps1) | Daily startup |
 

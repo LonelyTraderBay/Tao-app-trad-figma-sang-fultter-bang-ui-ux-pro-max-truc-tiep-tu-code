@@ -329,7 +329,8 @@ class _ReceiptActions extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCtaButton(
           key: PredictionOrderReceiptPage.viewPortfolioKey,
-          onPressed: () => context.go(AppRoutePaths.profilePredictions),
+          onPressed: () =>
+              context.go(AppRoutePaths.marketsPredictionsPortfolio),
           variant: VitCtaButtonVariant.secondary,
           child: const Text('Xem danh mục'),
         ),

@@ -35,13 +35,13 @@ class SavingsGuideTutorialsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _HeroCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _LearningProgressCard(
           completed: completedTutorials.length,
           total: snapshot.tutorials.length,
           progress: progress,
         ),
-        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Bài hướng dẫn',
           accentColor: AppColors.buy,
@@ -67,13 +67,13 @@ class SavingsGuideTutorialsTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Mẹo nhanh',
           accentColor: AppColors.warn,
           children: [_QuickTipsGrid(tips: snapshot.quickTips)],
         ),
-        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _StartSavingsCard(snapshot: snapshot),
       ],
     );

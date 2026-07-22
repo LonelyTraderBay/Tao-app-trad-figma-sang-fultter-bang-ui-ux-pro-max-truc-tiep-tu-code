@@ -72,7 +72,7 @@ class DesignSystemPlayground extends StatelessWidget {
                 title: 'CTAButton Playground',
                 color: AppColors.primary,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 variant: VitCardVariant.inner,
                 padding: AdminSpacingTokens.devCardPaddingLarge,
@@ -86,20 +86,20 @@ class DesignSystemPlayground extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _SegmentControls(
                 label: 'variant',
                 options: const ['primary', 'success', 'danger', 'ghost'],
                 selected: variant,
                 onChanged: onVariantChanged,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitInput(
                 controller: labelController,
                 label: 'children (text)',
                 onChanged: onLabelChanged,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Wrap(
                 spacing: AppSpacing.x3,
                 runSpacing: AppSpacing.x3,
@@ -136,7 +136,7 @@ class DesignSystemPlayground extends StatelessWidget {
                 title: 'InputField Playground',
                 color: AppColors.buy,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 variant: VitCardVariant.inner,
                 padding: AdminSpacingTokens.devCardPaddingLarge,
@@ -156,14 +156,14 @@ class DesignSystemPlayground extends StatelessWidget {
                   errorText: inputError.isEmpty ? null : inputError,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitInput(
                 controller: errorController,
                 label: 'error',
                 hintText: 'Leave empty for no error',
                 onChanged: onErrorChanged,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Wrap(
                 spacing: AppSpacing.x3,
                 runSpacing: AppSpacing.x3,
@@ -238,7 +238,7 @@ class _SegmentControls extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DesignSystemCaption(label),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x2,

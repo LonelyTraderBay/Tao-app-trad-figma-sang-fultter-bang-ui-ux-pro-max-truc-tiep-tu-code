@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/arena_challenge_detail_page.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_home_page.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/arena_leaderboard_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/my_arena_page.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/verified_challenges_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -65,10 +66,10 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Open Arena'), findsWidgets);
-    expect(find.text('Hoàn thành · Fair play'), findsOneWidget);
-    expect(find.text('Points only'), findsOneWidget);
+    expect(find.text('Điểm Arena · thách đấu · hoàn thành'), findsOneWidget);
+    expect(find.text('Chỉ điểm Arena'), findsOneWidget);
     expect(find.text('Thử thách cộng đồng'), findsOneWidget);
-    expect(find.text('Templates'), findsOneWidget);
+    expect(find.text('Mẫu thách đấu'), findsOneWidget);
     expect(find.text('Prediction'), findsWidgets);
     expect(find.text('Mode nổi bật'), findsOneWidget);
     expect(find.text('BTC Weekly Predict'), findsOneWidget);
@@ -136,6 +137,23 @@ void main() {
   testWidgets('SC-184 navigation edges open canonical Arena routes', (
     tester,
   ) async {
+    await pumpArenaHome(tester);
+    await tester.tap(find.byKey(ArenaHomePage.toolsActionKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ArenaHomePage.toolsSheetKey), findsOneWidget);
+    expect(find.text('Công cụ Arena'), findsOneWidget);
+    expect(find.text('Hướng dẫn'), findsWidgets);
+    expect(find.text('Bảng xếp hạng'), findsWidgets);
+    expect(find.text('Studio'), findsWidgets);
+    await tester.tap(find.byKey(ArenaHomePage.toolKey('leaderboard')));
+    await tester.pumpAndSettle();
+    expect(find.byType(ArenaLeaderboardPage), findsOneWidget);
+
+    await pumpArenaHome(tester);
+    await tester.tap(find.byKey(ArenaHomePage.myArenaHeaderKey));
+    await tester.pumpAndSettle();
+    expect(find.byType(MyArenaPage), findsOneWidget);
+
     await pumpArenaHome(tester);
     await tester.tap(find.byKey(ArenaHomePage.createChallengeKey));
     await tester.pumpAndSettle();

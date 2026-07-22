@@ -1,42 +1,33 @@
-# UI/UX Reorg Master Plan
+# UI/UX Reorg Master Plan (short outline)
 
 Generated: 2026-07-21  
-Prerequisite: `UI-UX-Pre-Implementation-Gate.md`. Batches: **5–10 files**; new chat per batch.
+**Chi tiết từng bước + progress tracker:**  
+→ [`UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md`](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md)
 
-## Locked decisions
+File này chỉ là bản tóm tắt. AI và người thực thi **bám playbook**, không bám outline này.
 
-- 5 bottom tabs; active-tab Option A
-- Trade = Spot terminal-first
+## Locked decisions (defaults)
+
+- 5 bottom tabs; active-tab Option A (Trade highlight secondary)
+- Trade = Spot terminal-first; Orders/Positions = header actions
 - P2P = marketplace-first + hub drawer
-- Earn dual entry + legal sheet
+- Earn dual entry + legal sheet (31 GOM)
 - Discovery canonical on Home
-- GOM: Profile Pháp lý + Earn sheet
+- GOM: Profile Pháp lý (39) + Earn sheet
 
-## Phases
+## Phases (51 STEPs trong playbook)
 
-| Phase | Scope |
-|-------|-------|
-| 0 | Evidence pack — DONE |
-| 1 | Home + Profile (2–3 batches) |
-| 2 | Markets + Trade + Wallet |
-| 3 | Earn/Savings + P2P |
-| 4 | Discovery family |
-| 5 | States + sparse P0 |
-| 6 | Wiring sweeps + Visual QA expand |
+| Phase | STEPs | Nội dung |
+|-------|------:|----------|
+| P0 | 12 | Làm dày specs 18–26 + lock D1–D6 (**chưa code UI**) |
+| P1 | 6 | Home + Profile |
+| P2 | 9 | Markets + Trade + Wallet |
+| P3 | 8 | Earn/Savings + P2P |
+| P4 | 6 | Discovery family |
+| P5 | 5 | Sparse density + states |
+| P6 | 5 | Wiring + Visual QA + final gate |
 
-## Phase 1 batches
+## First action
 
-1.1 Home product IA data (`home_mock_data` + products widgets)
-1.2 Home header News
-1.3 Profile sections + Pháp lý scaffold
-
-## Verify each code batch
-
-```bash
-cd flutter_app
-dart format --output=none --set-exit-if-changed .
-dart run tool/route_coverage_audit.dart --check
-dart run tool/navigation_edge_audit.dart --check
-flutter analyze
-flutter test --reporter=compact
-```
+1. Lock D1–D6 trong playbook §1.2  
+2. Chat mới → Execute **STEP-P0.1**

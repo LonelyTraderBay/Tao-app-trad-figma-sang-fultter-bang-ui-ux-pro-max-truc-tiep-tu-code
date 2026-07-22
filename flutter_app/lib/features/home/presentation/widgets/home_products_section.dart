@@ -10,17 +10,19 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 class HomeProductsSection extends StatelessWidget {
   const HomeProductsSection({
     super.key,
-    required this.actions,
-    required this.maxVisibleItems,
-    required this.moreActions,
+    required this.quickActions,
+    required this.maxVisibleQuickActions,
+    required this.moreQuickActions,
+    required this.productGroups,
     required this.onNavigate,
     required this.onMore,
     required this.density,
   });
 
-  final List<HomeQuickAction> actions;
-  final int maxVisibleItems;
-  final List<HomeQuickAction> moreActions;
+  final List<HomeQuickAction> quickActions;
+  final int maxVisibleQuickActions;
+  final List<HomeQuickAction> moreQuickActions;
+  final List<HomeProductGroup> productGroups;
   final ValueChanged<String> onNavigate;
   final VoidCallback? onMore;
   final VitDensity density;
@@ -32,21 +34,36 @@ class HomeProductsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitSectionHeader(
-          title: 'Sản phẩm',
+          title: 'Hành động nhanh',
           bottomGap: AppSpacing.pageRhythmCompactInnerGap,
-          actionLabel: moreActions.isEmpty
+          actionLabel: moreQuickActions.isEmpty
               ? null
-              : 'Xem thêm (+${moreActions.length})',
-          actionSemanticLabel: 'Xem thêm ${moreActions.length} sản phẩm khác',
+              : 'Xem thêm (+${moreQuickActions.length})',
+          actionSemanticLabel:
+              'Xem thêm ${moreQuickActions.length} hành động khác',
           onAction: onMore,
           density: density,
         ),
         HomeQuickActionsGrid(
-          actions: actions,
-          maxVisibleItems: maxVisibleItems,
+          actions: quickActions,
+          maxVisibleItems: maxVisibleQuickActions,
           onNavigate: onNavigate,
           density: density,
         ),
+        for (final group in productGroups) ...[
+          const SizedBox(height: AppSpacing.pageRhythmCompactSectionGap),
+          VitSectionHeader(
+            title: group.title,
+            bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+            density: density,
+          ),
+          HomeQuickActionsGrid(
+            actions: group.actions,
+            maxVisibleItems: group.actions.length,
+            onNavigate: onNavigate,
+            density: density,
+          ),
+        ],
       ],
     );
   }

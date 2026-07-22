@@ -30,7 +30,7 @@ class _VestingTimelineCard extends StatelessWidget {
                   Expanded(
                     flex: entry.percent,
                     child: SizedBox(
-                      height: AppSpacing.x3,
+                      height: AppSpacing.pageRhythmStandardInnerGap,
                       child: ColoredBox(color: _vestingColor(entry.status)),
                     ),
                   ),

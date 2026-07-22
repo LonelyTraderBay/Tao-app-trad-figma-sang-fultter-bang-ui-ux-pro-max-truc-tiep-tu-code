@@ -1,5 +1,28 @@
 part of '../../pages/hub/predictions_home_page.dart';
 
+const _predictionHomeTools = <({String id, String label, String route})>[
+  (
+    id: 'portfolio',
+    label: 'Danh mục',
+    route: AppRoutePaths.marketsPredictionsPortfolio,
+  ),
+  (
+    id: 'portfolio_analyzer',
+    label: 'Phân tích',
+    route: AppRoutePaths.marketsPredictionsPortfolioAnalyzer,
+  ),
+  (
+    id: 'leaderboard',
+    label: 'BXH',
+    route: AppRoutePaths.marketsPredictionsLeaderboard,
+  ),
+  (
+    id: 'calendar',
+    label: 'Lịch',
+    route: AppRoutePaths.marketsPredictionsEventCalendar,
+  ),
+];
+
 class _PredictionsHero extends StatelessWidget {
   const _PredictionsHero({
     required this.openEventCount,
@@ -219,7 +242,7 @@ class _ArenaBridgeCard extends StatelessWidget {
                       ),
                     ),
                     const PredictionSmallBadge(
-                      label: 'Arena Points only',
+                      label: 'Chỉ điểm Arena',
                       color: AppColors.text3,
                       background: AppColors.surface2,
                     ),
@@ -227,7 +250,7 @@ class _ArenaBridgeCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Khám phá room social points-only trong Open Arena',
+                  'Khám phá phòng xã hội chỉ dùng điểm Arena trong Open Arena',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -242,6 +265,40 @@ class _ArenaBridgeCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PredictionsToolsSection extends StatelessWidget {
+  const _PredictionsToolsSection({required this.onNavigate});
+
+  final ValueChanged<String> onNavigate;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageSection(
+      key: PredictionsHomePage.toolsSectionKey,
+      label: 'Công cụ dự đoán',
+      headerIcon: Icons.grid_view_rounded,
+      headerIconColor: _marketPrimary,
+      headerVariant: VitSectionHeaderVariant.plain,
+      accentColor: _marketPrimary,
+      innerGap: AppSpacing.pageRhythmCompactInnerGap,
+      children: [
+        VitPresetChipRow<String>(
+          items: [
+            for (final tool in _predictionHomeTools)
+              VitPresetChipItem<String>(
+                key: PredictionsHomePage.toolKey(tool.id),
+                value: tool.route,
+                label: tool.label,
+                semanticLabel: 'Mở ${tool.label}',
+              ),
+          ],
+          onTap: onNavigate,
+          accentColor: _marketPrimary,
+        ),
+      ],
     );
   }
 }

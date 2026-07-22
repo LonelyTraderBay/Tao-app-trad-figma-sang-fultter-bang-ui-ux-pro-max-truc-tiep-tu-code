@@ -152,6 +152,21 @@ class _TradePageState extends ConsumerState<TradePage> {
               mode: BackNavigationMode.historyThenFallback,
             )
           : null,
+      // STEP-P2.4 / D5: persistent Lệnh + Vị thế (EP-26 / EP-27).
+      headerActions: [
+        VitHeaderActionItem(
+          type: VitHeaderActionType.history,
+          size: VitHeaderActionSize.sm,
+          tooltip: 'Lệnh',
+          onPressed: () => context.push(AppRoutePaths.tradeOrdersHistory),
+        ),
+        VitHeaderActionItem(
+          type: VitHeaderActionType.portfolio,
+          size: VitHeaderActionSize.sm,
+          tooltip: 'Vị thế',
+          onPressed: () => context.push(AppRoutePaths.tradePositions),
+        ),
+      ],
       activeProductId: 'spot',
       productPair: pair,
       quickNavKey: TradePage.quickNavKey,

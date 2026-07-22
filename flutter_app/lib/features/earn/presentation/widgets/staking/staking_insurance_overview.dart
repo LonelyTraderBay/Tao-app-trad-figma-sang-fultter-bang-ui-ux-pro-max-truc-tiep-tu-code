@@ -200,7 +200,7 @@ class _BenefitCard extends StatelessWidget {
               ),
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             benefit.label,
             maxLines: 2,

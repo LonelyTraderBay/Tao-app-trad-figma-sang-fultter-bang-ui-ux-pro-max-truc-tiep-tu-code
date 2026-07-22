@@ -42,6 +42,7 @@ List<Widget> _profilePageChildren({
             'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u t\u00E0i kho\u1EA3n \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
       ),
       ..._profileReadySections(
+        context: context,
         snapshot: snapshot,
         copiedReferral: copiedReferral,
         onEdit: onEdit,
@@ -54,6 +55,7 @@ List<Widget> _profilePageChildren({
       ),
     ],
     _ => _profileReadySections(
+      context: context,
       snapshot: snapshot,
       copiedReferral: copiedReferral,
       onEdit: onEdit,
@@ -68,6 +70,7 @@ List<Widget> _profilePageChildren({
 }
 
 List<Widget> _profileReadySections({
+  required BuildContext context,
   required ProfileSnapshot snapshot,
   required bool copiedReferral,
   required VoidCallback onEdit,
@@ -85,6 +88,8 @@ List<Widget> _profileReadySections({
       onEdit: onEdit,
       onCopyReferral: onCopyReferral,
     ),
+    if (snapshot.user.kycNeedsAction)
+      _KycUpgradeBanner(onVerify: () => context.go(AppRoutePaths.profileKyc)),
     _VipCard(vip: snapshot.vip, onTap: onOpenVip),
     const VitSectionHeader(
       title: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
@@ -96,7 +101,7 @@ List<Widget> _profileReadySections({
     _PredictionCard(prediction: snapshot.prediction, onTap: onOpenPredictions),
     _ArenaCard(arena: snapshot.arena, onTap: onOpenArena),
     const VitSectionHeader(
-      title: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
+      title: 'LỐI TẮT SẢN PHẨM',
       accentColor: _profileAmber,
       variant: VitSectionHeaderVariant.accentBar,
       density: VitDensity.compact,
@@ -127,7 +132,10 @@ List<Widget> _profileReadySections({
           density: VitDensity.compact,
           bottomGap: AppSpacing.pageRhythmCompactInnerGap,
         ),
-        _MenuSection(section: section),
+        if (section.id == 'legal')
+          const _LegalAccordionSection()
+        else
+          _MenuSection(section: section),
       ],
     _ActivityButton(onTap: onOpenActivity),
     _LogoutButton(onTap: onLogout),
@@ -161,6 +169,33 @@ class _MenuSection extends StatelessWidget {
               ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// D2: KYC upgrade banner above menu sections (row phụ vẫn ở Tài khoản).
+class _KycUpgradeBanner extends StatelessWidget {
+  const _KycUpgradeBanner({required this.onVerify});
+
+  final VoidCallback onVerify;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitBanner(
+      key: ProfilePage.kycBannerKey,
+      variant: VitBannerVariant.warning,
+      icon: Icons.verified_user_outlined,
+      message: 'Hoàn tất KYC để nâng hạn mức giao dịch và rút tiền.',
+      action: VitCtaButton(
+        onPressed: onVerify,
+        fullWidth: false,
+        density: VitDensity.compact,
+        height: AppSpacing.buttonCompact,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x4,
+        ),
+        child: const Text('Xác minh'),
       ),
     );
   }

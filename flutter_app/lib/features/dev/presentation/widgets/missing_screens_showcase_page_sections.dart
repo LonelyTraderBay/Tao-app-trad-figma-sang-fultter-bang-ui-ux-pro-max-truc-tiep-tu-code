@@ -15,11 +15,11 @@ class _NewScreensSection extends StatelessWidget {
           snapshot.newScreensIntro,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final screen in snapshot.newScreens) ...[
           _NewScreenCard(screen: screen, onTap: () => context.go(screen.route)),
           if (screen != snapshot.newScreens.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -41,11 +41,11 @@ class _V2ScreensSection extends StatelessWidget {
           snapshot.v2Intro,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final page in snapshot.v2Pages) ...[
           _V2PageCard(page: page, onTap: () => context.go(page.route)),
           if (page != snapshot.v2Pages.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
@@ -54,7 +54,7 @@ class _V2ScreensSection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           clip: true,
@@ -67,7 +67,7 @@ class _V2ScreensSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AdminSpacingTokens.devCardPadding,
           radius: VitCardRadius.standard,
@@ -135,12 +135,12 @@ class _NewScreenCard extends StatelessWidget {
               _PreviewPill(color: accent),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             screen.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -211,11 +211,11 @@ class _V2PageCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final change in page.changes) ...[
             _ChangeRow(text: change, color: accent),
             if (change != page.changes.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

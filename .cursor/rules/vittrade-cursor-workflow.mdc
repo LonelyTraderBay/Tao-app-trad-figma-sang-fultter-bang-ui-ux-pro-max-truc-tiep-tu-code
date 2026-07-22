@@ -47,8 +47,8 @@ Self-check format: [.codex/skills/vittrade-minimal-review/SKILL.md](../../.codex
 ```
 
 Or manually: `.\scripts\headroom\Start-VitTradeHeadroom.ps1` then verify in **Cursor Settings → Tools & MCP**:
-- **Home MCP**: `gitnexus` + `dart` Connected
-- **Workspace MCP**: `headroom` Connected (project `.cursor/mcp.json` only)
+- **Home MCP**: `gitnexus` + `dart` + `headroom` Connected (`~/.cursor/mcp.json`)
+- **Workspace MCP**: empty (project `.cursor/mcp.json` defines no servers)
 
 ## Authority
 

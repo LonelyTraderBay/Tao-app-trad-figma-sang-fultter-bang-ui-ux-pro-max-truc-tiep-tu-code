@@ -57,6 +57,8 @@ void main() {
     expect(find.text('Đăng ký (3)'), findsOneWidget);
     expect(find.text('USDT Linh hoạt'), findsOneWidget);
     expect(find.text('4.5%'), findsOneWidget);
+    expect(find.byKey(SavingsPage.toolsSectionKey), findsOneWidget);
+    expect(find.byKey(SavingsPage.moreToolsKey), findsOneWidget);
   });
 
   testWidgets('SC-329 filters products and switches registered tab', (
@@ -113,10 +115,17 @@ void main() {
   testWidgets('SC-335 guide edge opens migrated savings guide', (tester) async {
     await pumpSavings(tester);
 
-    final guideButton = find.byKey(SavingsPage.guideButtonKey);
-    await Scrollable.ensureVisible(tester.element(guideButton), alignment: .55);
+    final moreToolsButton = find.byKey(SavingsPage.moreToolsKey);
+    await Scrollable.ensureVisible(
+      tester.element(moreToolsButton),
+      alignment: .55,
+    );
     await tester.pumpAndSettle();
-    await tester.tap(guideButton);
+    await tester.tap(moreToolsButton);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(SavingsPage.moreToolsSheetKey), findsOneWidget);
+    await tester.tap(find.byKey(SavingsPage.guideButtonKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(SavingsGuidePage), findsOneWidget);

@@ -24,11 +24,15 @@ class _PredictionEventCard extends StatelessWidget {
               ),
               if (event.isTrending) ...[
                 const SizedBox(width: AppSpacing.x3),
-                Text(
-                  'Đang nổi',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppModuleAccents.arena,
-                    fontWeight: AppTextStyles.bold,
+                Flexible(
+                  child: Text(
+                    'Đang nổi',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppModuleAccents.arena,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
               ],

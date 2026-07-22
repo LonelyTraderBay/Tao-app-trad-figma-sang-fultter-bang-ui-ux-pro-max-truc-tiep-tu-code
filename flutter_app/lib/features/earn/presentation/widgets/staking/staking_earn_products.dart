@@ -7,6 +7,14 @@ class _ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (products.isEmpty) {
+      return const VitEmptyState(
+        icon: Icons.inventory_2_outlined,
+        title: 'Không có sản phẩm phù hợp',
+        message: 'Thử đổi bộ lọc để xem thêm lựa chọn sinh lời.',
+      );
+    }
+
     return Column(
       children: [
         for (final product in products) ...[

@@ -67,7 +67,18 @@ void main() {
       'withdraw',
       'buy',
       'transfer',
+      'pending',
+      'limits',
+      'dust',
+      'network',
+      'gas',
+      'multi',
+      'approval',
+    ]);
+    expect(snapshot.tools.map((item) => item.id), [
       'history',
+      'addressBook',
+      'healthScore',
     ]);
     expect(snapshot.assets, hasLength(13));
     expect(snapshot.assets.first.symbol, 'USDT');
@@ -107,6 +118,9 @@ void main() {
     expect(find.text('Mua định kỳ (DCA)'), findsOneWidget);
     expect(find.text('Tài sản'), findsOneWidget);
     expect(find.text('Công cụ ví'), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('history')), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('addressBook')), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('healthScore')), findsOneWidget);
     expect(find.text('Biến động 24h'), findsOneWidget);
     expect(find.text('Danh sách'), findsOneWidget);
     expect(find.text('Tìm tài sản...'), findsOneWidget);
@@ -190,8 +204,7 @@ void main() {
     expect(find.text('Phân bổ'), findsWidgets);
     expect(find.text('BTC'), findsWidgets);
 
-    await tester.tap(find.byKey(WalletPage.moreActionsKey));
-    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(WalletPage.actionKey('history')));
     await tester.tap(find.byKey(WalletPage.actionKey('history')));
     await tester.pumpAndSettle();
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
@@ -203,11 +216,14 @@ void main() {
     final directCases = [
       (WalletPage.actionKey('deposit'), 'Nạp USDT'),
       (WalletPage.actionKey('withdraw'), 'Rút USDT'),
+      (WalletPage.actionKey('history'), 'Lịch sử giao dịch'),
+      (WalletPage.actionKey('addressBook'), 'Sổ địa chỉ'),
+      (WalletPage.actionKey('healthScore'), 'Wallet Health'),
     ];
     final overflowCases = [
       (WalletPage.actionKey('buy'), 'Mua Crypto'),
       (WalletPage.actionKey('transfer'), 'Chuyển nội bộ'),
-      (WalletPage.actionKey('history'), 'Lịch sử giao dịch'),
+      (WalletPage.actionKey('pending'), 'Nạp tiền đang chờ'),
     ];
 
     for (final testCase in directCases) {
@@ -220,6 +236,7 @@ void main() {
 
     for (final testCase in overflowCases) {
       await pumpWallet(tester);
+      await tester.ensureVisible(find.byKey(WalletPage.moreActionsKey));
       await tester.tap(find.byKey(WalletPage.moreActionsKey));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(testCase.$1));

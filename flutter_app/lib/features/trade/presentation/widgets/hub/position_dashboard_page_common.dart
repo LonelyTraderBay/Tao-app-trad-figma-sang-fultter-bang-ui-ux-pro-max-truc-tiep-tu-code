@@ -20,7 +20,7 @@ class _PositionTile extends StatelessWidget {
           Row(
             children: [
               _TypeBadge(type: position.type),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   position.symbol,
@@ -31,14 +31,25 @@ class _PositionTile extends StatelessWidget {
                   ),
                 ),
               ),
-              _SideBadge(position: position),
-              const SizedBox(width: AppSpacing.x3),
-              Text(
-                _formatSignedMoney(position.pnl),
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: pnlColor,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
+              const SizedBox(width: AppSpacing.x2),
+              Flexible(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: _SideBadge(position: position),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Flexible(
+                child: Text(
+                  _formatSignedMoney(position.pnl),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: pnlColor,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ),
             ],

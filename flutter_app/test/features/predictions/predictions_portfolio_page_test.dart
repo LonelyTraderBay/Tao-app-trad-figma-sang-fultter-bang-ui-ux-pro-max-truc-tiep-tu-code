@@ -8,8 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_ho
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_event_detail_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart';
-import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -71,7 +71,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-167 renders the profile prediction portfolio route', (
+  testWidgets('SC-167 redirects to canonical predictions portfolio route', (
     tester,
   ) async {
     await pumpPortfolio(
@@ -82,7 +82,7 @@ void main() {
     expect(find.byType(PredictionsPortfolioPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(
-      find.byKey(const Key('vit_bottom_nav_active_profile')),
+      find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
     expect(find.text('Prediction Portfolio'), findsOneWidget);
@@ -95,10 +95,10 @@ void main() {
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
 
-    expect(find.byType(ProfilePage), findsOneWidget);
+    expect(find.byType(PredictionsHomePage), findsOneWidget);
   });
 
-  testWidgets('SC-167 first viewport reaches profile portfolio controls', (
+  testWidgets('SC-167 redirect reaches canonical portfolio controls', (
     tester,
   ) async {
     await pumpPortfolio(
@@ -108,13 +108,13 @@ void main() {
 
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-167 PredictionsPortfolioPage',
+      routeName: 'SC-031 PredictionsPortfolioPage',
       semanticLabel: 'Danh mục dự đoán',
     );
     expectActionableInFirstViewport(
       tester,
       find.byKey(PredictionsPortfolioPage.visibilityToggleKey),
-      routeName: 'SC-167 PredictionsPortfolioPage',
+      routeName: 'SC-031 PredictionsPortfolioPage',
       actionLabel: 'the portfolio visibility toggle',
     );
   });
