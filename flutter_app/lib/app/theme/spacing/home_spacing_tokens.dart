@@ -11,7 +11,8 @@ final class HomeSpacingTokens {
   static const double skeletonLineWidthLg = 220;
   static const double skeletonLineHeightSm = 10;
 
-  static const int homeQuickActionCompactCount = 4;
+  /// Visible Home quick-action tiles (primary 4 + DCA + Phần thưởng).
+  static const int homeQuickActionCompactCount = 6;
   static const double homeQuickActionDensityBreakpoint = 480;
   static const double homeAnnouncementAutoHideScrollOffset = 96;
   static const double homeAnnouncementDotRadius = 3;

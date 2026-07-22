@@ -7,13 +7,13 @@ import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dar
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+/// Primary quick-action grid only. Full catalog opens via «Xem thêm».
 class HomeProductsSection extends StatelessWidget {
   const HomeProductsSection({
     super.key,
     required this.quickActions,
     required this.maxVisibleQuickActions,
-    required this.moreQuickActions,
-    required this.productGroups,
+    required this.moreActionCount,
     required this.onNavigate,
     required this.onMore,
     required this.density,
@@ -21,8 +21,7 @@ class HomeProductsSection extends StatelessWidget {
 
   final List<HomeQuickAction> quickActions;
   final int maxVisibleQuickActions;
-  final List<HomeQuickAction> moreQuickActions;
-  final List<HomeProductGroup> productGroups;
+  final int moreActionCount;
   final ValueChanged<String> onNavigate;
   final VoidCallback? onMore;
   final VitDensity density;
@@ -36,11 +35,10 @@ class HomeProductsSection extends StatelessWidget {
         VitSectionHeader(
           title: 'Hành động nhanh',
           bottomGap: AppSpacing.pageRhythmCompactInnerGap,
-          actionLabel: moreQuickActions.isEmpty
+          actionLabel: moreActionCount <= 0
               ? null
-              : 'Xem thêm (+${moreQuickActions.length})',
-          actionSemanticLabel:
-              'Xem thêm ${moreQuickActions.length} hành động khác',
+              : 'Xem thêm (+$moreActionCount)',
+          actionSemanticLabel: 'Xem thêm $moreActionCount hành động khác',
           onAction: onMore,
           density: density,
         ),
@@ -50,20 +48,6 @@ class HomeProductsSection extends StatelessWidget {
           onNavigate: onNavigate,
           density: density,
         ),
-        for (final group in productGroups) ...[
-          const SizedBox(height: AppSpacing.pageRhythmCompactSectionGap),
-          VitSectionHeader(
-            title: group.title,
-            bottomGap: AppSpacing.pageRhythmCompactInnerGap,
-            density: density,
-          ),
-          HomeQuickActionsGrid(
-            actions: group.actions,
-            maxVisibleItems: group.actions.length,
-            onNavigate: onNavigate,
-            density: density,
-          ),
-        ],
       ],
     );
   }

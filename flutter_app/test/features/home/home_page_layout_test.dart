@@ -144,15 +144,14 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Hành động nhanh'), findsOneWidget);
+    expect(find.textContaining('Xem thêm'), findsOneWidget);
     expect(find.byTooltip('Tin tức'), findsOneWidget);
     expect(find.byKey(HomePage.marketTickerKey), findsOneWidget);
-    expect(find.text('Giao dịch'), findsWidgets);
-    expect(find.text('Sinh lời'), findsOneWidget);
-    expect(find.text('Khám phá'), findsOneWidget);
-    expect(find.text('Staking'), findsWidgets);
+    expect(find.text('Sinh lời'), findsNothing);
+    expect(find.text('Staking'), findsNothing);
+    expect(find.text('Margin'), findsNothing);
     expect(find.text('Hỗ trợ'), findsNothing);
     expect(find.text('Giới thiệu'), findsNothing);
-    expect(find.text('Margin'), findsOneWidget);
     expect(find.text('Dự đoán'), findsNothing);
     expect(find.text('Thị trường dự đoán'), findsOneWidget);
     expect(find.text('Arena'), findsOneWidget);
@@ -163,39 +162,41 @@ void main() {
     expect(find.text('Trang chủ'), findsOneWidget);
   });
 
-  testWidgets('SC-007 orders products before discovery before recent', (
+  testWidgets(
+    'SC-007 orders quick actions before ticker before discovery before recent',
+    (tester) async {
+      await pumpHome(tester);
+
+      final productsTop = tester.getTopLeft(
+        find.byKey(HomePage.productsSectionKey),
+      );
+      final tickerTop = tester.getTopLeft(find.byKey(HomePage.marketTickerKey));
+      final discoveryTop = tester.getTopLeft(find.text('Dự đoán & Thách đấu'));
+      final recentTop = tester.getTopLeft(
+        find.byKey(HomePage.recentProductsSectionKey),
+      );
+
+      expect(productsTop.dy, lessThan(tickerTop.dy));
+      expect(tickerTop.dy, lessThan(discoveryTop.dy));
+      expect(discoveryTop.dy, lessThan(recentTop.dy));
+    },
+  );
+
+  testWidgets('SC-007 uses uniform section gap between ticker and discovery', (
     tester,
   ) async {
     await pumpHome(tester);
 
-    final productsTop = tester.getTopLeft(
-      find.byKey(HomePage.productsSectionKey),
+    final tickerBottom = tester.getBottomLeft(
+      find.byKey(HomePage.marketTickerKey),
     );
     final discoveryTop = tester.getTopLeft(find.text('Dự đoán & Thách đấu'));
-    final recentTop = tester.getTopLeft(
-      find.byKey(HomePage.recentProductsSectionKey),
+
+    expect(
+      discoveryTop.dy - tickerBottom.dy,
+      closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
     );
-
-    expect(productsTop.dy, lessThan(discoveryTop.dy));
-    expect(discoveryTop.dy, lessThan(recentTop.dy));
   });
-
-  testWidgets(
-    'SC-007 uses uniform section gap between products and discovery',
-    (tester) async {
-      await pumpHome(tester);
-
-      final productsBottom = tester.getBottomLeft(
-        find.byKey(HomePage.productsSectionKey),
-      );
-      final discoveryTop = tester.getTopLeft(find.text('Dự đoán & Thách đấu'));
-
-      expect(
-        discoveryTop.dy - productsBottom.dy,
-        closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
-      );
-    },
-  );
 
   testWidgets('SC-007 first viewport keeps key actions above bottom nav', (
     tester,
@@ -207,6 +208,7 @@ void main() {
 
     expect(depositIcon, findsOneWidget);
     expect(find.byKey(HomePage.marketTickerKey), findsOneWidget);
+    expect(find.byKey(HomePage.productsSectionKey), findsOneWidget);
 
     expect(tester.getBottomLeft(depositIcon).dy, lessThan(navTop));
     expect(
@@ -214,7 +216,7 @@ void main() {
       lessThan(navTop),
     );
     expect(
-      tester.getBottomLeft(find.byKey(HomePage.marketTickerKey)).dy,
+      tester.getTopLeft(find.byKey(HomePage.productsSectionKey)).dy,
       lessThan(navTop),
     );
     expect(

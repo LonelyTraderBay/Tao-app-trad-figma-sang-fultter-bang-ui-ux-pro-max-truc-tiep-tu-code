@@ -162,9 +162,16 @@ class _HomePageState extends ConsumerState<HomePage> {
               HomeSpacingTokens.homeQuickActionCompactCount;
           final visibleAnnouncements = _visibleAnnouncements(snapshot);
           final gridQuickActions = snapshot.quickActions;
-          final moreQuickActions = gridQuickActions
-              .skip(homePrimaryQuickActionCount)
-              .toList(growable: false);
+          final primaryRoutes = gridQuickActions
+              .take(homePrimaryQuickActionCount)
+              .map((action) => action.routePath)
+              .toSet();
+          // Flat catalog in «Xem thêm» — no group headers; skip Home tiles.
+          final moreCatalogActions = _flatMoreCatalogActions(
+            productGroups: snapshot.productGroups,
+            excludedRoutes: primaryRoutes,
+          );
+          final moreActionCount = moreCatalogActions.length;
           final visibleNextAction = _visibleNextAction(snapshot.nextAction);
           final marketTickerPairs = controller.gainers
               .take(3)
@@ -197,27 +204,30 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onNavigate: _go,
                     onDismiss: () => _dismissNextAction(visibleNextAction),
                   ),
+                // Action-first + lean Home: 6 quick actions on-scroll;
+                // catalog opens from «Xem thêm» (no stacked product groups).
+                HomeProductsSection(
+                  quickActions: gridQuickActions,
+                  maxVisibleQuickActions: homePrimaryQuickActionCount,
+                  moreActionCount: moreActionCount,
+                  onNavigate: _go,
+                  onMore: moreActionCount <= 0
+                      ? null
+                      : () =>
+                            _showMoreProducts(moreCatalogActions, homeDensity),
+                  density: homeDensity,
+                ),
                 // Distinct from the Market section below (default tab
                 // "Hot"): the ticker previews top movers so the two blocks
                 // don't show the exact same three pairs back to back.
+                // D4: keep compact ticker on Home.
                 if (marketTickerPairs.isNotEmpty)
                   HomeMarketTickerSection(
                     pairs: marketTickerPairs,
                     onNavigate: _go,
                   ),
-                HomeProductsSection(
-                  quickActions: gridQuickActions,
-                  maxVisibleQuickActions: homePrimaryQuickActionCount,
-                  moreQuickActions: moreQuickActions,
-                  productGroups: snapshot.productGroups,
-                  onNavigate: _go,
-                  onMore: moreQuickActions.isEmpty
-                      ? null
-                      : () => _showMoreProducts(moreQuickActions, homeDensity),
-                  density: homeDensity,
-                ),
                 _HomeDiscoverySection(onNavigate: _go),
-                // D3: «Gần đây» dưới Discovery (không chen giữa products).
+                // D3: «Gần đây» dưới Discovery.
                 HomeRecentProductsSection(
                   recentProducts: snapshot.recentProducts,
                   onNavigate: _go,

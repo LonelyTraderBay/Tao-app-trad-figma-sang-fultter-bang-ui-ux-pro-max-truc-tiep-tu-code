@@ -60,7 +60,8 @@ class HomeMockData {
     ),
   ];
 
-  /// Compact «Hành động nhanh»: 4 ô visible; phần còn lại vào sheet (≤9 tổng).
+  /// Compact «Hành động nhanh»: 6 ô visible (4 core + DCA + Phần thưởng);
+  /// phần còn lại vào sheet.
   /// Không gồm Support / Referral / Discovery (Predictions, Arena).
   static const quickActions = [
     HomeQuickAction(
@@ -93,10 +94,17 @@ class HomeMockData {
     ),
     HomeQuickAction(
       icon: 'dca',
-      label: 'Mua định kỳ',
+      label: 'DCA',
       routePath: '/dca',
       accentKey: 'caution',
       stateLabel: 'DCA',
+    ),
+    HomeQuickAction(
+      icon: 'rewards',
+      label: 'Phần thưởng',
+      routePath: '/rewards',
+      accentKey: 'medalGold',
+      stateLabel: 'Phần thưởng',
     ),
     HomeQuickAction(
       icon: 'staking',
@@ -119,13 +127,6 @@ class HomeMockData {
       accentKey: 'riskHigh',
       stateLabel: 'Token mới',
       riskBadge: 'Rủi ro cao',
-    ),
-    HomeQuickAction(
-      icon: 'rewards',
-      label: 'Phần thưởng',
-      routePath: '/rewards',
-      accentKey: 'medalGold',
-      stateLabel: 'Phần thưởng',
     ),
   ];
 
