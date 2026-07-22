@@ -14,8 +14,8 @@ Generated from `flutter_app/tool/body_component_consistency_audit.dart`.
 ## Summary
 
 ```text
-total_routed_screens=415
-grade_A=276
+total_routed_screens=413
+grade_A=274
 grade_B=73
 grade_C=57
 grade_D=4
@@ -38,7 +38,7 @@ screen_level_mismatches=0
 
 | Grade | Routes |
 | --- | ---: |
-| A | 276 |
+| A | 274 |
 | B | 73 |
 | C | 57 |
 | Tool | 5 |
@@ -48,7 +48,7 @@ screen_level_mismatches=0
 
 | Priority | Routes |
 | --- | ---: |
-| P3 | 281 |
+| P3 | 279 |
 | P2 | 114 |
 | P1 | 12 |
 | P0 | 8 |
@@ -58,11 +58,11 @@ screen_level_mismatches=0
 | Feature | Routes | A | B | C | D | Tool | P0 | P1 | P2 | P3 | Avg shared | Avg custom |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | admin | 5 | 2 | 3 | 0 | 0 | 0 | 0 | 0 | 3 | 2 | 20.0 | 11.6 |
-| arena | 26 | 23 | 3 | 0 | 0 | 0 | 0 | 0 | 3 | 23 | 37.5 | 15.2 |
+| arena | 25 | 22 | 3 | 0 | 0 | 0 | 0 | 0 | 3 | 22 | 37.3 | 15.2 |
 | auth | 6 | 1 | 5 | 0 | 0 | 0 | 0 | 0 | 5 | 1 | 14.3 | 0.8 |
 | cross_module | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 28.5 | 21.8 |
 | dca | 14 | 11 | 3 | 0 | 0 | 0 | 0 | 0 | 3 | 11 | 30.7 | 12.6 |
-| dev | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 33.3 | 12.5 |
+| dev | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 33.3 | 11.5 |
 | discovery | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 24.0 | 12.0 |
 | earn | 70 | 68 | 0 | 2 | 0 | 0 | 2 | 0 | 0 | 68 | 39.7 | 14.5 |
 | enterprise_states | 3 | 0 | 2 | 0 | 0 | 1 | 0 | 0 | 2 | 1 | 14.0 | 8.7 |
@@ -73,13 +73,13 @@ screen_level_mismatches=0
 | notifications | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 20.0 | 2.0 |
 | onboarding | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 49.0 | 14.0 |
 | p2p | 77 | 70 | 5 | 1 | 0 | 1 | 1 | 0 | 5 | 71 | 27.8 | 10.7 |
-| predictions | 19 | 17 | 2 | 0 | 0 | 0 | 0 | 0 | 1 | 18 | 24.9 | 12.9 |
+| predictions | 18 | 16 | 2 | 0 | 0 | 0 | 0 | 0 | 1 | 17 | 24.6 | 13.3 |
 | profile | 14 | 5 | 9 | 0 | 0 | 0 | 0 | 0 | 9 | 5 | 17.9 | 9.0 |
 | referral | 5 | 3 | 2 | 0 | 0 | 0 | 0 | 0 | 2 | 3 | 32.4 | 9.8 |
 | rewards | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 33.0 | 18.0 |
 | support | 3 | 2 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 21.0 | 9.0 |
 | trade | 13 | 0 | 0 | 12 | 0 | 1 | 0 | 12 | 0 | 1 | 21.5 | 7.8 |
-| trade_bots | 19 | 0 | 4 | 12 | 2 | 1 | 2 | 0 | 17 | 0 | 26.5 | 10.8 |
+| trade_bots | 19 | 0 | 4 | 12 | 2 | 1 | 2 | 0 | 17 | 0 | 26.5 | 10.7 |
 | trade_compliance | 30 | 0 | 15 | 15 | 0 | 0 | 0 | 0 | 30 | 0 | 32.2 | 6.8 |
 | trade_copy | 22 | 2 | 7 | 11 | 2 | 0 | 2 | 0 | 18 | 2 | 29.0 | 12.4 |
 | trade_terminal | 6 | 0 | 2 | 3 | 0 | 1 | 0 | 0 | 5 | 1 | 31.2 | 13.2 |
@@ -89,9 +89,9 @@ screen_level_mismatches=0
 
 | Screen level / grade | Routes |
 | --- | ---: |
-| L2_detail / A | 124 |
+| L2_detail / A | 123 |
 | L3_transactionFlow / A | 48 |
-| L2_utilityDetail / A | 43 |
+| L2_utilityDetail / A | 42 |
 | L2_detail / C | 28 |
 | L2_detail / B | 25 |
 | L2_entityDetail / A | 24 |
@@ -264,7 +264,6 @@ flutter test --reporter=compact
 | arena | `AppRoutePaths.arena` | `ArenaHomePage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 63 | 29 | 0 | 0 | 5 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page.dart` |
 | arena | `AppRoutePaths.arenaProduction` | `ArenaProductionReadyPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 47 | 17 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/hub/arena_production_ready_page.dart` |
 | arena | `AppRoutePaths.arenaMy` | `MyArenaPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 44 | 13 | 0 | 0 | 6 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/hub/my_arena_page.dart` |
-| arena | `AppRoutePaths.profileArena` | `MyArenaPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 44 | 13 | 0 | 0 | 6 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/hub/my_arena_page.dart` |
 | arena | `'/arena/ledger/entry/:entryId'` | `ArenaPointsEntryDetailPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 35 | 5 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/points/arena_points_entry_detail_page.dart` |
 | arena | `AppRoutePaths.arenaLedger` | `ArenaPointsLedgerPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 14 | 4 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/points/arena_points_ledger_page.dart` |
 | arena | `'/arena/creator/:creatorId'` | `ArenaCreatorPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 38 | 11 | 0 | 0 | 6 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/arena/presentation/pages/studio/arena_creator_page.dart` |
@@ -295,10 +294,10 @@ flutter test --reporter=compact
 | dca | `AppRoutePaths.dcaScheduleAnalytics` | `DCAScheduleAnalytics` | B | P2 | pass | warn | pass | pass | pass | pass | pass | 13 | 1 | 0 | 0 | 2 | surface_consistency_needs_review | Normalize primary surfaces to VitCard and theme tokens when touching this screen. | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_analytics_page.dart` |
 | dca | `AppRoutePaths.dcaScheduleConfig` | `DCAScheduleConfig` | A | P3 | pass | pass | pass | pass | pass | pass | pass | 15 | 5 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_config_page.dart` |
 | dca | `AppRoutePaths.dcaSmartRules` | `DCASmartRulesPage` | A | P3 | pass | pass | pass | pass | pass | pass | pass | 26 | 15 | 0 | 0 | 5 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_smart_rules_page.dart` |
-| dev | `AppRoutePaths.devDesignSystem` | `DesignSystemPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 54 | 21 | 0 | 0 | 10 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/design_system_page.dart` |
-| dev | `AppRoutePaths.devShowcase` | `MissingScreensShowcasePage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 23 | 12 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/missing_screens_showcase_page.dart` |
-| dev | `AppRoutePaths.performanceMonitor` | `PerformanceMonitor` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 30 | 9 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/performance_monitor.dart` |
-| dev | `AppRoutePaths.routeChecker` | `RouteChecker` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 26 | 8 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/route_checker_page.dart` |
+| dev | `AppRoutePaths.devDesignSystem` | `DesignSystemPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 54 | 20 | 0 | 0 | 10 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/design_system_page.dart` |
+| dev | `AppRoutePaths.devShowcase` | `MissingScreensShowcasePage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 23 | 11 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/missing_screens_showcase_page.dart` |
+| dev | `AppRoutePaths.performanceMonitor` | `PerformanceMonitor` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 30 | 8 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/performance_monitor.dart` |
+| dev | `AppRoutePaths.routeChecker` | `RouteChecker` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 26 | 7 | 0 | 0 | 4 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/dev/presentation/pages/route_checker_page.dart` |
 | discovery | `AppRoutePaths.topicCrypto` | `TopicHubPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 23 | 12 | 0 | 0 | 6 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/discovery/presentation/pages/topic_hub_page.dart` |
 | discovery | `AppRoutePaths.topics` | `TopicHubPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 23 | 12 | 0 | 0 | 6 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/discovery/presentation/pages/topic_hub_page.dart` |
 | discovery | `AppRoutePaths.search` | `UnifiedSearchPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 26 | 12 | 0 | 0 | 7 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/discovery/presentation/pages/unified_search_page.dart` |
@@ -513,7 +512,6 @@ flutter test --reporter=compact
 | predictions | `AppRoutePaths.marketsPredictionsPortfolioAnalyzer` | `PredictionPortfolioAnalyzerPage` | A | P3 | pass | pass | pass | pass | pass | pass | pass | 31 | 21 | 0 | 0 | 5 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/portfolio/prediction_portfolio_analyzer_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsRiskCalculator` | `PredictionRiskCalculatorPage` | A | P3 | pass | pass | pass | pass | pass | pass | pass | 23 | 12 | 0 | 0 | 5 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/portfolio/prediction_risk_calculator_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsPortfolio` | `PredictionsPortfolioPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 31 | 7 | 0 | 0 | 7 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart` |
-| predictions | `AppRoutePaths.profilePredictions` | `PredictionsPortfolioPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 31 | 7 | 0 | 0 | 7 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsDataIntegration` | `PredictionDataIntegrationPage` | A | P3 | pass | pass | pass | pass | not_applicable | pass | pass | 20 | 16 | 0 | 0 | 5 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_data_integration_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsEventCalendar` | `PredictionEventCalendarPage` | A | P3 | pass | pass | pass | pass | pass | pass | pass | 22 | 10 | 0 | 0 | 5 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_event_calendar_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsSocial` | `PredictionSocialPage` | A | P3 | pass | pass | pass | pass | pass | pass | pass | 30 | 18 | 0 | 0 | 6 | none | No body refactor required; keep visual smoke coverage when touched. | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_social_page.dart` |
@@ -566,7 +564,7 @@ flutter test --reporter=compact
 | trade_bots | `AppRoutePaths.tradeBotPerformanceAnalytics` | `BotPerformanceAnalyticsPage` | C | P2 | fail | pass | pass | pass | not_applicable | pass | pass | 22 | 19 | 0 | 0 | 5 | missing_shared_body_layout | Wrap the standard body in VitPageLayout/VitAutoHideHeaderScaffold and VitPageContent. | `flutter_app/lib/features/trade_bots/presentation/pages/dashboard/bot_performance_analytics_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotPortfolioDashboard` | `BotPortfolioDashboardPage` | C | P2 | fail | pass | pass | pass | not_applicable | pass | pass | 15 | 11 | 0 | 0 | 3 | missing_shared_body_layout | Wrap the standard body in VitPageLayout/VitAutoHideHeaderScaffold and VitPageContent. | `flutter_app/lib/features/trade_bots/presentation/pages/dashboard/bot_portfolio_dashboard_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotRiskDashboard` | `BotRiskDashboardPage` | C | P2 | fail | pass | pass | pass | not_applicable | pass | pass | 44 | 25 | 0 | 0 | 5 | missing_shared_body_layout | Wrap the standard body in VitPageLayout/VitAutoHideHeaderScaffold and VitPageContent. | `flutter_app/lib/features/trade_bots/presentation/pages/dashboard/bot_risk_dashboard_page.dart` |
-| trade_bots | `AppRoutePaths.tradeBots` | `TradingBotsPage` | Tool | P2 | warn | pass | pass | pass | not_applicable | pass | pass | 55 | 24 | 0 | 0 | 6 | fullscreen_tool_manual_visual_qa_required | Document fullscreen exception and verify safe close/back controls, safe areas, and nonblank rendering. | `flutter_app/lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` |
+| trade_bots | `AppRoutePaths.tradeBots` | `TradingBotsPage` | Tool | P2 | warn | pass | pass | pass | not_applicable | pass | pass | 55 | 23 | 0 | 0 | 6 | fullscreen_tool_manual_visual_qa_required | Document fullscreen exception and verify safe close/back controls, safe areas, and nonblank rendering. | `flutter_app/lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotApiDocumentation` | `BotApiDocumentationPage` | B | P2 | warn | pass | pass | pass | not_applicable | pass | pass | 39 | 5 | 0 | 0 | 5 | partial_shared_body_layout | Complete shared body composition with VitPageContent and section primitives. | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_api_documentation_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotEmergencyStop` | `BotEmergencyStopPage` | C | P2 | fail | pass | pass | pass | not_applicable | pass | pass | 44 | 7 | 0 | 0 | 4 | missing_shared_body_layout | Wrap the standard body in VitPageLayout/VitAutoHideHeaderScaffold and VitPageContent. | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_emergency_stop_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotFaq` | `BotFaqPage` | C | P2 | fail | warn | pass | pass | not_applicable | pass | pass | 13 | 2 | 0 | 0 | 3 | missing_shared_body_layout | Wrap the standard body in VitPageLayout/VitAutoHideHeaderScaffold and VitPageContent. | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_faq_page.dart` |

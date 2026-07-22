@@ -97,13 +97,6 @@ lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_active_
 lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_history_widgets.dart|${_formatAmount(order.amount)} ${order.symbol}
 lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_preview_widgets.dart|Create a limit order to get started
 lib/features/launchpad/presentation/widgets/tools/launchpad_risk_report_common.dart|Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.
-lib/features/markets/presentation/pages/hub/watchlist_page.dart|Note editing and remove actions preserve the selected pair context.
-lib/features/markets/presentation/pages/hub/watchlist_page.dart|Search, add, note, remove, empty, and refresh states remain visible for tracked pairs.
-lib/features/markets/presentation/pages/hub/watchlist_page.dart|Toolbar search and add-pair actions stay above watched assets.
-lib/features/markets/presentation/pages/tools/market_movers_page.dart|Filter chips and result summary keep the active market slice explicit.
-lib/features/markets/presentation/pages/tools/market_movers_page.dart|Market movers data reviewed
-lib/features/markets/presentation/pages/tools/market_movers_page.dart|Mover rows preserve pair identity, movement, volume, and next navigation.
-lib/features/markets/presentation/pages/tools/market_movers_page.dart|Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.
 lib/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart|@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r
 lib/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart|Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.
 lib/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart|Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.

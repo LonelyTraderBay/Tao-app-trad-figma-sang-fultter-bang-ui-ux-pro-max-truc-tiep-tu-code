@@ -13,20 +13,20 @@ Generated from `flutter_app/tool/visual_density_risk_audit.dart`.
 ## Summary
 
 ```text
-total_routed_screens=415
+total_routed_screens=413
 P0_CRITICAL_DENSITY_REVIEW=0
 P1_HIGH_DENSITY_REVIEW=2
 P1_TOOL_VISUAL_QA=2
 P2_MEDIUM_DENSITY_REVIEW=14
 P3_LOW_DENSITY_REVIEW=171
-PASS_MONITOR=226
+PASS_MONITOR=224
 root_official_audit_blind_spot=12
 root_shared_component_compliant_but_sparse=12
 root_tokenized_fixed_height_pressure=2
 root_vertical_gap_accumulation=2
 root_spacer_driven_looseness=19
 root_manual_content_density_bypass=0
-root_bottom_nav_inset_pressure=199
+root_bottom_nav_inset_pressure=198
 root_top_chrome_first_viewport_cost=11
 ```
 
@@ -52,14 +52,14 @@ Exceptions require a reason, route, owner feature, and emulator or widget-test e
 | `P1_TOOL_VISUAL_QA` | 2 |
 | `P2_MEDIUM_DENSITY_REVIEW` | 14 |
 | `P3_LOW_DENSITY_REVIEW` | 171 |
-| `PASS_MONITOR` | 226 |
+| `PASS_MONITOR` | 224 |
 
 ## Root Cause Counts
 
 | Root cause | Routes |
 | --- | ---: |
-| `low_signal_monitor` | 200 |
-| `bottom_nav_inset_pressure` | 199 |
+| `low_signal_monitor` | 199 |
+| `bottom_nav_inset_pressure` | 198 |
 | `spacer_inside_cards` | 19 |
 | `official_audit_blind_spot` | 12 |
 | `shared_component_compliant_but_sparse` | 12 |
@@ -74,22 +74,22 @@ Exceptions require a reason, route, owner feature, and emulator or widget-test e
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `wallet` | 21 | 23.4 | 47 | 0 | 2 | 0 | 5 | 14 | 0 |
 | `dev` | 4 | 28.5 | 36 | 0 | 0 | 0 | 4 | 0 | 0 |
-| `p2p` | 77 | 9.4 | 32 | 0 | 0 | 1 | 0 | 35 | 41 |
+| `p2p` | 77 | 9.5 | 32 | 0 | 0 | 1 | 0 | 35 | 41 |
 | `earn` | 70 | 12.9 | 30 | 0 | 0 | 0 | 2 | 55 | 13 |
 | `enterprise_states` | 3 | 18.7 | 30 | 0 | 0 | 0 | 1 | 2 | 0 |
 | `discovery` | 3 | 19.7 | 25 | 0 | 0 | 0 | 2 | 0 | 1 |
 | `profile` | 14 | 12.9 | 22 | 0 | 0 | 0 | 0 | 12 | 2 |
-| `launchpad` | 24 | 10.0 | 21 | 0 | 0 | 0 | 0 | 11 | 13 |
-| `predictions` | 19 | 6.4 | 21 | 0 | 0 | 0 | 0 | 4 | 15 |
+| `launchpad` | 24 | 9.9 | 21 | 0 | 0 | 0 | 0 | 11 | 13 |
+| `predictions` | 18 | 6.7 | 21 | 0 | 0 | 0 | 0 | 4 | 14 |
 | `referral` | 5 | 11.8 | 21 | 0 | 0 | 0 | 0 | 3 | 2 |
 | `trade_terminal` | 6 | 6.8 | 19 | 0 | 0 | 1 | 0 | 0 | 5 |
 | `support` | 3 | 10.7 | 18 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `admin` | 5 | 12.2 | 17 | 0 | 0 | 0 | 0 | 3 | 2 |
-| `trade` | 13 | 3.2 | 16 | 0 | 0 | 0 | 0 | 1 | 12 |
+| `trade` | 13 | 3.1 | 16 | 0 | 0 | 0 | 0 | 1 | 12 |
 | `dca` | 14 | 7.4 | 15 | 0 | 0 | 0 | 0 | 4 | 10 |
 | `markets` | 22 | 5.7 | 15 | 0 | 0 | 0 | 0 | 6 | 16 |
 | `news` | 1 | 15.0 | 15 | 0 | 0 | 0 | 0 | 1 | 0 |
-| `arena` | 26 | 4.8 | 14 | 0 | 0 | 0 | 0 | 3 | 23 |
+| `arena` | 25 | 4.7 | 14 | 0 | 0 | 0 | 0 | 3 | 22 |
 | `auth` | 6 | 11.2 | 14 | 0 | 0 | 0 | 0 | 5 | 1 |
 | `trade_bots` | 19 | 4.8 | 14 | 0 | 0 | 0 | 0 | 2 | 17 |
 | `trade_compliance` | 30 | 5.4 | 14 | 0 | 0 | 0 | 0 | 2 | 28 |
@@ -123,6 +123,7 @@ Exceptions require a reason, route, owner feature, and emulator or widget-test e
 | P2_MEDIUM_DENSITY_REVIEW | 25 | discovery | TopicHubPage | `AppRoutePaths.topics` | bottom_nav_inset_pressure; official_audit_blind_spot; shared_component_compliant_but_sparse | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/discovery/presentation/pages/topic_hub_page.dart` |
 | P2_MEDIUM_DENSITY_REVIEW | 25 | wallet | AssetDetailPage | `'/wallet/asset/:assetId'` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 24 | wallet | TransactionHistoryPage | `AppRoutePaths.walletHistory` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` |
+| P3_LOW_DENSITY_REVIEW | 23 | p2p | P2PPaymentMethodsPage | `AppRoutePaths.p2pPaymentMethods` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 23 | wallet | AddressAddPage | `AppRoutePaths.walletAddressBookAdd` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 23 | wallet | AddressBookPage | `AppRoutePaths.walletAddressBook` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 23 | wallet | NetworkStatusPage | `AppRoutePaths.walletNetworkStatus` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` |
@@ -137,7 +138,6 @@ Exceptions require a reason, route, owner feature, and emulator or widget-test e
 | P3_LOW_DENSITY_REVIEW | 21 | referral | ReferralHistoryPage | `AppRoutePaths.referralHistory` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/referral/presentation/pages/referral_history_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 20 | wallet | DustConverterPage | `AppRoutePaths.walletDustConverter` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/assets/dust_converter_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 19 | earn | SavingsExportPage | `AppRoutePaths.earnSavingsExport` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/earn/presentation/pages/savings/savings_export_page.dart` |
-| P3_LOW_DENSITY_REVIEW | 19 | p2p | P2PPaymentMethodsPage | `AppRoutePaths.p2pPaymentMethods` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 19 | wallet | PortfolioAnalyticsPage | `AppRoutePaths.walletPortfolioAnalytics` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 18 | earn | StakingInstitutionalPage | `AppRoutePaths.earnInstitutional` | spacer_inside_cards; bottom_nav_inset_pressure | Remove Spacer-driven loose card expansion or replace with fixed compact content rhythm. | `flutter_app/lib/features/earn/presentation/pages/staking/staking_institutional_page.dart` |
 | P3_LOW_DENSITY_REVIEW | 18 | support | HelpCenterPage | `AppRoutePaths.supportHelp` | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` |
@@ -225,6 +225,7 @@ dart run tool/visual_density_risk_audit.dart --check
 | discovery | `AppRoutePaths.topics` | `TopicHubPage` | L1_utilityHub | detail | A | 0 | 25 | P2_MEDIUM_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 12 | 0 | 1 | 2 | 1 | bottom_nav_inset_pressure; official_audit_blind_spot; shared_component_compliant_but_sparse | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 6 | `flutter_app/lib/features/discovery/presentation/pages/topic_hub_page.dart` |
 | wallet | `'/wallet/asset/:assetId'` | `AssetDetailPage` | L2_entityDetail | detail | B | 8 | 25 | P2_MEDIUM_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 7 | 0 | 3 | 3 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` |
 | wallet | `AppRoutePaths.walletHistory` | `TransactionHistoryPage` | L2_utilityDetail | detail | B | 9 | 24 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 7 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 3 | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` |
+| p2p | `AppRoutePaths.p2pPaymentMethods` | `P2PPaymentMethodsPage` | L3_transactionFlow | detail | A | 4 | 23 | P3_LOW_DENSITY_REVIEW | 0 | 2 | 0 | 0 | 7 | 0 | 1 | 1 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBookAdd` | `AddressAddPage` | L3_transactionFlow | detail | B | 12 | 23 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 2 | `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBook` | `AddressBookPage` | L3_transactionFlow | detail | B | 8 | 23 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 7 | 0 | 1 | 1 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` |
 | wallet | `AppRoutePaths.walletNetworkStatus` | `NetworkStatusPage` | L2_detail | detail | B | 8 | 23 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 7 | 0 | 1 | 1 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` |
@@ -239,7 +240,6 @@ dart run tool/visual_density_risk_audit.dart --check
 | referral | `AppRoutePaths.referralHistory` | `ReferralHistoryPage` | L1_utilityHub | detail | B | 12 | 21 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 4 | 0 | 1 | 2 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 3 | `flutter_app/lib/features/referral/presentation/pages/referral_history_page.dart` |
 | wallet | `AppRoutePaths.walletDustConverter` | `DustConverterPage` | L2_detail | detail | A | 0 | 20 | P3_LOW_DENSITY_REVIEW | 1 | 0 | 0 | 0 | 8 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 6 | `flutter_app/lib/features/wallet/presentation/pages/assets/dust_converter_page.dart` |
 | earn | `AppRoutePaths.earnSavingsExport` | `SavingsExportPage` | L2_detail | detail | A | 0 | 19 | P3_LOW_DENSITY_REVIEW | 0 | 3 | 0 | 0 | 5 | 0 | 3 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 5 | `flutter_app/lib/features/earn/presentation/pages/savings/savings_export_page.dart` |
-| p2p | `AppRoutePaths.p2pPaymentMethods` | `P2PPaymentMethodsPage` | L3_transactionFlow | detail | A | 0 | 19 | P3_LOW_DENSITY_REVIEW | 0 | 2 | 0 | 0 | 7 | 0 | 1 | 1 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart` |
 | wallet | `AppRoutePaths.walletPortfolioAnalytics` | `PortfolioAnalyticsPage` | L2_utilityDetail | detail | B | 8 | 19 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 5 | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` |
 | earn | `AppRoutePaths.earnInstitutional` | `StakingInstitutionalPage` | L2_detail | detail | A | 1 | 18 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 1 | 0 | 5 | 0 | 3 | 2 | 0 | spacer_inside_cards; bottom_nav_inset_pressure | Remove Spacer-driven loose card expansion or replace with fixed compact content rhythm. | 4 | `flutter_app/lib/features/earn/presentation/pages/staking/staking_institutional_page.dart` |
 | support | `AppRoutePaths.supportHelp` | `HelpCenterPage` | L1_utilityHub | detail | A | 4 | 18 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 1 | 4 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 3 | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` |
@@ -299,11 +299,9 @@ dart run tool/visual_density_risk_audit.dart --check
 | auth | `AppRoutePaths.authLogin` | `LoginPage` | L0_authEntry | authOnboarding | B | 9 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | low_signal_monitor | Review first viewport manually and apply shared compact primitives without removing safety or domain-copy requirements. | 1 | `flutter_app/lib/features/auth/presentation/pages/login_page.dart` |
 | earn | `AppRoutePaths.earnRiskDashboard` | `StakingRiskDashboardPage` | L2_sectionHub | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/earn/presentation/pages/staking/staking_risk_dashboard_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | L2_detail | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 2 | 3 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 1 | `flutter_app/lib/features/earn/presentation/pages/staking/staking_webhooks_page.dart` |
-| launchpad | `AppRoutePaths.launchpadBridgeCompare` | `LaunchpadBridgeComparePage` | L2_detail | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 3 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 8 | `flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_compare_page.dart` |
 | launchpad | `AppRoutePaths.launchpadEventLog` | `LaunchpadEventLogPage` | L2_detail | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 3 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 5 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_event_log_page.dart` |
 | launchpad | `AppRoutePaths.launchpadGasTracker` | `LaunchpadGasTrackerPage` | L2_detail | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 2 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 8 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_gas_tracker_page.dart` |
 | launchpad | `AppRoutePaths.launchpadMultisig` | `LaunchpadMultisigPage` | L2_detail | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 2 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 7 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_multisig_page.dart` |
-| launchpad | `AppRoutePaths.launchpadRebalance` | `LaunchpadRebalancePage` | L2_detail | detail | A | 1 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 1 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 8 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart` |
 | profile | `AppRoutePaths.profileSecurity` | `SecurityPage` | L2_detail | detail | B | 9 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | profile | `AppRoutePaths.settingsSecurity` | `SecurityPage` | L2_utilityDetail | detail | B | 9 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | profile | `AppRoutePaths.settingsSecurityBiometric` | `SecurityPage` | L2_utilityDetail | detail | B | 9 | 14 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
@@ -351,6 +349,8 @@ dart run tool/visual_density_risk_audit.dart --check
 | enterprise_states | `AppRoutePaths.forceUpdateGate` | `ForceUpdateGatePage` | L2_detail | detail | B | 12 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | low_signal_monitor | Review first viewport manually and apply shared compact primitives without removing safety or domain-copy requirements. | 1 | `flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart` |
 | enterprise_states | `AppRoutePaths.maintenanceGate` | `MaintenanceGatePage` | L2_detail | detail | B | 12 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | low_signal_monitor | Review first viewport manually and apply shared compact primitives without removing safety or domain-copy requirements. | 1 | `flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart` |
 | home | `AppRoutePaths.home` | `HomePage` | L0_homeRoot | rootBrand | B | 8 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 3 | root_top_chrome_first_viewport_cost | Review first viewport manually and apply shared compact primitives without removing safety or domain-copy requirements. | 15 | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| launchpad | `AppRoutePaths.launchpadBridgeCompare` | `LaunchpadBridgeComparePage` | L2_detail | detail | A | 0 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 3 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 8 | `flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_compare_page.dart` |
+| launchpad | `AppRoutePaths.launchpadRebalance` | `LaunchpadRebalancePage` | L2_detail | detail | A | 0 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 1 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 8 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart` |
 | launchpad | `AppRoutePaths.launchpadSwapAggregator` | `LaunchpadSwapAggregatorPage` | L2_detail | detail | A | 0 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 5 | 0 | 3 | 1 | 3 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_swap_aggregator_page.dart` |
 | markets | `AppRoutePaths.marketsMovers` | `MarketMoversPage` | L2_detail | detail | A | 0 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 6 | 0 | 1 | 2 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 7 | `flutter_app/lib/features/markets/presentation/pages/tools/market_movers_page.dart` |
 | markets | `AppRoutePaths.marketsOverview` | `MarketOverviewPage` | L2_sectionHub | detail | A | 0 | 13 | P3_LOW_DENSITY_REVIEW | 0 | 0 | 0 | 0 | 6 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 6 | `flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart` |
@@ -408,7 +408,6 @@ dart run tool/visual_density_risk_audit.dart --check
 | referral | `AppRoutePaths.referralRewards` | `ReferralRewardsPage` | L1_utilityHub | detail | A | 0 | 9 | PASS_MONITOR | 0 | 0 | 0 | 0 | 4 | 0 | 1 | 1 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/referral/presentation/pages/referral_rewards_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotSecuritySettings` | `BotSecuritySettingsPage` | L2_utilityDetail | detail | B | 9 | 9 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 4 | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_security_settings_page.dart` |
 | arena | `AppRoutePaths.arenaMy` | `MyArenaPage` | L2_detail | detail | A | 1 | 8 | PASS_MONITOR | 0 | 1 | 0 | 0 | 2 | 0 | 1 | 2 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 6 | `flutter_app/lib/features/arena/presentation/pages/hub/my_arena_page.dart` |
-| arena | `AppRoutePaths.profileArena` | `MyArenaPage` | L2_detail | detail | A | 1 | 8 | PASS_MONITOR | 0 | 1 | 0 | 0 | 2 | 0 | 1 | 2 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 6 | `flutter_app/lib/features/arena/presentation/pages/hub/my_arena_page.dart` |
 | p2p | `AppRoutePaths.p2pKycStatus` | `P2PKycStatusPage` | L3_transactionFlow | detail | A | 0 | 8 | PASS_MONITOR | 0 | 0 | 0 | 1 | 0 | 0 | 3 | 1 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 3 | `flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_kyc_status_page.dart` |
 | p2p | `AppRoutePaths.p2pSecurityLoginHistory` | `P2PLoginHistoryPage` | L2_utilityDetail | detail | A | 5 | 8 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 1 | 1 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 4 | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_login_history_page.dart` |
 | p2p | `AppRoutePaths.p2pKycFaceMatch` | `P2PSelfieVerificationPage` | L3_transactionFlow | detail | A | 1 | 8 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 3 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 3 | `flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart` |
@@ -496,7 +495,6 @@ dart run tool/visual_density_risk_audit.dart --check
 | profile | `AppRoutePaths.profileKyc` | `KYCPage` | L3_transactionFlow | detail | A | 0 | 5 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 1 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 3 | `flutter_app/lib/features/profile/presentation/pages/kyc_page.dart` |
 | referral | `AppRoutePaths.referral` | `ReferralHomePage` | L1_utilityHub | detail | A | 0 | 5 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 1 | 3 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 5 | `flutter_app/lib/features/referral/presentation/pages/referral_home_page.dart` |
 | trade | `AppRoutePaths.tradeOrdersHistory` | `OrdersHistoryPage` | L2_utilityDetail | detail | C | 5 | 5 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 3 | `flutter_app/lib/features/trade/presentation/pages/hub/orders_history_page.dart` |
-| trade | `AppRoutePaths.tradeExport` | `TradeHistoryExportPage` | L2_utilityDetail | detail | C | 1 | 5 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotDrawdownAnalyzer` | `BotDrawdownAnalyzerPage` | L2_detail | detail | C | 1 | 5 | PASS_MONITOR | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 3 | `flutter_app/lib/features/trade_bots/presentation/pages/dashboard/bot_drawdown_analyzer_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotEquityCurve` | `BotEquityCurvePage` | L2_detail | detail | C | 1 | 5 | PASS_MONITOR | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 4 | `flutter_app/lib/features/trade_bots/presentation/pages/dashboard/bot_equity_curve_page.dart` |
 | trade_copy | `AppRoutePaths.tradeCopyEducation` | `CopyEducationPage` | L2_detail | detail | C | 5 | 5 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 3 | `flutter_app/lib/features/trade_copy/presentation/pages/safety/copy_education_page.dart` |
@@ -508,6 +506,7 @@ dart run tool/visual_density_risk_audit.dart --check
 | launchpad | `AppRoutePaths.launchpadWebhooks` | `LaunchpadWebhooksPage` | L2_detail | detail | A | 1 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 3 | 6 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 9 | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart` |
 | p2p | `AppRoutePaths.p2pWallet` | `P2PWalletPage` | L2_detail | detail | A | 1 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 1 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 6 | `flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart` |
 | trade | `AppRoutePaths.tradeOrderReceipt` | `OrderReceiptPage` | L3_transactionFlow | detail | C | 0 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 3 | `flutter_app/lib/features/trade/presentation/pages/hub/order_receipt_page.dart` |
+| trade | `AppRoutePaths.tradeExport` | `TradeHistoryExportPage` | L2_utilityDetail | detail | C | 0 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 1 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 4 | `flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart` |
 | trade | `'/trade/:pairId'` | `TradePage` | L1_instrumentWorkspace | instrument | C | 4 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 5 | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
 | trade | `AppRoutePaths.trade` | `TradePage` | L1_instrumentWorkspace | instrument | C | 4 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 5 | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotBacktesting` | `BotBacktestingPage` | L2_detail | detail | C | 0 | 4 | PASS_MONITOR | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 2 | bottom_nav_inset_pressure | Recheck bottom-nav/sticky-footer clearance and keep primary content visible above chrome. | 2 | `flutter_app/lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart` |
@@ -593,7 +592,6 @@ dart run tool/visual_density_risk_audit.dart --check
 | p2p | `AppRoutePaths.p2pPaymentMethodCoolingPeriod` | `P2PPaymentMethodCoolingPeriodPage` | L3_transactionFlow | detail | A | 0 | 1 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 1 | `flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsLeaderboard` | `PredictionsLeaderboardPage` | L2_detail | detail | A | 0 | 1 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 4 | `flutter_app/lib/features/predictions/presentation/pages/social/predictions_leaderboard_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsPortfolio` | `PredictionsPortfolioPage` | L2_utilityDetail | detail | A | 0 | 1 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 3 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 7 | `flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart` |
-| predictions | `AppRoutePaths.profilePredictions` | `PredictionsPortfolioPage` | L2_utilityDetail | detail | A | 0 | 1 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 3 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 7 | `flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart` |
 | support | `AppRoutePaths.support` | `SupportPage` | L1_utilityHub | detail | A | 0 | 1 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 2 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 5 | `flutter_app/lib/features/support/presentation/pages/support_page.dart` |
 | trade | `AppRoutePaths.tradeConvert` | `ConvertPage` | L2_detail | detail | C | 0 | 0 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 7 | `flutter_app/lib/features/trade/presentation/pages/convert/convert_page.dart` |
 | trade | `AppRoutePaths.tradeMarginHub` | `MarginTradingHubPage` | L2_sectionHub | detail | C | 0 | 0 | PASS_MONITOR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | low_signal_monitor | Keep as reference/monitor screen; avoid unnecessary churn. | 4 | `flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart` |

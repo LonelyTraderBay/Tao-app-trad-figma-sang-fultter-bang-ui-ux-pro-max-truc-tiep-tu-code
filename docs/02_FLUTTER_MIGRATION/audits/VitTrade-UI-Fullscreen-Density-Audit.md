@@ -3,12 +3,12 @@
 Generated from `flutter_app/tool/ui_fullscreen_density_audit.dart`.
 
 ```text
-total_routed_screens=415
+total_routed_screens=413
 P1_density_refactor=0
 P1_fullscreen_tool_visual_qa=5
 P2_visual_density_review=29
 P3_followup_review=44
-Pass_or_low_signal=337
+Pass_or_low_signal=335
 ```
 
 ## Priority Counts
@@ -19,7 +19,7 @@ Pass_or_low_signal=337
 | `P1_fullscreen_tool_visual_qa` | 5 |
 | `P2_visual_density_review` | 29 |
 | `P3_followup_review` | 44 |
-| `Pass_or_low_signal` | 337 |
+| `Pass_or_low_signal` | 335 |
 
 ## Flagged Routes
 
@@ -60,10 +60,10 @@ Pass_or_low_signal=337
 | P2_visual_density_review | 10 | profile | SettingsPage | `AppRoutePaths.profileSettings` | body B | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` |
 | P2_visual_density_review | 10 | profile | SubAccountPage | `AppRoutePaths.profileSubAccounts` | body B | `flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart` |
 | P3_followup_review | 9 | auth | LoginPage | `AppRoutePaths.authLogin` | body B; few dense sections/cards=0 | `flutter_app/lib/features/auth/presentation/pages/login_page.dart` |
+| P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.profileSecurity` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.settingsSecurityChangePassword` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.settingsSecurityBiometric` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.settingsSecurity` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
-| P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.profileSecurity` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | P3_followup_review | 9 | trade_bots | BotSecuritySettingsPage | `AppRoutePaths.tradeBotSecuritySettings` | body B | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_security_settings_page.dart` |
 | P3_followup_review | 9 | trade_copy | PreCopyAssessmentPage | `'/trade/copy-provider/:providerId/assessment'` | body B | `flutter_app/lib/features/trade_copy/presentation/pages/flow/pre_copy_assessment_page.dart` |
 | P3_followup_review | 9 | wallet | TransactionHistoryPage | `AppRoutePaths.walletHistory` | body B | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` |

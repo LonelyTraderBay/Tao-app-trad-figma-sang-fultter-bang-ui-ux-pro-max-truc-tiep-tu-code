@@ -636,7 +636,6 @@ markets,flutter_app/lib/features/markets/presentation/pages/tools/market_correla
 markets,flutter_app/lib/features/markets/presentation/pages/tools/market_movers_page.dart,compact,compact,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/tools/market_screener_page.dart,compact,compact,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/tools/market_sectors_page.dart,compact,compact,0,,0,,0,0,pass
-markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_body_review_widgets.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_formatters.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_common.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_discover.dart,standard,,0,,0,,1,0,pass
