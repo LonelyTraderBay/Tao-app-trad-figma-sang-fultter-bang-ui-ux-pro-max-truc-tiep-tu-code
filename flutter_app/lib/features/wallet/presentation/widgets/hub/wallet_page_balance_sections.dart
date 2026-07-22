@@ -14,7 +14,7 @@ class WalletBalanceHero extends StatelessWidget {
     required this.hidden,
     required this.onToggle,
     required this.onNavigate,
-    required this.onShowMore,
+    this.onShowMore,
   });
 
   final WalletSnapshot snapshot;
@@ -22,19 +22,16 @@ class WalletBalanceHero extends StatelessWidget {
   final bool hidden;
   final VoidCallback onToggle;
   final ValueChanged<String> onNavigate;
-  final VoidCallback onShowMore;
+  final VoidCallback? onShowMore;
 
   @override
   Widget build(BuildContext context) {
-    const primaryIds = ['deposit', 'withdraw'];
     final actionsById = {
       for (final action in snapshot.actions) action.id: action,
     };
     final deposit = actionsById['deposit'];
     final withdraw = actionsById['withdraw'];
-    final hasOverflow = snapshot.actions.any(
-      (action) => !primaryIds.contains(action.id),
-    );
+    final hasOverflow = onShowMore != null;
 
     return VitCard(
       variant: VitCardVariant.hero,
@@ -148,7 +145,7 @@ class WalletBalanceHero extends StatelessWidget {
                   VitInlineIconAction(
                     key: const Key('sc135_wallet_more_actions'),
                     tooltip: 'Thêm thao tác',
-                    onPressed: onShowMore,
+                    onPressed: onShowMore!,
                     icon: Icons.more_horiz_rounded,
                     color: AppColors.portfolioTextDim,
                   ),

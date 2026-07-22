@@ -19,15 +19,15 @@ const P2PHomePlatformStatsDraft _p2pHomePlatformStats =
 const List<P2PHomeQuickActionDraft> _p2pHomeQuickActions = [
   P2PHomeQuickActionDraft(
     id: 'express',
-    title: 'Express Trade',
-    subtitle: 'Auto match · 1 chạm',
+    title: 'Express nhanh',
+    subtitle: 'Ghép tin nhanh · 1 chạm',
     iconKey: 'bolt',
     route: '/p2p/express',
     toneKey: 'buy',
   ),
   P2PHomeQuickActionDraft(
     id: 'create',
-    title: 'Đăng offer',
+    title: 'Tạo tin',
     subtitle: 'Tạo quảng cáo P2P',
     iconKey: 'add',
     route: '/p2p/create',

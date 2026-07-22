@@ -194,14 +194,14 @@ earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_history_pa
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_ladder_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_notification_preferences_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_notifications_page.dart,standard,standard,0,,0,,0,0,pass
-earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart,standard,standard,0,,0,,0,0,pass
+earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart,standard,compact,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_product_detail_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_receipt_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_recommendations_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_redeem_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_risk_assessment_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_smart_suggestions_page.dart,standard,standard,0,,0,,0,0,pass
-earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_what_if_page.dart,standard,standard,0,,0,,2,0,pass
+earn,flutter_app/lib/features/earn/presentation/pages/savings/savings_what_if_page.dart,standard,standard,0,,1,section_header_missing_inner_gap:2,2,2,warn
 earn,flutter_app/lib/features/earn/presentation/pages/staking/auto_compound_settings_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart,standard,standard,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/pages/staking/staking_analytics_page.dart,standard,standard,0,,0,,0,0,pass
@@ -344,7 +344,7 @@ earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_common_widgets.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_models.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_painters.dart,standard,,0,,0,,0,0,pass
-earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_results.dart,standard,,0,,0,,2,0,pass
+earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_results.dart,standard,,0,,1,section_header_missing_inner_gap:2,2,2,warn
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_stress.dart,standard,,0,,0,,1,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/savings/savings_what_if_stress_components.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_advanced_orders_guidance.dart,standard,,0,,0,,0,0,pass
@@ -387,6 +387,7 @@ earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_dashboar
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_hero_tabs.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_positions_common.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_products.dart,standard,,0,,0,,0,0,pass
+earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_tools.dart,standard,,0,,0,,1,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_calendar_grid.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_events_common.dart,standard,,0,,0,,0,0,pass
 earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_summary_tabs.dart,standard,,0,,0,,0,0,pass
@@ -488,7 +489,7 @@ home,flutter_app/lib/features/home/presentation/widgets/home_market_ticker_secti
 home,flutter_app/lib/features/home/presentation/widgets/home_more_products_sheet.dart,standard,,0,,0,,0,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_next_action_section.dart,standard,,0,,0,,1,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,standard,,0,,0,,0,0,pass
-home,flutter_app/lib/features/home/presentation/widgets/home_products_section.dart,standard,,0,,0,,1,0,pass
+home,flutter_app/lib/features/home/presentation/widgets/home_products_section.dart,standard,,0,,0,,2,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_recent_products_section.dart,standard,,0,,0,,1,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_scroll_shell.dart,standard,,0,,0,,0,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_status_content.dart,compact,compact,0,,0,,0,0,pass
@@ -802,6 +803,7 @@ p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_guide_video_common
 p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_offer_list.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_common.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart,standard,standard,0,,0,,0,0,pass
+p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_tools.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_hours_common.dart,standard,,0,,0,,2,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_trade_security.dart,standard,,0,,0,,2,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_trading_level_cards.dart,standard,,0,,0,,0,0,pass
@@ -982,6 +984,7 @@ profile,flutter_app/lib/features/profile/presentation/widgets/profile_api_key_cr
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_api_key_create_result.dart,standard,standard,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_home_arena_stats.dart,standard,,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_home_hero.dart,standard,,0,,0,,0,0,pass
+profile,flutter_app/lib/features/profile/presentation/widgets/profile_home_legal_accordion.dart,standard,,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_home_menu_actions.dart,standard,,0,,0,,3,0,pass
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_home_vip_prediction.dart,standard,,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_icon_registry.dart,standard,,0,,0,,0,0,pass

@@ -142,14 +142,14 @@ MARKETS (/markets) [EP-02] — GIỮ — MarketListPage
 | `MarketCalendarPage` | `/markets/calendar` | **yes** | `MarketListTools` chip «Sự kiện» |
 | `ComparisonToolPage` | `/markets/compare` | **yes** | `MarketListTools` chip «So sánh» |
 | `DerivativesOverviewPage` | `/markets/derivatives` | **yes** | `MarketListTools` chip «Phái sinh» |
-| `MarketHeatmapPage` | `/markets/heatmap` | **no** | — không header, không chip |
+| `MarketHeatmapPage` | `/markets/heatmap` | **yes** | `MarketListTools` chip «Bản đồ nhiệt» (STEP-P2.1) |
 | `MarketMoversPage` | `/markets/movers` | **yes** | `MarketListHeader` action analytics «Biến động» |
 | `MarketOverviewPage` | `/markets/overview` | **yes** | `MarketListHeader` action overview «Tổng quan» |
 | `PortfolioTrackerPage` | `/markets/portfolio-tracker` | **yes** | `MarketListTools` chip «Danh mục» |
 | `MarketScreenerPage` | `/markets/screener` | **yes** | `MarketListTools` chip «Bộ lọc» |
-| `WatchlistPage` | `/markets/watchlist` | **no** | — tab «Yêu thích» chỉ lọc list local, **không** `context.go` watchlist |
+| `WatchlistPage` | `/markets/watchlist` | **yes** | `MarketListTools` chip «Theo dõi» (STEP-P2.1; ≠ tab Yêu thích) |
 
-**Tóm tắt gap inbound:** `marketsHeatmap`, `marketsWatchlist` (2/10 HUB).
+**Tóm tắt gap inbound:** **0/10 HUB** (P2.1 closed). ẨN chips → overflow «Thêm» (P2.2).
 
 ### 3.2 GIỮ duy nhất
 

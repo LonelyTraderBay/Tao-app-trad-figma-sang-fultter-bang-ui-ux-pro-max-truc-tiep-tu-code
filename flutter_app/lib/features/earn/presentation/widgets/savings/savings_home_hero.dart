@@ -155,124 +155,158 @@ class _HeroAction extends StatelessWidget {
   }
 }
 
-class _InsightList extends StatelessWidget {
-  const _InsightList({required this.insights});
+const _visibleSavingsToolIds = {
+  'analytics',
+  'history',
+  'goals',
+  'ladder',
+  'backtest',
+  'smart-suggestions',
+  'what-if',
+  'autopilot',
+};
 
-  final List<SavingsInsightDraft> insights;
+const _savingsDcaOverflowTool = EarnHubTool(
+  id: 'dca',
+  label: 'DCA',
+  route: AppRoutePaths.earnSavingsDca,
+  iconKey: 'dca',
+);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (final insight in insights) ...[
-          VitCard(
-            key: _insightKey(insight.route),
-            radius: VitCardRadius.large,
-            padding: EarnSpacingTokens.earnCardPaddingX4,
-            onTap: insight.route == null
-                ? null
-                : () {
-                    unawaited(HapticFeedback.selectionClick());
-                    context.go(insight.route!);
+class _SavingsToolsSection extends StatelessWidget {
+  const _SavingsToolsSection({required this.tools, required this.onNavigate});
+
+  final List<EarnHubTool> tools;
+  final ValueChanged<String> onNavigate;
+
+  List<EarnHubTool> get _visibleTools => tools
+      .where((tool) => _visibleSavingsToolIds.contains(tool.id))
+      .toList(growable: false);
+
+  List<EarnHubTool> get _overflowTools => [
+    ...tools.where((tool) => !_visibleSavingsToolIds.contains(tool.id)),
+    _savingsDcaOverflowTool,
+  ];
+
+  void _openOverflowSheet(BuildContext context) {
+    final rootContext = context;
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        builder: (sheetContext) {
+          return VitSheetPanel(
+            key: SavingsPage.moreToolsSheetKey,
+            title: 'Thêm công cụ tiết kiệm',
+            child: VitActionTileGrid(
+              density: VitDensity.compact,
+              crossAxisSpacing: AppSpacing.x3,
+              mainAxisSpacing: AppSpacing.x3,
+              physics: const ClampingScrollPhysics(),
+              itemCount: _overflowTools.length,
+              itemBuilder: (context, index, density) {
+                final tool = _overflowTools[index];
+                return VitServiceTile(
+                  key: _savingsToolKey(tool.id),
+                  density: density,
+                  icon: _savingsToolIcon(tool.iconKey),
+                  label: tool.label,
+                  accentColor: AppModuleAccents.earn,
+                  onTap: () {
+                    Navigator.of(sheetContext).pop();
+                    rootContext.go(tool.route);
                   },
-            child: Row(
-              children: [
-                _RoundIcon(tone: insight.tone),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        insight.title,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      Text(
-                        insight.subtitle,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
+                );
+              },
             ),
-          ),
-          if (insight != insights.last)
-            const SizedBox(height: AppSpacing.rowGap),
-        ],
-      ],
-    );
-  }
-
-  Key? _insightKey(String? route) {
-    return switch (route) {
-      '/earn/savings/dca' => SavingsPage.dcaInsightKey,
-      '/earn/savings/export' => SavingsPage.exportInsightKey,
-      '/earn/savings/backtest' => SavingsPage.backtestInsightKey,
-      '/earn/savings/autopilot' => SavingsPage.autopilotInsightKey,
-      '/earn/savings/ladder' => SavingsPage.ladderInsightKey,
-      '/earn/savings/whatif' => SavingsPage.whatIfInsightKey,
-      '/earn/savings/smart-suggestions' =>
-        SavingsPage.smartSuggestionsInsightKey,
-      _ => null,
-    };
-  }
-}
-
-class _ToolboxButton extends StatelessWidget {
-  const _ToolboxButton({required this.guideRoute, required this.exportRoute});
-
-  final String guideRoute;
-  final String exportRoute;
-
-  @override
-  Widget build(BuildContext context) {
-    assert(exportRoute.isNotEmpty);
-    return VitCard(
-      key: SavingsPage.guideButtonKey,
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: EarnSpacingTokens.earnVerticalPaddingX3,
-      onTap: () {
-        unawaited(HapticFeedback.selectionClick());
-        context.go(guideRoute);
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.menu_book_outlined,
-            color: AppColors.text3,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            'Công cụ nâng cao',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.iconSm,
-          ),
-        ],
+          );
+        },
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleTools = _visibleTools;
+    final itemCount = visibleTools.length + 1;
+    return VitPageSection(
+      key: SavingsPage.toolsSectionKey,
+      label: 'Công cụ tiết kiệm',
+      headerIcon: Icons.grid_view_rounded,
+      headerIconColor: AppModuleAccents.earn,
+      accentColor: AppModuleAccents.earn,
+      headerVariant: VitSectionHeaderVariant.plain,
+      innerGap: AppSpacing.pageRhythmCompactInnerGap,
+      children: [
+        VitActionTileGrid(
+          density: VitDensity.compact,
+          itemCount: itemCount,
+          itemBuilder: (context, index, density) {
+            if (index == visibleTools.length) {
+              return VitServiceTile(
+                key: SavingsPage.moreToolsKey,
+                density: density,
+                icon: Icons.more_horiz_rounded,
+                label: 'Thêm',
+                accentColor: AppColors.text3,
+                onTap: () => _openOverflowSheet(context),
+              );
+            }
+            final tool = visibleTools[index];
+            return VitServiceTile(
+              key: _savingsToolKey(tool.id),
+              density: density,
+              icon: _savingsToolIcon(tool.iconKey),
+              label: tool.label,
+              accentColor: AppModuleAccents.earn,
+              onTap: () {
+                unawaited(HapticFeedback.selectionClick());
+                onNavigate(tool.route);
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+Key? _savingsToolKey(String id) {
+  return switch (id) {
+    'dca' => SavingsPage.dcaInsightKey,
+    'export' => SavingsPage.exportInsightKey,
+    'backtest' => SavingsPage.backtestInsightKey,
+    'autopilot' => SavingsPage.autopilotInsightKey,
+    'ladder' => SavingsPage.ladderInsightKey,
+    'what-if' => SavingsPage.whatIfInsightKey,
+    'smart-suggestions' => SavingsPage.smartSuggestionsInsightKey,
+    'guide' => SavingsPage.guideButtonKey,
+    _ => null,
+  };
+}
+
+IconData _savingsToolIcon(String iconKey) {
+  return switch (iconKey) {
+    'analytics' => Icons.analytics_outlined,
+    'autopilot' => Icons.auto_awesome_outlined,
+    'backtest' => Icons.science_outlined,
+    'comparison' => Icons.compare_arrows_rounded,
+    'dca' => Icons.sync_alt_rounded,
+    'export' => Icons.file_download_outlined,
+    'faq' => Icons.help_outline_rounded,
+    'goals' => Icons.flag_outlined,
+    'guide' => Icons.menu_book_outlined,
+    'history' => Icons.history_rounded,
+    'ladder' => Icons.stacked_line_chart_rounded,
+    'notifications' => Icons.notifications_active_outlined,
+    'rebalance' => Icons.tune_rounded,
+    'recommendations' => Icons.tips_and_updates_outlined,
+    'smart-suggestions' => Icons.lightbulb_outline_rounded,
+    'what-if' => Icons.query_stats_rounded,
+    _ => Icons.hub_outlined,
+  };
 }
 
 class _YieldDisclaimer extends StatelessWidget {

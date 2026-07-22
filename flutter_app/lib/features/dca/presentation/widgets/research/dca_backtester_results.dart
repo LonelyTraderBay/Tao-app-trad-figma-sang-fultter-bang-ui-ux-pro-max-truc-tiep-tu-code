@@ -194,7 +194,7 @@ class _MetricsCard extends StatelessWidget {
               ],
             ),
             if (metric != metrics.last)
-              const SizedBox(height: AppSpacing.rowGap),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

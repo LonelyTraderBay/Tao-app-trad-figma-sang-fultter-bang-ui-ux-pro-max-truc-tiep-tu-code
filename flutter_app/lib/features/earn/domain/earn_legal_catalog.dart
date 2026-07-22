@@ -1,5 +1,6 @@
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 
+/// One Earn legal / risk GOM document entry.
 final class EarnLegalItem {
   const EarnLegalItem({
     required this.id,
@@ -12,6 +13,7 @@ final class EarnLegalItem {
   final String route;
 }
 
+/// Cluster of Earn legal items shown in the Tài liệu & rủi ro sheet.
 final class EarnLegalGroup {
   const EarnLegalGroup({
     required this.id,

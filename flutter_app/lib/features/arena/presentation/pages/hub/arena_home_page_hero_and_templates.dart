@@ -40,9 +40,23 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
             title: 'Open Arena',
-            subtitle: 'Hoàn thành · Fair play',
+            subtitle: 'Điểm Arena · thách đấu · hoàn thành',
             showBack: true,
             onBack: _close,
+            actions: [
+              VitHeaderActionItem(
+                key: ArenaHomePage.myArenaHeaderKey,
+                type: VitHeaderActionType.portfolio,
+                tooltip: 'Của tôi',
+                onPressed: () => context.goHaptic(AppRoutePaths.arenaMy),
+              ),
+              VitHeaderActionItem(
+                key: ArenaHomePage.toolsActionKey,
+                type: VitHeaderActionType.more,
+                tooltip: 'Công cụ',
+                onPressed: _showToolsSheet,
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,9 +109,8 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                                 onLeaderboard: () => context.goHaptic(
                                   AppRoutePaths.arenaLeaderboard,
                                 ),
-                                onMyArena: () => context.goHaptic(
-                                  AppRoutePaths.profileArena,
-                                ),
+                                onMyArena: () =>
+                                    context.goHaptic(AppRoutePaths.arenaMy),
                               )
                             else ...[
                               _HeroCard(
@@ -123,9 +136,8 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                                 onLeaderboard: () => context.goHaptic(
                                   AppRoutePaths.arenaLeaderboard,
                                 ),
-                                onMyArena: () => context.goHaptic(
-                                  AppRoutePaths.profileArena,
-                                ),
+                                onMyArena: () =>
+                                    context.goHaptic(AppRoutePaths.arenaMy),
                               ),
                             ],
                             if (hasSearch)
@@ -230,6 +242,25 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
       ),
     );
   }
+
+  void _showToolsSheet() {
+    final rootContext = context;
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        builder: (sheetContext) {
+          return _ArenaToolsSheet(
+            onNavigate: (route) {
+              Navigator.of(sheetContext).pop();
+              rootContext.goHaptic(route);
+            },
+          );
+        },
+      ),
+    );
+  }
 }
 
 class _IntroBlock extends StatelessWidget {
@@ -289,7 +320,7 @@ class _IntroBlock extends StatelessWidget {
               _QuickChip(
                 key: ArenaHomePage.quickLeaderboardKey,
                 icon: Icons.emoji_events_outlined,
-                label: 'Leaderboard',
+                label: 'Bảng xếp hạng',
                 onTap: onLeaderboard,
               ),
               _QuickChip(
@@ -303,6 +334,38 @@ class _IntroBlock extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ArenaToolsSheet extends StatelessWidget {
+  const _ArenaToolsSheet({required this.onNavigate});
+
+  final ValueChanged<String> onNavigate;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitSheetPanel(
+      key: ArenaHomePage.toolsSheetKey,
+      title: 'Công cụ Arena',
+      child: VitActionTileGrid(
+        density: VitDensity.compact,
+        crossAxisSpacing: AppSpacing.x3,
+        mainAxisSpacing: AppSpacing.x3,
+        physics: const ClampingScrollPhysics(),
+        itemCount: _arenaHomeTools.length,
+        itemBuilder: (context, index, density) {
+          final tool = _arenaHomeTools[index];
+          return VitServiceTile(
+            key: ArenaHomePage.toolKey(tool.id),
+            density: density,
+            icon: tool.icon,
+            label: tool.label,
+            accentColor: _arenaAccent,
+            onTap: () => onNavigate(tool.route),
+          );
+        },
+      ),
     );
   }
 }
@@ -395,7 +458,7 @@ class _HeroCard extends StatelessWidget {
                 ),
               ),
               const VitStatusPill(
-                label: 'Points only',
+                label: 'Chỉ điểm Arena',
                 status: VitStatusPillStatus.orange,
                 size: VitStatusPillSize.sm,
               ),
@@ -443,7 +506,7 @@ class _HeroCard extends StatelessWidget {
             density: VitDensity.compact,
             fullWidth: true,
             leading: const Icon(Icons.auto_awesome_rounded),
-            child: const Text('Tạo challenge'),
+            child: const Text('Tạo thách đấu'),
           ),
           const SizedBox(height: AppSpacing.x1),
           Align(
@@ -452,7 +515,7 @@ class _HeroCard extends StatelessWidget {
               key: ArenaHomePage.exploreModeKey,
               onPressed: onExplore,
               icon: const Icon(Icons.search_rounded, size: AppSpacing.iconSm),
-              label: const Text('Khám phá mode'),
+              label: const Text('Khám phá chế độ'),
             ),
           ),
         ],

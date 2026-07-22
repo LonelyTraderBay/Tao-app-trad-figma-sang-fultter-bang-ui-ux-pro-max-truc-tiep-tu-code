@@ -64,8 +64,8 @@ class _StrategyCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
-            spacing: AppSpacing.rowGap,
-            runSpacing: AppSpacing.rowGap,
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
             children: [
               VitAccentPill(
                 label: strategy.avgReturn,
@@ -124,7 +124,7 @@ class _EmptyBots extends StatelessWidget {
             title: 'Gợi ý bắt đầu',
             variant: VitSectionHeaderVariant.plain,
             density: VitDensity.tool,
-            bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+            bottomGap: AppSpacing.x2,
           ),
           for (final strategy in suggestedStrategies) ...[
             _StrategyCard(
@@ -132,7 +132,7 @@ class _EmptyBots extends StatelessWidget {
               onCreate: () => onCreateSuggested(strategy),
             ),
             if (strategy != suggestedStrategies.last)
-              const SizedBox(height: AppSpacing.rowGap),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ],
@@ -210,7 +210,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               density: VitDensity.tool,
               radius: VitCardRadius.tight,
@@ -222,7 +222,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
-            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             const VitSectionHeader(
               title: 'Thông số bot',
               variant: VitSectionHeaderVariant.plain,
@@ -262,12 +262,12 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                       value: _values[param.key] ?? param.defaultValue,
                     ),
                     if (param != strategy.params.last)
-                      const SizedBox(height: AppSpacing.rowGap),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -317,7 +317,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               key: TradingBotsPage.sheetCreateKey,
               onPressed: _agreed && !_submitting ? _submit : null,

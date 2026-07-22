@@ -94,7 +94,8 @@ const List<ProfileMenuSection> _profileSections = [
       ProfileMenuItem(
         id: 'kyc',
         label: 'X\u00E1c minh danh t\u00EDnh (KYC)',
-        subtitle: 'Ch\u01B0a ho\u00E0n t\u1EA5t \u2014 n\u00E2ng h\u1EA1n m\u1EE9c',
+        subtitle:
+            'Ch\u01B0a ho\u00E0n t\u1EA5t \u2014 n\u00E2ng h\u1EA1n m\u1EE9c',
         subtitleHex: 0xFFF5A524,
         route: '/profile/kyc',
         iconKey: 'shield-check',
@@ -144,7 +145,7 @@ const List<ProfileMenuSection> _profileSections = [
         id: 'my-arena',
         label: 'Arena c\u1EE7a t\u00F4i',
         subtitle: 'Ch\u1EC9 \u0111i\u1EC3m Arena',
-        route: '/profile/arena',
+        route: '/arena/my',
         iconKey: 'trophy',
       ),
       ProfileMenuItem(
@@ -178,7 +179,7 @@ const List<ProfileMenuSection> _profileSections = [
       ProfileMenuItem(
         id: 'unified-portfolio',
         label: 'T\u1ED5ng quan \u0111a module',
-        subtitle: 'Unified portfolio',
+        subtitle: 'Tổng hợp Spot · Earn · Prediction',
         route: '/unified-portfolio',
         iconKey: 'briefcase',
       ),
@@ -233,7 +234,7 @@ const List<ProfileMenuSection> _profileSections = [
     id: 'legal',
     label: 'PH\u00C1P L\u00DD & B\u00C1O C\u00C1O',
     accentHex: 0xFF64748B,
-    items: const [],
+    items: [],
   ),
 ];
 

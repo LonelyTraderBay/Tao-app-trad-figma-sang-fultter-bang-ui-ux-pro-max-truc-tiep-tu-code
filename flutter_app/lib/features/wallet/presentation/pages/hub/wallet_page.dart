@@ -130,7 +130,6 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                     onToggle: () =>
                         setState(() => _balanceHidden = !_balanceHidden),
                     onNavigate: _navigate,
-                    onShowMore: () => _showMoreActions(snapshot.actions),
                   ),
                   if (snapshot.actions.isNotEmpty &&
                       (pendingDeposits?.pendingCount ?? 0) > 0)
@@ -184,6 +183,7 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                       WalletToolGrid(
                         tools: snapshot.tools,
                         onNavigate: _navigate,
+                        onShowMore: () => _showMoreActions(snapshot.actions),
                       ),
                     ],
                   ),
@@ -275,5 +275,12 @@ IconData _walletOverflowActionIcon(String key) => switch (key) {
   'buy' => Icons.shopping_cart_outlined,
   'transfer' => Icons.swap_vert_rounded,
   'history' => Icons.schedule_rounded,
+  'pending' => Icons.south_west_rounded,
+  'limits' => Icons.speed_rounded,
+  'dust' => Icons.auto_awesome_rounded,
+  'network' => Icons.wifi_rounded,
+  'gas' => Icons.local_gas_station_outlined,
+  'multi' => Icons.account_tree_outlined,
+  'approval' => Icons.verified_user_outlined,
   _ => Icons.account_balance_wallet_outlined,
 };

@@ -73,7 +73,7 @@ class _InputDemo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DesignSystemCaption(demo.caption),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitInput(
           controller: controller,
           label: demo.label.isEmpty ? null : demo.label,
@@ -111,12 +111,12 @@ class _InputWrapperDemo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DesignSystemCaption(caption),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         DecoratedBox(
           decoration: ShapeDecoration(
             color: AppColors.surface2,
@@ -153,7 +153,7 @@ class _InputWrapperDemo extends StatelessWidget {
           ),
         ),
         if (hasError) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             error!,
             style: AppTextStyles.caption.copyWith(color: AppColors.sell),

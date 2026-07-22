@@ -30,7 +30,7 @@ Không thuộc D1 (D1 = Trade highlight cho secondary earn/p2p/…).
 
 ## 1. ASCII wireframe @360×800
 
-### 1.1 CURRENT (production — history trong overflow; tools = ẨN ops)
+### 1.1 CURRENT (pre-D6 — superseded 2026-07-22 P2.7)
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -61,7 +61,7 @@ Không thuộc D1 (D1 = Trade highlight cho secondary earn/p2p/…).
 
 **Overflow «Thêm thao tác» hôm nay** (sau khi loại deposit/withdraw): Mua · Chuyển · **Lịch sử** — history HUB bị chôn.
 
-### 1.2 PROPOSED (D6 — 3 tool visible; rest overflow)
+### 1.2 PROPOSED = PRODUCTION (D6 — STEP-P2.7 done)
 
 ```
 ┌─────────────────────────────────────────────┐

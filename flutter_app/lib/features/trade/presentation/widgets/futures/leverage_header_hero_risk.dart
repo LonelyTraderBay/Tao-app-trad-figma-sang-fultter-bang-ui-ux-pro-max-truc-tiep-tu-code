@@ -44,7 +44,7 @@ class _RiskMeter extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: AppRadii.xsRadius,
                     child: SizedBox(
-                      height: AppSpacing.x3,
+                      height: AppSpacing.pageRhythmStandardInnerGap,
                       child: ColoredBox(
                         color: level <= preview.riskLevel
                             ? _segmentColor(level)

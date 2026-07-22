@@ -1,7 +1,5 @@
 import 'package:go_router/go_router.dart';
 
-import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/my_arena_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/activity_log_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/api_management_page.dart';
@@ -78,16 +76,12 @@ List<RouteBase> profileRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.profilePredictions,
       name: AppRouteNames.sc167ProfilePredictions,
-      builder: (_, _) => PredictionsPortfolioPage(
-        shellRenderMode: shellRenderMode,
-        backPath: AppRoutePaths.profile,
-        semanticIdentifier: 'SC-167',
-      ),
+      redirect: (_, _) => AppRoutePaths.marketsPredictionsPortfolio,
     ),
     GoRoute(
       path: AppRoutePaths.profileArena,
       name: AppRouteNames.sc168MyArena,
-      builder: (_, _) => MyArenaPage(shellRenderMode: shellRenderMode),
+      redirect: (_, _) => AppRoutePaths.arenaMy,
     ),
     GoRoute(
       path: AppRoutePaths.settingsSecurity,

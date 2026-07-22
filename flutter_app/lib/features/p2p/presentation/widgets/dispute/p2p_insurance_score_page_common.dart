@@ -102,7 +102,7 @@ class _TierPathCard extends StatelessWidget {
             if (i != snapshot.tierRequirements.length - 1)
               const Center(
                 child: SizedBox(
-                  height: AppSpacing.x3,
+                  height: AppSpacing.pageRhythmStandardInnerGap,
                   child: VerticalDivider(
                     width: AppSpacing.dividerHairline,
                     thickness: AppSpacing.dividerHairline,

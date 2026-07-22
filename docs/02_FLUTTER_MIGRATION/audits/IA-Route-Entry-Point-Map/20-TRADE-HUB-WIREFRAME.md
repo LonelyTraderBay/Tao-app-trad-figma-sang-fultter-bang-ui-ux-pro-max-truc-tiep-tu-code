@@ -103,15 +103,16 @@ Rhythm terminal: flush / trade shell (không dùng page rhythm compact Home).
 
 ## 3. Product switcher map
 
-Nguồn: `_tradeHubItems` + `primaryIds` trong `trade_product_navigation.dart`.
+Nguồn: `_tradeHubItems` + `primaryIds` trong `trade_product_navigation.dart`.  
+**STEP-P2.5 (2026-07-22):** nhãn L1 = vi-VN; chip **Rủi ro cao** trên Margin + Bot.
 
-| Tab id | Label UI | Target | Phân loại đích |
-|--------|----------|--------|----------------|
-| `spot` | Spot | `/trade/:pairId` (default pair) | GIỮ terminal / ẨN pair deep link |
-| `futures` | Futures | `/trade/:pairId/futures` | ẨN flow |
-| `margin` | Margin | `/trade/margin` | **GIỮ** `MarginTradingPage` |
-| `convert` | Convert | `/trade/convert` | **GIỮ** `ConvertPage` |
-| `bots` | Bot | `/trade/bots` | **GIỮ** `TradingBotsPage` |
+| Tab id | Label UI | Risk badge | Target | Phân loại đích |
+|--------|----------|------------|--------|----------------|
+| `spot` | Giao ngay | — | `/trade/:pairId` (default pair) | GIỮ terminal / ẨN pair deep link |
+| `futures` | Phái sinh | — | `/trade/:pairId/futures` | ẨN flow |
+| `margin` | Ký quỹ | **Rủi ro cao** | `/trade/margin` | **GIỮ** `MarginTradingPage` |
+| `convert` | Chuyển đổi | — | `/trade/convert` | **GIỮ** `ConvertPage` |
+| `bots` | Bot | **Rủi ro cao** | `/trade/bots` | **GIỮ** `TradingBotsPage` |
 
 Thứ tự tabs (`primaryIds`): **spot → futures → margin → convert → bots**.  
 Copy Trading **không** nằm trong switcher L1 (Home › Pro / Copy hub riêng). Overflow hiện không thêm Copy/Wallet (comment ARCH-A2).
@@ -276,7 +277,7 @@ Một dòng ẨN trong 05: target-market `/:productId` deep link — không menu
 | `trade_core/.../trade_high_risk_status_ui.dart` | Risk panel mapping |
 | `app/providers/trade_controller_providers.dart` | Screen + order Notifier providers |
 
-**Proposed chrome change (Phase 2):** truyền `headerActions` vào `VitTradeSimpleShell` — Lệnh → `tradeOrdersHistory`, Vị thế → `tradePositions` (STEP-P2.4).
+**Chrome D5 (STEP-P2.4 done):** `VitTradeSimpleShell.headerActions` — Lệnh → `tradeOrdersHistory` (EP-26), Vị thế → `tradePositions` (EP-27).
 
 ---
 
@@ -293,7 +294,7 @@ Một dòng ẨN trong 05: target-market `/:productId` deep link — không menu
 
 | Gap | Severity | Note |
 |-----|----------|------|
-| EP-26/27 không có header action | **P2 / D5** | STEP-P2.4; hiện chỉ NextAction + snippet |
+| EP-26/27 header action | **closed P2.4** | Persistent «Lệnh» + «Vị thế» trên Spot terminal |
 | Spot HUB chart/export inbound yếu | P2 | Thêm overflow khi chạm terminal chrome |
 | Compliance GOM (~29) không có Profile Pháp lý UI list | Cross-shell | Xem Profile wireframe / shell 18 — không list trên Trade |
 | Path naming EP-26 | Docs | `/trade/orders-history` ≠ label `/trade/orders` trong một số INDEX row |

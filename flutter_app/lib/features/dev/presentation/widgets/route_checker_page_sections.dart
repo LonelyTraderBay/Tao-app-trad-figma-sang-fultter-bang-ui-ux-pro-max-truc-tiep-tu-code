@@ -32,7 +32,7 @@ class _IntroBlock extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.subtitle,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -77,13 +77,13 @@ class _ProgressCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: ColoredBox(
               color: AppColors.surface2,
               child: SizedBox(
-                height: AppSpacing.x3,
+                height: AppSpacing.pageRhythmStandardInnerGap,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: FractionallySizedBox(
@@ -186,7 +186,7 @@ class _RouteList extends StatelessWidget {
             tested: testedRoutes.contains(route.path),
             onTap: () => onTapRoute(route),
           ),
-          if (route != routes.last) const SizedBox(height: AppSpacing.x3),
+          if (route != routes.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

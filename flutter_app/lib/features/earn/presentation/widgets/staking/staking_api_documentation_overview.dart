@@ -87,7 +87,7 @@ class _StatCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(_statIcon(stat.tone), color: color, size: AppSpacing.iconSm),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,

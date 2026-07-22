@@ -156,7 +156,7 @@ class _StatusBreakdown extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: AppSpacing.x3,
+              height: AppSpacing.pageRhythmStandardInnerGap,
               child: Row(
                 children: [
                   for (final entry in counts.entries)

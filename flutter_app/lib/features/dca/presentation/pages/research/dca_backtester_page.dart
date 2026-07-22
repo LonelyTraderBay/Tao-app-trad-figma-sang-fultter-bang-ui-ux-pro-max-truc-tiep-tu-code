@@ -78,10 +78,10 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
                 behavior: ScrollConfiguration.of(
                   context,
                 ).copyWith(scrollbars: false),
-                child: VitInsetScrollView(
+                child: SingleChildScrollView(
                   key: DCABacktesterPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  bottomInset: scrollEndPadding,
+                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,

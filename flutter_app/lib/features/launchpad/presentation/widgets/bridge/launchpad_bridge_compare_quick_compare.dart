@@ -180,7 +180,7 @@ class _MetricBarRow extends StatelessWidget {
                   child: FractionallySizedBox(
                     widthFactor: fraction,
                     child: SizedBox(
-                      height: AppSpacing.x4,
+                      height: AppSpacing.pageRhythmStandardSectionGap,
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
                           color: color.withValues(alpha: best ? 1 : .58),

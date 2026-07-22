@@ -69,7 +69,7 @@ class _CtaDemo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DesignSystemCaption('variant="${demo.variant}"'),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCtaButton(
           variant: designSystemVariantFromString(demo.variant),
           loading: demo.loading,

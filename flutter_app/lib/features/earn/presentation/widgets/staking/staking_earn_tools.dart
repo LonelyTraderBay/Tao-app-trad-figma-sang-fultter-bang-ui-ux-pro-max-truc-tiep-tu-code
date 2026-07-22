@@ -17,7 +17,7 @@ class _EarnCtaRow extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.inputHeight,
             leading: const Icon(Icons.dashboard_outlined),
-            child: const Text('Dashboard'),
+            child: const Text('Bảng điều khiển'),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -149,7 +149,7 @@ class _EarnLegalSheetState extends State<_EarnLegalSheet> {
       key: StakingEarnPage.legalSheetKey,
       title: 'Tài liệu & rủi ro',
       child: ListView(
-        physics: const ClampingScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
           Text(

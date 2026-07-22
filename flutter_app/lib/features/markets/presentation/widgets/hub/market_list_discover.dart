@@ -19,7 +19,7 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const VitSectionHeader(
-          title: 'Khám phá thêm',
+          title: 'Lối tắt từ Markets',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: marketListPredictionAccent,
@@ -32,9 +32,9 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
             children: [
               _DiscoverRow(
                 icon: Icons.gps_fixed_rounded,
-                title: 'Prediction Markets',
-                subtitle: 'Dự đoán sự kiện · Xác suất · Vị thế',
-                badge: 'Real positions',
+                title: 'Dự đoán thị trường',
+                subtitle: 'Lối tắt từ Markets · Xác suất · Vị thế',
+                badge: 'Lối tắt',
                 color: marketListPredictionAccent,
                 onTap: () => context.go(AppRoutePaths.marketsPredictions),
               ),
@@ -46,8 +46,8 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
               _DiscoverRow(
                 icon: Icons.sports_esports_outlined,
                 title: 'Open Arena',
-                subtitle: 'Creator modes · Thách đấu · Arena Points',
-                badge: 'Points only',
+                subtitle: 'Lối tắt từ Markets · ưu tiên Home · Điểm Arena',
+                badge: 'Lối tắt',
                 color: marketListArenaAccent,
                 onTap: () => context.go(AppRoutePaths.arena),
               ),

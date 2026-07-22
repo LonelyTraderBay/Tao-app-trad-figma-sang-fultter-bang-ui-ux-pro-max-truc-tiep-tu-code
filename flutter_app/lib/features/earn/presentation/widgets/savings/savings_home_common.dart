@@ -47,14 +47,6 @@ Color _riskColor(EarnRiskLevel riskLevel) {
   };
 }
 
-Color _riskTint(EarnRiskLevel riskLevel) {
-  return switch (riskLevel) {
-    EarnRiskLevel.low => AppColors.buy10,
-    EarnRiskLevel.medium => AppColors.warn10,
-    EarnRiskLevel.high => AppColors.primary12,
-  };
-}
-
 String _riskLabel(EarnRiskLevel riskLevel) {
   return switch (riskLevel) {
     EarnRiskLevel.low => 'Thấp',

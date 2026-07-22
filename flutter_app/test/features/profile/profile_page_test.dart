@@ -52,8 +52,6 @@ void main() {
       'launchpad',
       'bots',
       'copy',
-      'support',
-      'referral',
     ]);
     expect(
       snapshot.productShortcuts
@@ -65,9 +63,13 @@ void main() {
     );
     expect(snapshot.sections.map((section) => section.id), [
       'account',
-      'settings',
-      'explore',
+      'security',
+      'portfolio',
+      'referral',
+      'support',
+      'legal',
     ]);
+    expect(snapshot.user.kycNeedsAction, isTrue);
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -104,12 +106,20 @@ void main() {
       find.byKey(ProfilePage.productShortcutKey('wallet')),
       findsOneWidget,
     );
-    expect(
-      find.byKey(ProfilePage.productShortcutKey('support')),
-      findsOneWidget,
-    );
+    expect(find.byKey(ProfilePage.productShortcutKey('support')), findsNothing);
+    expect(find.byKey(ProfilePage.kycBannerKey), findsOneWidget);
+    expect(find.text('Xác minh'), findsOneWidget);
     expect(find.text('T\u00C0I KHO\u1EA2N'), findsOneWidget);
+    expect(find.text('B\u1EA2O M\u1EACT'), findsOneWidget);
+    expect(find.text('GI\u1EDAI THI\u1EC6U'), findsOneWidget);
+    expect(find.text('H\u1ED6 TR\u1EE2'), findsOneWidget);
+    expect(find.text('PH\u00C1P L\u00DD & B\u00C1O C\u00C1O'), findsOneWidget);
+    expect(find.byKey(ProfilePage.legalScaffoldKey), findsOneWidget);
+    expect(find.byKey(ProfilePage.legalSearchKey), findsOneWidget);
+    expect(find.byKey(ProfilePage.legalGroupKey('copy')), findsOneWidget);
     expect(find.text('X\u00E1c minh danh t\u00EDnh (KYC)'), findsOneWidget);
+    expect(find.text('M\u1EDDi b\u1EA1n b\u00E8'), findsOneWidget);
+    expect(find.text('Trung t\u00E2m h\u1ED7 tr\u1EE3'), findsOneWidget);
   });
 
   testWidgets('SC-156 first viewport previews product hub above bottom nav', (
@@ -180,11 +190,29 @@ void main() {
     expect(find.text('Qu\u1EA3n l\u00FD API'), findsOneWidget);
 
     await pumpProfile(tester);
-    await tester.ensureVisible(
-      find.text('Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng'),
-    );
-    await tester.tap(find.text('Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng'));
+    await tester.ensureVisible(find.byKey(ProfilePage.menuKey('activity')));
+    await tester.tap(find.byKey(ProfilePage.menuKey('activity')));
     await tester.pumpAndSettle();
     expect(find.byType(ActivityLogPage), findsOneWidget);
+  });
+
+  testWidgets('STEP-P1.4 legal accordion expands Bot group and pushes route', (
+    tester,
+  ) async {
+    await pumpProfile(tester);
+
+    await tester.ensureVisible(find.byKey(ProfilePage.legalScaffoldKey));
+    expect(find.text('Copy & tuân thủ giao dịch'), findsOneWidget);
+
+    // Copy group starts expanded — collapse then open Bot.
+    await tester.ensureVisible(find.byKey(ProfilePage.legalGroupKey('bots')));
+    await tester.tap(find.byKey(ProfilePage.legalGroupKey('bots')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(ProfilePage.legalItemKey('bot-terms')), findsOneWidget);
+    await tester.tap(find.byKey(ProfilePage.legalItemKey('bot-terms')));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Bot'), findsWidgets);
   });
 }

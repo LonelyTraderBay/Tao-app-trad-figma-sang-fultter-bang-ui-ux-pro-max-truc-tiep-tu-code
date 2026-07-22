@@ -101,8 +101,8 @@ class _BotCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
-            spacing: AppSpacing.rowGap,
-            runSpacing: AppSpacing.rowGap,
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
             children: [
               VitAccentPill(
                 label: '${bot.trades} lệnh',
@@ -202,8 +202,8 @@ class _StrategiesTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Wrap(
-          spacing: AppSpacing.rowGap,
-          runSpacing: AppSpacing.rowGap,
+          spacing: AppSpacing.x2,
+          runSpacing: AppSpacing.x2,
           children: [
             for (final filter in _StrategyRiskFilter.values)
               VitFilterChip(
@@ -229,7 +229,7 @@ class _StrategiesTab extends StatelessWidget {
               onCreate: () => onCreate(strategy),
             ),
             if (strategy != strategies.last)
-              const SizedBox(height: AppSpacing.rowGap),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
       ],
     );

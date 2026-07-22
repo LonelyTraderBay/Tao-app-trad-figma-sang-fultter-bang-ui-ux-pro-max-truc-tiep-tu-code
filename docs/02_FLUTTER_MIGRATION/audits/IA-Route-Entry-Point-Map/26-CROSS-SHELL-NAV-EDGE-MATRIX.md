@@ -71,6 +71,8 @@ Sources: [`99-ALL-ROUTES.md`](./99-ALL-ROUTES.md) (33 GIỮ), [`18-APP-SHELL-BOT
 | Arena studio HUB | `/arena` | Arena hub (points) | trade | `24` |
 | DCA / Launchpad HUB | `/dca`, `/launchpad` | Product hubs | trade | module maps `12`/`13` |
 
+Canonical portfolios: Predictions = `/markets/predictions/portfolio`; Arena = `/arena/my` (Profile aliases redirect/deep-link here).
+
 ---
 
 ## 3. Missing EP static routes (by design)

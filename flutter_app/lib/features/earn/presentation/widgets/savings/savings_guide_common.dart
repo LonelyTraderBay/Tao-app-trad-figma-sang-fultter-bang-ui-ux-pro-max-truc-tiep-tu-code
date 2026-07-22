@@ -40,7 +40,7 @@ class SavingsGuideProgressHeader extends StatelessWidget {
       trailingLabel: '${(progress * 100).round()}% hoàn thành',
       trackColor: AppColors.borderSolid,
       height: EarnSpacingTokens.earnGuideProgressHeight,
-      gap: AppSpacing.pageRhythmCompactInnerGap,
+      gap: AppSpacing.x2,
       borderRadius: AppRadii.xsRadius,
     );
   }

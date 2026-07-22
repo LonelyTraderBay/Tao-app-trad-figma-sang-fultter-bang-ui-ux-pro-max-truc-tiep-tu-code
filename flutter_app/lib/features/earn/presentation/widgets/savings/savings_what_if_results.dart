@@ -31,7 +31,7 @@ class _ResultsTab extends StatelessWidget {
           title: 'Kết quả mô phỏng',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: AppModuleAccents.earn,
-          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.x3,
         ),
         VitCard(
           radius: VitCardRadius.large,
@@ -117,7 +117,7 @@ class _ResultsTab extends StatelessWidget {
           title: 'Ảnh hưởng theo tài sản',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: AppModuleAccents.earn,
-          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.x3,
         ),
         _AssetImpactList(result: result),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),

@@ -5,9 +5,10 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_movers_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/watchlist_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/market_heatmap_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/pair_detail_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_sectors_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_movers_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -185,16 +186,32 @@ void main() {
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.layers_rounded).first);
+    // STEP-P2.2: «Ngành» removed from header (ẨN); overflow «Thêm» keeps deep links.
+    expect(find.byTooltip('Ngành'), findsNothing);
+    await tester.ensureVisible(find.text('Thêm'));
+    expect(find.text('Thêm'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Bộ lọc'));
+    await tester.tap(find.text('Bộ lọc'));
     await tester.pumpAndSettle();
-    expect(find.byType(MarketSectorsPage), findsOneWidget);
+    expect(find.text('Bộ lọc thị trường'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Bộ lọc'));
+    // STEP-P2.1 — HUB inbound heatmap + watchlist (RG-01 / RG-02).
+    await tester.ensureVisible(find.text('Bản đồ nhiệt'));
+    await tester.tap(find.text('Bản đồ nhiệt'));
     await tester.pumpAndSettle();
-    expect(find.text('Bộ lọc thị trường'), findsOneWidget);
+    expect(find.byType(MarketHeatmapPage), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Theo dõi'));
+    await tester.tap(find.text('Theo dõi'));
+    await tester.pumpAndSettle();
+    expect(find.byType(WatchlistPage), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
@@ -209,11 +226,16 @@ void main() {
   ) async {
     await pumpMarkets(tester);
 
-    await tester.ensureVisible(find.text('Khám phá thêm'));
+    await tester.ensureVisible(find.text('Lối tắt từ Markets'));
     await tester.pump(const Duration(milliseconds: 100));
 
-    expect(find.text('Khám phá thêm'), findsOneWidget);
-    expect(find.text('Prediction Markets'), findsOneWidget);
+    expect(find.text('Lối tắt từ Markets'), findsOneWidget);
+    expect(find.text('Dự đoán thị trường'), findsOneWidget);
+    expect(find.text('Lối tắt từ Markets · Xác suất · Vị thế'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
+    expect(
+      find.text('Lối tắt từ Markets · ưu tiên Home · Điểm Arena'),
+      findsOneWidget,
+    );
   });
 }

@@ -138,9 +138,9 @@ void main(List<String> args) {
 
   if (checkOnly) {
     final failures = <String>[];
-    if (entries.length != 414) {
+    if (entries.length != 415) {
       failures.add(
-        'Visual density audit expected 414 routed screens, '
+        'Visual density audit expected 415 routed screens, '
         'found ${entries.length}.',
       );
     }
@@ -350,10 +350,13 @@ int _countTokenizedFixedHeightRefs(String source) {
 }
 
 int _countTokenizedGapRefs(String source) {
+  // Count ad-hoc Gap/Spacing tokens only. Sanctioned pageRhythm* aliases are
+  // required by page_rhythm_spacing_scale_guardrail (raw x2/x3/x4 banned), so
+  // they must not inflate sparse-density risk.
   return _countRegex(
     source,
     RegExp(
-      r'SizedBox\s*\(\s*height\s*:\s*AppSpacing\.[A-Za-z0-9_]*(?:Gap|Spacing|Top|Bottom)\b',
+      r'SizedBox\s*\(\s*height\s*:\s*AppSpacing\.(?!pageRhythm)[A-Za-z0-9_]*(?:Gap|Spacing|Top|Bottom)\b',
     ),
   );
 }

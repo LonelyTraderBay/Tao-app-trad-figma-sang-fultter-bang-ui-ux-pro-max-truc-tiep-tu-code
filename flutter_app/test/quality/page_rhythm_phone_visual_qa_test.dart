@@ -38,6 +38,8 @@ void main() {
           EnginePhase.sendSemanticsUpdate,
           const Duration(seconds: 5),
         );
+        await tester.pump(const Duration(milliseconds: 350));
+        await tester.pump();
 
         final semantics = find.byWidgetPredicate(
           (widget) =>

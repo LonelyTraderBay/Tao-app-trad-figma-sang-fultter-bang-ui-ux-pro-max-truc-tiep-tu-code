@@ -14,19 +14,19 @@ Sources: [`19`](./19-MARKETS-HUB-WIREFRAME.md), [`20`](./20-TRADE-HUB-WIREFRAME.
 
 | Gap ID | Route / path | Page class | Class | Current inbound | Exception? | Owner STEP | Status |
 |--------|--------------|------------|-------|-----------------|------------|------------|--------|
-| RG-01 | `/markets/heatmap` | `MarketHeatmapPage` | HUB | **none** on `MarketListPage` (no chip/header) | No — must add inbound | **P2.1** | open |
-| RG-02 | `/markets/watchlist` | `WatchlistPage` | HUB | **none** — tab «Yêu thích» filters local list only; does not `go` watchlist | No — favorite ≠ Watchlist route | **P2.1** | open |
-| RG-03 | `/trade/orders-history` | `OrdersHistoryPage` | GIỮ | Reachable by path; **not** persistent Trade terminal chrome | No — D5 = header «Lệnh» | **P2.4** | open (D5 lock) |
-| RG-04 | `/trade/positions` | `PositionDashboardPage` | GIỮ | Reachable by path; **not** persistent Trade terminal chrome | No — D5 = header «Vị thế» | **P2.4** | open (D5 lock) |
-| RG-05 | `/wallet/history` | `TransactionHistoryPage` | HUB | Buried in overflow «Thêm thao tác» | No — D6 promote visible | **P2.7** | open (D6 lock) |
-| RG-06 | `/wallet/address-book` (proposed HUB bump) | Address-book page | HUB↑ | No hub tile | No — D6 promote | **P2.7** | open (D6 lock) |
-| RG-07 | `/wallet/health-score` (proposed HUB bump) | Health-score page | HUB↑ | No hub tile | No — D6 promote | **P2.7** | open (D6 lock) |
-| RG-08 | Profile › Pháp lý & báo cáo (**39** GOM) | accordion host on `ProfilePage` | GOM | Routes exist; **UI accordion absent** | No — must ship menu | **P1.4** | open |
+| RG-01 | `/markets/heatmap` | `MarketHeatmapPage` | HUB | `MarketListTools` chip «Bản đồ nhiệt» | — | **P2.1** | **closed** 2026-07-22 |
+| RG-02 | `/markets/watchlist` | `WatchlistPage` | HUB | `MarketListTools` chip «Theo dõi» (≠ tab Yêu thích local) | — | **P2.1** | **closed** 2026-07-22 |
+| RG-03 | `/trade/orders-history` | `OrdersHistoryPage` | GIỮ | Trade Spot header «Lệnh» (D5) | — | **P2.4** | **closed** 2026-07-22 |
+| RG-04 | `/trade/positions` | `PositionDashboardPage` | GIỮ | Trade Spot header «Vị thế» (D5) | — | **P2.4** | **closed** 2026-07-22 |
+| RG-05 | `/wallet/history` | `TransactionHistoryPage` | HUB | Wallet › Công cụ «Lịch sử» (D6 visible) | — | **P2.7** | **closed** 2026-07-22 |
+| RG-06 | `/wallet/address-book` (proposed HUB bump) | Address-book page | HUB↑ | Wallet › Công cụ «Sổ địa chỉ» | — | **P2.7** | **closed** 2026-07-22 |
+| RG-07 | `/wallet/health-score` (proposed HUB bump) | Health-score page | HUB↑ | Wallet › Công cụ «Sức khỏe ví» | — | **P2.7** | **closed** 2026-07-22 |
+| RG-08 | Profile › Pháp lý & báo cáo (**39** GOM) | accordion host on `ProfilePage` | GOM | `_LegalAccordionSection` + `ProfileLegalCatalog` (search + 5 nhóm) | — | **P1.4** | **closed** 2026-07-22 |
 | RG-09 | Earn › Tài liệu & rủi ro (**31** GOM) | sheet on `StakingEarnPage` | GOM | `StakingEarnPage` sheet + `EarnLegalCatalog` (5 cụm) | — | **P3.2** | **closed** 2026-07-22 |
-| RG-10 | `/news` | `NewsPage` | GIỮ | Spec = Home header [📰]; verify production header action | No if missing in code | **P1.2** | open / verify |
+| RG-10 | `/news` | `NewsPage` | GIỮ | Home header News → `/news` (`home_header.dart`) | — | **P1.2** | **closed** 2026-07-22 (verify) |
 | RG-11 | Markets Discover footer vs Home Discovery | `MarketListDiscoverMoreSection` → Predictions / Arena | HUB shortcut | Footer = **shortcut only**; Home = Discovery **canonical** | **Yes** — by design (not a missing inbound) | P2.x (docs only) | **accepted exception** |
 | RG-12 | `/referral` + D1 Trade highlight | `ReferralHomePage` | GIỮ | Canonical menu = Profile › Giới thiệu; path may still highlight **Trade** (D1 Option A) | **Tension** — menu Profile vs tab Trade | **P1.3** + shell D1 | open tension |
-| RG-13 | Support / Referral still on Home quick actions (legacy) | `SupportPage` / `ReferralHomePage` | GIỮ | Dual entry risk if Home tiles remain | No — move off Home → Profile | **P1.1** / **P1.3** | open |
+| RG-13 | Support / Referral still on Home quick actions (legacy) | `SupportPage` / `ReferralHomePage` | GIỮ | Removed from Home quick actions (`home_mock_data`); menu = Profile | — | **P1.1** / **P1.3** | **closed** 2026-07-22 (verify) |
 
 ## Exception register
 
@@ -39,7 +39,7 @@ Sources: [`19`](./19-MARKETS-HUB-WIREFRAME.md), [`20`](./20-TRADE-HUB-WIREFRAME.
 
 | Phase | Gaps |
 |-------|------|
-| P1 | RG-08, RG-10, RG-12, RG-13 |
+| P1 | RG-08 closed; RG-10/13 **closed (verify)**; RG-12 open tension |
 | P2 | RG-01, RG-02, RG-03, RG-04, RG-05, RG-06, RG-07 |
 | P3 | RG-09 |
 

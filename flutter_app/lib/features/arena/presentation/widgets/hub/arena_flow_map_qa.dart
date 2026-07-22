@@ -256,7 +256,7 @@ class _MiniProgress extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.xsRadius,
       child: SizedBox(
-        height: AppSpacing.x3,
+        height: AppSpacing.pageRhythmStandardInnerGap,
         child: ColoredBox(
           color: AppColors.surface3,
           child: Align(

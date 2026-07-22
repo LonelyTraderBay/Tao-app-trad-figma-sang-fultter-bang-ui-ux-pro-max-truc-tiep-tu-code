@@ -35,10 +35,18 @@ void main() {
       expect(snapshot.prediction.positions, 5);
       expect(snapshot.arena.rooms, 3);
       expect(snapshot.arena.pointsLabel, '2,220');
-      expect(snapshot.productShortcuts, hasLength(8));
-      expect(snapshot.sections, hasLength(3));
+      expect(snapshot.productShortcuts, hasLength(6));
+      expect(snapshot.sections, hasLength(6));
+      expect(snapshot.sections.map((section) => section.id), [
+        'account',
+        'security',
+        'portfolio',
+        'referral',
+        'support',
+        'legal',
+      ]);
       expect(snapshot.sections.first.id, 'account');
-      expect(snapshot.sections.first.items, hasLength(8));
+      expect(snapshot.sections.first.items, hasLength(9));
     });
 
     test('getEditProfile pins the same user identity for edit', () async {

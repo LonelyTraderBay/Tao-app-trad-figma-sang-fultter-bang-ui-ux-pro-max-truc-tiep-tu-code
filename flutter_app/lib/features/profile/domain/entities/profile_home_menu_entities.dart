@@ -219,3 +219,29 @@ final class ProfileMenuItem {
   final String? subtitle;
   final int? subtitleHex;
 }
+
+/// One GOM legal/compliance document row under Profile › Pháp lý.
+final class ProfileLegalItem {
+  const ProfileLegalItem({
+    required this.id,
+    required this.label,
+    required this.route,
+  });
+
+  final String id;
+  final String label;
+  final String route;
+}
+
+/// Accordion group of [ProfileLegalItem]s (Copy / Bot / P2P / …).
+final class ProfileLegalGroup {
+  const ProfileLegalGroup({
+    required this.id,
+    required this.label,
+    required this.items,
+  });
+
+  final String id;
+  final String label;
+  final List<ProfileLegalItem> items;
+}

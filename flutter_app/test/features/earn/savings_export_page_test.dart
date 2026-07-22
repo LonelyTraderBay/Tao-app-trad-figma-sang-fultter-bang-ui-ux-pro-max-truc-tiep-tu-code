@@ -155,10 +155,14 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.byKey(SavingsPage.exportInsightKey),
+      find.byKey(SavingsPage.moreToolsKey),
       120,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.tap(find.byKey(SavingsPage.moreToolsKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(SavingsPage.moreToolsSheetKey), findsOneWidget);
     await tester.tap(find.byKey(SavingsPage.exportInsightKey));
     await tester.pumpAndSettle();
 

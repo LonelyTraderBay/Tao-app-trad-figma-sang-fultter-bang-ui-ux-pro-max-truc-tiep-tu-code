@@ -69,11 +69,11 @@ class _StressTab extends StatelessWidget {
           title: 'Xếp hạng theo ảnh hưởng',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: AppModuleAccents.earn,
-          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.x3,
         ),
         for (final entry in results) ...[
           _StressRankCard(entry: entry),
-          if (entry != results.last) const SizedBox(height: AppSpacing.rowGap),
+          if (entry != results.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(

@@ -134,10 +134,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final dcaInsight = find.byKey(SavingsPage.dcaInsightKey);
-    await Scrollable.ensureVisible(tester.element(dcaInsight), alignment: .55);
+    final moreToolsButton = find.byKey(SavingsPage.moreToolsKey);
+    await Scrollable.ensureVisible(
+      tester.element(moreToolsButton),
+      alignment: .55,
+    );
     await tester.pumpAndSettle();
-    await tester.tap(dcaInsight);
+    await tester.tap(moreToolsButton);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(SavingsPage.moreToolsSheetKey), findsOneWidget);
+    await tester.tap(find.byKey(SavingsPage.dcaInsightKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(SavingsDCAPage), findsOneWidget);

@@ -1,9 +1,9 @@
 # Button Wiring Baseline Ledger
 
-Generated: 2026-07-21 · Expanded: STEP-P0.10  
+Generated: 2026-07-21 · Expanded: STEP-P0.10 · **Closed: STEP-P6.1 / P6.2 (2026-07-22)**
 
 Purpose: baseline matrix for non-navigation `onPressed` / `onTap` dead-handler discovery (complements `route_coverage_audit` + `navigation_edge_audit`).  
-**Status: baseline pending until Phase P6** (STEP-P6.1 / P6.2).
+**Status: P6 sweeps complete — product `broken=0`.**
 
 ## Command hint (`flutter-button-wiring-auditor`)
 
@@ -32,29 +32,34 @@ Cursor sessions: follow the same agent runbook manually (read-only); do not inve
 
 ## Scope matrix by module
 
-| Module | Feature path (scope) | Priority sweep STEP | Empty stubs (baseline) | Verdict | Status |
-|--------|----------------------|---------------------|-----------------------:|---------|--------|
-| home | `flutter_app/lib/features/home/` | P6.2 (after P1 Home) | TBD | — | **baseline pending (P6)** |
-| profile | `flutter_app/lib/features/profile/` | P6.2 (after P1 Profile) | TBD | — | **baseline pending (P6)** |
-| markets | `flutter_app/lib/features/markets/` | **P6.1** | TBD | — | **baseline pending (P6)** |
-| trade | `flutter_app/lib/features/trade/` (+ bots/copy/margin as touched) | **P6.1** | TBD | — | **baseline pending (P6)** |
-| wallet | `flutter_app/lib/features/wallet/` | **P6.1** | TBD | — | **baseline pending (P6)** |
-| earn | `flutter_app/lib/features/earn/` | **P6.2** | TBD | — | **baseline pending (P6)** |
-| p2p | `flutter_app/lib/features/p2p/` | **P6.2** | TBD | — | **baseline pending (P6)** |
-| arena | `flutter_app/lib/features/arena/` | **P6.2** | TBD | — | **baseline pending (P6)** |
-| predictions | `flutter_app/lib/features/predictions/` | **P6.2** | TBD | — | **baseline pending (P6)** |
+| Module | Feature path (scope) | Priority sweep STEP | Empty stubs | Verdict | Status |
+|--------|----------------------|---------------------|------------:|---------|--------|
+| home | `flutter_app/lib/features/home/` | P6.2 | 0 | PASS | **done 2026-07-22** |
+| profile | `flutter_app/lib/features/profile/` | P6.2 | 0 | PASS | **done 2026-07-22** |
+| markets | `flutter_app/lib/features/markets/` | **P6.1** | 0 broken (1 legitimate) | PASS | **done 2026-07-22** |
+| trade | `flutter_app/lib/features/trade/` (+ bots/copy) | **P6.1** | 0 broken (1 demo legitimate) | PASS | **done 2026-07-22** |
+| wallet | `flutter_app/lib/features/wallet/` | **P6.1** | 0 | PASS | **done 2026-07-22** |
+| earn | `flutter_app/lib/features/earn/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
+| p2p | `flutter_app/lib/features/p2p/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
+| arena | `flutter_app/lib/features/arena/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
+| predictions | `flutter_app/lib/features/predictions/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
+| launchpad / rewards / referral / dca / support / news / discovery | related Discovery family | P6.2 | 0 broken (1 launchpad ended-pool legitimate) | PASS | **done 2026-07-22** |
 
-## Prior sample (historical, not P6 baseline)
+## Dated artifacts
 
-| Module | Empty onPressed/onTap stubs | Verdict | Note |
-|--------|----------------------------:|---------|------|
-| home | 0 (spot sample 2026-07-21) | PASS (sample) | Not a substitute for P6 sweep |
-| profile | 0 (spot sample 2026-07-21) | PASS (sample) | Not a substitute for P6 sweep |
+| Scope | Artifact | broken | needs_review | legitimate |
+|-------|----------|-------:|-------------:|-----------:|
+| trade+markets+wallet | `flutter_app/run-artifacts/button-wiring-audit-trade-markets-wallet-2026-07-22.md` | 0 | 0 | 2 |
+| earn+p2p+discovery | `flutter_app/run-artifacts/button-wiring-audit-earn-p2p-discovery-2026-07-22.md` | 0 | 0 | 1 |
 
-Repo known **legitimate** stubs: DEV design-system demos + copy demo widgets — keep classified `legitimate` when re-auditing.
+## Legitimate catalog (kept)
+
+- Markets pair header share: `VitHeaderActionButton(onPressed: null)` — documented disabled until share sheet.
+- Copy-trading SC-401 card demo empty `onTap` — internal design demo.
+- Launchpad ended pool CTA `onPressed: null` — conditional terminal state.
 
 ## Exit criteria (P6)
 
-- Each module row above has dated ledger artifact + counts for `broken` / `needs_review` / `legitimate`.
-- `broken` count = 0 on production scopes, or deferred with issue ID.
-- Program gate: playbook **STEP-P6.5**.
+- [x] Each module row has dated ledger artifact + counts.
+- [x] `broken` count = 0 on production scopes.
+- [x] Program gate: playbook **STEP-P6.5**.

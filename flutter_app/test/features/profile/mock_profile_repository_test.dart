@@ -18,7 +18,7 @@ void main() {
       expect(snapshot.prediction.positions, 5);
       expect(snapshot.arena.rooms, 3);
       expect(snapshot.productShortcuts, isNotEmpty);
-      expect(snapshot.sections, hasLength(3));
+      expect(snapshot.sections, hasLength(6));
       expect(snapshot.endpoint, isNotEmpty);
     });
 

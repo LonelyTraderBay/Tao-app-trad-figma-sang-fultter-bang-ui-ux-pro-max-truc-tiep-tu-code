@@ -38,7 +38,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 03_tab_roots,flutter_app/lib/features/arena/presentation/pages/governance/arena_guide_page_tips_safety_content.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/arena/presentation/pages/governance/arena_resolution_center_page.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/arena/presentation/pages/governance/arena_trust_breakdown_page.dart,C,-,done,0,-
-03_tab_roots,flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page_hero_and_templates.dart,A,-,done,0,-
+03_tab_roots,flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page_hero_and_templates.dart,D,-,done,0,-
 03_tab_roots,flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page_modes_and_rooms_section.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page_search_and_shared_widgets.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/arena/presentation/pages/hub/arena_production_ready_page_flows_registry_handoff.dart,C,-,done,0,-
@@ -591,6 +591,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_hero_tabs.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_positions_common.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_products.dart,D,-,done,0,-
+05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_tools.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_calendar_grid.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_events_common.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_summary_tabs.dart,D,-,done,0,-
@@ -807,6 +808,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 06_other,flutter_app/lib/features/profile/presentation/widgets/profile_api_key_create_result.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/profile_home_arena_stats.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/profile_home_hero.dart,D,-,done,0,-
+06_other,flutter_app/lib/features/profile/presentation/widgets/profile_home_legal_accordion.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/profile_home_menu_actions.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/profile_home_vip_prediction.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/profile_sub_account_cards.dart,E,-,done,0,-

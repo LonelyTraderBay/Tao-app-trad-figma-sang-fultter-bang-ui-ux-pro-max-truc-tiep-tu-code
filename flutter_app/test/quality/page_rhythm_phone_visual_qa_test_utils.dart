@@ -3,6 +3,8 @@
 // Tách từ page_rhythm_phone_visual_qa_test.dart 2026-07-20 (giới hạn 400 dòng/file test).
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 
+part 'page_rhythm_phone_visual_qa_test_utils_giu.dart';
+
 class VisualQaFlow {
   const VisualQaFlow({
     required this.id,
@@ -254,6 +256,7 @@ const pageRhythmVisualQaFlows = [
     name: 'Wallet tab root (compact 8px sections)',
     route: AppRoutePaths.wallet,
     semanticLabel: 'Ví - số dư minh bạch, bảo mật đa lớp',
+    expectBottomNav: true,
     assertStandardContentWidth: true,
   ),
   VisualQaFlow(
@@ -320,4 +323,5 @@ const pageRhythmVisualQaFlows = [
     semanticLabel: 'Tổng quan P2P',
     assertStandardContentWidth: true,
   ),
+  ...pageRhythmGiuVisualQaFlows,
 ];

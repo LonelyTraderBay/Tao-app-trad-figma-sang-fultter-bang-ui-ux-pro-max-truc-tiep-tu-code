@@ -142,7 +142,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                   const VitOfflineBanner(
                     detail: 'Showing cached token reference.',
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   ..._liveSections(snapshot),
                 ],
               ),

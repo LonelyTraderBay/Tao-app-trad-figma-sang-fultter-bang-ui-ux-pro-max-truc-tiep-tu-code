@@ -43,10 +43,13 @@ class PredictionsHomePage extends ConsumerStatefulWidget {
   static const categoryAllKey = Key('sc027_category_all');
   static const categoryLiveCryptoKey = Key('sc027_category_live_crypto');
   static const myPredictionsKey = Key('sc027_my_predictions');
+  static const portfolioHeaderKey = Key('sc027_portfolio_header');
+  static const toolsSectionKey = Key('sc027_prediction_tools');
   static const breakingMoversKey = Key('sc027_breaking_movers');
   static const arenaBridgeKey = Key('sc027_arena_bridge');
 
   static Key eventCardKey(String id) => Key('sc027_event_$id');
+  static Key toolKey(String id) => Key('sc027_tool_$id');
   static const viewAllEventsKey = Key('sc027_view_all_events');
 
   final ShellRenderMode? shellRenderMode;
@@ -117,7 +120,7 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
         child: VitAutoHideHeaderScaffold(
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
-            title: 'Prediction Markets',
+            title: 'Dự đoán thị trường',
             subtitle: 'Xác suất và sự kiện đang mở',
             showBack: true,
             onBack: () => goBackOrFallback(
@@ -131,6 +134,13 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                 type: VitHeaderActionType.search,
                 onPressed: () =>
                     context.go(AppRoutePaths.marketsPredictionsSearch),
+              ),
+              VitHeaderActionItem(
+                key: PredictionsHomePage.portfolioHeaderKey,
+                type: VitHeaderActionType.portfolio,
+                tooltip: 'Danh mục',
+                onPressed: () =>
+                    context.go(AppRoutePaths.marketsPredictionsPortfolio),
               ),
             ],
           ),
@@ -173,8 +183,9 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                                 hubTotalsValue?.events.length ??
                                 snapshot.events.length,
                             openPositionCount: snapshot.openPositionCount,
-                            onPositionsTap: () =>
-                                context.go(AppRoutePaths.profilePredictions),
+                            onPositionsTap: () => context.go(
+                              AppRoutePaths.marketsPredictionsPortfolio,
+                            ),
                           ),
                           _SearchField(
                             controller: _searchController,
@@ -294,6 +305,9 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                                 ),
                               ),
                           ],
+                          _PredictionsToolsSection(
+                            onNavigate: (route) => context.go(route),
+                          ),
                           const _RiskDisclaimer(),
                         ],
                       ),

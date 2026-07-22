@@ -31,14 +31,14 @@ class _PointsHero extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Arena Points',
+                        'Điểm Arena',
                         style: AppTextStyles.sectionTitle.copyWith(
                           fontWeight: AppTextStyles.heavy,
                         ),
                       ),
                     ),
                     const VitStatusPill(
-                      label: 'Points only',
+                      label: 'Chỉ điểm Arena',
                       status: VitStatusPillStatus.orange,
                       size: VitStatusPillSize.sm,
                     ),
@@ -303,7 +303,7 @@ class _QuickLinks extends StatelessWidget {
           child: _QuickLinkButton(
             key: MyArenaPage.leaderboardKey,
             icon: Icons.emoji_events_outlined,
-            label: 'Leaderboard',
+            label: 'Bảng xếp hạng',
             onTap: onLeaderboard,
           ),
         ),

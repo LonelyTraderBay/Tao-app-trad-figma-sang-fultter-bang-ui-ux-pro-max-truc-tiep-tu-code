@@ -117,7 +117,7 @@ class HomeMockData {
       label: 'Launchpad',
       routePath: '/launchpad',
       accentKey: 'riskHigh',
-      stateLabel: 'Token',
+      stateLabel: 'Token mới',
       riskBadge: 'Rủi ro cao',
     ),
     HomeQuickAction(
@@ -125,7 +125,7 @@ class HomeMockData {
       label: 'Phần thưởng',
       routePath: '/rewards',
       accentKey: 'medalGold',
-      stateLabel: 'Growth',
+      stateLabel: 'Phần thưởng',
     ),
   ];
 
@@ -215,7 +215,7 @@ class HomeMockData {
           label: 'Launchpad',
           routePath: '/launchpad',
           accentKey: 'riskHigh',
-          stateLabel: 'Token',
+          stateLabel: 'Token mới',
           riskBadge: 'Rủi ro cao',
         ),
         HomeQuickAction(
@@ -223,14 +223,14 @@ class HomeMockData {
           label: 'Phần thưởng',
           routePath: '/rewards',
           accentKey: 'medalGold',
-          stateLabel: 'Growth',
+          stateLabel: 'Phần thưởng',
         ),
         HomeQuickAction(
           icon: 'discover',
           label: 'Chủ đề',
           routePath: '/topics',
           accentKey: 'discovery',
-          stateLabel: 'Topic',
+          stateLabel: 'Chủ đề',
         ),
       ],
     ),

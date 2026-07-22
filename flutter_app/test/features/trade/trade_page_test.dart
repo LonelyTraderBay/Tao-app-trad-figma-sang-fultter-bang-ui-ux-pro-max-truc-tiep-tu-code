@@ -142,6 +142,12 @@ void main() {
     expect(find.byKey(TradePage.quickNavKey('spot')), findsOneWidget);
     expect(find.byKey(TradePage.quickNavKey('convert')), findsOneWidget);
     expect(find.byKey(TradePage.quickNavKey('futures')), findsOneWidget);
+    expect(find.text('Giao ngay'), findsOneWidget);
+    expect(find.text('Chuyển đổi'), findsOneWidget);
+    expect(find.text('Phái sinh'), findsOneWidget);
+    // STEP-P2.4 / D5 header chrome
+    expect(find.byTooltip('Lệnh'), findsOneWidget);
+    expect(find.byTooltip('Vị thế'), findsOneWidget);
     expect(find.text('67,543.21'), findsAtLeastNWidgets(1));
     expect(find.text('Chế độ Pro'), findsNothing);
     expect(find.text('Giao dịch Spot'), findsOneWidget);

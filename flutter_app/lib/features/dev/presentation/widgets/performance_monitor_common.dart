@@ -68,7 +68,7 @@ class _TargetsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final target in targets)
             Text(
               '- $target',

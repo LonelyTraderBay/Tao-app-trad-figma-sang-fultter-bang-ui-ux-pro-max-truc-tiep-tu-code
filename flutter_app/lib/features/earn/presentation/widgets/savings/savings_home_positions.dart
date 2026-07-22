@@ -66,34 +66,6 @@ class _SavingsPositions extends StatelessWidget {
   }
 }
 
-class _RoundIcon extends StatelessWidget {
-  const _RoundIcon({required this.tone});
-
-  final EarnRiskLevel tone;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = _riskColor(tone);
-    final icon = switch (tone) {
-      EarnRiskLevel.low => Icons.repeat_rounded,
-      EarnRiskLevel.medium => Icons.schedule_rounded,
-      EarnRiskLevel.high => Icons.auto_awesome_rounded,
-    };
-
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: _riskTint(tone),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-      ),
-      child: SizedBox(
-        width: AppSpacing.x6,
-        height: AppSpacing.x6,
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}
-
 class _AssetBadge extends StatelessWidget {
   const _AssetBadge({required this.asset, required this.color});
 

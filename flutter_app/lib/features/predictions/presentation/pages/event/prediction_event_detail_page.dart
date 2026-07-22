@@ -15,8 +15,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -133,11 +133,10 @@ class _PredictionEventDetailPageState
       predictionsEventDetailSnapshotProvider(widget.eventId),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final footerChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
     final footerPadding =
-        footerChrome +
+        (mode.usesVisualQaFrame
+            ? SharedSpacingTokens.bottomNavVisualClearance
+            : SharedSpacingTokens.bottomNavNativeClearance) +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 

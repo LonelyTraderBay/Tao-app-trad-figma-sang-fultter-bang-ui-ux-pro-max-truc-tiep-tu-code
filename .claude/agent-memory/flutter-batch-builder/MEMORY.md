@@ -38,3 +38,9 @@ nhật sau khi batch xanh nếu có bài học mới. Giữ file < 200 dòng.
 - Glob `cp` rộng có thể ĐÈ file đã sửa; worktree thấy git HEAD cũ. Khi
   task yêu cầu "copy nguyên trạng", diff lại chuỗi dài sau copy — đừng
   tự nhận byte-for-byte khi chưa diff.
+
+## Windows shell verify
+
+- PowerShell trong Cursor Cloud win32 có thể không hỗ trợ `&&`; khi chain
+  verify, dùng `; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }` để tránh
+  fail giả trước khi Dart/Flutter chạy.

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_module_components.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
 /// Product tab descriptor for horizontal product switcher.
 final class VitTradeProductTab {
@@ -18,12 +19,16 @@ final class VitTradeProductTab {
     required this.label,
     required this.onTap,
     this.tabKey,
+    this.riskBadge,
   });
 
   final String id;
   final String label;
   final VoidCallback onTap;
   final Key? tabKey;
+
+  /// Compact risk disclosure on leveraged / automated products (e.g. Margin, Bot).
+  final String? riskBadge;
 }
 
 /// Overflow hub tile for the "more products" sheet.
@@ -118,6 +123,7 @@ class VitTradeProductTabs extends StatelessWidget {
                   _ProductTabChip(
                     key: tabs[i].tabKey,
                     label: tabs[i].label,
+                    riskBadge: tabs[i].riskBadge,
                     active: tabs[i].id == activeId,
                     onTap: tabs[i].onTap,
                   ),
@@ -159,42 +165,63 @@ class _ProductTabChip extends StatelessWidget {
     required this.label,
     required this.active,
     required this.onTap,
+    this.riskBadge,
   });
 
   final String label;
+  final String? riskBadge;
   final bool active;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.x4,
-        right: AppSpacing.x4,
-        top: AppSpacing.x2,
-        bottom: AppSpacing.x2,
-      ),
-      borderColor: active
-          ? AppColors.primary.withValues(alpha: .45)
-          : AppColors.borderSolid,
-      background: active
-          ? DecoratedBox(
-              decoration: ShapeDecoration(
-                color: AppColors.primary.withValues(alpha: .10),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.cardRadius,
+    final semanticsLabel = riskBadge == null ? label : '$label, $riskBadge';
+    return Semantics(
+      button: true,
+      selected: active,
+      label: semanticsLabel,
+      child: VitCard(
+        onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.standard,
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.x3,
+          right: AppSpacing.x3,
+          top: AppSpacing.x2,
+          bottom: AppSpacing.x2,
+        ),
+        borderColor: active
+            ? AppColors.primary.withValues(alpha: .45)
+            : AppColors.borderSolid,
+        background: active
+            ? DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: AppColors.primary.withValues(alpha: .10),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.cardRadius,
+                  ),
                 ),
+              )
+            : null,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? AppColors.primary : AppColors.text2,
+                fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
               ),
-            )
-          : null,
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: active ? AppColors.primary : AppColors.text2,
-          fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+            ),
+            if (riskBadge != null) ...[
+              const SizedBox(width: AppSpacing.x1),
+              VitStatusPill(
+                label: riskBadge!,
+                status: VitStatusPillStatus.warning,
+                size: VitStatusPillSize.sm,
+              ),
+            ],
+          ],
         ),
       ),
     );

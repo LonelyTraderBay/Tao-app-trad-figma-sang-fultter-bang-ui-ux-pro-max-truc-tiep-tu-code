@@ -97,6 +97,11 @@ TradeProductNavigation buildTradeProductNavigation({
     label: item.label,
     tabKey: item.tileKey,
     onTap: item.onTap,
+    // STEP-P2.5: surface risk on leveraged / automated L1 products only.
+    riskBadge: switch (item.id) {
+      'margin' || 'bots' => item.badge,
+      _ => null,
+    },
   );
 
   VitTradeProductOverflowItem overflowFor(VitTradeHubItem item) =>
@@ -130,13 +135,16 @@ List<VitTradeHubItem> _tradeHubItems(
   Key navKey(String id) => quickNavKey?.call(id) ?? Key('trade_nav_$id');
 
   // L1 trade modes. Bot joined this switcher under ARCH-A2 (2026-07-19).
+  // Labels: vi-VN (STEP-P2.5). Badge field carries risk copy for Margin/Bot
+  // (shown on the tab chip); other products keep an empty badge so overflow
+  // tiles — if ever used — do not show English Core/Pro/Auto chips.
   // Remaining overflow tiles (Copy, Wallet, …) live on Home quick actions
   // and Wallet bottom nav — no duplicate "Thêm" sheet entries for those.
   return [
     VitTradeHubItem(
       id: 'spot',
-      label: 'Spot',
-      badge: 'Core',
+      label: 'Giao ngay',
+      badge: '',
       icon: Icons.show_chart_rounded,
       accentColor: AppModuleAccents.trade,
       tileKey: navKey('spot'),
@@ -144,8 +152,8 @@ List<VitTradeHubItem> _tradeHubItems(
     ),
     VitTradeHubItem(
       id: 'convert',
-      label: 'Convert',
-      badge: 'Core',
+      label: 'Chuyển đổi',
+      badge: '',
       icon: Icons.swap_horiz_rounded,
       accentColor: AppModuleAccents.trade,
       tileKey: navKey('convert'),
@@ -153,8 +161,8 @@ List<VitTradeHubItem> _tradeHubItems(
     ),
     VitTradeHubItem(
       id: 'futures',
-      label: 'Futures',
-      badge: 'Risk',
+      label: 'Phái sinh',
+      badge: '',
       icon: Icons.bar_chart_rounded,
       accentColor: AppColors.sell,
       tileKey: navKey('futures'),
@@ -162,8 +170,8 @@ List<VitTradeHubItem> _tradeHubItems(
     ),
     VitTradeHubItem(
       id: 'margin',
-      label: 'Margin',
-      badge: 'Pro',
+      label: 'Ký quỹ',
+      badge: 'Rủi ro cao',
       icon: Icons.trending_up_rounded,
       accentColor: AppModuleAccents.trade,
       tileKey: navKey('margin'),
@@ -172,7 +180,7 @@ List<VitTradeHubItem> _tradeHubItems(
     VitTradeHubItem(
       id: 'bots',
       label: 'Bot',
-      badge: 'Auto',
+      badge: 'Rủi ro cao',
       icon: Icons.smart_toy_rounded,
       accentColor: AppModuleAccents.trade,
       tileKey: navKey('bots'),

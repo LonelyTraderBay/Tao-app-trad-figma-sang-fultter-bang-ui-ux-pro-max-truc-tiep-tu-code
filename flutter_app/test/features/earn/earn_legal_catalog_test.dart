@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_hub_tools_catalog.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_legal_catalog.dart';
+import 'package:vit_trade_flutter/features/earn/domain/earn_hub_tools_catalog.dart';
+import 'package:vit_trade_flutter/features/earn/domain/earn_legal_catalog.dart';
 
 void main() {
   test('STEP-P3.2 EarnLegalCatalog exposes 31 GOM items in 5 groups', () {

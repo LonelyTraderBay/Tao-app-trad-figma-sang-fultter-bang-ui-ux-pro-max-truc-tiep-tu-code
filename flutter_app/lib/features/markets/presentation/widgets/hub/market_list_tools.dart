@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
@@ -18,7 +20,8 @@ class MarketListTools extends StatelessWidget {
 
   final ValueChanged<String> onNavigate;
 
-  static const tools = [
+  /// HUB-only chips on the Markets list strip (STEP-P2.1 + P2.2).
+  static const hubTools = [
     _MarketTool(
       icon: Icons.filter_alt_outlined,
       label: 'Bộ lọc',
@@ -44,22 +47,10 @@ class MarketListTools extends StatelessWidget {
       color: AppColors.sell,
     ),
     _MarketTool(
-      icon: Icons.forum_outlined,
-      label: 'Tâm lý',
-      route: 'social-sentiment',
-      color: AppAssetColors.cyanChain,
-    ),
-    _MarketTool(
       icon: Icons.pie_chart_outline_rounded,
       label: 'Danh mục',
       route: 'portfolio-tracker',
       color: AppColors.buy,
-    ),
-    _MarketTool(
-      icon: Icons.article_outlined,
-      label: 'Tin tức',
-      route: 'news',
-      color: AppColors.text3,
     ),
     _MarketTool(
       icon: Icons.show_chart_rounded,
@@ -68,8 +59,36 @@ class MarketListTools extends StatelessWidget {
       color: AppAssetColors.skyChain,
     ),
     _MarketTool(
+      icon: Icons.grid_view_rounded,
+      label: 'Bản đồ nhiệt',
+      route: 'heatmap',
+      color: AppColors.riskHigh,
+    ),
+    _MarketTool(
+      icon: Icons.star_border_rounded,
+      label: 'Theo dõi',
+      route: 'watchlist',
+      color: marketListPrimary,
+    ),
+  ];
+
+  /// ẨN deep-link tools — reachable via overflow «Thêm» only (STEP-P2.2).
+  static const overflowTools = [
+    _MarketTool(
+      icon: Icons.forum_outlined,
+      label: 'Tâm lý',
+      route: 'social-sentiment',
+      color: AppAssetColors.cyanChain,
+    ),
+    _MarketTool(
+      icon: Icons.article_outlined,
+      label: 'Tin tức',
+      route: 'news',
+      color: AppColors.text3,
+    ),
+    _MarketTool(
       icon: Icons.lock_open_rounded,
-      label: 'Unlock',
+      label: 'Mở khóa',
       route: 'unlocks',
       color: AppAssetColors.violetChain,
     ),
@@ -87,23 +106,77 @@ class MarketListTools extends StatelessWidget {
     ),
   ];
 
+  void _openOverflowSheet(BuildContext context) {
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        builder: (sheetContext) {
+          return VitSheetPanel(
+            title: 'Thêm công cụ',
+            child: Wrap(
+              spacing: AppSpacing.x3,
+              runSpacing: AppSpacing.x3,
+              children: [
+                for (final tool in overflowTools)
+                  SizedBox(
+                    width:
+                        (MediaQuery.sizeOf(sheetContext).width -
+                            AppSpacing.contentPad * 2 -
+                            AppSpacing.x3) /
+                        2,
+                    child: VitServiceTile(
+                      density: VitServiceTileDensity.compact,
+                      icon: tool.icon,
+                      label: tool.label,
+                      accentColor: tool.color,
+                      onTap: () {
+                        Navigator.of(sheetContext).pop();
+                        onNavigate('/markets/${tool.route}');
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: _marketToolsCompactHeight,
-      child: ListView.separated(
+      child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
-        itemCount: tools.length,
-        separatorBuilder: (_, _) =>
+        child: Row(
+          children: [
+            for (var i = 0; i < hubTools.length; i++) ...[
+              if (i > 0) const SizedBox(width: _marketToolCompactGap),
+              _ToolChip(
+                tool: hubTools[i],
+                onTap: () => onNavigate('/markets/${hubTools[i].route}'),
+              ),
+            ],
             const SizedBox(width: _marketToolCompactGap),
-        itemBuilder: (context, index) {
-          final tool = tools[index];
-          return _ToolChip(
-            tool: tool,
-            onTap: () => onNavigate('/markets/${tool.route}'),
-          );
-        },
+            VitChoicePill(
+              label: 'Thêm',
+              selected: false,
+              showSelectedIcon: false,
+              onTap: () => _openOverflowSheet(context),
+              accentColor: AppColors.primary,
+              padding: _marketToolCompactPadding,
+              leading: const Icon(
+                Icons.more_horiz_rounded,
+                color: AppColors.primary,
+                size: _marketToolCompactIcon,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

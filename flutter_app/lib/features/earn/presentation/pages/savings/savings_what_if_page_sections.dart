@@ -176,7 +176,7 @@ class _ScenarioList extends StatelessWidget {
             onTap: () => onScenarioChanged(scenario.id),
           ),
           if (scenario != scenarios.last)
-            const SizedBox(height: AppSpacing.rowGap),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         if (selected == SavingsWhatIfScenarioId.custom) ...[
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),

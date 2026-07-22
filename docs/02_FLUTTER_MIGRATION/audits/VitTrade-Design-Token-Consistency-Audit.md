@@ -16,7 +16,7 @@ generated=2026-06-12
 status_fail=0
 status_warn=54
 status_exception=259
-rows=2883
+rows=2889
 ```
 
 ## CI Baseline Gates
@@ -122,11 +122,11 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/arena/presentation/pages/challenge/arena_challenge_detail_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_home_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_hero_tabs.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_hero_tabs.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_express_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_express_page_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -667,6 +667,8 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_positions_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_products.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_products.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_tools.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_tools.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_calendar_grid.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earnings_calendar_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_calendar_grid.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earnings_events_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -1196,6 +1198,8 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_tools.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_home_tools.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_hours_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_settings_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_hours_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_settings_trade_security.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -1488,6 +1492,8 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_arena_stats.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_hero.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_hero.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_legal_accordion.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_legal_accordion.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_menu_actions.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_menu_actions.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/profile/presentation/widgets/profile_home_vip_prediction.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -2854,7 +2860,6 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/savings/savings_risk_assessment_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_audit_reports_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `4 files` | warn | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earnings_calendar_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_history_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_institutional_page.dart` | `4 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
@@ -2886,7 +2891,6 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_insurance_fund_page.dart` | `4 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_express_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_guide_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_merchant_apply_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -2947,6 +2951,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/discovery/presentation/pages/topic_hub_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/savings/savings_dca_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart` | `5 files` | warn | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking/staking_earn_page.dart` | `5 files` | warn | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_event_log_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -2957,9 +2962,9 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/markets/presentation/pages/tools/market_correlations_page.dart` | `5 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
 | root_page_bundle_summary | `flutter_app/lib/features/markets/presentation/pages/tools/market_movers_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_dashboard_page.dart` | `5 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/predictions/presentation/pages/portfolio/prediction_market_maker_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_tournaments_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/referral/presentation/pages/referral_home_page.dart` | `5 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `5 files` | warn | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart` | `5 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
@@ -2980,6 +2985,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart` | `6 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_page.dart` | `6 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart` | `6 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
+| root_page_bundle_summary | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` | `6 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` | `6 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_guide_page.dart` | `6 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade_compliance/presentation/pages/disclosures/regulatory_disclosures_page.dart` | `6 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
