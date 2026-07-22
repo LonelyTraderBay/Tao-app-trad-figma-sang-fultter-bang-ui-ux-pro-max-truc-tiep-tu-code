@@ -120,7 +120,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               onOpenPredictions: () =>
                   context.go(AppRoutePaths.profilePredictions),
               onOpenArena: () => context.go(AppRoutePaths.profileArena),
-              onOpenKyc: () => context.go(AppRoutePaths.profileKyc),
+              onOpenActivity: () =>
+                  context.go(AppRoutePaths.profileActivity),
               onLogout: () async {
                 await ref.read(authSessionControllerProvider.notifier).logout();
                 if (context.mounted) context.go(AppRoutePaths.authLogin);

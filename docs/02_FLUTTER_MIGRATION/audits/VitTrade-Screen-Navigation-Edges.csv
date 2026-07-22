@@ -920,12 +920,12 @@ profile,flutter_app/lib/features/profile/presentation/pages/device_management_pa
 profile,flutter_app/lib/features/profile/presentation/pages/device_management_page.dart,279,device_management_page.dart,,context.pop,,,,back_or_close_modal
 profile,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,204,edit_profile_page.dart,,context.go,AppRoutePaths.profile,/profile,ProfilePage (/profile),
 profile,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,201,edit_profile_page.dart,,context.pop,,,,back_or_close_modal
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,108,profile_page.dart,Thử lại | Không tải được dữ liệu,context.go,AppRoutePaths.profileEdit,/profile/edit,EditProfilePage (/profile/edit),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,117,profile_page.dart,Thử lại,context.go,AppRoutePaths.profileVip,/profile/vip,VIPPage (/profile/vip),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,119,profile_page.dart,,context.go,AppRoutePaths.profilePredictions,/profile/predictions,PredictionsPortfolioPage (/profile/predictions),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,120,profile_page.dart,,context.go,AppRoutePaths.profileArena,/profile/arena,MyArenaPage (/profile/arena),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,121,profile_page.dart,,context.go,AppRoutePaths.profileActivity,/profile/activity,ActivityLogPage (/profile/activity),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,124,profile_page.dart,,context.go,AppRoutePaths.authLogin,/auth/login,AuthRouteShell (/auth/login),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,110,profile_page.dart,Thử lại | Không tải được dữ liệu,context.go,AppRoutePaths.profileEdit,/profile/edit,EditProfilePage (/profile/edit),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,119,profile_page.dart,Thử lại,context.go,AppRoutePaths.profileVip,/profile/vip,VIPPage (/profile/vip),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,121,profile_page.dart,,context.go,AppRoutePaths.profilePredictions,/profile/predictions,PredictionsPortfolioPage (/profile/predictions),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,122,profile_page.dart,,context.go,AppRoutePaths.profileArena,/profile/arena,MyArenaPage (/profile/arena),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,124,profile_page.dart,,context.go,AppRoutePaths.profileActivity,/profile/activity,ActivityLogPage (/profile/activity),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,127,profile_page.dart,,context.go,AppRoutePaths.authLogin,/auth/login,AuthRouteShell (/auth/login),
 profile,flutter_app/lib/features/profile/presentation/pages/security_page.dart,175,security_page.dart,Mã chống lừa đảo | Xác nhận mã chống lừa đảo,context.go,item.route!,,,dynamic_route_expression
 profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,227,settings_page.dart,,context.go,AppRoutePaths.profile,/profile,ProfilePage (/profile),
 profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,224,settings_page.dart,,context.pop,,,,back_or_close_modal

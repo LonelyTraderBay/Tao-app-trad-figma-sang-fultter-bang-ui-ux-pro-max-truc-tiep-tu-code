@@ -123,12 +123,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     await ref.read(homeSnapshotProvider.future);
   }
 
-  int _primaryQuickActionCount(HomeDensityVariant variant) {
-    return variant == HomeDensityVariant.compact
-        ? HomeSpacingTokens.homeQuickActionCompactCount
-        : HomeSpacingTokens.homeQuickActionStandardCount;
-  }
-
   @override
   Widget build(BuildContext context) {
     final homeAsync = ref.watch(homeSnapshotProvider);
@@ -164,9 +158,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           final screenWidth = MediaQuery.sizeOf(context).width;
           final homeVariant = _homeDensityVariant(screenWidth);
           final homeDensity = _tileDensity(homeVariant);
-          final homePrimaryQuickActionCount = _primaryQuickActionCount(
-            homeVariant,
-          );
+          final homePrimaryQuickActionCount =
+              HomeSpacingTokens.homeQuickActionCompactCount;
           final visibleAnnouncements = _visibleAnnouncements(snapshot);
           final gridQuickActions = snapshot.quickActions;
           final moreQuickActions = gridQuickActions
