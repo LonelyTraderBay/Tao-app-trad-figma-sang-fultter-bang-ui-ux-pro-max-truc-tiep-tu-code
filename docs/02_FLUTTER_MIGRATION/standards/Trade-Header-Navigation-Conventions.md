@@ -22,6 +22,30 @@ Not backed by a dedicated automated guardrail — unlike [Top-Header-Standard.md
 
 When adding a new `trade` screen: if it's an entry point users can scroll for a while and return to, use `VitTradeHubScaffold`. If it's a step inside a flow that already has a root (a detail, a confirmation, a log), use `VitTradeDetailScaffold` so the title/context never scrolls away mid-flow.
 
+## 1.1 Title / subtitle archetypes
+
+Header chrome must stay consistent across the L1 product-tab strip (`Giao ngay` … `Bot`). Differences come from **title / subtitle / actions inputs**, not from a different shell.
+
+| Archetype | Pages | Title | Subtitle | Actions | Product tabs |
+| --- | --- | --- | --- | --- | --- |
+| **L1 Instrument** | Spot, Futures, Margin | `{pair.symbol}` | Product name VI (Spot / Futures / Margin) | **Lệnh + Vị thế** (D5) on all three | on |
+| **L1 Product hub** | Convert, Bot hub | Product name VI | One-line purpose VI | Convert: settings; Bot hub: none | on |
+| **L2 Trade utility** | Orders, Positions, Settings, leverage, export… (`showProductTabs: true`) | Screen name VI | Short context VI; **no** EN crumbs like `· Trade` | Keep existing | keep on |
+| **L2 Copy** | Copy cluster | Title VI | Hub/detail context VI | Keep existing | **off** (ARCH-A2) |
+| **L2 Bot sub-pages** | Bot settings / dashboard / backtest children | Keep VI | Keep VI | Keep existing | **off**; do not pass dead `activeProductId: 'bots'` when tabs are off |
+
+**L1 product-tab copy (Phase 1 / T1):**
+
+| Page | Title | Subtitle |
+| --- | --- | --- |
+| Convert SC-056 | `Chuyển đổi` | `Đổi tài sản nhanh` |
+| Orders SC-050 | `Lịch sử lệnh` | `Lịch sử lệnh · Spot` |
+| Copy hub SC-063 | `Sao chép giao dịch` | `Sao chép chiến lược có kiểm soát` |
+| Bot SC-059 | `Bot giao dịch` | `Tự động hóa giao dịch theo chiến lược` |
+| Spot / Futures / Margin | `{pair.symbol}` | existing product subtitle |
+
+Chart terminals (`VitTradeTerminalHeader`) stay on their own L1 visual variant — document only; do not force them onto `VitTradeSimpleShell` inputs.
+
 **Known tool gaps, fixed (2026-07-12):**
 
 - `tool/top_header_visual_archetype_audit.dart`'s `_extraSourceForPageGroup` used to pull in the *entire* `trade_module_layout.dart` file as extra classification source for any page matching `'VitTradeDetailScaffold('` — but that file also defines `VitTradeHubScaffold`, whose body contains `VitAutoHideHeaderScaffold(`, so the classifier true-positived on borrowed text from the *other* class. Fixed by extracting only the matched shell class's own body (brace-matched) instead of the whole file. 7 of the 8 `VitTradeDetailScaffold` pages above now correctly show `fixed_vit_header`; `total_routed_screens=414`, `strict_visual_issues=0`, `screen_level_mismatches=0` unchanged. One residual gap remains and is intentionally left as-is: `ClientOptUpRequestPage` (grouped via `client_categorization_page.dart`, which also defines a routed class delegating header rendering through a third helper) still shows `auto_hide_header` — a per-routed-class fix for it was tried and reverted because it regressed an unrelated `markets` page (`PairDetailPage`) that delegates to a differently-named helper class; documented as a code comment in the tool.
