@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_dashboard_page.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_earn_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -123,14 +124,21 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Staking & Earn'), findsOneWidget);
-    expect(find.text('San pham'), findsOneWidget);
-    expect(find.text('Cua toi (2)'), findsOneWidget);
+    expect(find.text('Sản phẩm'), findsOneWidget);
+    expect(find.text('Của tôi (2)'), findsOneWidget);
     expect(find.text('Bitcoin Fixed'), findsOneWidget);
     expect(find.text('Ethereum Flexible'), findsOneWidget);
     expect(find.text('5.8%'), findsOneWidget);
     expect(find.text('Rui ro: Thap'), findsWidgets);
-    expect(find.text('APY uoc tinh'), findsWidgets);
-    expect(find.textContaining('APY la uoc tinh tham khao'), findsOneWidget);
+    expect(find.text('APY ước tính'), findsWidgets);
+    expect(find.textContaining('APY là ước tính tham khảo'), findsOneWidget);
+    expect(find.byKey(StakingEarnPage.dashboardButtonKey), findsOneWidget);
+    expect(find.byKey(StakingEarnPage.savingsButtonKey), findsOneWidget);
+    expect(find.text('Tiết kiệm'), findsOneWidget);
+    expect(find.byKey(StakingEarnPage.toolsSectionKey), findsOneWidget);
+    expect(find.byKey(StakingEarnPage.toolKey('analytics')), findsOneWidget);
+    expect(find.byKey(StakingEarnPage.toolKey('staking')), findsOneWidget);
+    expect(find.byKey(StakingEarnPage.legalEntryKey), findsOneWidget);
   });
 
   testWidgets('SC-327 360px viewport follows Home rhythm', (tester) async {
@@ -160,20 +168,28 @@ void main() {
     expect(find.text('ETH-USDT LP Pool'), findsOneWidget);
     expect(find.text('Bitcoin Fixed'), findsNothing);
 
-    await tester.tap(find.text('Cua toi (2)'));
+    await tester.tap(find.text('Của tôi (2)'));
     await tester.pump();
     expect(find.text('Thu nhap uoc tinh'), findsOneWidget);
     expect(find.text('0.05 BTC'), findsOneWidget);
 
-    await tester.tap(find.text('San pham'));
+    await tester.tap(find.text('Sản phẩm'));
     await tester.pump();
     expect(find.text('Thu nhap uoc tinh'), findsNothing);
     expect(find.text('ETH-USDT LP Pool'), findsOneWidget);
   });
 
-  testWidgets('SC-327 navigation edges open savings and home', (tester) async {
+  testWidgets('SC-327 navigation edges open dashboard, savings and home', (
+    tester,
+  ) async {
     await pumpStakingEarn(tester);
 
+    await tester.tap(find.byKey(StakingEarnPage.dashboardButtonKey));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(StakingDashboardPage), findsOneWidget);
+
+    await pumpStakingEarn(tester);
     await tester.tap(find.byKey(StakingEarnPage.savingsButtonKey));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
@@ -196,6 +212,36 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('Xem chi tiết sản phẩm sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('STEP-P3.2 opens Earn legal sheet with grouped GOM rows', (
+    tester,
+  ) async {
+    await pumpStakingEarn(tester);
+
+    await tester.ensureVisible(find.byKey(StakingEarnPage.legalEntryKey));
+    await tester.tap(find.byKey(StakingEarnPage.legalEntryKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(StakingEarnPage.legalSheetKey), findsOneWidget);
+    expect(find.text('Tài liệu & rủi ro'), findsWidgets);
+    expect(
+      find.byKey(StakingEarnPage.legalGroupKey('legal-terms')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(StakingEarnPage.legalItemKey('staking-terms')),
+      findsOneWidget,
+    );
+
+    await tester.tap(
+      find.byKey(StakingEarnPage.legalGroupKey('community-governance')),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(StakingEarnPage.legalItemKey('voting-proposal-demo')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('SC-328 renders the staking route variant', (tester) async {

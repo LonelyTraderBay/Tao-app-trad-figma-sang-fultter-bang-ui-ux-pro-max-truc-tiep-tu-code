@@ -29,6 +29,9 @@ nhật sau khi batch xanh nếu có bài học mới. Giữ file < 200 dòng.
 - Sau khi rename class/function router: grep `tool/` tìm tên cũ —
   `tool/*_audit.dart` hardcode symbol name dạng chuỗi, rename xong audit
   vẫn xanh giả.
+- Page rhythm guardrail tên trong docs/rules có thể lệch: checkout 2026-07-22
+  dùng `test/quality/page_rhythm_audit_sync_guardrail_test.dart`, không có
+  `page_rhythm_guardrail_test.dart`; Glob test trước khi kết luận thiếu.
 
 ## Copy file số lượng lớn
 

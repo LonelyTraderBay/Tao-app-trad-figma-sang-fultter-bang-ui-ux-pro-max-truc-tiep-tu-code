@@ -22,9 +22,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/data/earn_hub_tools_catalog.dart';
+import 'package:vit_trade_flutter/features/earn/data/earn_legal_catalog.dart';
 part '../../widgets/staking/staking_earn_hero_tabs.dart';
 part '../../widgets/staking/staking_earn_products.dart';
 part '../../widgets/staking/staking_earn_positions_common.dart';
+part '../../widgets/staking/staking_earn_tools.dart';
 
 enum _EarnTab { products, positions }
 
@@ -40,8 +43,15 @@ class StakingEarnPage extends ConsumerStatefulWidget {
   static const productsTabKey = Key('sc327_tab_products');
   static const positionsTabKey = Key('sc327_tab_positions');
   static const savingsButtonKey = Key('sc327_savings_button');
+  static const dashboardButtonKey = Key('sc327_dashboard_button');
+  static const toolsSectionKey = Key('sc327_tools_section');
+  static const legalEntryKey = Key('sc327_legal_entry');
+  static const legalSheetKey = Key('sc327_legal_sheet');
   static Key filterKey(String filter) => Key('sc327_filter_$filter');
   static Key productKey(String id) => Key('sc327_product_$id');
+  static Key toolKey(String id) => Key('sc327_tool_$id');
+  static Key legalGroupKey(String id) => Key('sc327_legal_group_$id');
+  static Key legalItemKey(String id) => Key('sc327_legal_item_$id');
 
   final ShellRenderMode? shellRenderMode;
   final StakingEarnRoute route;
@@ -122,19 +132,16 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                     density: VitDensity.compact,
                     children: [
                       _EarnHero(snapshot: snapshot),
-                      VitCtaButton(
-                        key: StakingEarnPage.savingsButtonKey,
-                        onPressed: () => context.go(snapshot.savingsRoute),
-                        height: AppSpacing.inputHeight,
-                        leading: const Icon(Icons.savings_outlined),
-                        child: const Text('Tiet kiem'),
+                      _EarnCtaRow(
+                        savingsRoute: snapshot.savingsRoute,
+                        dashboardRoute: AppRoutePaths.earnDashboard,
                       ),
                       if (snapshot.highRiskContractId != null)
                         VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
-                          title: 'Yield risk states active',
+                          title: 'Trạng thái rủi ro sinh lời đang bật',
                           message:
-                              'Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.',
+                              'Điều khoản, thiết lập validator, xem trước rủi ro, xác nhận, biên nhận, quản lý và hỗ trợ được theo dõi trong một hợp đồng Earn.',
                           contractId: snapshot.highRiskContractId,
                         ),
                       _MainTabs(
@@ -162,6 +169,13 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                             setState(() => _tab = _EarnTab.products);
                           },
                         ),
+                      _StakingToolsSection(
+                        tools: EarnHubToolsCatalog.stakingTools,
+                        onNavigate: context.go,
+                      ),
+                      _EarnLegalEntry(
+                        onTap: () => _showEarnLegalSheet(context),
+                      ),
                       const _YieldDisclaimer(),
                     ],
                   ),
@@ -173,4 +187,23 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
       ),
     );
   }
+}
+
+void _showEarnLegalSheet(BuildContext context) {
+  final rootContext = context;
+  unawaited(HapticFeedback.selectionClick());
+  unawaited(
+    showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) {
+        return _EarnLegalSheet(
+          onNavigate: (route) {
+            Navigator.of(sheetContext).pop();
+            unawaited(rootContext.push<void>(route));
+          },
+        );
+      },
+    ),
+  );
 }

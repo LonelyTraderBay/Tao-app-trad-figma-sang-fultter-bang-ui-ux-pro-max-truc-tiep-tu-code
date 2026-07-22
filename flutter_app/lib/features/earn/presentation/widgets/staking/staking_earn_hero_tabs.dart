@@ -15,11 +15,11 @@ class _EarnHero extends StatelessWidget {
         children: [
           Expanded(
             child: _HeroKpi(
-              label: 'Tong stake',
+              label: 'Tổng stake',
               value: _stakedHeroValue(snapshot.positions),
               caption: snapshot.positions.isEmpty
-                  ? 'Chua co vi the'
-                  : '${snapshot.activePositions} vi the dang hoat dong',
+                  ? 'Chưa có vị thế'
+                  : '${snapshot.activePositions} vị thế đang hoạt động',
               valueColor: AppColors.text1,
             ),
           ),
@@ -32,9 +32,9 @@ class _EarnHero extends StatelessWidget {
             child: Padding(
               padding: EarnSpacingTokens.earnHeroSecondaryPadding,
               child: _HeroKpi(
-                label: 'APY uoc tinh',
+                label: 'APY ước tính',
                 value: _apyEstimateRange(snapshot.products),
-                caption: 'Tham khao, co the thay doi',
+                caption: 'Tham khảo, có thể thay đổi',
                 valueColor: AppModuleAccents.earn,
               ),
             ),
@@ -107,13 +107,13 @@ class _MainTabs extends StatelessWidget {
       tabs: [
         VitTabItem(
           key: _EarnTab.products.name,
-          label: 'San pham',
+          label: 'Sản phẩm',
           icon: Icons.inventory_2_outlined,
           widgetKey: StakingEarnPage.productsTabKey,
         ),
         VitTabItem(
           key: _EarnTab.positions.name,
-          label: 'Cua toi ($positionCount)',
+          label: 'Của tôi ($positionCount)',
           icon: Icons.business_center_outlined,
           widgetKey: StakingEarnPage.positionsTabKey,
         ),
@@ -154,19 +154,19 @@ class _YieldDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitRiskDisclaimerNote(
       message:
-          'APY la uoc tinh tham khao va co the thay doi. Gia tai san va APY co the bien dong; DeFi co rui ro smart contract.',
+          'APY là ước tính tham khảo và có thể thay đổi. Giá tài sản và APY có thể biến động; DeFi có rủi ro hợp đồng thông minh.',
     );
   }
 }
 
 String _stakedHeroValue(List<EarnPositionDraft> positions) {
   if (positions.isEmpty) {
-    return 'Chua stake';
+    return 'Chưa stake';
   }
   if (positions.length == 1) {
     return positions.first.amount;
   }
-  return '${positions.length} vi the';
+  return '${positions.length} vị thế';
 }
 
 String _apyEstimateRange(List<EarnProductDraft> products) {

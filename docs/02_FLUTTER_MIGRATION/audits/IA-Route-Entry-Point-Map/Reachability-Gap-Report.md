@@ -22,7 +22,7 @@ Sources: [`19`](./19-MARKETS-HUB-WIREFRAME.md), [`20`](./20-TRADE-HUB-WIREFRAME.
 | RG-06 | `/wallet/address-book` (proposed HUB bump) | Address-book page | HUB↑ | No hub tile | No — D6 promote | **P2.7** | open (D6 lock) |
 | RG-07 | `/wallet/health-score` (proposed HUB bump) | Health-score page | HUB↑ | No hub tile | No — D6 promote | **P2.7** | open (D6 lock) |
 | RG-08 | Profile › Pháp lý & báo cáo (**39** GOM) | accordion host on `ProfilePage` | GOM | Routes exist; **UI accordion absent** | No — must ship menu | **P1.4** | open |
-| RG-09 | Earn › Tài liệu & rủi ro (**31** GOM) | sheet on `StakingEarnPage` | GOM | Routes exist; **sheet UI absent** | No — 5-cluster sheet | **P3.2** | open |
+| RG-09 | Earn › Tài liệu & rủi ro (**31** GOM) | sheet on `StakingEarnPage` | GOM | `StakingEarnPage` sheet + `EarnLegalCatalog` (5 cụm) | — | **P3.2** | **closed** 2026-07-22 |
 | RG-10 | `/news` | `NewsPage` | GIỮ | Spec = Home header [📰]; verify production header action | No if missing in code | **P1.2** | open / verify |
 | RG-11 | Markets Discover footer vs Home Discovery | `MarketListDiscoverMoreSection` → Predictions / Arena | HUB shortcut | Footer = **shortcut only**; Home = Discovery **canonical** | **Yes** — by design (not a missing inbound) | P2.x (docs only) | **accepted exception** |
 | RG-12 | `/referral` + D1 Trade highlight | `ReferralHomePage` | GIỮ | Canonical menu = Profile › Giới thiệu; path may still highlight **Trade** (D1 Option A) | **Tension** — menu Profile vs tab Trade | **P1.3** + shell D1 | open tension |
