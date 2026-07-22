@@ -43,8 +43,10 @@ class _FearGreedGaugePainter extends CustomPainter {
       progressPaint,
     );
 
+    // Arc runs left→top→right (π → 2π). Needle must use the same sweep.
     final needleColor = _fearGreedColor(value);
-    final angle = ((value.clamp(0, 100) / 100) * 180 - 90) * math.pi / 180;
+    final t = value.clamp(0, 100) / 100;
+    final angle = math.pi + t * math.pi;
     final needleEnd = Offset(
       center.dx + math.cos(angle) * (radius - 12),
       center.dy + math.sin(angle) * (radius - 12),

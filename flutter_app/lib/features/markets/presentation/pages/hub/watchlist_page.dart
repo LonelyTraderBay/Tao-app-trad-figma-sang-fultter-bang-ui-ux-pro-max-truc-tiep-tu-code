@@ -18,8 +18,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_body_review_widgets.dart';
-
 part '../../widgets/hub/watchlist_toolbar.dart';
 part '../../widgets/hub/watchlist_cards.dart';
 part '../../widgets/hub/watchlist_common_painter.dart';
@@ -235,18 +233,6 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                                       ),
                                   ],
                                 ),
-                          const MarketBodyReviewSection(
-                            title: 'Watchlist state review',
-                            message: 'Watchlist data reviewed',
-                            detail:
-                                'Search, add, note, remove, empty, and refresh states remain visible for tracked pairs.',
-                            primary:
-                                'Toolbar search and add-pair actions stay above watched assets.',
-                            secondary:
-                                'Note editing and remove actions preserve the selected pair context.',
-                            tertiary:
-                                'Empty watchlist recovery stays visible before market navigation.',
-                          ),
                         ],
                       ),
                     ),

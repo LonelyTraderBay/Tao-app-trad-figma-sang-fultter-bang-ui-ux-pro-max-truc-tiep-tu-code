@@ -20,7 +20,6 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_formatters.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_body_review_widgets.dart';
 part '../../widgets/tools/market_movers_filters.dart';
 part '../../widgets/tools/market_movers_results.dart';
 part '../../widgets/tools/market_movers_row_common.dart';
@@ -254,18 +253,6 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
                                   AppRoutePaths.pairDetail('${mover.id}usdt'),
                                 ),
                               ),
-                            const MarketBodyReviewSection(
-                              title: 'Movers state review',
-                              message: 'Market movers data reviewed',
-                              detail:
-                                  'Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.',
-                              primary:
-                                  'Filter chips and result summary keep the active market slice explicit.',
-                              secondary:
-                                  'Empty results include a reset path before the shared review section.',
-                              tertiary:
-                                  'Mover rows preserve pair identity, movement, volume, and next navigation.',
-                            ),
                             const _DataRefreshFooter(),
                           ];
                         },
