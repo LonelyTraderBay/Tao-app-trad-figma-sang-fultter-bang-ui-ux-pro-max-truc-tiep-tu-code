@@ -34,3 +34,18 @@ Withdraw, P2P payment-method change, escrow critical, security/API key changes, 
 ## Owner for missing states
 
 Hub/list empty+error gaps → playbook **STEP-P5.4**.
+
+## STEP-P5.4 gaps closed
+
+- **Fixed:** `StakingEarnPage` product list, `SavingsPage` product list,
+  `SavingsPage` registered-position list, and `ArenaHomePage` template /
+  featured-mode sections now render `VitEmptyState` instead of blank bodies
+  when their backing lists are empty.
+- **Already OK:** `HomePage`, `MarketListPage`, `WalletPage`, `P2PHomePage`,
+  `StakingEarnPage`, `PredictionsHomePage`, `ArenaHomePage`, `SavingsPage`,
+  `WatchlistPage`, `OrdersHistoryPage`, `PositionDashboardPage`, and
+  `NotificationsPage` have loading/error coverage via `AsyncValue.when` or
+  equivalent state switches; the empty archetype pages listed above already
+  expose `VitEmptyState` or focused empty widgets.
+- **Accepted remaining:** offline-state completeness remains a later pass for
+  this playbook; STEP-P5.4 only closed clear empty/error gaps.

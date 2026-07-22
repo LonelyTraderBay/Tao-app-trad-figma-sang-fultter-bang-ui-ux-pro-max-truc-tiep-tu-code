@@ -504,14 +504,30 @@ class _TemplateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (templates.isEmpty) {
+      return VitPageSection(
+        key: anchorKey,
+        label: 'Mẫu thách đấu',
+        accentColor: AppColors.accent,
+        density: VitDensity.compact,
+        children: const [
+          VitEmptyState(
+            icon: Icons.dashboard_customize_outlined,
+            title: 'Chưa có mẫu thách đấu',
+            message: 'Mẫu tạo thách đấu mới sẽ hiển thị tại đây.',
+          ),
+        ],
+      );
+    }
+
     return VitPageSection(
       key: anchorKey,
-      label: 'Templates',
+      label: 'Mẫu thách đấu',
       accentColor: AppColors.accent,
       density: VitDensity.compact,
       children: [
         Text(
-          'Chọn template để bắt đầu tạo challenge',
+          'Chọn mẫu để bắt đầu tạo thách đấu',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         GridView.builder(

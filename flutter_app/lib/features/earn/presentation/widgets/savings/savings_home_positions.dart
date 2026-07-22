@@ -7,6 +7,14 @@ class _SavingsPositions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (positions.isEmpty) {
+      return const VitEmptyState(
+        icon: Icons.business_center_outlined,
+        title: 'Chưa có đăng ký tiết kiệm',
+        message: 'Sản phẩm bạn đã đăng ký sẽ hiển thị tại đây.',
+      );
+    }
+
     return Column(
       children: [
         for (final position in positions) ...[

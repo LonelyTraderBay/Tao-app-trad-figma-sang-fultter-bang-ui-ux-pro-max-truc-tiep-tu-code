@@ -60,7 +60,6 @@ lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|C
 lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Order History
 lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Order type, trigger condition, asset amount, risk disclosure, create-order preview, submitting state, and result handling are reviewed before an advanced staking order is placed.
 lib/features/earn/presentation/pages/staking/staking_developer_console_page.dart|API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.
-lib/features/earn/presentation/pages/staking/staking_earn_page.dart|Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.
 lib/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart|Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.
 lib/features/earn/presentation/widgets/savings/savings_risk_assessment_result.dart|Review product fit, lockup, APY variability, risk notes and next steps before subscribing.
 lib/features/earn/presentation/widgets/staking/staking_advanced_orders_overview_orders.dart|${_formatAmount(order.amount)} ${order.asset}
@@ -143,7 +142,6 @@ lib/features/p2p/presentation/pages/security/p2p_security_center_page.dart|Secur
 lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart|Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.
 lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart|Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.
 lib/features/p2p/presentation/widgets/hub/p2p_express_page_state.dart|Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.
-lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart|Offer browse, order placement, payment proof, and dispute flows are tracked as one P2P escrow contract.
 lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Back to P2P order detail
 lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Open E2E encryption info
 lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Open P2P order detail

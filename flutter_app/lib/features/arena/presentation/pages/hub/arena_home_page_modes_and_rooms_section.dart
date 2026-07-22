@@ -13,6 +13,27 @@ class _FeaturedModesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (modes.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          VitModuleSectionHeader(
+            title: 'Mode nổi bật',
+            accentColor: AppColors.primary,
+            actionLabel: 'Xem tất cả',
+            onAction: onViewAll,
+            density: VitDensity.compact,
+            bottomGap: 0,
+          ),
+          const VitEmptyState(
+            icon: Icons.bookmark_border_rounded,
+            title: 'Chưa có chế độ nổi bật',
+            message: 'Các chế độ được cộng đồng yêu thích sẽ hiển thị tại đây.',
+          ),
+        ],
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
