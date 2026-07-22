@@ -60,8 +60,8 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
       child: Stack(
         children: [
           VitTradeHubScaffold(
-            title: 'Safety Center',
-            semanticLabel: 'Trung tâm an toàn Copy Trading',
+            title: 'Trung tâm an toàn',
+            semanticLabel: 'Trung tâm an toàn sao chép giao dịch',
             semanticIdentifier: 'SC-083',
             contentKey: CopySafetyCenterPage.contentKey,
             shellRenderMode: widget.shellRenderMode,

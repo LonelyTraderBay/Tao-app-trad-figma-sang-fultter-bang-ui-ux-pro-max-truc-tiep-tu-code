@@ -78,7 +78,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Safety Center'), findsOneWidget);
+    expect(find.text('Trung tâm an toàn'), findsOneWidget);
     expect(find.text('Your Safety is Our Priority'), findsOneWidget);
     expect(find.text('Provider verification tiers explained:'), findsOneWidget);
     expect(find.text('Basic'), findsOneWidget);
@@ -103,7 +103,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-083 CopySafetyCenterPage',
-      semanticLabel: 'Trung tâm an toàn Copy Trading',
+      semanticLabel: 'Trung tâm an toàn sao chép giao dịch',
     );
     expectFirstViewportVisible(
       tester,

@@ -42,14 +42,14 @@ const pageRhythmGiuVisualQaFlows = [
     id: 48,
     name: 'Trade convert form',
     route: AppRoutePaths.tradeConvert,
-    semanticLabel: 'Chuyển đổi tài sản (Convert)',
+    semanticLabel: 'Chuyển đổi tài sản',
     assertStandardContentWidth: true,
   ),
   VisualQaFlow(
     id: 49,
     name: 'Copy trading hub',
     route: AppRoutePaths.tradeCopyTrading,
-    semanticLabel: 'Copy Trading – sao chép chiến lược có kiểm soát',
+    semanticLabel: 'Sao chép giao dịch – sao chép chiến lược có kiểm soát',
     assertStandardContentWidth: true,
   ),
   VisualQaFlow(

@@ -116,6 +116,6 @@ void main() {
     await tester.tap(find.byKey(ProviderComparisonPage.addProviderLinkKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Copy Trading'), findsOneWidget);
+    expect(find.text('Sao chép giao dịch'), findsOneWidget);
   });
 }

@@ -39,8 +39,8 @@ class CopyTradingCardDemo extends ConsumerWidget {
 
     return snapshotAsync.when(
       loading: () => VitTradeHubScaffold(
-        title: 'Copy Trading Card Analysis',
-        semanticLabel: 'Phân tích thẻ Copy Trading (bản demo nội bộ)',
+        title: 'Phân tích thẻ sao chép',
+        semanticLabel: 'Phân tích thẻ sao chép giao dịch (bản demo nội bộ)',
         semanticIdentifier: 'SC-401',
         contentKey: CopyTradingCardDemo.contentKey,
         shellRenderMode: mode,
@@ -53,8 +53,8 @@ class CopyTradingCardDemo extends ConsumerWidget {
         children: const [VitSkeletonList()],
       ),
       error: (error, stackTrace) => VitTradeHubScaffold(
-        title: 'Copy Trading Card Analysis',
-        semanticLabel: 'Phân tích thẻ Copy Trading (bản demo nội bộ)',
+        title: 'Phân tích thẻ sao chép',
+        semanticLabel: 'Phân tích thẻ sao chép giao dịch (bản demo nội bộ)',
         semanticIdentifier: 'SC-401',
         contentKey: CopyTradingCardDemo.contentKey,
         shellRenderMode: mode,
@@ -75,7 +75,7 @@ class CopyTradingCardDemo extends ConsumerWidget {
       ),
       data: (snapshot) => VitTradeHubScaffold(
         title: snapshot.title,
-        semanticLabel: 'Phân tích thẻ Copy Trading (bản demo nội bộ)',
+        semanticLabel: 'Phân tích thẻ sao chép giao dịch (bản demo nội bộ)',
         semanticIdentifier: 'SC-401',
         contentKey: CopyTradingCardDemo.contentKey,
         shellRenderMode: mode,

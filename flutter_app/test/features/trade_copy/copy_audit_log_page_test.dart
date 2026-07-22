@@ -83,7 +83,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Audit Log'), findsOneWidget);
+    expect(find.text('Nhật ký kiểm toán'), findsOneWidget);
     expect(find.text('MiFID II Compliant Audit Trail'), findsOneWidget);
     expect(find.text('Trade Executed'), findsOneWidget);
     expect(find.text('Risk Alert Triggered'), findsOneWidget);

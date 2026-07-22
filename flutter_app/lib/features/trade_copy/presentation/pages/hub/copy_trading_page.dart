@@ -49,9 +49,9 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
     final snapshotAsync = ref.watch(tradeCopyTradingProvider);
 
     return VitTradeHubScaffold(
-      title: 'Copy Trading',
+      title: 'Sao chép giao dịch',
       subtitle: 'Sao chép chiến lược có kiểm soát',
-      semanticLabel: 'Copy Trading – sao chép chiến lược có kiểm soát',
+      semanticLabel: 'Sao chép giao dịch – sao chép chiến lược có kiểm soát',
       semanticIdentifier: 'SC-063',
       contentKey: CopyTradingPage.contentKey,
       shellRenderMode: widget.shellRenderMode,

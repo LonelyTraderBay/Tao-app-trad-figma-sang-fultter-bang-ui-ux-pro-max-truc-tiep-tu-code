@@ -47,7 +47,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
         TradeScreenState.error,
         TradeScreenState.offline,
       ],
-      title: 'Copy Trading Card Analysis',
+      title: 'Phân tích thẻ sao chép',
       backRoute: '/home',
       metrics: TradeCopyCardMetrics(
         traders: 5,
