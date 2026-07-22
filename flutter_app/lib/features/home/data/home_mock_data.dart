@@ -61,7 +61,8 @@ class HomeMockData {
   ];
 
   /// Compact «Hành động nhanh»: 6 ô visible (4 core + DCA + Phần thưởng);
-  /// phần còn lại vào sheet. Không gồm Support / Referral / Discovery.
+  /// phần còn lại vào sheet.
+  /// Không gồm Support / Referral / Discovery (Predictions, Arena).
   static const quickActions = [
     HomeQuickAction(
       icon: 'quickBuy',
