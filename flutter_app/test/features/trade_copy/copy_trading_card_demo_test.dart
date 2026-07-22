@@ -38,7 +38,7 @@ void main() {
       snapshot.actionDraft,
       'POST /copy-trading/follow|configure|stop where applicable',
     );
-    expect(snapshot.title, 'Copy Trading Card Analysis');
+    expect(snapshot.title, 'Phân tích thẻ sao chép');
     expect(snapshot.backRoute, AppRoutePaths.home);
     expect(snapshot.metrics.traders, 5);
     expect(snapshot.metrics.copiers, 11000);
@@ -65,7 +65,7 @@ void main() {
     expect(find.byType(CopyTradingCardDemo), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Copy Trading Card Analysis'), findsOneWidget);
+    expect(find.text('Phân tích thẻ sao chép'), findsOneWidget);
     expect(find.byKey(CopyTradingCardDemo.analysisKey), findsOneWidget);
     expect(find.text('Enterprise Fintech Card Analysis'), findsOneWidget);
     expect(find.text('Variant A: Hero Metric Pattern'), findsOneWidget);

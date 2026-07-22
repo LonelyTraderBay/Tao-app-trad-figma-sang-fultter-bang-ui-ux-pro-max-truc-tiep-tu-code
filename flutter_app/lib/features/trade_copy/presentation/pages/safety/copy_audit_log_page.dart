@@ -74,7 +74,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
     final snapshotAsync = ref.watch(tradeCopyAuditLogProvider(widget.copyId));
 
     return VitTradeDetailScaffold(
-      title: 'Audit Log',
+      title: 'Nhật ký kiểm toán',
       semanticLabel: 'Nhật ký kiểm toán copy',
       semanticIdentifier: 'SC-077',
       contentKey: CopyAuditLogPage.contentKey,

@@ -132,8 +132,9 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
     final hasError = _convertSnapshotHasError(snapshot);
 
     return VitTradeSimpleShell(
-      title: 'Convert / Swap',
-      semanticLabel: 'Chuyển đổi tài sản (Convert)',
+      title: 'Chuyển đổi',
+      subtitle: 'Đổi tài sản nhanh',
+      semanticLabel: 'Chuyển đổi tài sản',
       semanticIdentifier: 'SC-056',
       contentKey: ConvertPage.contentKey,
       shellRenderMode: mode,

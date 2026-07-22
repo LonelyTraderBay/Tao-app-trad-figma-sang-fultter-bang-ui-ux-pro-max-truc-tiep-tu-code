@@ -58,7 +58,7 @@ class _ProviderLeaderboardPageState
     final snapshotAsync = ref.watch(tradeProviderLeaderboardProvider);
 
     return VitTradeHubScaffold(
-      title: 'Leaderboard',
+      title: 'Bảng xếp hạng',
       semanticLabel: 'Bảng xếp hạng provider',
       semanticIdentifier: 'SC-079',
       contentKey: ProviderLeaderboardPage.contentKey,

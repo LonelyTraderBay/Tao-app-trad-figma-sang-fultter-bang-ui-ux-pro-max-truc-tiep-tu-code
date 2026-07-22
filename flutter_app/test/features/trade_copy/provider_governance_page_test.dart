@@ -70,7 +70,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Provider Governance'), findsOneWidget);
+    expect(find.text('Quản trị provider'), findsOneWidget);
     expect(find.text('Provider Dashboard'), findsOneWidget);
     expect(find.text('Managing 245 followers'), findsOneWidget);
     expect(find.text('Strategy Modification Log'), findsOneWidget);

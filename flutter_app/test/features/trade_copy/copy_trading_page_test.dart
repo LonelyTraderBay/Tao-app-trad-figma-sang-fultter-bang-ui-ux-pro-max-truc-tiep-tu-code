@@ -73,7 +73,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Copy Trading'), findsWidgets);
+    expect(find.text('Sao chép giao dịch'), findsWidgets);
     expect(find.text('Sao chép chiến lược có kiểm soát'), findsOneWidget);
     expect(find.text('Tổng AUM'), findsOneWidget);
     expect(find.text(r'$19.25M'), findsOneWidget);
@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-063 CopyTradingPage',
-      semanticLabel: 'Copy Trading – sao chép chiến lược có kiểm soát',
+      semanticLabel: 'Sao chép giao dịch – sao chép chiến lược có kiểm soát',
     );
     expectFirstViewportVisible(
       tester,

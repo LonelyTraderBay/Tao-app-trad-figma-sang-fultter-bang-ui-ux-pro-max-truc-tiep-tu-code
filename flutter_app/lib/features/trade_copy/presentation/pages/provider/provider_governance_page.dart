@@ -56,7 +56,7 @@ class _ProviderGovernancePageState
       child: Stack(
         children: [
           VitTradeHubScaffold(
-            title: 'Provider Governance',
+            title: 'Quản trị provider',
             semanticLabel: 'Quản trị provider',
             semanticIdentifier: 'SC-081',
             contentKey: ProviderGovernancePage.contentKey,

@@ -86,7 +86,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeDisputeResolutionProvider);
     return VitTradeHubScaffold(
-      title: 'Dispute Resolution',
+      title: 'Giải quyết khiếu nại',
       semanticLabel: 'Giải quyết khiếu nại',
       semanticIdentifier: 'SC-082',
       contentKey: DisputeResolutionPage.contentKey,
