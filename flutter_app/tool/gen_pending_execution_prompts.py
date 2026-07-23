@@ -8,10 +8,10 @@ from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-CSV_PATH = REPO / "docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-batches.csv"
-OUT_FINAL = REPO / "docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-FINAL.md"
-OUT_LAST = REPO / "docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-4-LAST.md"
-OUT_LEGACY = REPO / "docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-26.md"
+CSV_PATH = REPO / "docs/_archive/2026-redesign-v2.5/redesign/ke-hoach-redesign-batches.csv"
+OUT_FINAL = REPO / "docs/_archive/2026-redesign-v2.5/prompt-redesign/EXECUTION-PENDING-FINAL.md"
+OUT_LAST = REPO / "docs/_archive/2026-redesign-v2.5/prompt-redesign/EXECUTION-PENDING-4-LAST.md"
+OUT_LEGACY = REPO / "docs/_archive/2026-redesign-v2.5/prompt-redesign/EXECUTION-PENDING-26.md"
 BASE = "dad444ab0"
 MAX_PAGES_PER_CHAT = 8
 DOC_NAME = "EXECUTION-PENDING-4-LAST.md"
@@ -53,8 +53,8 @@ def completion_line(batch_id: str, module_id: str) -> str:
 
 def load_lines(batch_id: str, special_prompt: str, module_prompt: str) -> list[str]:
     lines = [
-        "- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4",
-        "- docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md",
+        "- docs/_archive/2026-redesign-v2.5/redesign/ke-hoach-redesign-theo-module.md §1-4",
+        "- docs/_archive/2026-redesign-v2.5/prompt-redesign/REDESIGN-CONTRACT.md",
         f"- ke-hoach-redesign-batches.csv row {batch_id}",
         "- VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)",
     ]
@@ -65,9 +65,9 @@ def load_lines(batch_id: str, special_prompt: str, module_prompt: str) -> list[s
             f"- docs/02_FLUTTER_MIGRATION/{module_prompt} "
             "(North Star · Copy · Financial ONLY)"
         )
-        lines.append("- docs/02_FLUTTER_MIGRATION/prompt-redesign/_template-tier-b-batch.md")
+        lines.append("- docs/_archive/2026-redesign-v2.5/prompt-redesign/_template-tier-b-batch.md")
     else:
-        lines.append("- docs/02_FLUTTER_MIGRATION/prompt-redesign/_template-tier-b-batch.md")
+        lines.append("- docs/_archive/2026-redesign-v2.5/prompt-redesign/_template-tier-b-batch.md")
     lines.append("- docs/01_AI_RULES/AI_PROMPT_SHELL.md (verify gate)")
     return lines
 

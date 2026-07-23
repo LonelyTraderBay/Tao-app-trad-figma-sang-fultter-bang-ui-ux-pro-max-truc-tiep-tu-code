@@ -17,11 +17,13 @@ from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
-CSV_PATH = REPO / "docs/02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.csv"
-OUT_MD = REPO / "docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md"
-OUT_BATCHES = REPO / "docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-batches.csv"
-OUT_PLAYBOOK = REPO / "docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PLAYBOOK.md"
-TRADING_BOTS_PROMPT = "prompt-redesign/trading-bots-hub.md"
+# Redesign v2.5 program closed 2026-07-10 — artifacts live under docs/_archive/.
+_ARCH = "docs/_archive/2026-redesign-v2.5"
+CSV_PATH = REPO / f"{_ARCH}/redesign/VitTrade-Screen-Redesign-Checklist.csv"
+OUT_MD = REPO / f"{_ARCH}/redesign/ke-hoach-redesign-theo-module.md"
+OUT_BATCHES = REPO / f"{_ARCH}/redesign/ke-hoach-redesign-batches.csv"
+OUT_PLAYBOOK = REPO / f"{_ARCH}/prompt-redesign/EXECUTION-PLAYBOOK.md"
+TRADING_BOTS_PROMPT = "_archive/2026-redesign-v2.5/prompt-redesign/trading-bots-hub.md"
 
 SKIP_REDESIGN_MODULES = {"home"}
 
@@ -190,8 +192,8 @@ def completion_line(batch_id: str, module_id: str, special_prompt: str) -> str:
 
 def load_lines_for_batch(special_prompt: str, module_prompt: str) -> list[str]:
     lines = [
-        "- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4",
-        "- docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md",
+        "- docs/_archive/2026-redesign-v2.5/redesign/ke-hoach-redesign-theo-module.md §1-4",
+        "- docs/_archive/2026-redesign-v2.5/prompt-redesign/REDESIGN-CONTRACT.md",
         "- ke-hoach-redesign-batches.csv row <batch_id>",
         "- VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)",
     ]
@@ -202,9 +204,9 @@ def load_lines_for_batch(special_prompt: str, module_prompt: str) -> list[str]:
             f"- docs/02_FLUTTER_MIGRATION/{module_prompt} "
             "(North Star · Copy · Financial ONLY)"
         )
-        lines.append("- docs/02_FLUTTER_MIGRATION/prompt-redesign/_template-tier-b-batch.md")
+        lines.append("- docs/_archive/2026-redesign-v2.5/prompt-redesign/_template-tier-b-batch.md")
     else:
-        lines.append("- docs/02_FLUTTER_MIGRATION/prompt-redesign/_template-tier-b-batch.md")
+        lines.append("- docs/_archive/2026-redesign-v2.5/prompt-redesign/_template-tier-b-batch.md")
     lines.append("- docs/01_AI_RULES/AI_PROMPT_SHELL.md (verify gate)")
     return lines
 
@@ -508,7 +510,7 @@ def render_slim_markdown(
         "**Lấy row batch (PowerShell):**",
         "",
         "```powershell",
-        "Import-Csv docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-batches.csv |",
+        "Import-Csv docs/_archive/2026-redesign-v2.5/redesign/ke-hoach-redesign-batches.csv |",
         "  Where-Object batch_id -eq 'RD-M02-B01'",
         "```",
         "",

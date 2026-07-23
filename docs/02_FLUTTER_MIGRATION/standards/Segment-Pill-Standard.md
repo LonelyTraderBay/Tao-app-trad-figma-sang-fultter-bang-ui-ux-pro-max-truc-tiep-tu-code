@@ -5,7 +5,7 @@
 **Enforcement:** `flutter test test/quality/segment_pill_guardrail_test.dart`  
 **Audit:** `dart run tool/segment_pill_audit.dart --check --strict-full` → [VitTrade-Segment-Pill-Audit.csv](../audits/VitTrade-Segment-Pill-Audit.csv)  
 **Migration manifest:** `dart run tool/segment_pill_manifest.dart --check` → [VitTrade-Segment-Pill-Migration-Manifest.csv](../audits/VitTrade-Segment-Pill-Migration-Manifest.csv)  
-**Execution plan:** [Segment-Pill-Migration-Execution-Plan.md](../checklists/Segment-Pill-Migration-Execution-Plan.md) — program complete (2026-07-07)  
+**Execution plan (archived):** [Segment-Pill-Migration-Execution-Plan.md](../../_archive/2026-migrations-closed/Segment-Pill-Migration-Execution-Plan.md) — program complete (2026-07-07)  
 **Reference screenshots:** Wallet `Danh sách` / `Phân bổ`, Savings `Sản phẩm` / `Đăng ký (N)` — both use **Tier S1**.
 
 VitTrade uses five shared pill/segment families (`VitTabBar`, `VitSegmentedChoice`, `VitChoicePill`, `VitPresetChipRow`, `VitFilterChip`). Pick the canonical widget by **role + height tier**; P0 local duplicates (`_FilterButton`, `_FilterTabs`, `_SegmentedTabs`, …) are banned — see guardrail test.

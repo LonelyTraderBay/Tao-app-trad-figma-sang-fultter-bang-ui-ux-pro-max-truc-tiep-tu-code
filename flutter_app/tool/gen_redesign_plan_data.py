@@ -8,7 +8,7 @@ from pathlib import Path
 
 CSV = (
     Path(__file__).resolve().parent.parent.parent
-    / "docs/02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.csv"
+    / "docs/_archive/2026-redesign-v2.5/redesign/VitTrade-Screen-Redesign-Checklist.csv"
 )
 
 MODULE_ORDER = [

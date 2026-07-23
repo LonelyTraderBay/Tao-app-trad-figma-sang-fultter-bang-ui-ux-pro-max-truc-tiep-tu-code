@@ -55,7 +55,7 @@ check `lib/app/theme/` for layout shells like `VitAppShell`/
 ## If the task is a deliberate redesign (not a from-scratch feature)
 
 Borrow the generative skeleton from
-`docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md` (read it
+`docs/_archive/2026-redesign-v2.5/prompt-redesign/REDESIGN-CONTRACT.md` (read it
 live — it's short and in Vietnamese) for how to think about the screen, even
 though the 66-batch redesign program it was written for is complete/
 archived:

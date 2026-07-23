@@ -1,6 +1,6 @@
 # VitTrade Docs Index
 
-**Last Updated:** 2026-07-18 (DOC-D4/D5: hệ ADR + trường Last Updated)
+**Last Updated:** 2026-07-23 (repo cleanup: archive completed playbooks → `docs/_archive/`)
 
 Load docs **on demand** — do not paste large audit output into chat. Shared rules:
 [AI_PROMPT_SHELL.md](01_AI_RULES/AI_PROMPT_SHELL.md).
@@ -43,7 +43,6 @@ Load docs **on demand** — do not paste large audit output into chat. Shared ru
 | [Task-Card-Standard.md](02_FLUTTER_MIGRATION/standards/Task-Card-Standard.md) | Mandatory Tier E mission task rows (`VitTaskCard`) |
 | [Accent-Icon-Box-Standard.md](02_FLUTTER_MIGRATION/standards/Accent-Icon-Box-Standard.md) | Mandatory module accent icon boxes (`VitAccentIconBox`) |
 | [Segment-Pill-Standard.md](02_FLUTTER_MIGRATION/standards/Segment-Pill-Standard.md) | Mandatory segment/tab/filter pill tiers (S1–S4) |
-| [Segment-Pill-Migration-Execution-Plan.md](02_FLUTTER_MIGRATION/checklists/Segment-Pill-Migration-Execution-Plan.md) | Segment pill migration status (0 locals, 0 warn) |
 | [Card-Tile-Compliance-Report.md](02_FLUTTER_MIGRATION/audits/Card-Tile-Compliance-Report.md) | Card tile audit status (993/993 pass) |
 | [Top-Header-Standard.md](02_FLUTTER_MIGRATION/standards/Top-Header-Standard.md) | Mandatory header behavior/actions/global-access/visual-archetype (4 sub-domains) |
 | [Back-Navigation-Standard.md](02_FLUTTER_MIGRATION/standards/Back-Navigation-Standard.md) | Mandatory back-control safe fallback + Home-entry contract |
@@ -111,13 +110,9 @@ mechanism.
 | File | When |
 | --- | --- |
 | [HomePage-Flutter-Native-Standard.md](04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md) | Home module work |
-| [ke-hoach-redesign-theo-module.md](02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md) | **Redesign v2.5** — routing; entry → EXECUTION-PLAYBOOK |
-| [prompt-redesign/EXECUTION-PLAYBOOK.md](02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PLAYBOOK.md) | **66 bước** copy-paste tuần tự — 66/66 done, không còn batch pending |
-| [prompt-redesign/REDESIGN-CONTRACT.md](02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md) | Contract chung mọi batch |
-| [ke-hoach-redesign-batches.csv](02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-batches.csv) | 66 batch — `status` · `tier` · prompts |
-| [VitTrade-Screen-Redesign-Checklist.csv](02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.csv) | 416 màn — lọc theo batch |
-| [prompt-redesign/README.md](02_FLUTTER_MIGRATION/prompt-redesign/README.md) | 11 hub Tier A + Trade sub-hubs |
-| [prompt-redesign/trading-bots-hub.md](02_FLUTTER_MIGRATION/prompt-redesign/trading-bots-hub.md) | SC-059 — batch `RD-T02` (Trade sub-hub) |
+| [IA Route Entry Point Map](02_FLUTTER_MIGRATION/audits/IA-Route-Entry-Point-Map/00-INDEX.md) | Living IA wireframes + route map |
+| [GD4-Async-Playbook.md](02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md) | Living async/error idiom (A+) |
+| [_archive/README.md](_archive/README.md) | Completed redesign / IA / A+ / migration playbooks (66/66, P0–P6, etc.) |
 
 ## Audit tools (run from `flutter_app/`)
 
@@ -145,39 +140,35 @@ the `02_FLUTTER_MIGRATION/` top level — verified against the tools' own
 
 Policy: use **Cursor Auto**; optimize via batch/GitNexus/Headroom.
 
-## Removed docs (2026-07-02)
+## Removed / archived docs (2026-07-23)
 
-Completed migration plans, AI execution prompts, and audit markdown dumps were
-removed. Summary preserved in
+Repo cleanup (phương án C). Summary also in
 [ke-hoac-tong-the.md](02_FLUTTER_MIGRATION/ke-hoac-tong-the.md) § Completed
-migrations. Full history: git log on `docs/`.
+migrations. Full history: `git log -- docs/`.
 
-## Removed docs (2026-07-10, corrected 2026-07-16)
+### Deleted (stubs / orphans)
 
-This note previously claimed several files were removed on 2026-07-10 that
-were, in fact, still tracked (caught by the A-Plus roadmap audit, task
-DOC-D1). Corrected 2026-07-16:
+- `02_FLUTTER_MIGRATION/prompt-redesign/CHECKLIST-26-PENDING-BATCHES.md`
+- `02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-26.md`
+- `02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-4-LAST.md`
+- `02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-FINAL.md`
+- `02_FLUTTER_MIGRATION/prompt-redesign/prompt-redesign-trading-bots-hub-sc059.md`
+- `02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.md`
+- `02_FLUTTER_MIGRATION/Flutter-Enterprise-100-Percent-File-Action-Manifest.csv`
+- `02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Debt-Audit.csv`
+- `02_FLUTTER_MIGRATION/VitTrade-Dark-Professional-Flow-Reorder-Matrix.csv`
+- `02_FLUTTER_MIGRATION/VitTrade-Product-Capability-Inventory.csv`
 
-- **Actually removed 2026-07-16** (byte-identical top-level duplicate of the
-  canonical `redesign/` copy — see [DOC-D3](02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv)):
-  `02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv` and `.md`.
-  Canonical copies stay at
-  [redesign/VitTrade-Screen-Redesign-Checklist.csv](02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.csv).
-- **Actually removed 2026-07-16** (zero repo references found):
+### Archived under [`docs/_archive/`](_archive/README.md)
+
+- Redesign v2.5 hubs + playbook + CSVs → `_archive/2026-redesign-v2.5/`
+- IA/UI-UX reorg playbook + gates → `_archive/2026-ia-ux-reorg/`
+  (wireframes `17–26`, `00-INDEX`, `99-ALL-ROUTES` stay active)
+- A+ assessment / playbook / manifests → `_archive/2026-a-plus-closed/`
+  ([GD4-Async-Playbook.md](02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md) stays active)
+- Card-tile / segment-pill / notice / hub-reorg plans → `_archive/2026-migrations-closed/`
+
+### Earlier removals (still true)
+
+- 2026-07-16: top-level duplicate `VitTrade-Screen-Redesign-Checklist.csv`/`.md`;
   `03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv`.
-- **NOT removed — this note was wrong.** Card Tile execution-plan/checklist
-  (migration itself is 993/993 closed, but the two files are still tracked
-  and actively linked as historical reference from
-  [Card-Tile-Standard.md](02_FLUTTER_MIGRATION/standards/Card-Tile-Standard.md)):
-  `02_FLUTTER_MIGRATION/Card-Tile-Migration-Checklist.md` and
-  `Card-Tile-Migration-Execution-Plan.md`.
-- **Unverified, deferred to the full DOC-D3 sweep:** the original note's
-  claim of "4 stale/abandoned CSV dumps in `02_FLUTTER_MIGRATION/`" — which
-  4 of the ~30 top-level CSVs in that directory (most of which duplicate an
-  `audits/` canonical copy) this referred to was not re-established during
-  this correction. Do not treat this note as evidence any specific CSV is
-  safe to delete; re-verify from scratch.
-
-Summary preserved in
-[ke-hoac-tong-the.md](02_FLUTTER_MIGRATION/ke-hoac-tong-the.md) § Completed
-migrations. Full history: git log on `docs/`.
