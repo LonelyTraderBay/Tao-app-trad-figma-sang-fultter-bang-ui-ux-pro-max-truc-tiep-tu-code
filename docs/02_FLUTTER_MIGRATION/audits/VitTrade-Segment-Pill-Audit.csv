@@ -313,4 +313,5 @@ wallet,wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart,Vit
 wallet,wallet/presentation/widgets/tools/wallet_manager_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 wallet,wallet/presentation/widgets/tools/wallet_token_approval_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
 wallet,wallet/presentation/widgets/transfer/deposit_page_common.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+wallet,wallet/presentation/widgets/transfer/pending_deposits_page_sections.dart,VitFilterChip,filter_accent,3,44,hug_scroll,-,review,wrapper over VitChoicePill
 wallet,wallet/presentation/widgets/transfer/wallet_transfer_asset_amount.dart,VitChoicePill,chip,1,44,hug,-,pass,
