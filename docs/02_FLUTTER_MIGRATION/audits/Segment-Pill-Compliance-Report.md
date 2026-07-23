@@ -36,7 +36,8 @@
 | dca | 12 |
 | dev | 4 |
 | discovery | 2 |
-| earn | 51 |
+| earn_savings | 26 |
+| earn_staking | 25 |
 | enterprise_states | 2 |
 | home | 1 |
 | launchpad | 24 |

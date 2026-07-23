@@ -1001,7 +1001,10 @@ String _testScope(String feature) {
     'markets' => 'flutter test test/features/markets --reporter=compact',
     'arena' => 'flutter test test/features/arena --reporter=compact',
     'dca' => 'flutter test test/features/dca --reporter=compact',
-    'earn' => 'flutter test test/features/earn --reporter=compact',
+    'earn' => 'flutter test test/features/earn_staking test/features/earn_savings --reporter=compact',
+      'earn_staking' => 'flutter test test/features/earn_staking --reporter=compact',
+      'earn_savings' => 'flutter test test/features/earn_savings --reporter=compact',
+      'earn_core' => 'flutter test test/features/earn_core --reporter=compact',
     'launchpad' => 'flutter test test/features/launchpad --reporter=compact',
     _ => 'flutter test --reporter=compact',
   };
