@@ -10,9 +10,7 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
       path.startsWith('/support/')) {
     return VitBottomNavDestination.home;
   }
-  if (path == AppRoutePaths.referral ||
-      path.startsWith('/referral/') ||
-      path == AppRoutePaths.enterpriseStates ||
+  if (path == AppRoutePaths.enterpriseStates ||
       path == AppRoutePaths.unifiedPortfolio ||
       path == AppRoutePaths.crossModuleAnalytics ||
       path == AppRoutePaths.smartAlerts ||
@@ -56,6 +54,9 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
   }
   if (path.startsWith(AppRoutePaths.wallet)) {
     return VitBottomNavDestination.wallet;
+  }
+  if (path == AppRoutePaths.referral || path.startsWith('/referral/')) {
+    return VitBottomNavDestination.profile;
   }
   if (path == AppRoutePaths.settingsSecurity ||
       path.startsWith('/settings/security/')) {

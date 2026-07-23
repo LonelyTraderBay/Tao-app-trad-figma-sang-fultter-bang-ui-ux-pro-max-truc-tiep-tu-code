@@ -144,6 +144,10 @@ List<NavigationEdge> _collectNavigationEdges(Directory appRoot) {
         final parts = _splitTopLevel(args);
         final firstArg = parts.isEmpty ? '' : parts.first.trim();
         final kind = token.substring(0, token.length - 1);
+        if (_isDeclarationLikeOnNavigate(kind, firstArg)) {
+          index = end + 1;
+          continue;
+        }
         final target = routeResolver.resolveRouteExpression(firstArg);
         final notes = _edgeNotes(kind, firstArg, target);
 
@@ -189,10 +193,28 @@ String _edgeNotes(String kind, String firstArg, String target) {
   return '';
 }
 
+/// Skip method/parameter declarations like `void onNavigate(String route)`.
+bool _isDeclarationLikeOnNavigate(String kind, String firstArg) {
+  if (kind != 'onNavigate') {
+    return false;
+  }
+  final trimmed = firstArg.trim();
+  if (trimmed.isEmpty) return true;
+  if (trimmed.contains("'") ||
+      trimmed.contains('"') ||
+      trimmed.contains('AppRoutePaths') ||
+      trimmed.contains(r'${')) {
+    return false;
+  }
+  // Type + name (optional generics): `String route`, `ValueChanged<String> cb`
+  return RegExp(r'^[A-Za-z_][\w.<>,\s?]+\s+[A-Za-z_]\w*$').hasMatch(trimmed);
+}
+
 const _navigationCallTokens = [
   'context.goNamed(',
   'context.pushNamed(',
   'context.replaceNamed(',
+  'context.goHaptic(',
   'context.go(',
   'context.push(',
   'context.replace(',
@@ -204,6 +226,7 @@ const _navigationCallTokens = [
   'Navigator.pop(',
   'Navigator.of(context).push(',
   'Navigator.push(',
+  'onNavigate(',
 ];
 
 final class _RouteResolver {

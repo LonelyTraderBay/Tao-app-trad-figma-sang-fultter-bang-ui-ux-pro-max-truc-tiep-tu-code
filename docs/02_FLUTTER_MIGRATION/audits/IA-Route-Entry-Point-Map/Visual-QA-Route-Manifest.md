@@ -40,7 +40,7 @@ Evidence owner: Phase **P6** (STEP-P6.3 bottom-nav · P6.4 remaining GIỮ).
 | 19 | EP-20 | `/markets/predictions` | `PredictionsHomePage` | P0 | Discovery SO from Home | phone QA flow 54 @360×800 |
 | 20 | EP-21 | `/arena` | `ArenaHomePage` | P0 | Points-only copy | phone QA flow 5 @360×800 |
 | 21 | EP-22 | `/rewards` | `RewardsHubPage` | P0 | | phone QA flow 12 @360×800 |
-| 22 | EP-23 | `/referral` | `ReferralHomePage` | P0 | Profile menu + D1 Trade tension | phone QA flow 55 @360×800 |
+| 22 | EP-23 | `/referral` | `ReferralHomePage` | P0 | Profile menu + Profile tab | phone QA flow 55 @360×800 |
 | 23 | EP-24 | `/support` | `SupportPage` | P0 | Profile menu | phone QA flow 56 @360×800 |
 | 24 | EP-26 | `/trade/orders-history` | `OrdersHistoryPage` | P0 | After D5 header chrome | phone QA flow 57 @360×800 |
 | 25 | EP-27 | `/trade/positions` | `PositionDashboardPage` | P0 | After D5 header chrome | phone QA flow 58 @360×800 |

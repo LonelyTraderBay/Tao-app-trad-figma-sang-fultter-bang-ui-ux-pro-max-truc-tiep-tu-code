@@ -115,6 +115,8 @@ void main() {
       AppRoutePaths.wallet: VitBottomNavDestination.wallet,
       AppRoutePaths.profile: VitBottomNavDestination.profile,
       AppRoutePaths.settingsSecurity: VitBottomNavDestination.profile,
+      AppRoutePaths.referral: VitBottomNavDestination.profile,
+      AppRoutePaths.referralHistory: VitBottomNavDestination.profile,
       AppRoutePaths.p2p: VitBottomNavDestination.trade,
       AppRoutePaths.earnStaking: VitBottomNavDestination.trade,
       AppRoutePaths.arena: VitBottomNavDestination.trade,
