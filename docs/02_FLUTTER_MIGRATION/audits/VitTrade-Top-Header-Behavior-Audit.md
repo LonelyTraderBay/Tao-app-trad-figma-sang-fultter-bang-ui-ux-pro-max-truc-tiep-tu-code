@@ -4,8 +4,8 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 
 ```text
 total_routed_screens=413
-fixed_vit_header_remaining=21
-auto_hide_header=380
+fixed_vit_header_remaining=22
+auto_hide_header=379
 custom_scroll_header=1
 no_top_header=11
 unresolved=0
@@ -16,8 +16,8 @@ unresolved=0
 | Feature | Fixed-header routes |
 | --- | ---: |
 | trade_copy | 10 |
+| trade_bots | 4 |
 | admin | 3 |
-| trade_bots | 3 |
 | enterprise_states | 2 |
 | trade | 2 |
 | markets | 1 |
@@ -357,7 +357,7 @@ unresolved=0
 | trade_bots | `AppRoutePaths.tradeBotSecuritySettings` | `BotSecuritySettingsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_security_settings_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotStrategyCompare` | `BotStrategyComparePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotSuitabilityAssessment` | `BotSuitabilityAssessmentPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_suitability_assessment_page.dart` |
-| trade_bots | `AppRoutePaths.tradeBotTaxReporting` | `BotTaxReportingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_tax_reporting_page.dart` |
+| trade_bots | `AppRoutePaths.tradeBotTaxReporting` | `BotTaxReportingPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_tax_reporting_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBotTermsOfService` | `BotTermsOfServicePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_terms_of_service_page.dart` |
 | trade_bots | `AppRoutePaths.tradeBots` | `TradingBotsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` |
 | trade_compliance | `'${AppRoutePaths.tradeCopyTargetMarketDefinition}/:productId'` | `TargetMarketDefinitionPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade_compliance/presentation/pages/governance/target_market_definition_page.dart` |
