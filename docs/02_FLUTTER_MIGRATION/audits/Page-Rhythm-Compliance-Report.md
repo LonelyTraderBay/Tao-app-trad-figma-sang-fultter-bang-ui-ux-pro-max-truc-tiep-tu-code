@@ -50,7 +50,9 @@ Screen rollup: 413 real_page routes, L1 pass 413, L2 pass 413 warn 0, unknown 0,
 
 ### discovery (3 routes, L2 warn 0, unknown 0)
 
-### earn (70 routes, L2 warn 0, unknown 0)
+### earn_savings (24 routes, L2 warn 0, unknown 0)
+
+### earn_staking (46 routes, L2 warn 0, unknown 0)
 
 ### enterprise_states (3 routes, L2 warn 0, unknown 0)
 
