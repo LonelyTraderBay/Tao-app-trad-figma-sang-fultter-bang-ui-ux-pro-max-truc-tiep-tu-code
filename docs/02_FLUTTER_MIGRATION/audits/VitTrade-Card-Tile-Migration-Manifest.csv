@@ -422,7 +422,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 05_growth,flutter_app/lib/features/dca/presentation/pages/portfolio/dca_multi_asset_page_setup.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_allocation_strategy.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_common.dart,D,-,done,0,-
-05_growth,flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_settings_and_preview.dart,D,allow_start_baseline,pending,1,fixed_height_baseline
+05_growth,flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_settings_and_preview.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/research/dca_dynamic_amount_page_hero_and_strategy.dart,E,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/research/dca_dynamic_amount_page_history_and_config.dart,C,-,done,0,-

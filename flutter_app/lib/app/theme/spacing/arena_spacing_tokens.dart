@@ -86,7 +86,7 @@ final class ArenaSpacingTokens {
     right: AppSpacing.x2,
   );
   static const double arenaHomeQuickChipHeight = 36;
-  static const double arenaHomeQuickChipIcon = 13;
+  static const double arenaHomeQuickChipIcon = AppSpacing.x4;
   static const double arenaHomeQuickChipLineHeight = 1.0;
   static const double arenaHomeHeroTitleLineHeight = 1.05;
   static const int arenaHomeTemplateColumns = 2;
@@ -253,7 +253,7 @@ final class ArenaSpacingTokens {
     vertical: AppSpacing.x4,
   );
   static const double arenaModeTitleLineHeight = 1.08;
-  static const double arenaModeCreatorIcon = 34;
+  static const double arenaModeCreatorIcon = AppSpacing.x6;
   static const double arenaModeChevron = 18;
   static const double arenaModeDescriptionLineHeight = 1.55;
   static const double arenaModeRuleLabelWidth = 112;
@@ -595,7 +595,7 @@ final class ArenaSpacingTokens {
   static const double arenaGovernanceFooterIcon = arenaPresetStepDot;
   static const double arenaGovernanceClarityProgressHeight = 7;
   static const double arenaGovernancePillPadCompactV = 1;
-  static const double arenaGovernancePillPadV = 3;
+  static const double arenaGovernancePillPadV = AppSpacing.x1;
   static const double arenaGovernanceOptionMaxWidth = 132;
   static const int arenaGovernanceGridColumns = 2;
   static const double arenaGovernanceDomainGridAspect = 3.2;
@@ -752,7 +752,7 @@ final class ArenaSpacingTokens {
   static const double arenaCreatorEmptyIcon = arenaGovernanceStepDefault;
   static const double arenaCreatorInlineIcon = arenaSmartRuleSmallIcon;
   static const double arenaCreatorAvatar = 64;
-  static const double arenaCreatorAvatarGlyph = 34;
+  static const double arenaCreatorAvatarGlyph = AppSpacing.x6;
   static const double arenaCreatorSectionMarkerWidth = 4;
   static const double arenaCreatorSectionMarkerHeight = 16;
   static const double arenaCreatorChevron = arenaSmartRuleIcon;
@@ -853,7 +853,7 @@ final class ArenaSpacingTokens {
   );
   static const double arenaGuideAccordionBodyLineHeight = 1.55;
   static const double arenaGuideSmallBadgePadH = 7;
-  static const double arenaGuideSmallBadgePadV = 3;
+  static const double arenaGuideSmallBadgePadV = AppSpacing.x1;
   static const EdgeInsets arenaGuideSmallBadgePadding = EdgeInsets.symmetric(
     horizontal: arenaGuideSmallBadgePadH,
     vertical: arenaGuideSmallBadgePadV,

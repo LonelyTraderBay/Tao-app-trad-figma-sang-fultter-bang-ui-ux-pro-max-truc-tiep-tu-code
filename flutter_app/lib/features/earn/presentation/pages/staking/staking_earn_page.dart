@@ -14,7 +14,6 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
@@ -68,10 +67,9 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(stakingEarnSnapshotProvider(widget.route));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+    // Same clearance as DeviceMetrics shell chrome without density-audit markers.
+    final scrollEndPad =
+        (mode.usesVisualQaFrame ? 90.0 + AppSpacing.x7 : 72.0 + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -124,7 +122,7 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                 ).copyWith(scrollbars: false),
                 child: VitInsetScrollView(
                   physics: const ClampingScrollPhysics(),
-                  bottomInset: bottomInset,
+                  bottomInset: scrollEndPad,
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,

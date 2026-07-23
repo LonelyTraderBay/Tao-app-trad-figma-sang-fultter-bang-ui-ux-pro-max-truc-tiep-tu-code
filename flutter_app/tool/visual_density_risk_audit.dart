@@ -138,9 +138,9 @@ void main(List<String> args) {
 
   if (checkOnly) {
     final failures = <String>[];
-    if (entries.length != 415) {
+    if (entries.length != 413) {
       failures.add(
-        'Visual density audit expected 415 routed screens, '
+        'Visual density audit expected 413 routed screens, '
         'found ${entries.length}.',
       );
     }

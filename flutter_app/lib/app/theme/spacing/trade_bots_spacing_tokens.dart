@@ -23,15 +23,15 @@ final class TradeBotsSpacingTokens {
   static const double tradeBotBottomInsetNative = 28;
   static const double tradeBotFooterBottomInsetVisual = 128;
   static const double tradeBotFooterBottomInsetNative = 96;
-  static const double tradeBotTinyGap = 5;
+  static const double tradeBotTinyGap = AppSpacing.x2;
   static const double tradeBotHairline = AppSpacing.dividerHairline;
   static const double tradeBotSectionMarkerWidth = 4;
   static const double tradeBotNoticeIconTop = 1;
   static const double tradeBotIntroIconTop = 2;
   static const double tradeBotRecordIconTop = 4;
   static const double tradeBotCardIconGap = 12;
-  static const double tradeBotInlineIconGap = 8;
-  static const double tradeBotMetricGap = 5;
+  static const double tradeBotInlineIconGap = AppSpacing.x3;
+  static const double tradeBotMetricGap = AppSpacing.x2;
   static const double tradeBotLabelGap = 7;
   static const double tradeBotDisclosureGap = 9;
   static const double tradeBotStatusGap = 14;
@@ -42,10 +42,10 @@ final class TradeBotsSpacingTokens {
   static const double tradeBotFooterButtonHeight = 42;
   static const double tradeBotMethodTextIndent = 25;
   static const double tradeBotSelectionDot = 16;
-  static const double tradeBotSelectionDotInner = 8;
-  static const double tradeBotCardIcon = 21;
+  static const double tradeBotSelectionDotInner = AppSpacing.x3;
+  static const double tradeBotCardIcon = AppSpacing.x5;
   static const double tradeBotHeroIcon = 25;
-  static const double tradeBotProgressHeight = 8;
+  static const double tradeBotProgressHeight = AppSpacing.x3;
   static const double tradeBotScoreProgressHeight = 12;
   static const double tradeBotCompactProgressHeight = 6;
   static const int tradeBotGridColumns = 2;
@@ -95,7 +95,7 @@ final class TradeBotsSpacingTokens {
   static const double tradeBotClientHistoryIcon = 40;
   static const double tradeBotClientHistoryIconGlyph = 19;
   static const double tradeBotClientMarker = 12;
-  static const double tradeBotClientCurrentIcon = 21;
+  static const double tradeBotClientCurrentIcon = AppSpacing.x5;
   static const double tradeBotClientMoneyRiskGap = AppSpacing.rowGap;
   static const double tradeBotClientMoneyNoticeIcon = 16;
   static const double tradeBotClientMoneyBalanceIcon = 56;
@@ -106,7 +106,7 @@ final class TradeBotsSpacingTokens {
   static const double tradeBotClientMoneyInsolvencyIcon = 14;
   static const double tradeBotClientMoneyProtectionGap = 22;
   static const double tradeBotDisputeTabsHeight = 54;
-  static const double tradeBotDisputeFileTopGap = 13;
+  static const double tradeBotDisputeFileTopGap = AppSpacing.x4;
   static const double tradeBotDisputeCasesTopGap = 18;
   static const double tradeBotDisputeFileBottomGap = 24;
   static const double tradeBotDisputeCasesBottomGap = 20;
@@ -138,7 +138,7 @@ final class TradeBotsSpacingTokens {
   // would roughly double the on-screen chart size.
   static const double tradeBotAttributionCompactChartHeight = 132;
   static const double tradeBotAttributionReturnsCompactChartHeight = 148;
-  static const double tradeBotAttributionProgressHeight = 8;
+  static const double tradeBotAttributionProgressHeight = AppSpacing.x3;
   static const double tradeBotAttributionLegendLineWidth = 18;
   static const double tradeBotAttributionLegendLineHeight =
       AppSpacing.hairlineStroke;

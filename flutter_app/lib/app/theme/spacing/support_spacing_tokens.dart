@@ -46,7 +46,7 @@ final class SupportSpacingTokens {
   static const double supportLineHeightReadable = 1.35;
   static const double supportLineHeightBody = 1.45;
   static const double supportLineHeightExpanded = 1.55;
-  static const double supportContextIconBox = 34;
+  static const double supportContextIconBox = AppSpacing.x6;
   static const double supportContextIcon = 19;
   static const double supportTimelineRailWidth = 24;
   static const double supportTimelineDotSize = 18;
@@ -57,8 +57,8 @@ final class SupportSpacingTokens {
   static const int supportCategoryGridColumns = 2;
   static const double supportCategoryGridAspectRatio = 1.9;
   static const double supportCategoryIcon = 24;
-  static const double supportArticleIcon = 21;
-  static const double supportFilterChipHeight = 34;
+  static const double supportArticleIcon = AppSpacing.x5;
+  static const double supportFilterChipHeight = AppSpacing.x6;
   static const double supportAnnouncementIconBox = 42;
   static const double supportAnnouncementIcon = 20;
 }

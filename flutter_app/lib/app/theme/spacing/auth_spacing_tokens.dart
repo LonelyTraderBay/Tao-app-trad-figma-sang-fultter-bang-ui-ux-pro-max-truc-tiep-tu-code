@@ -35,12 +35,12 @@ final class AuthSpacingTokens {
   );
   static const double authLogoBoxSize = 64;
   static const double authLogoMarkSize = 36;
-  static const double authLogoElevation = 8;
+  static const double authLogoElevation = AppSpacing.x3;
   static const double authHeroIconBoxSm = 64;
   static const double authHeroIconBoxMd = 80;
   static const double authStateIconBox = 96;
   static const double authHeroPainterSize = 32;
-  static const double authHeroIconMd = 34;
+  static const double authHeroIconMd = AppSpacing.x6;
   static const double authHeroIconLg = 40;
   static const double authStateIconLg = 48;
   static const double authErrorIcon = 14;
@@ -95,7 +95,7 @@ final class AuthSpacingTokens {
   static const EdgeInsets authStateVerticalPadding = EdgeInsets.symmetric(
     vertical: AppSpacing.x6,
   );
-  static const double authTextLetterSpacing = 8;
+  static const double authTextLetterSpacing = AppSpacing.x3;
   static const double authReadableLineHeight = 1.6;
   static const double authAgreementLineHeight = 1.45;
   static const double authFooterLineHeight = 1.5;

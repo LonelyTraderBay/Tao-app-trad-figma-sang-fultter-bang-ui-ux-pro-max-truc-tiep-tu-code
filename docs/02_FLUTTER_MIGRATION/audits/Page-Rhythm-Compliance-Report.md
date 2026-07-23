@@ -6,7 +6,7 @@ Source: `VitTrade-Page-Rhythm-Screen-Compliance.csv`
 
 ## Summary
 
-Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10, documented exceptions 1.
+Screen rollup: 413 real_page routes, L1 pass 413, L2 pass 413 warn 0, unknown 0, documented exceptions 1.
 | Level | Meaning |
 | --- | --- |
 | L1 | Wiring: rhythm, orphan gaps, nested VPC |
@@ -33,16 +33,6 @@ Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10
 
 | Screen | Page | Pattern |
 | --- | --- | --- |
-| AppRouteNames.sc140WithdrawUsdt | `WithdrawPage` | shared_shell |
-| AppRouteNames.sc401CopyTradingCardDemo | `InternalSurfaceGate` | direct_vpc |
-| AppRouteNames.sc399DesignSystem | `InternalSurfaceGate` | direct_vpc |
-| AppRouteNames.sc398MissingScreensShowcase | `InternalSurfaceGate` | direct_vpc |
-| AppRouteNames.sc326PerformanceMonitor | `InternalSurfaceGate` | direct_vpc |
-| AppRouteNames.sc325RouteChecker | `InternalSurfaceGate` | direct_vpc |
-| AppRouteNames.sc411ClientOptUpRequest | `ClientOptUpRequestPage` | direct_vpc |
-| AppRouteNames.sc145BuyCrypto | `BuyCryptoPage` | shared_shell |
-| AppRouteNames.sc146Transfer | `TransferPage` | shared_shell |
-| AppRouteNames.sc139Withdraw | `WithdrawPage` | shared_shell |
 
 ## By module
 
@@ -56,7 +46,7 @@ Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10
 
 ### dca (14 routes, L2 warn 0, unknown 0)
 
-### dev (4 routes, L2 warn 0, unknown 4)
+### dev (4 routes, L2 warn 0, unknown 0)
 
 ### discovery (3 routes, L2 warn 0, unknown 0)
 
@@ -88,15 +78,15 @@ Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10
 
 ### support (3 routes, L2 warn 0, unknown 0)
 
-### trade (15 routes, L2 warn 0, unknown 2)
+### trade (13 routes, L2 warn 0, unknown 0)
 
 ### trade_bots (19 routes, L2 warn 0, unknown 0)
 
-### trade_compliance (29 routes, L2 warn 0, unknown 0)
+### trade_compliance (30 routes, L2 warn 0, unknown 0)
 
-### trade_copy (21 routes, L2 warn 0, unknown 0)
+### trade_copy (22 routes, L2 warn 0, unknown 0)
 
 ### trade_terminal (6 routes, L2 warn 0, unknown 0)
 
-### wallet (21 routes, L2 warn 0, unknown 4)
+### wallet (21 routes, L2 warn 0, unknown 0)
 

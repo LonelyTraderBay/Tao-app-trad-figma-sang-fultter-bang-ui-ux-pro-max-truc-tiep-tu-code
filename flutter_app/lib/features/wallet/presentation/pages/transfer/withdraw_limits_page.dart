@@ -30,8 +30,8 @@ const _limitsProgressHeight = AppSpacing.x2 + AppSpacing.dividerHairline;
 
 double _limitsScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? WalletSpacingTokens.walletBottomInsetVisualChrome
-          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletVisualChromePad
+          : WalletSpacingTokens.walletNativeChromePad) +
       MediaQuery.paddingOf(context).bottom;
 }
 

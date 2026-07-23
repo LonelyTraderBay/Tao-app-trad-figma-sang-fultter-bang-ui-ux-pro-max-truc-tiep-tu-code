@@ -58,7 +58,7 @@ class TransferAmountCard extends StatelessWidget {
             ),
             onTap: onAssetTap,
           ),
-          const SizedBox(height: AppSpacing.rowGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Row(
             children: [
               Expanded(
@@ -77,7 +77,7 @@ class TransferAmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.rowGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           VitInput(
             fieldKey: const Key('sc146_transfer_amount'),
             controller: controller,

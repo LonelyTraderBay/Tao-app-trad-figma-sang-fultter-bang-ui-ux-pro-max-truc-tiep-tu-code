@@ -245,29 +245,15 @@ class _StakingRecommendationsAmountSimulatorState
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          TextField(
-            key: StakingRecommendationsKeys.amountField,
+          VitInput(
+            fieldKey: StakingRecommendationsKeys.amountField,
+            controller: _controller,
             keyboardType: TextInputType.number,
             onChanged: widget.onAmountChanged,
-            controller: _controller,
-            cursorColor: AppColors.primary,
-            style: AppTextStyles.baseMedium.copyWith(
+            semanticLabel: 'Số lượng mô phỏng staking',
+            textStyle: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-            ),
-            decoration: const InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.surface2,
-              contentPadding: EarnSpacingTokens.earnCardPaddingX4X3,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: AppRadii.inputRadius,
-                borderSide: BorderSide(color: AppColors.borderSolid),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: AppRadii.inputRadius,
-                borderSide: BorderSide(color: AppColors.primary30),
-              ),
             ),
           ),
         ],

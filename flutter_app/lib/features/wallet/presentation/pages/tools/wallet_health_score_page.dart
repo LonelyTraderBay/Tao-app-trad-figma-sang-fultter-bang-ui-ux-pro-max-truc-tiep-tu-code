@@ -44,8 +44,8 @@ const _tabDiversification = '\u0110a d\u1EA1ng h\u00F3a';
 
 double _healthScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? WalletSpacingTokens.walletBottomInsetVisualChrome
-          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletVisualChromePad
+          : WalletSpacingTokens.walletNativeChromePad) +
       MediaQuery.paddingOf(context).bottom;
 }
 

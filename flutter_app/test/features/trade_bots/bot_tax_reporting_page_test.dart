@@ -81,7 +81,7 @@ void main() {
     expect(find.text('Báo cáo thuế'), findsOneWidget);
     expect(find.text('Thông báo báo cáo thuế'), findsOneWidget);
     expect(find.text('Chọn năm thuế'), findsOneWidget);
-    expect(find.text('Summary for 2025'), findsOneWidget);
+    expect(find.text('Tóm tắt năm 2025'), findsOneWidget);
     expect(find.text('Tổng số giao dịch'), findsOneWidget);
     expect(find.text('Phương pháp tính giá vốn'), findsOneWidget);
     expect(find.text('IRS Form 8949'), findsOneWidget);
@@ -96,7 +96,7 @@ void main() {
 
     await tester.tap(find.byKey(BotTaxReportingPage.yearKey('2026')));
     await tester.pumpAndSettle();
-    expect(find.text('Summary for 2026'), findsOneWidget);
+    expect(find.text('Tóm tắt năm 2026'), findsOneWidget);
     expect(find.text('Tạo 2 báo cáo cho năm 2026'), findsOneWidget);
 
     await tester.tap(find.byKey(BotTaxReportingPage.methodKey('LIFO')));

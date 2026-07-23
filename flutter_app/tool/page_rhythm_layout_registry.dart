@@ -5,7 +5,7 @@ import 'dart:io';
 /// Shell widget class → lib-relative VPC owner file.
 const shellWidgetToVpcPath = <String, String>{
   'VitWalletDetailScaffold':
-      'features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+      'features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart',
   'VitP2PFlowScaffold':
       'features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart',
   'VitTradeHubScaffold':
@@ -58,7 +58,7 @@ const gateShellWidgets = {'InternalSurfaceGate'};
 /// Route truth-table widget → page file when not under `presentation/pages/`.
 const widgetClassPageOverrides = <String, String>{
   'ClientOptUpRequestPage':
-      'features/trade/presentation/pages/client_categorization_opt_up_page.dart',
+      'features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart',
   'PredictionTournamentDetailPage':
       'features/predictions/presentation/pages/prediction_tournaments_page.dart',
   'P2PWhitelistModePage':
@@ -103,9 +103,9 @@ const gateRouteNameToPage = <String, String>{
   'AppRouteNames.sc399DesignSystem':
       'features/dev/presentation/pages/design_system_page.dart',
   'AppRouteNames.sc400DcaOverviewDemo':
-      'features/dca/presentation/pages/dca_overview_demo.dart',
+      'features/dca/presentation/pages/hub/dca_overview_demo.dart',
   'AppRouteNames.sc401CopyTradingCardDemo':
-      'features/trade/presentation/pages/copy_trading_card_demo.dart',
+      'features/trade_copy/presentation/pages/hub/copy_trading_card_demo.dart',
 };
 
 /// Product-intent tier: declared tier matches UX role though path heuristics differ.

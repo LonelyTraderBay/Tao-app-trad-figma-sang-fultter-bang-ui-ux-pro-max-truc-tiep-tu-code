@@ -46,34 +46,32 @@ const _coreScale = <String, double>{
 // or when a scanned module is missing from this map entirely. Mirrors
 // tool/home_reference_consistency_audit.dart's `_allModuleDivergenceBaselines`
 // — this is a regression-only ratchet, not a demand to fix all 301 today.
+// Ratchet paid down 2026-07-22: bare AppSpacing scale literals → AppSpacing.xN.
 const _moduleBaselines = <String, int>{
   'admin': 0,
-  'arena': 5,
-  'auth': 3,
+  'arena': 0,
+  'auth': 0,
   'cross_module': 0,
   'dca': 0,
-  'earn': 3,
+  'earn': 0,
   'enterprise_states': 0,
-  'home': 3,
+  'home': 0,
   'launchpad': 0,
-  'markets': 141,
-  'news': 1,
+  'markets': 0,
+  'news': 0,
   'notifications': 0,
   'onboarding': 0,
-  'p2p': 16,
-  'predictions': 38,
-  'profile': 19,
+  'p2p': 0,
+  'predictions': 0,
+  'profile': 0,
   'referral': 0,
   'shared': 0,
-  'support': 3,
-  // DEBT-89 (2026-07-18): trade_spacing_tokens.dart tách 3 khu — 9/17 entry
-  // của 'trade' di cư sang module mới 'trade_bots'; baseline hạ theo đúng
-  // ratchet (tổng họ trade vẫn 17, không tăng).
-  'trade': 8,
-  'trade_bots': 9,
+  'support': 0,
+  'trade': 0,
+  'trade_bots': 0,
   'trade_compliance': 0,
   'trade_copy': 0,
-  'wallet': 46,
+  'wallet': 0,
 };
 
 void main(List<String> args) {

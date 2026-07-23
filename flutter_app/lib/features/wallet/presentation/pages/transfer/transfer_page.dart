@@ -22,15 +22,6 @@ import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 const _transferPrimary = AppColors.primary;
-const _transferNativeBottomClearance = 88.0;
-const _transferVisualBottomClearance = 112.0;
-
-double _transferScrollBottomInset(BuildContext context, ShellRenderMode mode) {
-  return (mode.usesVisualQaFrame
-          ? _transferVisualBottomClearance
-          : _transferNativeBottomClearance) +
-      MediaQuery.paddingOf(context).bottom;
-}
 
 class TransferPage extends ConsumerStatefulWidget {
   const TransferPage({super.key, this.shellRenderMode});
@@ -70,8 +61,6 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   @override
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(walletTransferProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = _transferScrollBottomInset(context, mode);
 
     return VitWalletDetailScaffold(
       title: 'Chuy\u1ec3n n\u1ed9i b\u1ed9',
@@ -79,7 +68,8 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       semanticLabel: 'Chuyển nội bộ',
       semanticIdentifier: 'SC-146',
       contentKey: TransferPage.contentKey,
-      bottomInset: bottomInset,
+      shellRenderMode: widget.shellRenderMode,
+      contentGap: VitContentGap.tight,
       onBack: () => context.go(AppRoutePaths.wallet),
       children: snapshotAsync.when(
         loading: () => const [VitSkeletonList()],

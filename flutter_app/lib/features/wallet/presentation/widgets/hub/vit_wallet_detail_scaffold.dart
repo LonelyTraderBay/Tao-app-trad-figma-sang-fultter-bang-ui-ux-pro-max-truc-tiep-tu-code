@@ -12,14 +12,14 @@ import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 /// Home-aligned bottom scroll clearance for wallet L2 flow pages.
-double walletScrollBottomInset(
+double walletScrollEndPad(
   BuildContext context, {
   ShellRenderMode? shellRenderMode,
 }) {
   final mode = shellRenderMode ?? defaultShellRenderMode();
   return (mode.usesVisualQaFrame
-          ? WalletSpacingTokens.walletBottomInsetVisualChrome
-          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletVisualChromePad
+          : WalletSpacingTokens.walletNativeChromePad) +
       MediaQuery.paddingOf(context).bottom;
 }
 
@@ -36,7 +36,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
     this.showBack = true,
     this.onBack,
     this.backKey,
-    this.bottomInset,
+    this.scrollEndPad,
     this.shellRenderMode,
     this.backgroundColor = AppColors.bg,
     this.contentGap = VitContentGap.defaultGap,
@@ -56,7 +56,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
   final bool showBack;
   final VoidCallback? onBack;
   final Key? backKey;
-  final double? bottomInset;
+  final double? scrollEndPad;
   final ShellRenderMode? shellRenderMode;
   final Color backgroundColor;
   final VitContentGap contentGap;
@@ -65,9 +65,9 @@ class VitWalletDetailScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedInset =
-        bottomInset ??
-        walletScrollBottomInset(context, shellRenderMode: shellRenderMode);
+    final resolvedPad =
+        scrollEndPad ??
+        walletScrollEndPad(context, shellRenderMode: shellRenderMode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -85,7 +85,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
           ),
           child: VitInsetScrollView(
             key: contentKey,
-            bottomInset: resolvedInset,
+            bottomInset: resolvedPad,
             child:
                 scrollChild ??
                 VitPageContent(

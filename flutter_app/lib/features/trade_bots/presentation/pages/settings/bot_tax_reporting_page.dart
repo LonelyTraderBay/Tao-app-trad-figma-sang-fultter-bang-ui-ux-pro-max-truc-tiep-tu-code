@@ -54,122 +54,116 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
   @override
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotTaxReportingProvider);
-    const generateFooterHeight = AppSpacing.inputHeight + AppSpacing.x4;
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final shellInset = tradeScrollBottomInset(context, shellRenderMode: mode);
+    final snapshot = snapshotAsync.asData?.value;
+    if (snapshot != null) {
+      _selectedYear ??= snapshot.defaultYear;
+      _costBasisMethod ??= snapshot.defaultCostBasisMethod;
+      _selectedReportIds ??= {
+        for (final report in snapshot.reportTypes)
+          if (report.selectedByDefault) report.id,
+      };
+    }
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
-          title: 'Báo cáo thuế',
-          subtitle: 'Báo cáo thuế bot giao dịch',
-          semanticLabel: 'Báo cáo thuế cho giao dịch bot',
-          semanticIdentifier: 'SC-133',
-          contentKey: BotTaxReportingPage.contentKey,
-          shellRenderMode: widget.shellRenderMode,
-          activeProductId: 'bots',
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.tradeBots,
-            mode: BackNavigationMode.historyThenFallback,
-          ),
-          children: snapshotAsync.when(
-            loading: () => const [VitSkeletonList()],
-            error: (error, stackTrace) => [
-              VitErrorState(
-                title: 'Không tải được báo cáo thuế',
-                message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                actionLabel: 'Thử lại',
-                onAction: () => ref.invalidate(tradeBotTaxReportingProvider),
-              ),
-            ],
-            data: (snapshot) {
-              _selectedYear ??= snapshot.defaultYear;
-              _costBasisMethod ??= snapshot.defaultCostBasisMethod;
-              _selectedReportIds ??= {
-                for (final report in snapshot.reportTypes)
-                  if (report.selectedByDefault) report.id,
-              };
-              final selectedYear = _selectedYear!;
-              final costBasisMethod = _costBasisMethod!;
-              final selectedReportIds = _selectedReportIds!;
-              return [
-                const VitTradeSection(title: 'Lưu ý', child: _TaxNotice()),
-                VitTradeSection(
-                  title: 'Chọn năm thuế',
-                  child: _YearPicker(
-                    years: snapshot.taxYears,
-                    selectedYear: selectedYear,
-                    onChanged: (year) {
-                      setState(() => _selectedYear = year);
-                    },
-                  ),
-                ),
-                VitTradeSection(
-                  title: 'Summary for $selectedYear',
-                  child: _SummaryCard(summary: snapshot.summary),
-                ),
-                VitTradeSection(
-                  title: 'Phương pháp tính giá vốn',
-                  child: _CostBasisPicker(
-                    selectedMethod: costBasisMethod,
-                    onChanged: (method) {
-                      setState(() => _costBasisMethod = method);
-                    },
-                  ),
-                ),
-                VitTradeSection(
-                  title: 'Chọn loại báo cáo',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (final report in snapshot.reportTypes)
-                        _ReportTypeCard(
-                          report: report,
-                          selected: selectedReportIds.contains(report.id),
-                          onTap: () => _toggleReport(report.id),
-                        ),
-                    ],
-                  ),
-                ),
-                VitTradeSection(
-                  title: 'Chi tiết lãi vốn',
-                  child: _BreakdownCard(
-                    summary: snapshot.summary,
-                    breakdown: snapshot.breakdown,
-                  ),
-                ),
-                VitTradeSection(
-                  title: 'Ghi chú thuế',
-                  child: _TaxNotesCard(notes: snapshot.taxNotes),
-                ),
-                const VitBotRiskReviewFooter(
-                  title: 'Cần xem lại xuất báo cáo thuế',
-                  message:
-                      'Năm thuế, giá vốn, loại báo cáo, file đã tạo, che dữ liệu nhạy cảm và bước tiếp theo được xem lại trước khi xuất.',
-                  contractId: 'bot-tax-reporting-review',
-                  statusLabel: 'Xem trước báo cáo trước khi xuất',
-                ),
-                const SizedBox(height: generateFooterHeight),
-              ];
-            },
-          ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: _GenerateFooter(
-            bottomInset: tradeScrollBottomInset(
-              context,
-              shellRenderMode: widget.shellRenderMode,
+    return VitTradeDetailScaffold(
+      title: 'Báo cáo thuế',
+      subtitle: 'Báo cáo thuế bot giao dịch',
+      semanticLabel: 'Báo cáo thuế cho giao dịch bot',
+      semanticIdentifier: 'SC-133',
+      contentKey: BotTaxReportingPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      bottomInset: AppSpacing.x3,
+      activeProductId: 'bots',
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.tradeBots,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      footer: snapshot == null
+          ? null
+          : _GenerateFooter(
+              bottomInset: shellInset,
+              disabled: (_selectedReportIds?.isEmpty ?? true) || _generating,
+              generating: _generating,
+              selectedCount: _selectedReportIds?.length ?? 0,
+              selectedYear: _selectedYear ?? '',
+              onPressed: _generate,
             ),
-            disabled: (_selectedReportIds?.isEmpty ?? true) || _generating,
-            generating: _generating,
-            selectedCount: _selectedReportIds?.length ?? 0,
-            selectedYear: _selectedYear ?? '',
-            onPressed: _generate,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được báo cáo thuế',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotTaxReportingProvider),
           ),
-        ),
-      ],
+        ],
+        data: (snapshot) {
+          final selectedYear = _selectedYear!;
+          final costBasisMethod = _costBasisMethod!;
+          final selectedReportIds = _selectedReportIds!;
+          return [
+            const VitTradeSection(title: 'Lưu ý', child: _TaxNotice()),
+            VitTradeSection(
+              title: 'Chọn năm thuế',
+              child: _YearPicker(
+                years: snapshot.taxYears,
+                selectedYear: selectedYear,
+                onChanged: (year) {
+                  setState(() => _selectedYear = year);
+                },
+              ),
+            ),
+            VitTradeSection(
+              title: 'Tóm tắt năm $selectedYear',
+              child: _SummaryCard(summary: snapshot.summary),
+            ),
+            VitTradeSection(
+              title: 'Phương pháp tính giá vốn',
+              child: _CostBasisPicker(
+                selectedMethod: costBasisMethod,
+                onChanged: (method) {
+                  setState(() => _costBasisMethod = method);
+                },
+              ),
+            ),
+            VitTradeSection(
+              title: 'Chọn loại báo cáo',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final report in snapshot.reportTypes)
+                    _ReportTypeCard(
+                      report: report,
+                      selected: selectedReportIds.contains(report.id),
+                      onTap: () => _toggleReport(report.id),
+                    ),
+                ],
+              ),
+            ),
+            VitTradeSection(
+              title: 'Chi tiết lãi vốn',
+              child: _BreakdownCard(
+                summary: snapshot.summary,
+                breakdown: snapshot.breakdown,
+              ),
+            ),
+            VitTradeSection(
+              title: 'Ghi chú thuế',
+              child: _TaxNotesCard(notes: snapshot.taxNotes),
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'Cần xem lại xuất báo cáo thuế',
+              message:
+                  'Năm thuế, giá vốn, loại báo cáo, file đã tạo, che dữ liệu nhạy cảm và bước tiếp theo được xem lại trước khi xuất.',
+              contractId: 'bot-tax-reporting-review',
+              statusLabel: 'Xem trước báo cáo trước khi xuất',
+            ),
+          ];
+        },
+      ),
     );
   }
 

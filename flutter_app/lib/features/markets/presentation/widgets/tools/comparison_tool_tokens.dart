@@ -182,44 +182,13 @@ class ComparisonTokenPickerCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: MarketsSpacingTokens.comparisonToolPickerGap),
-          Material(
+          VitSearchBar(
             key: ComparisonToolKeys.pickerSearch,
-            color: AppColors.surface2,
-            borderRadius: AppRadii.smRadius,
-            child: SizedBox(
-              height: MarketsSpacingTokens.comparisonToolPickerSearchHeight,
-              child: Padding(
-                padding: MarketsSpacingTokens.comparisonToolPickerSearchPadding,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.search_rounded,
-                      color: AppColors.text3,
-                      size: MarketsSpacingTokens.comparisonToolPickerIcon,
-                    ),
-                    const SizedBox(
-                      width: MarketsSpacingTokens
-                          .comparisonToolPickerSearchIconGap,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: controller,
-                        onChanged: (_) => onChanged(),
-                        autofocus: true,
-                        cursorColor: comparisonToolPrimary,
-                        style: AppTextStyles.caption,
-                        decoration: InputDecoration.collapsed(
-                          hintText: 'Tìm BTC, ETH...',
-                          hintStyle: AppTextStyles.caption.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            controller: controller,
+            placeholder: 'Tìm BTC, ETH...',
+            variant: VitSearchBarVariant.compact,
+            autofocus: true,
+            onChanged: (_) => onChanged(),
           ),
           const SizedBox(height: MarketsSpacingTokens.comparisonToolPickerGap),
           if (search.isEmpty)
