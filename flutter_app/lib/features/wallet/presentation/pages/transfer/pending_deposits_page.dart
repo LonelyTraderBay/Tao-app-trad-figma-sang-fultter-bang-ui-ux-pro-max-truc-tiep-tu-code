@@ -112,22 +112,27 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                       children: [
                         ...snapshotAsync.when(
                           loading: () => const [VitSkeletonList()],
-                          error: (error, stackTrace) => [
-                            if (_isLikelyOffline(error))
-                              const VitOfflineBanner(
-                                message: 'Mất kết nối mạng',
-                                detail: 'Không tải được nạp tiền đang chờ.',
+                          error: (error, stackTrace) {
+                            final offline = _isLikelyOffline(error);
+                            return [
+                              if (offline)
+                                const VitOfflineBanner(
+                                  message: 'Mất kết nối mạng',
+                                  detail: 'Không tải được nạp tiền đang chờ.',
+                                ),
+                              VitErrorState(
+                                title: offline
+                                    ? 'Đang offline'
+                                    : 'Không tải được nạp tiền đang chờ',
+                                message:
+                                    'Vui lòng kiểm tra kết nối và thử lại.',
+                                actionLabel: 'Thử lại',
+                                onAction: () => ref.invalidate(
+                                  walletPendingDepositsProvider,
+                                ),
                               ),
-                            VitErrorState(
-                              title: _isLikelyOffline(error)
-                                  ? 'Đang offline'
-                                  : 'Không tải được nạp tiền đang chờ',
-                              message: 'Vui lòng kiểm tra kết nối và thử lại.',
-                              actionLabel: 'Thử lại',
-                              onAction: () =>
-                                  ref.invalidate(walletPendingDepositsProvider),
-                            ),
-                          ],
+                            ];
+                          },
                           data: (snapshot) {
                             final deposits = _filteredDeposits(
                               snapshot.deposits,
