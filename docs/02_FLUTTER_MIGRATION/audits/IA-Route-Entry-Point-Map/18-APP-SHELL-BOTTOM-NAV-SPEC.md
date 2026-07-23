@@ -64,7 +64,6 @@ Evaluation order mirrors code (first match wins). Default fallback = **Home**.
 
 | Path / pattern | Active tab | Note |
 |----------------|------------|------|
-| `/referral`, `/referral/*` | **Trade** | D1 — product lives under Trade highlight; **menu canonical = Profile** (EP-23) |
 | `/enterprise-states` | Trade | DEV-adjacent |
 | `/unified-portfolio` | Trade | EP-34 menu = Profile nâng cao |
 | `/cross-module-analytics` | Trade | |
@@ -89,6 +88,7 @@ Evaluation order mirrors code (first match wins). Default fallback = **Home**.
 | `/trade*` (`startsWith(trade)`) | **Trade** |
 | `/pair/*` | **Markets** |
 | `/wallet*` | **Wallet** |
+| `/referral`, `/referral/*` | **Profile** |
 | `/settings/security`, `/settings/security/*` | **Profile** |
 | `/profile*` | **Profile** |
 | *(everything else in shell)* | **Home** |
@@ -109,7 +109,7 @@ Evaluation order mirrors code (first match wins). Default fallback = **Home**.
 | `/wallet/deposit` | Wallet |
 | `/profile/kyc` | Profile |
 | `/settings/security` | Profile |
-| `/referral` | Trade highlight / Profile menu home |
+| `/referral` | Profile (menu + chrome) |
 | `/auth/login` | *(no shell — file 25)* |
 
 ---
@@ -118,10 +118,11 @@ Evaluation order mirrors code (first match wins). Default fallback = **Home**.
 
 | Option | Behavior | Status |
 |--------|----------|--------|
-| **A (locked)** | earn / p2p / arena / dca / launchpad / rewards / referral* → highlight **Trade** | **Current code + continuum lock 2026-07-21** |
-| B (deferred) | Same routes highlight **Home** | Chỉ mở lại nếu product đổi D1 |
+| **A (locked)** | earn / p2p / arena / dca / launchpad / rewards → highlight **Trade** | **Current code + continuum lock 2026-07-21** |
+| Referral carve-out | `/referral*` → **Profile** (align menu home) | **closed RG-12** 2026-07-23 |
+| B (deferred) | Same D1 routes highlight **Home** | Chỉ mở lại nếu product đổi D1 |
 
-**UX implication:** User trên Earn/P2P vẫn thấy tab Giao dịch sáng — đúng với Option A. Menu entry canonical vẫn theo cột Menu UI (Home nhóm sản phẩm / Discovery / Profile), **không** yêu cầu đổi highlight khi đổi menu home.
+**UX implication:** User trên Earn/P2P vẫn thấy tab Giao dịch sáng — đúng với Option A. Referral mirrors Profile menu (account/growth). Menu entry canonical vẫn theo cột Menu UI (Home nhóm sản phẩm / Discovery / Profile).
 
 ---
 

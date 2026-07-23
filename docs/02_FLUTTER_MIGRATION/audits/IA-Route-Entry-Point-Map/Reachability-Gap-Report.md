@@ -25,7 +25,7 @@ Sources: [`19`](./19-MARKETS-HUB-WIREFRAME.md), [`20`](./20-TRADE-HUB-WIREFRAME.
 | RG-09 | Earn › Tài liệu & rủi ro (**31** GOM) | sheet on `StakingEarnPage` | GOM | `StakingEarnPage` sheet + `EarnLegalCatalog` (5 cụm) | — | **P3.2** | **closed** 2026-07-22 |
 | RG-10 | `/news` | `NewsPage` | GIỮ | Home header News → `/news` (`home_header.dart`) | — | **P1.2** | **closed** 2026-07-22 (verify) |
 | RG-11 | Markets Discover footer vs Home Discovery | `MarketListDiscoverMoreSection` → Predictions / Arena | HUB shortcut | Footer = **shortcut only**; Home = Discovery **canonical** | **Yes** — by design (not a missing inbound) | P2.x (docs only) | **accepted exception** |
-| RG-12 | `/referral` + D1 Trade highlight | `ReferralHomePage` | GIỮ | Canonical menu = Profile › Giới thiệu; path may still highlight **Trade** (D1 Option A) | **Tension** — menu Profile vs tab Trade | **P1.3** + shell D1 | open tension |
+| RG-12 | `/referral` + Profile tab chrome | `ReferralHomePage` | GIỮ | Profile › Giới thiệu; `_activeDestinationForPath` → **profile** (carved out of D1 Trade) | — | **P1.3** + shell chrome | **closed** 2026-07-23 |
 | RG-13 | Support / Referral still on Home quick actions (legacy) | `SupportPage` / `ReferralHomePage` | GIỮ | Removed from Home quick actions (`home_mock_data`); menu = Profile | — | **P1.1** / **P1.3** | **closed** 2026-07-22 (verify) |
 
 ## Exception register
@@ -33,13 +33,12 @@ Sources: [`19`](./19-MARKETS-HUB-WIREFRAME.md), [`20`](./20-TRADE-HUB-WIREFRAME.
 | Gap ID | Why accepted | Revisit |
 |--------|--------------|---------|
 | RG-11 | Discover footer on Markets is intentional shortcut; Discovery SO = Home | Only if product moves Discovery off Home |
-| RG-12 | D1 locks secondary-product Trade highlight; Referral **menu home** stays Profile | Clarify chrome copy in P1; do not invent Referral tab |
 
 ## Owner STEP map (quick)
 
 | Phase | Gaps |
 |-------|------|
-| P1 | RG-08 closed; RG-10/13 **closed (verify)**; RG-12 open tension |
+| P1 | RG-08 closed; RG-10/12/13 **closed** |
 | P2 | RG-01, RG-02, RG-03, RG-04, RG-05, RG-06, RG-07 |
 | P3 | RG-09 |
 

@@ -46,7 +46,7 @@ Sources: [`99-ALL-ROUTES.md`](./99-ALL-ROUTES.md) (33 GIỮ), [`18-APP-SHELL-BOT
 | 25 | EP-19 | `/launchpad` | `LaunchpadPage` | Home › Khám phá | `push` | `pop_or_/home` | **trade** | D1 |
 | 26 | EP-18 | `/dca` | `DCAPage` | Home › Sinh lời | `push` | `pop_or_/home` | **trade** | D1 |
 | 27 | EP-07 | `/notifications` | `NotificationsPage` | Header Thông báo | `header` / `push` | `pop_or_/home` | home | |
-| 28 | EP-23 | `/referral` | `ReferralHomePage` | Profile › Giới thiệu | `push` | `pop_or_/profile` | **trade** | D1 tension RG-12 |
+| 28 | EP-23 | `/referral` | `ReferralHomePage` | Profile › Giới thiệu | `push` | `pop_or_/profile` | **profile** | RG-12 closed 2026-07-23 |
 | 29 | EP-22 | `/rewards` | `RewardsHubPage` | Home › Khám phá | `push` | `pop_or_/home` | **trade** | D1 |
 | 30 | EP-06 | `/search` | `UnifiedSearchPage` | Header Tìm kiếm | `header` / `push` | `pop_or_/home` | home | |
 | 31 | EP-31 | `/topics` | `TopicHubPage` | Home › Khám phá | `push` | `pop_or_/home` | home | Explicit home mapping |
