@@ -35,13 +35,18 @@ void main() {
     VitFirstViewport viewport = VitFirstViewport.qaPhone,
     WalletPendingDepositsSnapshot? snapshot,
     Object? error,
+    Future<WalletPendingDepositsSnapshot> Function()? pendingDepositsLoader,
   }) async {
     configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (snapshot != null || error != null)
+          if (pendingDepositsLoader != null)
+            walletPendingDepositsProvider.overrideWith(
+              (ref) => pendingDepositsLoader(),
+            )
+          else if (snapshot != null || error != null)
             walletPendingDepositsProvider.overrideWith((ref) {
               if (error != null) throw error;
               return snapshot!;
@@ -241,6 +246,27 @@ void main() {
       find.textContaining('Trạng thái nạp tiền đang chờ đã được cập nhật'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('SC-152 refresh lỗi chỉ hiện notice thất bại', (tester) async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getPendingDeposits();
+    var loadCount = 0;
+
+    await pumpPendingDeposits(
+      tester,
+      pendingDepositsLoader: () async {
+        if (loadCount++ > 0) throw Exception('refresh failed');
+        return snapshot;
+      },
+    );
+
+    await tester.tap(find.byKey(PendingDepositsPage.refreshKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Không làm mới được'), findsOneWidget);
+    expect(find.text('Đã làm mới'), findsNothing);
   });
 
   testWidgets('SC-152 offline có banner và CTA thử lại', (tester) async {

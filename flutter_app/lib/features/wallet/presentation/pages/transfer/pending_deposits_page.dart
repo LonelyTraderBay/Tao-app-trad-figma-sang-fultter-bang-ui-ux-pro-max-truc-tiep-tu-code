@@ -247,7 +247,14 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
       ref.invalidate(walletPendingDepositsProvider);
       await ref.read(walletPendingDepositsProvider.future);
     } catch (_) {
-      // AsyncValue.error sẽ render VitErrorState; vẫn báo người dùng.
+      if (!mounted) return;
+      await showVitNoticeSheet(
+        context: context,
+        title: 'Không làm mới được',
+        message:
+            'Không cập nhật được trạng thái nạp đang chờ. Kiểm tra kết nối và thử lại.',
+      );
+      return;
     }
     if (!mounted) return;
     await showVitNoticeSheet(
