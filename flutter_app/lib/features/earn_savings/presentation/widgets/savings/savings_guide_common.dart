@@ -1,0 +1,268 @@
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/features/earn_core/domain/entities/earn_entities.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+
+final class SavingsGuideKeys {
+  const SavingsGuideKeys._();
+
+  static const tutorialList = Key('sc335_tutorial_list');
+  static const glossaryList = Key('sc335_glossary_list');
+  static const firstTutorial = Key('sc335_first_tutorial');
+  static const startButton = Key('sc335_start_button');
+  static const completeButton = Key('sc335_complete_tutorial_button');
+
+  static Key tab(String id) => Key('sc335_tab_$id');
+}
+
+class SavingsGuideProgressHeader extends StatelessWidget {
+  const SavingsGuideProgressHeader({
+    super.key,
+    required this.stepIndex,
+    required this.total,
+    required this.progress,
+  });
+
+  final int stepIndex;
+  final int total;
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitProgressBar(
+      progress: progress,
+      label: 'Bước ${stepIndex + 1}/$total',
+      trailingLabel: '${(progress * 100).round()}% hoàn thành',
+      trackColor: AppColors.borderSolid,
+      height: EarnSpacingTokens.earnGuideProgressHeight,
+      gap: AppSpacing.x2,
+      borderRadius: AppRadii.xsRadius,
+    );
+  }
+}
+
+class SavingsGuideStepDetail extends StatelessWidget {
+  const SavingsGuideStepDetail({super.key, required this.step});
+
+  final SavingsGuideStepDraft step;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SavingsGuideRoundIcon(
+              icon: savingsGuideIcon(step.iconKey),
+              color: AppColors.buy,
+              size: AppSpacing.buttonStandard,
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                step.title,
+                style: AppTextStyles.baseMedium.copyWith(
+                  color: AppColors.text1,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        Text(
+          step.description,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text2,
+            height: EarnSpacingTokens.earnGuideParagraphLineHeight,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SavingsGuideTipPanel extends StatelessWidget {
+  const SavingsGuideTipPanel({super.key, required this.tips});
+
+  final List<String> tips;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.lightbulb_outline_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                'Tips quan trọng',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          for (final tip in tips) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EarnSpacingTokens.earnWithdrawalBulletPadding,
+                  child: SizedBox(
+                    width: EarnSpacingTokens.earnGuideBulletSize,
+                    height: EarnSpacingTokens.earnGuideBulletSize,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: AppColors.text3,
+                        shape: CircleBorder(),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    tip,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: EarnSpacingTokens.earnGuideTipLineHeight,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (tip != tips.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class SavingsGuideDifficultyPill extends StatelessWidget {
+  const SavingsGuideDifficultyPill({super.key, required this.difficulty});
+
+  final SavingsGuideDifficulty difficulty;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = savingsGuideDifficultyColor(difficulty);
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: color.withValues(alpha: 0.12),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+      ),
+      child: Padding(
+        padding: EarnSpacingTokens.earnSmallPillPadding,
+        child: Text(
+          savingsGuideDifficultyLabel(difficulty),
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: EarnSpacingTokens.earnGuidePillLineHeight,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SavingsGuideRoundIcon extends StatelessWidget {
+  const SavingsGuideRoundIcon({
+    super.key,
+    required this.icon,
+    required this.color,
+    this.size = AppSpacing.x7,
+    this.label,
+  });
+
+  final IconData icon;
+  final Color color;
+  final double size;
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: color.withValues(alpha: 0.12),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.22)),
+        ),
+      ),
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: Center(
+          child: label == null
+              ? Icon(icon, color: color, size: AppSpacing.iconSm)
+              : Text(
+                  label!,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                    height: EarnSpacingTokens.earnGuidePillLineHeight,
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+IconData savingsGuideIcon(String iconKey) {
+  return switch (iconKey) {
+    'piggy' => Icons.savings_outlined,
+    'trend' => Icons.trending_up_rounded,
+    'shield' => Icons.shield_outlined,
+    'zap' => Icons.bolt_rounded,
+    'lock' => Icons.lock_outline_rounded,
+    'calculator' => Icons.calculate_outlined,
+    'alert' => Icons.warning_amber_rounded,
+    'check' => Icons.check_circle_outline_rounded,
+    _ => Icons.menu_book_outlined,
+  };
+}
+
+String savingsGuideDifficultyLabel(SavingsGuideDifficulty difficulty) {
+  return switch (difficulty) {
+    SavingsGuideDifficulty.beginner => 'Cơ bản',
+    SavingsGuideDifficulty.intermediate => 'Trung bình',
+    SavingsGuideDifficulty.advanced => 'Nâng cao',
+  };
+}
+
+Color savingsGuideDifficultyColor(SavingsGuideDifficulty difficulty) {
+  return switch (difficulty) {
+    SavingsGuideDifficulty.beginner => AppColors.buy,
+    SavingsGuideDifficulty.intermediate => AppColors.primary,
+    SavingsGuideDifficulty.advanced => AppColors.warn,
+  };
+}
+
+Color savingsGuideRiskColor(EarnRiskLevel tone) {
+  return switch (tone) {
+    EarnRiskLevel.low => AppColors.buy,
+    EarnRiskLevel.medium => AppColors.primary,
+    EarnRiskLevel.high => AppColors.sell,
+  };
+}

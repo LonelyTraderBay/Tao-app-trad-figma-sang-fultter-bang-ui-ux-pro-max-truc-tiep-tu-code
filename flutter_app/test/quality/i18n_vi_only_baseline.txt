@@ -53,37 +53,37 @@ lib/features/dev/presentation/pages/route_checker_page.dart|Show all routes
 lib/features/dev/presentation/pages/route_checker_page.dart|Switch phase filter or return to live data.
 lib/features/dev/presentation/widgets/design_system_input_section.dart|InputWrapper with error
 lib/features/dev/presentation/widgets/design_system_playground.dart|Leave empty for no error
-lib/features/earn/presentation/pages/savings/savings_ladder_page.dart|Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.
-lib/features/earn/presentation/pages/savings/savings_risk_assessment_page.dart|Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.
-lib/features/earn/presentation/pages/staking/auto_compound_settings_page.dart|Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.
-lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Create Order
-lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Order History
-lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Order type, trigger condition, asset amount, risk disclosure, create-order preview, submitting state, and result handling are reviewed before an advanced staking order is placed.
-lib/features/earn/presentation/pages/staking/staking_developer_console_page.dart|API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.
-lib/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart|Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.
-lib/features/earn/presentation/widgets/savings/savings_risk_assessment_result.dart|Review product fit, lockup, APY variability, risk notes and next steps before subscribing.
-lib/features/earn/presentation/widgets/staking/staking_advanced_orders_overview_orders.dart|${_formatAmount(order.amount)} ${order.asset}
-lib/features/earn/presentation/widgets/staking/staking_advanced_orders_sheet_fields.dart|Create Order
-lib/features/earn/presentation/widgets/staking/staking_api_documentation_auth.dart|Include your API key in the X-API-Key header with every request.
-lib/features/earn/presentation/widgets/staking/staking_api_documentation_examples.dart|Test your integration with fake data before going live. No real funds involved.
-lib/features/earn/presentation/widgets/staking/staking_custody_assets.dart|Online for withdrawals, secured with MPC technology
-lib/features/earn/presentation/widgets/staking/staking_institutional_sheet_painter.dart|Drop CSV or click to upload
-lib/features/earn/presentation/widgets/staking/staking_institutional_sheet_painter.dart|Submit for Approval
-lib/features/earn/presentation/widgets/staking/staking_insurance_fund_claims.dart|Claim Processing: All claims are reviewed within 24 hours. Approved claims are paid out within 7 business days. Average approval rate: 94%.
-lib/features/earn/presentation/widgets/staking/staking_insurance_fund_contribution_card.dart|${snapshot.stakingFeeContribution}% of all staking fees are automatically allocated to the insurance fund. No user funds are ever used.
-lib/features/earn/presentation/widgets/staking/staking_insurance_fund_contribution_card.dart|Total Contributed (All-time)
-lib/features/earn/presentation/widgets/staking/staking_insurance_fund_status_card.dart|Total Fund Balance
-lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify.dart|Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.
-lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify.dart|Verify Your Balance
-lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify_sheet.dart|Verify Your Balance
-lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify_sheet.dart|Your balance of ${proof.balance.toStringAsFixed(2)} ETH is included in the Proof of Reserves Merkle tree.
-lib/features/earn/presentation/widgets/staking/staking_risk_dashboard_page_sections.dart|Your staking portfolio has ${label.toLowerCase()}. No immediate action required, but monitor market volatility.
-lib/features/earn/presentation/widgets/staking/staking_slashing_history_prevention.dart|Our multi-layered prevention system has reduced slashing events by 40% year-over-year. Continuous monitoring and automated rebalancing ensure your stake is always protected.
-lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_common.dart|Review recommended products, allocation limits, lockup terms, annual reassessment and next steps before subscribing.
-lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_common.dart|This assessment is valid until ${snapshot.validUntil}. You must re-assess annually or if your financial situation changes significantly.
-lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_sections.dart|Question ${current + 1} of $total
-lib/features/earn/presentation/widgets/staking/staking_transaction_reporting_sheet_widgets.dart|Once you choose a method for a tax year, use it consistently. Consult a tax professional for guidance.
-lib/features/earn/presentation/widgets/staking/staking_validator_health_monitor_page_sections.dart|View Details
+lib/features/earn_savings/presentation/pages/savings/savings_ladder_page.dart|Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.
+lib/features/earn_savings/presentation/pages/savings/savings_risk_assessment_page.dart|Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.
+lib/features/earn_savings/presentation/pages/savings/auto_compound_settings_page.dart|Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.
+lib/features/earn_staking/presentation/pages/staking/staking_advanced_orders_page.dart|Create Order
+lib/features/earn_staking/presentation/pages/staking/staking_advanced_orders_page.dart|Order History
+lib/features/earn_staking/presentation/pages/staking/staking_advanced_orders_page.dart|Order type, trigger condition, asset amount, risk disclosure, create-order preview, submitting state, and result handling are reviewed before an advanced staking order is placed.
+lib/features/earn_staking/presentation/pages/staking/staking_developer_console_page.dart|API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.
+lib/features/earn_staking/presentation/pages/staking/staking_withdrawal_policy_page.dart|Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.
+lib/features/earn_savings/presentation/widgets/savings/savings_risk_assessment_result.dart|Review product fit, lockup, APY variability, risk notes and next steps before subscribing.
+lib/features/earn_staking/presentation/widgets/staking/staking_advanced_orders_overview_orders.dart|${_formatAmount(order.amount)} ${order.asset}
+lib/features/earn_staking/presentation/widgets/staking/staking_advanced_orders_sheet_fields.dart|Create Order
+lib/features/earn_staking/presentation/widgets/staking/staking_api_documentation_auth.dart|Include your API key in the X-API-Key header with every request.
+lib/features/earn_staking/presentation/widgets/staking/staking_api_documentation_examples.dart|Test your integration with fake data before going live. No real funds involved.
+lib/features/earn_staking/presentation/widgets/staking/staking_custody_assets.dart|Online for withdrawals, secured with MPC technology
+lib/features/earn_staking/presentation/widgets/staking/staking_institutional_sheet_painter.dart|Drop CSV or click to upload
+lib/features/earn_staking/presentation/widgets/staking/staking_institutional_sheet_painter.dart|Submit for Approval
+lib/features/earn_staking/presentation/widgets/staking/staking_insurance_fund_claims.dart|Claim Processing: All claims are reviewed within 24 hours. Approved claims are paid out within 7 business days. Average approval rate: 94%.
+lib/features/earn_staking/presentation/widgets/staking/staking_insurance_fund_contribution_card.dart|${snapshot.stakingFeeContribution}% of all staking fees are automatically allocated to the insurance fund. No user funds are ever used.
+lib/features/earn_staking/presentation/widgets/staking/staking_insurance_fund_contribution_card.dart|Total Contributed (All-time)
+lib/features/earn_staking/presentation/widgets/staking/staking_insurance_fund_status_card.dart|Total Fund Balance
+lib/features/earn_staking/presentation/widgets/staking/staking_proof_of_reserves_verify.dart|Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.
+lib/features/earn_staking/presentation/widgets/staking/staking_proof_of_reserves_verify.dart|Verify Your Balance
+lib/features/earn_staking/presentation/widgets/staking/staking_proof_of_reserves_verify_sheet.dart|Verify Your Balance
+lib/features/earn_staking/presentation/widgets/staking/staking_proof_of_reserves_verify_sheet.dart|Your balance of ${proof.balance.toStringAsFixed(2)} ETH is included in the Proof of Reserves Merkle tree.
+lib/features/earn_staking/presentation/widgets/staking/staking_risk_dashboard_page_sections.dart|Your staking portfolio has ${label.toLowerCase()}. No immediate action required, but monitor market volatility.
+lib/features/earn_staking/presentation/widgets/staking/staking_slashing_history_prevention.dart|Our multi-layered prevention system has reduced slashing events by 40% year-over-year. Continuous monitoring and automated rebalancing ensure your stake is always protected.
+lib/features/earn_staking/presentation/widgets/staking/staking_suitability_assessment_page_common.dart|Review recommended products, allocation limits, lockup terms, annual reassessment and next steps before subscribing.
+lib/features/earn_staking/presentation/widgets/staking/staking_suitability_assessment_page_common.dart|This assessment is valid until ${snapshot.validUntil}. You must re-assess annually or if your financial situation changes significantly.
+lib/features/earn_staking/presentation/widgets/staking/staking_suitability_assessment_page_sections.dart|Question ${current + 1} of $total
+lib/features/earn_staking/presentation/widgets/staking/staking_transaction_reporting_sheet_widgets.dart|Once you choose a method for a tax year, use it consistently. Consult a tax professional for guidance.
+lib/features/earn_staking/presentation/widgets/staking/staking_validator_health_monitor_page_sections.dart|View Details
 lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart|Loading · Empty · Error · Offline
 lib/features/launchpad/presentation/pages/tools/launchpad_notif_sound_page.dart|Sound, vibration, do-not-disturb, alert categories and delivery preferences are reviewed before saving.
 lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart|Target allocation, deviation, gas estimate, risk impact and confirmation are reviewed before execution.

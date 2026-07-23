@@ -15,7 +15,7 @@ void main() {
   test('god-family mock fixtures không phình vượt baseline +10%', () {
     // family -> (số file baseline, tổng dòng baseline)
     const baselines = <String, (int files, int lines)>{
-      'lib/features/earn/data/fixtures': (26, 11202),
+      'lib/features/earn_core/data/fixtures': (26, 11202),
       'lib/features/p2p/data/fixtures': (26, 6668),
       'lib/features/arena/data/fixtures': (10, 5006),
       'lib/features/launchpad/data/fixtures': (9, 3764),
