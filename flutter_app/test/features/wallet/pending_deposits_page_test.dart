@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
@@ -123,18 +124,38 @@ void main() {
     expect(find.text('N\u1EA1p BTC'), findsOneWidget);
     expect(find.text('\u0110ang x\u00E1c nh\u1EADn'), findsWidgets);
     expect(find.text('1/2 y\u00EAu c\u1EA7u'), findsOneWidget);
-    expect(find.text('X\u00E1c nh\u1EADn y\u00EAu c\u1EA7u'), findsWidgets);
+    expect(find.text('X\u00E1c nh\u1EADn y\u00EAu c\u1EA7u'), findsNothing);
     expect(find.text('+5,000.00'), findsOneWidget);
     expect(find.text('+0.050000'), findsOneWidget);
     expect(find.text('X\u00E1c nh\u1EADn blockchain'), findsWidgets);
+    expect(find.text('Chi tiết giao dịch'), findsWidgets);
     expect(
       semanticsLabel('Làm mới trạng thái nạp tiền đang chờ'),
       findsOneWidget,
     );
     expect(
       semanticsLabel(RegExp(r'Sao chép mã giao dịch của .+')),
-      findsWidgets,
+      findsNothing,
     );
+  });
+
+  testWidgets('SC-152 ẩn chi tiết mặc định và chỉ hiện khi mở rộng', (
+    tester,
+  ) async {
+    await pumpPendingDeposits(tester);
+
+    expect(find.text('Mạng'), findsNothing);
+    expect(find.text('Thời điểm gửi'), findsNothing);
+
+    final expand = find.text('Chi tiết giao dịch').first;
+    await tester.ensureVisible(expand);
+    await tester.tap(expand);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Mạng'), findsOneWidget);
+    expect(find.text('Xác nhận yêu cầu'), findsOneWidget);
+    expect(find.text('Thời điểm gửi'), findsNothing);
+    expect(find.text('Ẩn chi tiết'), findsOneWidget);
   });
 
   testWidgets('SC-152 first viewport reaches first pending deposit', (
@@ -157,6 +178,16 @@ void main() {
 
   testWidgets('SC-152 filters and copy action are local', (tester) async {
     await pumpPendingDeposits(tester);
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (methodCall) async => null,
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      ),
+    );
 
     await tester.tap(find.byKey(PendingDepositsPage.filterKey('pending')));
     await tester.pumpAndSettle();
@@ -168,6 +199,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(PendingDepositsPage.depositKey('pd001')), findsOneWidget);
     expect(find.byKey(PendingDepositsPage.depositKey('pd004')), findsOneWidget);
+    final expand = find.text('Chi tiết giao dịch').first;
+    await tester.ensureVisible(expand);
+    await tester.tap(expand);
+    await tester.pumpAndSettle();
     await tester.ensureVisible(
       find.byKey(PendingDepositsPage.copyKey('pd001')),
     );
@@ -175,6 +210,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('\u0110\u00E3 ch\u00E9p'), findsOneWidget);
     expect(semanticsLabel('Đã sao chép mã giao dịch của USDT'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 2));
+    expect(find.text('Sao chép'), findsOneWidget);
+    expect(semanticsLabel('Sao chép mã giao dịch của USDT'), findsOneWidget);
   });
 
   testWidgets('SC-152 banner không claim cập nhật tự động 5 giây', (

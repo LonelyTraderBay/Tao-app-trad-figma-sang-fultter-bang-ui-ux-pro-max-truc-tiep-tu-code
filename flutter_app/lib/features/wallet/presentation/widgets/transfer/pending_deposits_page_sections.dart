@@ -145,8 +145,9 @@ class _PendingDepositFilters extends StatelessWidget {
   }
 }
 
-class _DepositCard extends StatelessWidget {
+class _DepositCard extends StatefulWidget {
   const _DepositCard({
+    super.key,
     required this.deposit,
     required this.copied,
     required this.onCopy,
@@ -159,10 +160,20 @@ class _DepositCard extends StatelessWidget {
   final ValueChanged<WalletPendingDeposit> onSupport;
 
   @override
+  State<_DepositCard> createState() => _DepositCardState();
+}
+
+class _DepositCardState extends State<_DepositCard> {
+  bool _expanded = false;
+
+  @override
   Widget build(BuildContext context) {
+    final deposit = widget.deposit;
+    final copied = widget.copied;
+    final onCopy = widget.onCopy;
+    final onSupport = widget.onSupport;
     final config = _statusConfig(deposit.status);
     return VitCard(
-      key: PendingDepositsPage.depositKey(deposit.id),
       padding: AppSpacing.cardTilePadding,
       borderColor: AppColors.overlayStroke,
       child: Column(
@@ -264,7 +275,17 @@ class _DepositCard extends StatelessWidget {
             ),
           ],
           const SizedBox(height: _pendingGap),
-          _DepositDetails(deposit: deposit, copied: copied, onCopy: onCopy),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              onPressed: () => setState(() => _expanded = !_expanded),
+              child: Text(_expanded ? 'Ẩn chi tiết' : 'Chi tiết giao dịch'),
+            ),
+          ),
+          if (_expanded) ...[
+            const SizedBox(height: _pendingTinyGap),
+            _DepositDetails(deposit: deposit, copied: copied, onCopy: onCopy),
+          ],
         ],
       ),
     );
@@ -295,7 +316,6 @@ class _ConfirmationProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dotCount = deposit.requiredConfirmations.clamp(2, 12);
     return Semantics(
       container: true,
       label:
@@ -332,25 +352,6 @@ class _ConfirmationProgress extends StatelessWidget {
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
             ),
-          ),
-          const SizedBox(height: _pendingTinyGap),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (var i = 0; i < dotCount; i++)
-                ClipRRect(
-                  borderRadius: AppRadii.pillRadius,
-                  child: SizedBox(
-                    width: WalletSpacingTokens.walletPendingProgressDot,
-                    height: WalletSpacingTokens.walletPendingProgressDot,
-                    child: ColoredBox(
-                      color: i < deposit.confirmations
-                          ? color
-                          : AppColors.surface3,
-                    ),
-                  ),
-                ),
-            ],
           ),
         ],
       ),

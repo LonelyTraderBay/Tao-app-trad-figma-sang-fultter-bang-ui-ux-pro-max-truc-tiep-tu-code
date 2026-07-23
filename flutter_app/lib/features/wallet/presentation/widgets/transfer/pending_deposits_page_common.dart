@@ -52,13 +52,6 @@ class _DepositDetails extends StatelessWidget {
           showDivider: true,
         ),
         VitInfoRow(
-          label: 'Thời điểm gửi',
-          value: deposit.createdAt,
-          leading: const Icon(Icons.schedule_rounded),
-          density: VitDensity.compact,
-          showDivider: true,
-        ),
-        VitInfoRow(
           label: 'Dự kiến nhận',
           value: deposit.estimatedArrival,
           leading: const Icon(Icons.timelapse_rounded),

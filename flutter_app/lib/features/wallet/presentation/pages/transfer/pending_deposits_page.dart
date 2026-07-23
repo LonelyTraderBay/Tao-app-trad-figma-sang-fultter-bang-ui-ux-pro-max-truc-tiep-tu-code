@@ -69,6 +69,7 @@ class PendingDepositsPage extends ConsumerStatefulWidget {
 class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
   _DepositFilter _filter = _DepositFilter.all;
   String? _copiedId;
+  Timer? _copiedReset;
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +164,9 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                                   else
                                     for (final deposit in deposits)
                                       _DepositCard(
+                                        key: PendingDepositsPage.depositKey(
+                                          deposit.id,
+                                        ),
                                         deposit: deposit,
                                         copied: _copiedId == deposit.id,
                                         onCopy: () => _copyHash(deposit),
@@ -210,8 +214,13 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
   }
 
   Future<void> _copyHash(WalletPendingDeposit deposit) async {
+    _copiedReset?.cancel();
     setState(() => _copiedId = deposit.id);
     await Clipboard.setData(ClipboardData(text: deposit.txHash));
+    _copiedReset = Timer(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      if (_copiedId == deposit.id) setState(() => _copiedId = null);
+    });
   }
 
   void _openSupportForDeposit(WalletPendingDeposit deposit) {
@@ -242,5 +251,11 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
       message:
           'Trạng thái nạp tiền đang chờ đã được cập nhật. Kiểm tra lại số xác nhận và mạng trước khi thao tác ví.',
     );
+  }
+
+  @override
+  void dispose() {
+    _copiedReset?.cancel();
+    super.dispose();
   }
 }
