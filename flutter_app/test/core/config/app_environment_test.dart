@@ -4,7 +4,7 @@ import 'package:vit_trade_flutter/core/config/app_environment.dart';
 import 'package:vit_trade_flutter/core/network/api_client.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/features/earn_core/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/notifications/data/notifications_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
