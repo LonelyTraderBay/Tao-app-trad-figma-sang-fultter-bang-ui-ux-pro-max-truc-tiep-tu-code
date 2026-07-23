@@ -59,16 +59,25 @@ void main() {
     });
 
     test('docs/INDEX.md "Removed docs" notes match the disk', () {
-      // Mirrors docs/INDEX.md's "Removed docs (2026-07-10, corrected
-      // 2026-07-16)" section — when a new file is added there under
-      // "Actually removed", add its path here too (DOC-D1,
-      // docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv).
-      // This guardrail exists because that note was previously wrong: it
-      // claimed several files were removed that were still tracked.
+      // Mirrors docs/INDEX.md "Removed / archived docs (2026-07-23)".
+      // When adding a path under "Deleted", add it here too (DOC-D1).
       const claimedRemoved = {
         '../docs/02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv',
         '../docs/02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.md',
         '../docs/03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv',
+        '../docs/02_FLUTTER_MIGRATION/prompt-redesign/CHECKLIST-26-PENDING-BATCHES.md',
+        '../docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-26.md',
+        '../docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-4-LAST.md',
+        '../docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PENDING-FINAL.md',
+        '../docs/02_FLUTTER_MIGRATION/prompt-redesign/prompt-redesign-trading-bots-hub-sc059.md',
+        '../docs/02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.md',
+        '../docs/02_FLUTTER_MIGRATION/Flutter-Enterprise-100-Percent-File-Action-Manifest.csv',
+        '../docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Debt-Audit.csv',
+        '../docs/02_FLUTTER_MIGRATION/VitTrade-Dark-Professional-Flow-Reorder-Matrix.csv',
+        '../docs/02_FLUTTER_MIGRATION/VitTrade-Product-Capability-Inventory.csv',
+        // Active-tree paths superseded by docs/_archive/ (2026-07-23).
+        '../docs/02_FLUTTER_MIGRATION/Card-Tile-Migration-Checklist.md',
+        '../docs/02_FLUTTER_MIGRATION/Card-Tile-Migration-Execution-Plan.md',
       };
 
       final stillPresent = claimedRemoved
@@ -83,13 +92,13 @@ void main() {
             'they still exist on disk: $stillPresent',
       );
 
-      // The flip side: files this codebase explicitly documents as KEPT
-      // (despite the historical "removed" note being wrong about them)
-      // must stay tracked, so a future cleanup pass does not re-delete them
-      // without updating the doc that links to them.
+      // Archived historical references linked from Card-Tile-Standard.md
+      // must remain on disk under docs/_archive/.
       const explicitlyKept = {
-        '../docs/02_FLUTTER_MIGRATION/Card-Tile-Migration-Checklist.md',
-        '../docs/02_FLUTTER_MIGRATION/Card-Tile-Migration-Execution-Plan.md',
+        '../docs/_archive/2026-migrations-closed/Card-Tile-Migration-Checklist.md',
+        '../docs/_archive/2026-migrations-closed/Card-Tile-Migration-Execution-Plan.md',
+        '../docs/_archive/README.md',
+        '../docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md',
       };
       final missingButExpected = explicitlyKept
           .where((path) => !File(path).existsSync())
@@ -98,9 +107,8 @@ void main() {
         missingButExpected,
         isEmpty,
         reason:
-            'These files are linked from Card-Tile-Standard.md as historical '
-            'reference and must not be deleted without updating that link: '
-            '$missingButExpected',
+            'These archived/living docs must stay on disk (update INDEX + '
+            'Card-Tile-Standard links before removing): $missingButExpected',
       );
     });
 

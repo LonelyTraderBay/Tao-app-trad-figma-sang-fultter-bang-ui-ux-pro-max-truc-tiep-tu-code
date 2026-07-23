@@ -2,7 +2,7 @@
 
 Generated: 2026-07-21 · Updated STEP-P0.11  
 
-Authority: [`UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md`](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) · [`00-INDEX.md`](./00-INDEX.md)
+Authority: [`UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md`](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) · [`00-INDEX.md`](../../02_FLUTTER_MIGRATION/audits/IA-Route-Entry-Point-Map/00-INDEX.md)
 
 ## Verdict
 

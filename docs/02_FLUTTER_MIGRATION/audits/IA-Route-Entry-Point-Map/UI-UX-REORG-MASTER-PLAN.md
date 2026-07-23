@@ -2,7 +2,7 @@
 
 Generated: 2026-07-21  
 **Chi tiết từng bước + progress tracker:**  
-→ [`UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md`](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md)
+→ [`UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md`](../../../_archive/2026-ia-ux-reorg/UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) (archived)
 
 File này chỉ là bản tóm tắt. AI và người thực thi **bám playbook**, không bám outline này.
 

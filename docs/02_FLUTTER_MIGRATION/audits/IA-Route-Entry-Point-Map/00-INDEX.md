@@ -8,14 +8,14 @@ Generated: 2026-07-13 · **Readiness pack updated: 2026-07-22**
 |------|--------|
 | Evidence pack | **SPEC DEPTH READY** (P0 done) |
 | Code phases | **P0–P6 done** |
-| Progress | **51 / 51** STEPs (100%) — see [playbook §1](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md#1-progress-dashboard-ai-cập-nhật-sau-mỗi-step) |
+| Progress | **51 / 51** STEPs (100%) — see [playbook §1](../../../_archive/2026-ia-ux-reorg/UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md#1-progress-dashboard-ai-cập-nhật-sau-mỗi-step) |
 | Badge | **`UI/UX REORG PROGRAM COMPLETE`** |
 | Route + navigation audits | **PASS** (P6.5 gate) |
 | Sparse P0 | **0** |
 | Button wiring | **broken=0** |
 | Visual QA | **33/33 GIỮ** · 65 phone QA @360×800 |
 | Full test | **3534** PASS |
-| **Execution playbook (chi tiết + tiến độ)** | [UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) |
+| **Execution playbook (chi tiết + tiến độ)** | [UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md](../../../_archive/2026-ia-ux-reorg/UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) (archived) |
 | Short outline | [UI-UX-REORG-MASTER-PLAN.md](./UI-UX-REORG-MASTER-PLAN.md) |
 
 > Program complete. Next human action: open PR `cursor/ia-ux-readiness-pack` → `main`. D1–D6 locked; RG-12 remains documented tension.
@@ -69,9 +69,9 @@ Phân loại + **Menu UI đề xuất** theo quy tắc IA (chỉnh tay khi produ
 - [State-Coverage-by-Archetype.md](./State-Coverage-by-Archetype.md)
 - [Button-Wiring-Baseline-Ledger.md](./Button-Wiring-Baseline-Ledger.md)
 - [Visual-QA-Route-Manifest.md](./Visual-QA-Route-Manifest.md)
-- [Home-Profile-IA-Delta-Checklist.md](./Home-Profile-IA-Delta-Checklist.md)
-- [UI-UX-Pre-Implementation-Gate.md](./UI-UX-Pre-Implementation-Gate.md)
-- [UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md](./UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md)
+- [Home-Profile-IA-Delta-Checklist.md](../../../_archive/2026-ia-ux-reorg/Home-Profile-IA-Delta-Checklist.md) (archived)
+- [UI-UX-Pre-Implementation-Gate.md](../../../_archive/2026-ia-ux-reorg/UI-UX-Pre-Implementation-Gate.md) (archived)
+- [UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md](../../../_archive/2026-ia-ux-reorg/UI-UX-FULL-REORG-EXECUTION-PLAYBOOK.md) (archived)
 - [99-ALL-ROUTES.md](./99-ALL-ROUTES.md)
 - [UX-Evidence-Matrix.csv](./UX-Evidence-Matrix.csv)
 

@@ -4,7 +4,7 @@
 `flutter_app/lib/shared/widgets/vit_offline_banner.dart`, the Trade receipt /
 submit reference (`order_receipt_page.dart`, `trade_page_state.dart`), and
 rollout plan
-[Notice-Acknowledgement-Rollout-Plan.md](./Notice-Acknowledgement-Rollout-Plan.md).  
+[Notice-Acknowledgement-Rollout-Plan.md](../../_archive/2026-migrations-closed/Notice-Acknowledgement-Rollout-Plan.md).  
 **Enforcement:** `test/quality/notice_acknowledgement_guardrail_test.dart` (+
 baseline ratchet `notice_acknowledgement_baseline.txt`).  
 **Related (do not conflate):** [Bottom-Sheet-Standard.md](./Bottom-Sheet-Standard.md)
@@ -106,7 +106,7 @@ flutter test test/shared/widgets/vit_offline_banner_test.dart --reporter=compact
 
 ## Related
 
-- [Notice-Acknowledgement-Rollout-Plan.md](./Notice-Acknowledgement-Rollout-Plan.md) — batch order
+- [Notice-Acknowledgement-Rollout-Plan.md](../../_archive/2026-migrations-closed/Notice-Acknowledgement-Rollout-Plan.md) — batch order (archived)
 - [Bottom-Sheet-Standard.md](./Bottom-Sheet-Standard.md) — `showVitBottomSheet` wrapper
 - [Flutter-Design-System-Reference.md](../Flutter-Design-System-Reference.md) — domain map
 - [High-Risk-State-Standard.md](./High-Risk-State-Standard.md) — high-risk panels (separate from notice ack)

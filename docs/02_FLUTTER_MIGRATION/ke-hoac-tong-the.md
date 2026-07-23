@@ -1,6 +1,6 @@
 # Kế hoạch tổng thể cho AI triển khai
 
-Updated: 2026-07-02
+Updated: 2026-07-23
 Scope: Flutter-only VitTrade app trong `flutter_app/`.
 
 Tài liệu này là dashboard trạng thái và hướng dẫn cho các lượt AI tiếp theo.
@@ -9,11 +9,12 @@ verification cho packet đó, rồi mới chuyển sang packet tiếp theo.
 
 Việc còn lại thực tế: [`ke-hoach-san-sang-production.md`](ke-hoach-san-sang-production.md).
 Doc picker: [`docs/INDEX.md`](../INDEX.md).
+Completed playbooks (redesign / IA / A+ / migration plans): [`docs/_archive/`](../_archive/README.md).
 
-## Completed migrations (removed 2026-07-02)
+## Completed migrations (removed 2026-07-02 · archived 2026-07-23)
 
-Các kế hoạch/prompt execution lớn đã **đóng** và được xóa khỏi repo (chi tiết
-từng batch vẫn tra được qua git history):
+Các kế hoạch/prompt execution lớn đã **đóng**. Bản chi tiết nằm dưới
+[`docs/_archive/`](../_archive/README.md); git history vẫn đủ:
 
 | Wave | Status | Summary |
 | --- | --- | --- |
@@ -24,10 +25,12 @@ từng batch vẫn tra được qua git history):
 | Shared components / typography / button / token plans | Absorbed | Rules live in `DESIGN.md`, `flutter_app/lib/app/theme/`, and `Guidelines.md`. |
 | E900 / Post-E900 file-size refactor waves | Closed | Large-file debt reduced; 4 files still >1200 lines (ongoing, not blocking UI). |
 | Card Tile migration execution plan/checklist | Closed 2026-07-07 | 993/993 files pass; compliance report + manifest/audit CSV kept as live CI baseline. |
-| VitTrade UI Redesign v2.5 pending-batch trackers | Closed 2026-07-10 | 66/66 batch done, 0 pending; playbook/contract/hub prompts kept as reference. |
+| VitTrade UI Redesign v2.5 pending-batch trackers | Closed 2026-07-10 | 66/66 batch done; archived → `_archive/2026-redesign-v2.5/`. |
+| IA / UI-UX full reorg (P0–P6) | Closed 2026-07-22 | Playbook archived → `_archive/2026-ia-ux-reorg/`; wireframes stay active. |
+| A+ enterprise roadmap (67 done) | Closed | Assessment/manifest archived → `_archive/2026-a-plus-closed/`; `GD4-Async-Playbook.md` stays living. |
 
 Active sources thay thế: `AGENTS.md`, `DESIGN.md`, `ke-hoach-san-sang-production.md`,
-`AI_PROMPT_SHELL.md`, audit tools under `flutter_app/tool/`.
+`AI_PROMPT_SHELL.md`, audit tools under `flutter_app/tool/`, `docs/_archive/`.
 
 ## 1. Kết luận hiện tại
 

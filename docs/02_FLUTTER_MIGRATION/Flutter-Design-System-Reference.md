@@ -98,7 +98,7 @@ enforcement mechanics.
 - [High-Risk-State-Standard.md](./standards/High-Risk-State-Standard.md) — High-risk state primitives
 - [Bottom-Sheet-Standard.md](./standards/Bottom-Sheet-Standard.md) — Bottom sheet usage
 - [Notice-Acknowledgement-Standard.md](./standards/Notice-Acknowledgement-Standard.md) — Notice acknowledgement (`showVitNoticeSheet`)
-- [Notice-Acknowledgement-Rollout-Plan.md](./standards/Notice-Acknowledgement-Rollout-Plan.md) — Migration batch order
+- [Notice-Acknowledgement-Rollout-Plan.md](../_archive/2026-migrations-closed/Notice-Acknowledgement-Rollout-Plan.md) — Migration batch order (archived)
 - [Body-Component-Standard.md](./standards/Body-Component-Standard.md) — Body component consistency
 - [Top-Header-Standard.md](./standards/Top-Header-Standard.md) — Top header (behavior, actions, global access policy, visual archetype — 4 sub-domains, one doc)
 - [Back-Navigation-Standard.md](./standards/Back-Navigation-Standard.md) — Back navigation (header back-control behavior, Home-entry contract — 2 sub-domains, one doc)
