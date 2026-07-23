@@ -21,7 +21,7 @@ class _SummaryBanner extends StatelessWidget {
   const _SummaryBanner({required this.pendingCount, required this.onRefresh});
 
   final int pendingCount;
-  final VoidCallback onRefresh;
+  final Future<void> Function() onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _SummaryBanner extends StatelessWidget {
                 const SizedBox(height: _pendingTinyGap),
                 Text(
                   hasPending
-                      ? 'Trang tự động cập nhật mỗi 5 giây'
+                      ? 'Nhấn làm mới để cập nhật trạng thái xác nhận'
                       : 'Không có giao dịch nào đang chờ',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -77,7 +77,7 @@ class _SummaryBanner extends StatelessWidget {
               icon: Icons.refresh_rounded,
               tooltip: 'Làm mới nạp tiền đang chờ',
               size: VitIconButtonSize.sm,
-              onPressed: onRefresh,
+              onPressed: () => unawaited(onRefresh()),
             ),
           ),
         ],

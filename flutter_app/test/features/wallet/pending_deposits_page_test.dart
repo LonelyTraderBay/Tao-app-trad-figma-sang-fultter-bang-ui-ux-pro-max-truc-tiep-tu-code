@@ -151,11 +151,23 @@ void main() {
     expect(semanticsLabel('Đã sao chép mã giao dịch của USDT'), findsOneWidget);
   });
 
+  testWidgets('SC-152 banner không claim cập nhật tự động 5 giây', (
+    tester,
+  ) async {
+    await pumpPendingDeposits(tester);
+    expect(find.textContaining('5 giây'), findsNothing);
+    expect(
+      find.text('Nhấn làm mới để cập nhật trạng thái xác nhận'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('SC-152 refresh invalidates and shows notice sheet', (
     tester,
   ) async {
     await pumpPendingDeposits(tester);
 
+    // Refresh must await provider reload before showing the notice sheet.
     await tester.tap(find.byKey(PendingDepositsPage.refreshKey));
     await tester.pumpAndSettle();
 

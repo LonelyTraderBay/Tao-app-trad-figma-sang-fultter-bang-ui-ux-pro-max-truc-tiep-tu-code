@@ -83,65 +83,74 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: VitInsetScrollView(
-                  key: PendingDepositsPage.contentKey,
-                  bottomInset: bottomInset,
-                  physics: const ClampingScrollPhysics(),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      ...snapshotAsync.when(
-                        loading: () => const [VitSkeletonList()],
-                        error: (error, stackTrace) => [
-                          VitErrorState(
-                            title:
-                                'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c n\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
-                            message:
-                                'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
-                            actionLabel: 'Th\u1EED l\u1EA1i',
-                            onAction: () =>
-                                ref.invalidate(walletPendingDepositsProvider),
-                          ),
-                        ],
-                        data: (snapshot) {
-                          final deposits = _filteredDeposits(snapshot.deposits);
-                          return [
-                            const _TrustReviewNotice(),
-                            _SummaryBanner(
-                              pendingCount: snapshot.pendingCount,
-                              onRefresh: _refreshDeposits,
+                child: RefreshIndicator(
+                  color: AppColors.primary,
+                  backgroundColor: AppColors.surface2,
+                  onRefresh: _refreshDeposits,
+                  child: VitInsetScrollView(
+                    key: PendingDepositsPage.contentKey,
+                    bottomInset: bottomInset,
+                    physics: const AlwaysScrollableScrollPhysics(
+                      parent: ClampingScrollPhysics(),
+                    ),
+                    child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
+                      gap: VitContentGap.tight,
+                      children: [
+                        ...snapshotAsync.when(
+                          loading: () => const [VitSkeletonList()],
+                          error: (error, stackTrace) => [
+                            VitErrorState(
+                              title:
+                                  'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c n\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
+                              message:
+                                  'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+                              actionLabel: 'Th\u1EED l\u1EA1i',
+                              onAction: () =>
+                                  ref.invalidate(walletPendingDepositsProvider),
                             ),
-                            _PendingDepositFilters(
-                              active: _filter,
-                              pendingCount: snapshot.pendingCount,
-                              onChanged: (filter) =>
-                                  setState(() => _filter = filter),
-                            ),
-                            VitPageSection(
-                              label: 'Danh s\u00E1ch n\u1EA1p',
-                              headerIcon: Icons.pending_actions_outlined,
-                              headerVariant: VitSectionHeaderVariant.plain,
-                              innerGap: AppSpacing.pageRhythmStandardInnerGap,
-                              children: [
-                                if (deposits.isEmpty)
-                                  const _EmptyDeposits()
-                                else
-                                  for (final deposit in deposits)
-                                    _DepositCard(
-                                      deposit: deposit,
-                                      copied: _copiedId == deposit.id,
-                                      onCopy: () => _copyHash(deposit),
-                                    ),
-                              ],
-                            ),
-                            const _InfoNotice(),
-                          ];
-                        },
-                      ),
-                    ],
+                          ],
+                          data: (snapshot) {
+                            final deposits = _filteredDeposits(
+                              snapshot.deposits,
+                            );
+                            return [
+                              const _TrustReviewNotice(),
+                              _SummaryBanner(
+                                pendingCount: snapshot.pendingCount,
+                                onRefresh: _refreshDeposits,
+                              ),
+                              _PendingDepositFilters(
+                                active: _filter,
+                                pendingCount: snapshot.pendingCount,
+                                onChanged: (filter) =>
+                                    setState(() => _filter = filter),
+                              ),
+                              VitPageSection(
+                                label: 'Danh s\u00E1ch n\u1EA1p',
+                                headerIcon: Icons.pending_actions_outlined,
+                                headerVariant: VitSectionHeaderVariant.plain,
+                                innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                                children: [
+                                  if (deposits.isEmpty)
+                                    const _EmptyDeposits()
+                                  else
+                                    for (final deposit in deposits)
+                                      _DepositCard(
+                                        deposit: deposit,
+                                        copied: _copiedId == deposit.id,
+                                        onCopy: () => _copyHash(deposit),
+                                      ),
+                                ],
+                              ),
+                              const _InfoNotice(),
+                            ];
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -180,16 +189,19 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
     await Clipboard.setData(ClipboardData(text: deposit.txHash));
   }
 
-  void _refreshDeposits() {
-    ref.invalidate(walletPendingDepositsProvider);
+  Future<void> _refreshDeposits() async {
+    try {
+      ref.invalidate(walletPendingDepositsProvider);
+      await ref.read(walletPendingDepositsProvider.future);
+    } catch (_) {
+      // AsyncValue.error sẽ render VitErrorState; vẫn báo người dùng.
+    }
     if (!mounted) return;
-    unawaited(
-      showVitNoticeSheet(
-        context: context,
-        title: 'Đã làm mới',
-        message:
-            'Trạng thái nạp tiền đang chờ đã được cập nhật. Kiểm tra lại số xác nhận và mạng trước khi thao tác ví.',
-      ),
+    await showVitNoticeSheet(
+      context: context,
+      title: 'Đã làm mới',
+      message:
+          'Trạng thái nạp tiền đang chờ đã được cập nhật. Kiểm tra lại số xác nhận và mạng trước khi thao tác ví.',
     );
   }
 }
