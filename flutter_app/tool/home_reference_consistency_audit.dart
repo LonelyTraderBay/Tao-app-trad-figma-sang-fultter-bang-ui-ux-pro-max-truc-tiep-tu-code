@@ -26,7 +26,9 @@ const Map<String, int> _allModuleDivergenceBaselines = <String, int>{
   'dca': 1,
   'dev': 0,
   'discovery': 0,
-  'earn': 0,
+  'earn_core': 0,
+  'earn_savings': 0,
+  'earn_staking': 0,
   'enterprise_states': 0,
   // Home is the canonical reference itself — locked at zero, not just a
   // frozen historical baseline. If this regresses above 0, home is no

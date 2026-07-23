@@ -119,4 +119,25 @@ void main() {
           'siblings depend on, not the reverse. See ARCH-A1.',
     );
   });
+
+  test('earn_core does not import earn siblings '
+      '(ADR-011: earn_core is a leaf kernel)', () {
+    // When earn_core does not exist yet, the edge set is empty (0) — still PASS.
+    // After ADR-011 split, earn_core must never import earn_staking / earn_savings.
+    const maxEarnCoreSiblingEdges = 0;
+    const earnSiblings = {'earn_staking', 'earn_savings', 'earn'};
+
+    final edges = _buildFeatureGraph();
+    final siblingEdges = (edges['earn_core'] ?? const <String>{})
+        .where(earnSiblings.contains)
+        .toList();
+
+    expect(
+      siblingEdges.length,
+      lessThanOrEqualTo(maxEarnCoreSiblingEdges),
+      reason:
+          'earn_core imports/exports a sibling earn module '
+          '($siblingEdges) — earn_core must remain a leaf. See ADR-011.',
+    );
+  });
 }

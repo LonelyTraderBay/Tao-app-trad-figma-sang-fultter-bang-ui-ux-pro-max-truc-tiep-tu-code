@@ -313,7 +313,7 @@ jobs:
           test/features/trade/golden
           test/features/wallet/golden
           test/features/p2p/golden
-          test/features/earn/golden
+          test/features/earn_core/golden
           --reporter=compact
 
   tests:
@@ -450,7 +450,7 @@ jobs:
           test/features/trade/golden
           test/features/wallet/golden
           test/features/p2p/golden
-          test/features/earn/golden
+          test/features/earn_core/golden
           --reporter=compact
 
   secret-scan:

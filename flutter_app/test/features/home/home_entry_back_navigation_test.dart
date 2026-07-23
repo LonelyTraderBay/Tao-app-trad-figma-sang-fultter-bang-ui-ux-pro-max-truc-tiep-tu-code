@@ -10,8 +10,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_ho
 import 'package:vit_trade_flutter/features/discovery/presentation/pages/topic_hub_page.dart';
 import 'package:vit_trade_flutter/features/discovery/presentation/pages/unified_search_page.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/hub/dca_page.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_page.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_earn_page.dart';
+import 'package:vit_trade_flutter/features/earn_savings/presentation/pages/savings/savings_page.dart';
+import 'package:vit_trade_flutter/features/earn_staking/presentation/pages/staking/staking_earn_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';

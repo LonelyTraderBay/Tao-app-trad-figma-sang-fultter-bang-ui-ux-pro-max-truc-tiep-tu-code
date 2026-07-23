@@ -523,7 +523,8 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02G',
     area: 'Savings entry',
-    file: 'lib/features/earn/presentation/pages/savings/savings_page.dart',
+    file:
+        'lib/features/earn_savings/presentation/pages/savings/savings_page.dart',
     requiredSnippets: [
       'fallbackPath: snapshot.backRoute',
       'mode: BackNavigationMode.historyThenFallback',

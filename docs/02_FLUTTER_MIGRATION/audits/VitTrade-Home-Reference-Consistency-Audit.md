@@ -15,7 +15,9 @@ Generated from `flutter_app/tool/home_reference_consistency_audit.dart`. Measure
 | dca | 1 | 1 | pass |
 | dev | 0 | 0 | pass |
 | discovery | 0 | 0 | pass |
-| earn | 0 | 0 | pass |
+| earn_core | 0 | 0 | pass |
+| earn_savings | 0 | 0 | pass |
+| earn_staking | 0 | 0 | pass |
 | enterprise_states | 0 | 0 | pass |
 | home | 0 | 0 | pass |
 | launchpad | 0 | 0 | pass |

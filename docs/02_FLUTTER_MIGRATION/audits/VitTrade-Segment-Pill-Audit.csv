@@ -37,57 +37,57 @@ dev,dev/presentation/widgets/dev_state_bar.dart,VitPresetChipRow,preset_row,1,34
 dev,dev/presentation/widgets/route_checker_page_sections.dart,VitChoicePill,chip,1,44,hug,-,pass,
 discovery,discovery/presentation/widgets/topic_hub_header.dart,VitChoicePill,chip,1,44,hug,-,pass,
 discovery,discovery/presentation/widgets/unified_search_shell.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/pages/savings/earn_portfolio_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-earn,earn/presentation/pages/savings/savings_analytics_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/pages/savings/savings_auto_rebalance_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/savings/savings_what_if_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/staking/staking_analytics_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/pages/staking/staking_audit_reports_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/staking/staking_developer_console_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/staking/staking_faq_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/staking/staking_insurance_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/pages/staking/staking_proof_of_reserves_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/staking/staking_regulatory_framework_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/pages/staking/staking_webhooks_page.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/pages/staking/staking_withdrawal_policy_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/hub/auto_compound_settings_settings_sheet.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-earn,earn/presentation/widgets/savings/savings_analytics_summary_range.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-earn,earn/presentation/widgets/savings/savings_autopilot_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/savings/savings_backtest_setup.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-earn,earn/presentation/widgets/savings/savings_backtest_setup.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/savings/savings_dca_summary.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/savings/savings_export_config_widgets.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/savings/savings_export_option_widgets.dart,VitPresetChipRow,preset_row,2,34,equal_full,-,pass,
-earn,earn/presentation/widgets/savings/savings_faq_page_sections.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/widgets/savings/savings_guide_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/savings/savings_history_page_sections.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/widgets/savings/savings_history_page_sections.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-earn,earn/presentation/widgets/savings/savings_home_products.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-earn,earn/presentation/widgets/savings/savings_home_products.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/savings/savings_ladder_common.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-earn,earn/presentation/widgets/savings/savings_ladder_common.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/savings/savings_notification_preferences_summary.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-earn,earn/presentation/widgets/savings/savings_notifications_history.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/savings/savings_portfolio_positions.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
-earn,earn/presentation/widgets/savings/savings_recommendations_amount_panel.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-earn,earn/presentation/widgets/savings/savings_smart_suggestions_summary.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/widgets/savings/savings_smart_suggestions_summary.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/staking/staking_advanced_orders_overview_orders.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/staking/staking_advanced_orders_sheet_fields.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-earn,earn/presentation/widgets/staking/staking_api_documentation_common.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/widgets/staking/staking_api_documentation_examples.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/widgets/staking/staking_earn_hero_tabs.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-earn,earn/presentation/widgets/staking/staking_earn_hero_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/staking/staking_earnings_summary_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/staking/staking_guide_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/staking/staking_history_summary_filters.dart,VitChoicePill,chip,2,44,hug,-,pass,
-earn,earn/presentation/widgets/staking/staking_institutional_overview_batches.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/staking/staking_liquid_staking_common.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-earn,earn/presentation/widgets/staking/staking_risk_disclosure_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/staking/staking_social_feed_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/staking/staking_tax_guide_header.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-earn,earn/presentation/widgets/staking/staking_tax_guide_jurisdictions.dart,VitChoicePill,chip,1,44,hug,-,pass,
-earn,earn/presentation/widgets/staking/staking_validator_selection_filters.dart,VitChoicePill,chip,3,44,hug,-,pass,
+earn_savings,earn_savings/presentation/pages/savings/earn_portfolio_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+earn_savings,earn_savings/presentation/pages/savings/savings_analytics_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_savings,earn_savings/presentation/pages/savings/savings_auto_rebalance_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_savings,earn_savings/presentation/pages/savings/savings_what_if_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_savings,earn_savings/presentation/widgets/hub/auto_compound_settings_settings_sheet.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_analytics_summary_range.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_autopilot_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_savings,earn_savings/presentation/widgets/savings/savings_backtest_setup.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_backtest_setup.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_dca_summary.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_export_config_widgets.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_export_option_widgets.dart,VitPresetChipRow,preset_row,2,34,equal_full,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_faq_page_sections.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_guide_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_savings,earn_savings/presentation/widgets/savings/savings_history_page_sections.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_history_page_sections.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_home_products.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_home_products.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_ladder_common.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_ladder_common.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_savings,earn_savings/presentation/widgets/savings/savings_notification_preferences_summary.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+earn_savings,earn_savings/presentation/widgets/savings/savings_notifications_history.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_savings,earn_savings/presentation/widgets/savings/savings_portfolio_positions.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
+earn_savings,earn_savings/presentation/widgets/savings/savings_recommendations_amount_panel.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_smart_suggestions_summary.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_savings,earn_savings/presentation/widgets/savings/savings_smart_suggestions_summary.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/pages/staking/staking_analytics_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/pages/staking/staking_audit_reports_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/pages/staking/staking_developer_console_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/pages/staking/staking_faq_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/pages/staking/staking_insurance_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/pages/staking/staking_proof_of_reserves_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/pages/staking/staking_regulatory_framework_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/pages/staking/staking_webhooks_page.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_staking,earn_staking/presentation/pages/staking/staking_withdrawal_policy_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/widgets/staking/staking_advanced_orders_overview_orders.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_advanced_orders_sheet_fields.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_api_documentation_common.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_api_documentation_examples.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_earn_hero_tabs.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_earn_hero_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_earnings_summary_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_guide_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/widgets/staking/staking_history_summary_filters.dart,VitChoicePill,chip,2,44,hug,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_institutional_overview_batches.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_liquid_staking_common.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_risk_disclosure_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/widgets/staking/staking_social_feed_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/widgets/staking/staking_tax_guide_header.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn_staking,earn_staking/presentation/widgets/staking/staking_tax_guide_jurisdictions.dart,VitChoicePill,chip,1,44,hug,-,pass,
+earn_staking,earn_staking/presentation/widgets/staking/staking_validator_selection_filters.dart,VitChoicePill,chip,3,44,hug,-,pass,
 enterprise_states,enterprise_states/presentation/widgets/enterprise_states_hero_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
 enterprise_states,enterprise_states/presentation/widgets/enterprise_states_preview_kit.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
 home,home/presentation/pages/home_page_sections.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
