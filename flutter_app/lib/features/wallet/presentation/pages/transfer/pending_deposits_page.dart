@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +28,7 @@ part '../../widgets/transfer/pending_deposits_page_common.dart';
 const _pendingGap = AppSpacing.x2;
 const _pendingTinyGap = AppSpacing.x1;
 const _pendingInlineGap = AppSpacing.x2;
+const _pendingFilterHeight = AppSpacing.buttonCompact;
 
 double _pendingScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
@@ -41,9 +44,6 @@ class PendingDepositsPage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc152_pending_deposits_content');
   static const refreshKey = Key('sc152_pending_deposits_refresh');
-  static const refreshFeedbackKey = Key(
-    'sc152_pending_deposits_refresh_feedback',
-  );
   static Key filterKey(String filter) =>
       Key('sc152_pending_deposits_filter_$filter');
   static Key depositKey(String id) => Key('sc152_pending_deposit_$id');
@@ -59,7 +59,6 @@ class PendingDepositsPage extends ConsumerStatefulWidget {
 class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
   _DepositFilter _filter = _DepositFilter.all;
   String? _copiedId;
-  String? _lastRefreshLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +112,6 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                             const _TrustReviewNotice(),
                             _SummaryBanner(
                               pendingCount: snapshot.pendingCount,
-                              lastRefreshLabel: _lastRefreshLabel,
                               onRefresh: _refreshDeposits,
                             ),
                             _PendingDepositFilters(
@@ -183,6 +181,15 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
   }
 
   void _refreshDeposits() {
-    setState(() => _lastRefreshLabel = 'Vừa cập nhật trạng thái nạp tiền');
+    ref.invalidate(walletPendingDepositsProvider);
+    if (!mounted) return;
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Đã làm mới',
+        message:
+            'Trạng thái nạp tiền đang chờ đã được cập nhật. Kiểm tra lại số xác nhận và mạng trước khi thao tác ví.',
+      ),
+    );
   }
 }

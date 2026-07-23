@@ -999,8 +999,7 @@ wallet,flutter_app/lib/features/wallet/presentation/widgets/tools/wallet_token_a
 wallet,flutter_app/lib/features/wallet/presentation/widgets/tools/wallet_token_revoke_sheet.dart,1,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/deposit_page_common.dart,2,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/deposit_page_sections.dart,3,1,0,C,0,0,0,pass,-
-wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/pending_deposits_page_common.dart,1,0,0,C,0,0,0,pass,-
-wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/pending_deposits_page_sections.dart,3,1,0,C,0,0,0,pass,-
+wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/pending_deposits_page_sections.dart,2,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/wallet_transfer_asset_amount.dart,3,1,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/wallet_transfer_confirm_sheet.dart,1,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/transfer/wallet_transfer_history_picker.dart,3,0,0,C,0,0,0,pass,-

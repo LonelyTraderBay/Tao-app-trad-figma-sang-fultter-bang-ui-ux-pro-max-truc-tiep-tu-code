@@ -338,7 +338,7 @@ Next step: STEP-NNN+1
 
 **DD-A path cu the:**
 - `flutter_app/lib/features/trade/data/`, `trade/domain/`
-- `flutter_app/lib/features/earn/data/`, `earn/domain/`
+- `flutter_app/lib/features/earn_core/data/`, `earn/domain/`
 - `flutter_app/lib/features/p2p/data/`, `p2p/domain/`
 - `flutter_app/lib/features/wallet/data/`, `wallet/domain/`
 - `flutter_app/lib/features/markets/data/`, `markets/domain/`

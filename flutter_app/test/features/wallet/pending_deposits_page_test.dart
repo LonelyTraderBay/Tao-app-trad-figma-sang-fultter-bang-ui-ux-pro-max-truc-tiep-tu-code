@@ -151,17 +151,17 @@ void main() {
     expect(semanticsLabel('Đã sao chép mã giao dịch của USDT'), findsOneWidget);
   });
 
-  testWidgets('SC-152 refresh shows visible status feedback', (tester) async {
+  testWidgets('SC-152 refresh invalidates and shows notice sheet', (
+    tester,
+  ) async {
     await pumpPendingDeposits(tester);
 
     await tester.tap(find.byKey(PendingDepositsPage.refreshKey));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
-    expect(find.byKey(PendingDepositsPage.refreshFeedbackKey), findsOneWidget);
+    expect(find.text('Đã làm mới'), findsOneWidget);
     expect(
-      find.text(
-        'V\u1EEBa c\u1EADp nh\u1EADt tr\u1EA1ng th\u00E1i n\u1EA1p ti\u1EC1n',
-      ),
+      find.textContaining('Trạng thái nạp tiền đang chờ đã được cập nhật'),
       findsOneWidget,
     );
   });
