@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/features/support/presentation/pages/support_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/deposit_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/pending_deposits_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -12,14 +15,37 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
+  const creditedDeposit = WalletPendingDeposit(
+    id: 'credited-only',
+    asset: 'USDT',
+    amountLabel: '10.0000',
+    network: 'TRC20',
+    txHash: 'test-hash',
+    confirmations: 1,
+    requiredConfirmations: 1,
+    status: 'credited',
+    createdAt: '24/07/2026 01:00',
+    estimatedArrival: 'Đã xong',
+    fromAddress: 'test-address',
+  );
+
   Future<void> pumpPendingDeposits(
     WidgetTester tester, {
     VitFirstViewport viewport = VitFirstViewport.qaPhone,
+    WalletPendingDepositsSnapshot? snapshot,
+    Object? error,
   }) async {
     configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (snapshot != null || error != null)
+            walletPendingDepositsProvider.overrideWith((ref) {
+              if (error != null) throw error;
+              return snapshot!;
+            }),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.walletPendingDeposits,
@@ -176,5 +202,71 @@ void main() {
       find.textContaining('Trạng thái nạp tiền đang chờ đã được cập nhật'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('SC-152 offline có banner và CTA thử lại', (tester) async {
+    await pumpPendingDeposits(
+      tester,
+      error: Exception('SocketException: Failed host lookup'),
+    );
+
+    expect(find.text('Mất kết nối mạng'), findsOneWidget);
+    expect(find.text('Đang offline'), findsOneWidget);
+    expect(find.text('Thử lại'), findsOneWidget);
+  });
+
+  testWidgets('SC-152 empty global có CTA Nạp tiền', (tester) async {
+    await pumpPendingDeposits(
+      tester,
+      snapshot: const WalletPendingDepositsSnapshot(
+        deposits: [],
+        endpoint: '/api/mobile/wallet/wallet-pending-deposits',
+        actionDraft: 'POST /wallet/deposit-intent',
+        supportedStates: [WalletScreenState.empty],
+      ),
+    );
+
+    expect(find.text('Chưa có nạp đang chờ'), findsOneWidget);
+    await tester.tap(find.text('Nạp tiền'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DepositPage), findsOneWidget);
+  });
+
+  testWidgets('SC-152 empty filter có CTA Xem tất cả', (tester) async {
+    await pumpPendingDeposits(
+      tester,
+      snapshot: const WalletPendingDepositsSnapshot(
+        deposits: [creditedDeposit],
+        endpoint: '/api/mobile/wallet/wallet-pending-deposits',
+        actionDraft: 'POST /wallet/deposit-intent',
+        supportedStates: [WalletScreenState.empty],
+      ),
+    );
+
+    await tester.tap(find.byKey(PendingDepositsPage.filterKey('pending')));
+    await tester.pumpAndSettle();
+    expect(find.text('Xem tất cả'), findsOneWidget);
+
+    await tester.tap(find.text('Xem tất cả'));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(PendingDepositsPage.depositKey(creditedDeposit.id)),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-152 failed deposit mở hỗ trợ theo giao dịch', (tester) async {
+    await pumpPendingDeposits(tester);
+
+    await tester.tap(find.byKey(PendingDepositsPage.filterKey('done')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Liên hệ hỗ trợ'));
+    await tester.tap(find.text('Liên hệ hỗ trợ'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SupportPage), findsOneWidget);
+    expect(find.byKey(SupportPage.contextKey), findsOneWidget);
+    expect(find.text('Nạp USDT thất bại'), findsOneWidget);
+    expect(find.text('pd004'), findsOneWidget);
   });
 }

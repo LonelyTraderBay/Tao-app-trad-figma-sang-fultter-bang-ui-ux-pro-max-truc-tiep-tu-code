@@ -108,14 +108,33 @@ class _DepositDetails extends StatelessWidget {
 }
 
 class _EmptyDeposits extends StatelessWidget {
-  const _EmptyDeposits();
+  const _EmptyDeposits({
+    required this.hasAnyDeposits,
+    required this.onShowAll,
+    required this.onDeposit,
+  });
+
+  final bool hasAnyDeposits;
+  final VoidCallback onShowAll;
+  final VoidCallback onDeposit;
 
   @override
   Widget build(BuildContext context) {
-    return const VitEmptyState(
-      title: 'Không có giao dịch nạp nào',
-      message: 'Bộ lọc hiện tại không có giao dịch cần theo dõi.',
+    if (hasAnyDeposits) {
+      return VitEmptyState(
+        title: 'Không có giao dịch nạp nào',
+        message: 'Bộ lọc hiện tại không có giao dịch cần theo dõi.',
+        icon: Icons.inbox_outlined,
+        actionLabel: 'Xem tất cả',
+        onAction: onShowAll,
+      );
+    }
+    return VitEmptyState(
+      title: 'Chưa có nạp đang chờ',
+      message: 'Khi bạn gửi tiền vào ví, giao dịch sẽ xuất hiện tại đây.',
       icon: Icons.inbox_outlined,
+      actionLabel: 'Nạp tiền',
+      onAction: onDeposit,
     );
   }
 }

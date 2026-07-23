@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/core/utils/data_masking.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -29,6 +30,15 @@ const _pendingGap = AppSpacing.x2;
 const _pendingTinyGap = AppSpacing.x1;
 const _pendingInlineGap = AppSpacing.x2;
 const _pendingFilterHeight = AppSpacing.buttonCompact;
+
+bool _isLikelyOffline(Object error) {
+  final text = error.toString().toLowerCase();
+  return text.contains('socket') ||
+      text.contains('network') ||
+      text.contains('offline') ||
+      text.contains('failed host lookup') ||
+      text.contains('clientexception');
+}
 
 double _pendingScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
@@ -102,12 +112,17 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                         ...snapshotAsync.when(
                           loading: () => const [VitSkeletonList()],
                           error: (error, stackTrace) => [
+                            if (_isLikelyOffline(error))
+                              const VitOfflineBanner(
+                                message: 'Mất kết nối mạng',
+                                detail: 'Không tải được nạp tiền đang chờ.',
+                              ),
                             VitErrorState(
-                              title:
-                                  'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c n\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
-                              message:
-                                  'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
-                              actionLabel: 'Th\u1EED l\u1EA1i',
+                              title: _isLikelyOffline(error)
+                                  ? 'Đang offline'
+                                  : 'Không tải được nạp tiền đang chờ',
+                              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                              actionLabel: 'Thử lại',
                               onAction: () =>
                                   ref.invalidate(walletPendingDepositsProvider),
                             ),
@@ -135,13 +150,23 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                                 innerGap: AppSpacing.pageRhythmStandardInnerGap,
                                 children: [
                                   if (deposits.isEmpty)
-                                    const _EmptyDeposits()
+                                    _EmptyDeposits(
+                                      hasAnyDeposits:
+                                          snapshot.deposits.isNotEmpty,
+                                      onShowAll: () => setState(
+                                        () => _filter = _DepositFilter.all,
+                                      ),
+                                      onDeposit: () => context.go(
+                                        AppRoutePaths.walletDeposit,
+                                      ),
+                                    )
                                   else
                                     for (final deposit in deposits)
                                       _DepositCard(
                                         deposit: deposit,
                                         copied: _copiedId == deposit.id,
                                         onCopy: () => _copyHash(deposit),
+                                        onSupport: _openSupportForDeposit,
                                       ),
                                 ],
                               ),
@@ -187,6 +212,20 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
   Future<void> _copyHash(WalletPendingDeposit deposit) async {
     setState(() => _copiedId = deposit.id);
     await Clipboard.setData(ClipboardData(text: deposit.txHash));
+  }
+
+  void _openSupportForDeposit(WalletPendingDeposit deposit) {
+    final supportContext = ProductSupportContext.fromContract(
+      ContextualSupportContracts.contracts.firstWhere(
+        (contract) => contract.flow == ContextualSupportFlow.withdrawal,
+      ),
+      referenceId: deposit.id,
+      sourceRoute: AppRoutePaths.walletPendingDeposits,
+      issueLabel: 'Nạp ${deposit.asset} thất bại',
+    );
+    context.go(
+      supportContext.toSupportRoute(supportPath: AppRoutePaths.support),
+    );
   }
 
   Future<void> _refreshDeposits() async {

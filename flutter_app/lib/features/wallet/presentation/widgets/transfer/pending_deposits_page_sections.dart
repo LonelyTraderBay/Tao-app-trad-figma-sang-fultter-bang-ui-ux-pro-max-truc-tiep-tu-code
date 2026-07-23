@@ -150,11 +150,13 @@ class _DepositCard extends StatelessWidget {
     required this.deposit,
     required this.copied,
     required this.onCopy,
+    required this.onSupport,
   });
 
   final WalletPendingDeposit deposit;
   final bool copied;
   final VoidCallback onCopy;
+  final ValueChanged<WalletPendingDeposit> onSupport;
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +249,18 @@ class _DepositCard extends StatelessWidget {
               color: AppColors.sell,
               icon: Icons.warning_amber_rounded,
               text: 'Giao dịch thất bại — liên hệ hỗ trợ nếu đã gửi tiền',
+            ),
+            const SizedBox(height: _pendingTinyGap),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: VitCtaButton(
+                onPressed: () => onSupport(deposit),
+                variant: VitCtaButtonVariant.secondary,
+                density: VitDensity.compact,
+                fullWidth: false,
+                leading: const Icon(Icons.support_agent_rounded),
+                child: const Text('Liên hệ hỗ trợ'),
+              ),
             ),
           ],
           const SizedBox(height: _pendingGap),
