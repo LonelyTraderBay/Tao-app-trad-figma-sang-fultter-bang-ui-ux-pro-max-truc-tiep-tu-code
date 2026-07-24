@@ -965,36 +965,6 @@ feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/merchant/p2p_s
 feature_widget,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart,flutter_app/lib/features/p2p/presentation/widgets/merchant/p2p_selfie_verification_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/merchant/p2p_selfie_verification_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart,flutter_app/lib/features/p2p/presentation/widgets/merchant/p2p_selfie_verification_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_chat_composer_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_chat_composer_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_chat_messages.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_chat_messages.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_status_address.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_status_address.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_my_orders_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_my_orders_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_my_orders_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_my_orders_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_content_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_content_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_page_common.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_page_common.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_proof_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_proof_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_rate_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart,flutter_app/lib/features/p2p/presentation/widgets/orders/p2p_order_rate_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_add_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_add_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/payment/p2p_payment_method_add_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -1065,18 +1035,6 @@ feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_t
 feature_widget,flutter_app/lib/features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_transaction_limits_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_transaction_limits_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart,flutter_app/lib/features/p2p/presentation/widgets/security/p2p_transaction_limits_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_actions_history.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_actions_history.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_balances.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_balances.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_hero.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_hero.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_amount.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_amount.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_confirm.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_confirm.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_form.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_form.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p_marketplace/presentation/widgets/ads/p2p_ad_analytics_breakdown_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/widgets/ads/p2p_ad_analytics_breakdown_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -1140,6 +1098,48 @@ feature_widget,,flutter_app/lib/features/p2p_marketplace/presentation/widgets/hu
 feature_widget,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_trading_level_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/widgets/hub/p2p_trading_level_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/p2p_marketplace/presentation/widgets/hub/p2p_trading_level_hero_progress.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_trading_level_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/widgets/hub/p2p_trading_level_hero_progress.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_composer_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_composer_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_messages.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_messages.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_balance_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_balance_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_status_address.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_status_address.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_my_orders_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_my_orders_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_my_orders_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_my_orders_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_content_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_content_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_common.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_common.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_proof_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_proof_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_proof_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_rate_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_rate_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/orders/p2p_order_rate_widgets.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_actions_history.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_actions_history.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_balances.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_balances.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_hero.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_hero.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_amount.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_amount.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_confirm.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_confirm.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_form.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_form.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_analysis.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 feature_widget,flutter_app/lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart,flutter_app/lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_analysis.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 feature_widget,,flutter_app/lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_indicators.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
@@ -2213,16 +2213,6 @@ root_page,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_merchant_
 root_page,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_video_verification_page.dart,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_video_verification_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2252,8 +2242,6 @@ root_page,flutter_app/lib/features/p2p/presentation/pages/security/p2p_source_of
 root_page,flutter_app/lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart,flutter_app/lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/security/p2p_tax_reporting_page.dart,flutter_app/lib/features/p2p/presentation/pages/security/p2p_tax_reporting_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart,flutter_app/lib/features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_detail_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_detail_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_create_ad_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_create_ad_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2267,6 +2255,18 @@ root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_ho
 root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_notifications_settings_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_notifications_settings_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_settings_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_settings_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_trading_level_page.dart,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_trading_level_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_fund_lock_history_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_fund_lock_history_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_cancel_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_cancel_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_proof_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_proof_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_rate_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_rate_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_timeline_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_timeline_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart,flutter_app/lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart,flutter_app/lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
 root_page,flutter_app/lib/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart,flutter_app/lib/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2477,9 +2477,6 @@ root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/dispute
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_disputes_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_insurance_policy_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_video_verification_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_ownership_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2496,6 +2493,9 @@ root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/securit
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_express_confirm_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_notifications_settings_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_fund_lock_history_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_cancel_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_timeline_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/referral/presentation/pages/referral_friend_detail_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2525,9 +2525,9 @@ root_page_bundle_summary,flutter_app/lib/features/auth/presentation/pages/forgot
 root_page_bundle_summary,flutter_app/lib/features/auth/presentation/pages/register_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/auth/presentation/pages/reset_password_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/earn_savings/presentation/pages/savings/savings_portfolio_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_create_ad_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_proof_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_rate_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart,2 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2565,8 +2565,6 @@ root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/merchan
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_kyc_status_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_method_verification_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2582,6 +2580,8 @@ root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/p
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_my_ads_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_settings_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_trading_level_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/hub/predictions_breaking_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart,3 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2687,19 +2687,19 @@ root_page_bundle_summary,flutter_app/lib/features/onboarding/presentation/pages/
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page.dart,4 files,warn,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_insurance_fund_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_merchant_apply_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/security/p2p_blacklist_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/security/p2p_device_management_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/security/p2p_fraud_prevention_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/security/p2p_login_history_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_order_book_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_express_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_guide_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/hub/predictions_home_page.dart,4 files,warn,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/hub/predictions_rewards_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/portfolio/prediction_portfolio_analyzer_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter

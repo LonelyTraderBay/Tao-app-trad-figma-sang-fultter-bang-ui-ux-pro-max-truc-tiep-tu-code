@@ -111,11 +111,11 @@ lib/features/p2p/presentation/pages/merchant/p2p_kyc_requirements_page.dart|Curr
 lib/features/p2p/presentation/pages/merchant/p2p_kyc_status_page.dart|Overall status, refresh state, timeline actions, support path, and P2P trading impact remain visible while verification is reviewed.
 lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart|Guide, capture, liveness progress, biometric handling, result state and support next step are reviewed before P2P verification completes.
 lib/features/p2p/presentation/pages/merchant/p2p_video_verification_page.dart|Preparation checklist, slot availability, selected time, verification status route and next KYC step are reviewed before booking.
-lib/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart|Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.
-lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset}
-lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart|Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.
-lib/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart|Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.
-lib/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart|Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.
+lib/features/p2p_orders/presentation/pages/orders/p2p_fund_lock_history_page.dart|Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.
+lib/features/p2p_orders/presentation/pages/orders/p2p_order_cancel_page.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset}
+lib/features/p2p_orders/presentation/pages/orders/p2p_order_cancel_page.dart|Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.
+lib/features/p2p_orders/presentation/pages/orders/p2p_order_proof_page.dart|Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.
+lib/features/p2p_orders/presentation/pages/orders/p2p_order_rate_page.dart|Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.
 lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart|Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.
 lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart|New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.
 lib/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart|P2P payment history keeps order direction, cancelled status, total volume, success rate, and next review context visible before users reuse or change a payment method.
@@ -129,17 +129,17 @@ lib/features/p2p/presentation/pages/security/p2p_limit_tracker_page.dart|Selecte
 lib/features/p2p/presentation/pages/security/p2p_risk_assessment_page.dart|Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.
 lib/features/p2p/presentation/pages/security/p2p_security_center_page.dart|Security score, feature status, quick actions, recent events, settings route, and login history route stay visible before sensitive P2P security changes.
 lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart|Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.
-lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart|Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.
+lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart|Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.
 lib/features/p2p_marketplace/presentation/widgets/hub/p2p_express_page_state.dart|Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.
-lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Back to P2P order detail
-lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Open E2E encryption info
-lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Open P2P order detail
-lib/features/p2p/presentation/widgets/orders/p2p_my_orders_page_sections.dart|${_formatCrypto(order.amount)} ${order.asset}
-lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart|${order.typeLabel} ${_formatCrypto(order.amount)} ${order.asset}
-lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart|Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.
-lib/features/p2p/presentation/widgets/orders/p2p_order_rate_widgets.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}
-lib/features/p2p/presentation/widgets/wallet/p2p_wallet_hero.dart|Toggle P2P wallet balance visibility
-lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_form.dart|${balance.balanceLabel}: ${_formatAvailable(balance.available, balance.asset)} ${balance.asset}
+lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart|Back to P2P order detail
+lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart|Open E2E encryption info
+lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart|Open P2P order detail
+lib/features/p2p_orders/presentation/widgets/orders/p2p_my_orders_page_sections.dart|${_formatCrypto(order.amount)} ${order.asset}
+lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart|${order.typeLabel} ${_formatCrypto(order.amount)} ${order.asset}
+lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart|Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.
+lib/features/p2p_orders/presentation/widgets/orders/p2p_order_rate_widgets.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}
+lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_hero.dart|Toggle P2P wallet balance visibility
+lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_form.dart|${balance.balanceLabel}: ${_formatAvailable(balance.available, balance.asset)} ${balance.asset}
 lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart|Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.
 lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart|Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.
 lib/features/predictions/presentation/pages/portfolio/prediction_portfolio_analyzer_page.dart|Portfolio value, category exposure, P/L attribution, probability drift, risk concentration, diversification, and warning states are reviewed before portfolio decisions.

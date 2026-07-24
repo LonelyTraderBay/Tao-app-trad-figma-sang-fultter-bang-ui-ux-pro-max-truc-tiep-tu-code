@@ -10,12 +10,12 @@ void main() {
       final targets = [
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/orders/p2p_order_page.dart',
+              'lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/orders/p2p_order_page.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_order_content_cards.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_common.dart',
+            'lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_order_content_cards.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_common.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],
@@ -26,11 +26,11 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart',
+              'lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_common.dart',
+            'lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_balance_page.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_balance_page_common.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],
@@ -41,12 +41,12 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart',
+              'lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_status_address.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart',
+            'lib/features/p2p_orders/presentation/pages/orders/p2p_escrow_detail_page.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_status_address.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart',
+            'lib/features/p2p_orders/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],
@@ -59,12 +59,12 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart',
+              'lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart',
-            'lib/features/p2p/presentation/widgets/wallet/p2p_wallet_hero.dart',
-            'lib/features/p2p/presentation/widgets/wallet/p2p_wallet_balances.dart',
-            'lib/features/p2p/presentation/widgets/wallet/p2p_wallet_actions_history.dart',
+            'lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart',
+            'lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_hero.dart',
+            'lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_balances.dart',
+            'lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_actions_history.dart',
           ],
           roles: {
             'wallet': [RegExp(r'wallet', caseSensitive: false)],

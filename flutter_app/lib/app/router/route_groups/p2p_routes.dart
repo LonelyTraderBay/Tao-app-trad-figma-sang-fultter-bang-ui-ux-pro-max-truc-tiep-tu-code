@@ -1,8 +1,6 @@
 import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_address_proof_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_identity_verification_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_kyc_requirements_page.dart';
@@ -17,7 +15,6 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_l
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_e2e_info_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_fraud_prevention_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_aml_screening_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_limit_tracker_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart';
@@ -29,20 +26,12 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_b
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_source_of_funds_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_tax_reporting_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_fund_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_certificate_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_contribution_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_claim_detail_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_policy_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_score_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_chat_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_detail_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_evidence_page.dart';
@@ -50,7 +39,6 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_di
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_disputes_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_merchant_apply_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart';
@@ -67,54 +55,6 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 
 List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
   return [
-    GoRoute(
-      path: '/p2p/order/timeline/:orderId',
-      name: AppRouteNames.sc212P2POrderTimeline,
-      builder: (_, state) => P2POrderTimelinePage(
-        orderId: requireRouteParam(state, 'orderId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: '/p2p/order/rate/:orderId',
-      name: AppRouteNames.sc213P2POrderRate,
-      builder: (_, state) => P2POrderRatePage(
-        orderId: requireRouteParam(state, 'orderId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: '/p2p/order/cancel/:orderId',
-      name: AppRouteNames.sc214P2POrderCancel,
-      builder: (_, state) => P2POrderCancelPage(
-        orderId: requireRouteParam(state, 'orderId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: '/p2p/order/proof/:orderId',
-      name: AppRouteNames.sc215P2POrderProof,
-      builder: (_, state) => P2POrderProofPage(
-        orderId: requireRouteParam(state, 'orderId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: '/p2p/order/:orderId',
-      name: AppRouteNames.sc216P2POrder,
-      builder: (_, state) => P2POrderPage(
-        orderId: requireRouteParam(state, 'orderId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: '/p2p/chat/:orderId',
-      name: AppRouteNames.sc217P2PChat,
-      builder: (_, state) => P2PChatPage(
-        orderId: requireRouteParam(state, 'orderId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
     GoRoute(
       path: '/p2p/dispute/detail/:disputeId',
       name: AppRouteNames.sc218P2PDisputeDetail,
@@ -162,22 +102,6 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc228P2PMerchantProfile,
       builder: (_, state) => P2PMerchantProfilePage(
         merchantId: requireRouteParam(state, 'merchantId'),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: AppRoutePaths.p2pEscrowBalance,
-      name: AppRouteNames.sc245P2PEscrowBalance,
-      builder: (_, state) => P2PEscrowBalancePage(
-        initialAsset: p2pAssetFromQuery(state.uri.queryParameters['asset']),
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
-      path: '/p2p/escrow/:orderId',
-      name: AppRouteNames.sc246P2PEscrowDetail,
-      builder: (_, state) => P2PEscrowDetailPage(
-        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -397,37 +321,6 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
           P2PFraudPreventionPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
-      path: AppRoutePaths.p2pWallet,
-      name: AppRouteNames.sc264P2PWallet,
-      builder: (_, _) => P2PWalletPage(shellRenderMode: shellRenderMode),
-    ),
-    GoRoute(
-      path: AppRoutePaths.p2pWalletTransfer,
-      name: AppRouteNames.sc261P2PWalletTransfer,
-      builder: (_, state) {
-        final query = state.uri.queryParameters;
-        return P2PWalletTransferPage(
-          initialAsset: p2pAssetFromQuery(query['asset']),
-          initialType: p2pWalletTransferTypeFromQuery(query),
-          shellRenderMode: shellRenderMode,
-        );
-      },
-    ),
-    GoRoute(
-      path: AppRoutePaths.p2pWalletFundLockHistory,
-      name: AppRouteNames.sc262P2PFundLockHistory,
-      builder: (_, _) =>
-          P2PFundLockHistoryPage(shellRenderMode: shellRenderMode),
-    ),
-    GoRoute(
-      path: AppRoutePaths.p2pWalletHistory,
-      name: AppRouteNames.sc263P2PWalletHistoryAlias,
-      builder: (_, _) => P2PFundLockHistoryPage(
-        walletHistoryAlias: true,
-        shellRenderMode: shellRenderMode,
-      ),
-    ),
-    GoRoute(
       path: AppRoutePaths.p2pLimits,
       name: AppRouteNames.sc266P2PTransactionLimits,
       builder: (_, _) =>
@@ -491,26 +384,5 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
         shellRenderMode: shellRenderMode,
       ),
     ),
-    GoRoute(
-      path: AppRoutePaths.p2pMyOrders,
-      name: AppRouteNames.sc281P2PMyOrders,
-      builder: (_, _) => P2PMyOrdersPage(shellRenderMode: shellRenderMode),
-    ),
   ];
-}
-
-String p2pAssetFromQuery(String? value) {
-  final asset = value?.toUpperCase();
-  return switch (asset) {
-    'BTC' || 'VND' || 'USDT' => asset!,
-    _ => 'USDT',
-  };
-}
-
-String p2pWalletTransferTypeFromQuery(Map<String, String> query) {
-  return switch (query['direction']) {
-    'to-main' => 'withdraw',
-    'from-main' => 'deposit',
-    _ => query['type'] == 'withdraw' ? 'withdraw' : 'deposit',
-  };
 }
