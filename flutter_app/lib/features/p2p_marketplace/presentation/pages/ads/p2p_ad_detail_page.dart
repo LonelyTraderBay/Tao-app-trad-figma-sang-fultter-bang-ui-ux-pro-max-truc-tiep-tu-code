@@ -138,7 +138,7 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                               state: VitHighRiskUiState.riskReview,
                               title: 'P2P order preview review',
                               message:
-                                  'Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.',
+                                  'Đã xem độ tin cậy merchant, hạn mức, số dư khả dụng, điều khoản thanh toán, bảo vệ escrow và bước đặt lệnh trước khi mua.',
                               contractId: 'p2p-ad-detail-order-review',
                             ),
                             VitCtaButton(

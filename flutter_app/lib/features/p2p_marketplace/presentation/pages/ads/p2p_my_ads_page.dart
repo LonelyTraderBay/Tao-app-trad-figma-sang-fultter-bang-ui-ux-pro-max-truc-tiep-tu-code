@@ -180,7 +180,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               state: VitHighRiskUiState.riskReview,
               title: 'My ads state review',
               message:
-                  'Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.',
+                  'Trạng thái tin, tạm dừng/xóa, liên kết phân tích, trạng thái trống và ảnh hưởng đơn đang mở vẫn hiện trước khi thay đổi phơi bày quảng cáo P2P.',
               contractId: 'SC-225',
             ),
           ],

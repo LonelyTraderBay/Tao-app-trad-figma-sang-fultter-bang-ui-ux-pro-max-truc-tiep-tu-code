@@ -70,7 +70,7 @@ class _WalletHero extends StatelessWidget {
                         icon: balanceVisible
                             ? Icons.visibility_rounded
                             : Icons.visibility_off_rounded,
-                        tooltip: 'Toggle P2P wallet balance visibility',
+                        tooltip: 'Bật/tắt hiển thị số dư ví P2P',
                         onPressed: onPrivacyToggle,
                         color: AppColors.onAccent,
                         size: AppSpacing.iconSm,

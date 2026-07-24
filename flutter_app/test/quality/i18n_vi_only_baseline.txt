@@ -98,10 +98,6 @@ lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_history
 lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_preview_widgets.dart|Create a limit order to get started
 lib/features/launchpad/presentation/widgets/tools/launchpad_risk_report_common.dart|Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.
 lib/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart|@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r
-lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart|Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.
-lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_detail_page.dart|Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.
-lib/features/p2p_marketplace/presentation/pages/ads/p2p_create_ad_page.dart|Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.
-lib/features/p2p_marketplace/presentation/pages/ads/p2p_my_ads_page.dart|Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.
 lib/features/p2p_dispute/presentation/pages/dispute/p2p_dispute_evidence_page.dart|Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.
 lib/features/p2p_dispute/presentation/pages/dispute/p2p_dispute_page.dart|Reason, description, uploaded evidence, escrow impact, case target and next dispute step are reviewed before submission.
 lib/features/p2p_dispute/presentation/pages/dispute/p2p_dispute_resolution_page.dart|Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.
@@ -131,14 +127,10 @@ lib/features/p2p_security/presentation/pages/security/p2p_security_center_page.d
 lib/features/p2p_security/presentation/pages/security/p2p_suspicious_activity_page.dart|Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.
 lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart|Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.
 lib/features/p2p_marketplace/presentation/widgets/hub/p2p_express_page_state.dart|Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.
-lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart|Back to P2P order detail
-lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart|Open E2E encryption info
-lib/features/p2p_orders/presentation/widgets/orders/p2p_chat_header_banners.dart|Open P2P order detail
 lib/features/p2p_orders/presentation/widgets/orders/p2p_my_orders_page_sections.dart|${_formatCrypto(order.amount)} ${order.asset}
 lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart|${order.typeLabel} ${_formatCrypto(order.amount)} ${order.asset}
 lib/features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart|Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.
 lib/features/p2p_orders/presentation/widgets/orders/p2p_order_rate_widgets.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}
-lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_hero.dart|Toggle P2P wallet balance visibility
 lib/features/p2p_orders/presentation/widgets/wallet/p2p_wallet_transfer_form.dart|${balance.balanceLabel}: ${_formatAvailable(balance.available, balance.asset)} ${balance.asset}
 lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart|Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.
 lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart|Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.
