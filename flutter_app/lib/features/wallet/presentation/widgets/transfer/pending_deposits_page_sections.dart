@@ -21,7 +21,7 @@ class _SummaryBanner extends StatelessWidget {
   const _SummaryBanner({required this.pendingCount, required this.onRefresh});
 
   final int pendingCount;
-  final VoidCallback onRefresh;
+  final Future<void> Function() onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _SummaryBanner extends StatelessWidget {
                 const SizedBox(height: _pendingTinyGap),
                 Text(
                   hasPending
-                      ? 'Trang tự động cập nhật mỗi 5 giây'
+                      ? 'Nhấn làm mới để cập nhật trạng thái xác nhận'
                       : 'Không có giao dịch nào đang chờ',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -77,7 +77,7 @@ class _SummaryBanner extends StatelessWidget {
               icon: Icons.refresh_rounded,
               tooltip: 'Làm mới nạp tiền đang chờ',
               size: VitIconButtonSize.sm,
-              onPressed: onRefresh,
+              onPressed: () => unawaited(onRefresh()),
             ),
           ),
         ],
@@ -145,22 +145,35 @@ class _PendingDepositFilters extends StatelessWidget {
   }
 }
 
-class _DepositCard extends StatelessWidget {
+class _DepositCard extends StatefulWidget {
   const _DepositCard({
+    super.key,
     required this.deposit,
     required this.copied,
     required this.onCopy,
+    required this.onSupport,
   });
 
   final WalletPendingDeposit deposit;
   final bool copied;
   final VoidCallback onCopy;
+  final ValueChanged<WalletPendingDeposit> onSupport;
+
+  @override
+  State<_DepositCard> createState() => _DepositCardState();
+}
+
+class _DepositCardState extends State<_DepositCard> {
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
+    final deposit = widget.deposit;
+    final copied = widget.copied;
+    final onCopy = widget.onCopy;
+    final onSupport = widget.onSupport;
     final config = _statusConfig(deposit.status);
     return VitCard(
-      key: PendingDepositsPage.depositKey(deposit.id),
       padding: AppSpacing.cardTilePadding,
       borderColor: AppColors.overlayStroke,
       child: Column(
@@ -248,9 +261,31 @@ class _DepositCard extends StatelessWidget {
               icon: Icons.warning_amber_rounded,
               text: 'Giao dịch thất bại — liên hệ hỗ trợ nếu đã gửi tiền',
             ),
+            const SizedBox(height: _pendingTinyGap),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: VitCtaButton(
+                onPressed: () => onSupport(deposit),
+                variant: VitCtaButtonVariant.secondary,
+                density: VitDensity.compact,
+                fullWidth: false,
+                leading: const Icon(Icons.support_agent_rounded),
+                child: const Text('Liên hệ hỗ trợ'),
+              ),
+            ),
           ],
           const SizedBox(height: _pendingGap),
-          _DepositDetails(deposit: deposit, copied: copied, onCopy: onCopy),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              onPressed: () => setState(() => _expanded = !_expanded),
+              child: Text(_expanded ? 'Ẩn chi tiết' : 'Chi tiết giao dịch'),
+            ),
+          ),
+          if (_expanded) ...[
+            const SizedBox(height: _pendingTinyGap),
+            _DepositDetails(deposit: deposit, copied: copied, onCopy: onCopy),
+          ],
         ],
       ),
     );
@@ -281,7 +316,6 @@ class _ConfirmationProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dotCount = deposit.requiredConfirmations.clamp(2, 12);
     return Semantics(
       container: true,
       label:
@@ -318,25 +352,6 @@ class _ConfirmationProgress extends StatelessWidget {
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
             ),
-          ),
-          const SizedBox(height: _pendingTinyGap),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (var i = 0; i < dotCount; i++)
-                ClipRRect(
-                  borderRadius: AppRadii.pillRadius,
-                  child: SizedBox(
-                    width: WalletSpacingTokens.walletPendingProgressDot,
-                    height: WalletSpacingTokens.walletPendingProgressDot,
-                    child: ColoredBox(
-                      color: i < deposit.confirmations
-                          ? color
-                          : AppColors.surface3,
-                    ),
-                  ),
-                ),
-            ],
           ),
         ],
       ),

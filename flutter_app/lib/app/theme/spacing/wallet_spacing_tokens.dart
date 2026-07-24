@@ -567,73 +567,7 @@ final class WalletSpacingTokens {
   static const double walletNetworkHealthPillRadius = 7;
   static const double walletPendingBottomInsetVisual = walletVisualChromePad;
   static const double walletPendingBottomInsetNative = walletNativeChromePad;
-  static const double walletPendingPageTopPadding = 12;
-  static const double walletPendingContentGap = 16;
-  static const double walletPendingSummaryHeight = 78;
-  static const EdgeInsets walletPendingSummaryPadding = EdgeInsets.all(16);
-  static const double walletPendingSummaryIconBox = 44;
-  static const double walletPendingSummaryIconGlyph = 22;
-  static const double walletPendingRefreshButton = AppSpacing.x6;
-  static const double walletPendingRefreshGlyph = 16;
-  static const double walletPendingChipHeight = 30;
-  static const EdgeInsets walletPendingChipPadding = EdgeInsets.symmetric(
-    horizontal: 13,
-  );
-  static const double walletPendingChipGap = 10;
-  static const EdgeInsets walletPendingCardPadding = EdgeInsets.all(16);
-  static const double walletPendingAssetIconBox = 40;
-  static const double walletPendingAssetIconGlyph = 20;
-  static const double walletPendingRowGap = 12;
-  static const double walletPendingInlineGap = AppSpacing.rowGap;
-  static const double walletPendingTextGap = walletAssetSmallGap;
-  static const double walletPendingProgressGap = 10;
-  static const double walletPendingProgressBlockGap = 18;
-  static const double walletPendingStatusGap = 14;
   static const double walletPendingProgressHeight = 6;
-  static const double walletPendingProgressDot = 6;
-  static const EdgeInsets walletPendingBadgePadding = EdgeInsets.symmetric(
-    horizontal: 7,
-    vertical: AppSpacing.x1,
-  );
-  static const double walletPendingNoticeMinHeight = AppSpacing.x6;
-  static const EdgeInsets walletPendingNoticePadding = EdgeInsets.symmetric(
-    horizontal: 12,
-    vertical: 9,
-  );
-  static const double walletPendingNoticeIcon = 14;
-  static const EdgeInsets walletPendingDetailsPadding = EdgeInsets.fromLTRB(
-    12,
-    11,
-    12,
-    10,
-  );
-  static const double walletPendingDetailsGap = 9;
-  static const double walletPendingTxGap = 6;
-  static const double walletPendingCopyHeight = 24;
-  static const EdgeInsets walletPendingCopyPadding = EdgeInsets.symmetric(
-    horizontal: AppSpacing.rowGap,
-  );
-  static const double walletPendingCopyIcon = 11;
-  static const double walletPendingCopyGap = AppSpacing.x1;
-  static const double walletPendingEmptyVerticalPadding = 64;
-  static const EdgeInsets walletPendingEmptyPadding = EdgeInsets.symmetric(
-    vertical: walletPendingEmptyVerticalPadding,
-  );
-  static const double walletPendingEmptyIconBox = 64;
-  static const double walletPendingEmptyIconGlyph = 32;
-  static const EdgeInsets walletPendingInfoPadding = EdgeInsets.fromLTRB(
-    16,
-    14,
-    16,
-    14,
-  );
-  static EdgeInsets walletPendingScrollPadding(double bottomInset) =>
-      EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        walletPendingPageTopPadding,
-        AppSpacing.contentPad,
-        bottomInset,
-      );
   static const double walletAnalyticsBottomInsetVisual = walletVisualChromePad;
   static const double walletAnalyticsBottomInsetNative = walletNativeChromePad;
   static const double walletAnalyticsPageTopPadding = AppSpacing.x4;
