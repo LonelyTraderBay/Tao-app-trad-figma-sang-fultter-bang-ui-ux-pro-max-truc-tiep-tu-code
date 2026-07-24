@@ -1,6 +1,6 @@
-# ADR-012 — Tách module P2P thành họ feature sibling (p2p_core / marketplace / orders / account / trust)
+# ADR-012 — Tách module P2P thành họ feature sibling (p2p_core + marketplace / orders / account / security / dispute)
 
-- **Trạng thái:** Đã chốt (PR5 · 2026-07-24)
+- **Trạng thái:** Đã chốt (PR5 · 2026-07-24; wave-1b PR7 + wave-2 PR8 · 2026-07-24)
 - **Phạm vi:** toàn bộ họ P2P — cấu trúc thư mục feature, barrel export, IA route entry point
 - **Design:** [docs/superpowers/specs/2026-07-24-p2p-family-split-design.md](../../superpowers/specs/2026-07-24-p2p-family-split-design.md)
 - **Parity:** [ADR-002](ADR-002-trade-family-split.md) (Trade), [ADR-011](ADR-011-earn-family-split.md) (Earn)
@@ -15,17 +15,20 @@ ranh giới sở hữu mờ, khó sửa song song.
 
 ## Quyết định
 
-1. **Tách thành sibling ngang hàng (phương án A2):**
+1. **Tách thành sibling ngang hàng (phương án A2), family cuối (post-PR8):**
    - `p2p_marketplace` — hub, ads, express/guide
    - `p2p_orders` — orders, escrow, chat, p2p wallet
    - `p2p_account` — merchant/KYC, payment methods
-   - `p2p_trust` — security, dispute, insurance, compliance/risk
+   - `p2p_security` — security center, 2FA, devices, compliance/risk, …
+   - `p2p_dispute` — disputes, insurance, reviews/report (tách từ `p2p_trust` ở PR8)
+   - *(Lịch sử wave-1: PR4 tạm gom security+dispute vào `p2p_trust` — đã xóa ở PR8.)*
 2. **`p2p_core` là kernel leaf:** entity/shared UI/errors/contracts chảy **một chiều**
    ra sibling; sibling **không** import lẫn nhau; `p2p_core` **không** import sibling.
 3. **Giữ nguyên path IA:** `AppRoutePaths` / URL (`/p2p`, `/p2p/orders/*`, …)
    không đổi — chỉ đổi package path + ownership.
-4. **Route groups:** bốn file `p2p_*_routes.dart`; `p2p_route_ids.dart` giữ unified
-   (tránh mass-rename path constants). Monolith `p2p_routes.dart` đã xóa ở PR5.
+4. **Route groups:** năm file sibling `p2p_*_routes.dart` (marketplace / orders /
+   account / security / dispute); `p2p_route_ids.dart` giữ unified.
+   Monolith `p2p_routes.dart` đã xóa ở PR5.
 5. **Repository:** wave-1 giữ **một** mock / fixtures / `p2pRepositoryProvider`
    trong `p2p_core` (Earn parity). **Wave-1b (Task 6 / PR7 — done):** bốn
    interface sibling-owned sống **trong** `p2p_core` —
@@ -33,9 +36,11 @@ ranh giới sở hữu mờ, khó sửa song song.
    `P2PTrustRepository` — plus typed providers (`p2p*RepositoryProvider`)
    delegate về cùng instance; `P2PRepository` vẫn là composite facade
    `implements` cả bốn (tránh core→sibling edge nếu interface nằm ở sibling).
+   Wave-2 **không** tách thêm interface trust — `p2p_security` + `p2p_dispute`
+   cùng watch `p2pTrustRepositoryProvider`.
 6. **Providers:** tách `p2p_*_controller_providers.dart` theo sibling tại
-   `app/providers/`; facade `p2p_controller_providers.dart` chỉ re-export bốn
-   sibling (Earn-style).
+   `app/providers/`; facade `p2p_controller_providers.dart` re-export **năm**
+   sibling (Earn-style; giữ lâu dài — không xóa).
 
 ## Hệ quả / nợ còn lại
 
@@ -60,3 +65,7 @@ Optional wave-1b: Task 6 / PR7 tách repository interfaces (**done** —
 interfaces + typed providers trong `p2p_core`; composite facade giữ nguyên).
 Optional wave-2: PR8 tách `p2p_trust` → `p2p_security` + `p2p_dispute`
 (**done** — repo interface trust vẫn composite trong core).
+
+**Family trên `main` (post-PR8):** `p2p_core` + `p2p_marketplace` + `p2p_orders` +
+`p2p_account` + `p2p_security` + `p2p_dispute` — không còn `features/p2p` /
+`features/p2p_trust`.

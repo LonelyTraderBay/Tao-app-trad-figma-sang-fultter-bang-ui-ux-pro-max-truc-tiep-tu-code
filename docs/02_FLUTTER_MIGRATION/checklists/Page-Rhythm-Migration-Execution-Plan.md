@@ -12,12 +12,12 @@
 
 | Metric | Giá trị |
 | --- | --- |
-| Tổng file `VitPageContent` | 348 |
-| Đã migrate (`done`) | 346 |
+| Tổng file `VitPageContent` | 350 |
+| Đã migrate (`done`) | 348 |
 | Còn lại (`pending`) | 2 |
 | Batch cuối | 02 |
 | **Batch tiếp theo** | **01** |
-| Ngày generate | 2026-07-17 |
+| Ngày generate | 2026-07-24 |
 
 ---
 
@@ -120,15 +120,15 @@ Trạng thái: ⏳ PENDING
 
 **Gate:** `flutter analyze lib/features/wallet/`
 
-### Batch 02 — p2p
+### Batch 02 — p2p_core
 
 Trạng thái: ⏳ PENDING
 
 | # | File | Tier | Status |
 | --- | --- | --- | --- |
-| 1 | `features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart` | standard | pending |
+| 1 | `features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart` | standard | pending |
 
-**Gate:** `flutter analyze lib/features/p2p/`
+**Gate:** `flutter analyze lib/features/p2p_core/`
 
 ---
 
@@ -222,139 +222,6 @@ Trạng thái: ⏳ PENDING
 - [x] `features/wallet/presentation/widgets/address/wallet_address_add_preview.dart` — form
 - [x] `features/wallet/presentation/widgets/assets/wallet_buy_crypto_result_sections.dart` — standard
 - [x] `features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart` — standard
-- [x] `features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart` — standard
-- [x] `features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart` — standard
-- [x] `features/p2p/presentation/pages/ads/p2p_order_book_page.dart` — standard
-- [x] `features/p2p/presentation/pages/dispute/p2p_dispute_detail_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_dispute_evidence_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_dispute_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_dispute_resolution_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_disputes_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_insurance_fund_overview_cards.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_insurance_fund_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_insurance_policy_page.dart` — form
-- [x] `features/p2p/presentation/pages/dispute/p2p_insurance_score_page.dart` — form
-- [x] `features/p2p/presentation/pages/hub/p2p_dashboard_page.dart` — standard
-- [x] `features/p2p/presentation/pages/hub/p2p_express_confirm_page.dart` — standard
-- [x] `features/p2p/presentation/pages/hub/p2p_guide_page.dart` — standard
-- [x] `features/p2p/presentation/pages/hub/p2p_notifications_settings_page.dart` — standard
-- [x] `features/p2p/presentation/pages/hub/p2p_settings_page.dart` — standard
-- [x] `features/p2p/presentation/pages/hub/p2p_trading_level_page.dart` — standard
-- [x] `features/p2p/presentation/pages/merchant/p2p_identity_verification_page.dart` — form
-- [x] `features/p2p/presentation/pages/merchant/p2p_kyc_requirements_page.dart` — form
-- [x] `features/p2p/presentation/pages/merchant/p2p_kyc_status_page.dart` — form
-- [x] `features/p2p/presentation/pages/merchant/p2p_merchant_apply_page_state.dart` — standard
-- [x] `features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart` — form
-- [x] `features/p2p/presentation/pages/orders/p2p_chat_page.dart` — standard
-- [x] `features/p2p/presentation/pages/orders/p2p_my_orders_page.dart` — standard
-- [x] `features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart` — standard
-- [x] `features/p2p/presentation/pages/orders/p2p_order_proof_page.dart` — standard
-- [x] `features/p2p/presentation/pages/orders/p2p_order_rate_page.dart` — standard
-- [x] `features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart` — standard
-- [x] `features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart` — standard
-- [x] `features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart` — standard
-- [x] `features/p2p/presentation/pages/payment/p2p_payment_method_verification_page.dart` — form
-- [x] `features/p2p/presentation/pages/security/p2p_achievements_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_address_proof_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_aml_screening_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_anti_phishing_code_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_blacklist_add_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_blacklist_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_contribution_history_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_e2e_info_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_fraud_prevention_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_large_transaction_justification_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_login_history_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_report_merchant_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_reviews_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_risk_assessment_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_security_center_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_source_of_funds_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_tax_reporting_page.dart` — standard
-- [x] `features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart` — standard
-- [x] `features/p2p/presentation/pages/wallet/p2p_wallet_page.dart` — standard
-- [x] `features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart` — standard
-- [x] `features/p2p/presentation/widgets/hub/p2p_express_page_state.dart` — standard
-- [x] `features/p2p/presentation/widgets/hub/p2p_home_page_state.dart` — standard
-- [x] `features/p2p/presentation/widgets/orders/p2p_order_page_state.dart` — standard
-- [x] `features/earn/presentation/pages/savings/earn_portfolio_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_analytics_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_auto_rebalance_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_autopilot_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_backtest_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_comparison_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_dca_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_export_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_faq_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_goal_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_guide_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_history_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_ladder_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_notification_preferences_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_notifications_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_product_detail_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_receipt_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_recommendations_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_redeem_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_risk_assessment_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_smart_suggestions_page.dart` — standard
-- [x] `features/earn/presentation/pages/savings/savings_what_if_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/auto_compound_settings_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_advanced_orders_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_analytics_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_api_documentation_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_audit_reports_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_auto_compound_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_community_governance_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_contingency_plan_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_custody_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_dashboard_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_data_export_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_developer_console_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_earn_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_earnings_calendar_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_emergency_actions_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_faq_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_forum_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_guide_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_history_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_institutional_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_insurance_fund_transparency_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_insurance_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_liquid_staking_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_multi_chain_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_notifications_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_proof_of_reserves_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_proposals_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_recommendations_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_regulatory_framework_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_risk_assessment_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_risk_dashboard_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_risk_disclosure_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_risk_score_calculator_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_slashing_history_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_social_feed_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_suitability_assessment_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_tax_guide_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_terms_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_third_party_integrations_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_transaction_reporting_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_validator_health_monitor_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_validator_selection_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_voting_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_webhooks_page.dart` — standard
-- [x] `features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart` — form
-- [x] `features/earn/presentation/widgets/savings/savings_auto_rebalance_allocation.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_auto_rebalance_drift_history.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_auto_rebalance_settings.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_auto_rebalance_strategy.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_ladder_analysis.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_ladder_builder_config.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_ladder_rung_manager.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_ladder_timeline.dart` — standard
-- [x] `features/earn/presentation/widgets/savings/savings_portfolio_overview.dart` — standard
 - [x] `features/profile/presentation/pages/activity_log_page.dart` — standard
 - [x] `features/profile/presentation/pages/api_key_create_page.dart` — standard
 - [x] `features/profile/presentation/pages/api_management_page.dart` — standard
@@ -430,7 +297,142 @@ Trạng thái: ⏳ PENDING
 - [x] `features/dev/presentation/pages/performance_monitor.dart` — flush
 - [x] `features/dev/presentation/pages/route_checker_page.dart` — flush
 - [x] `app/router/internal_surface_gate.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/auto_compound_settings_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/earn_portfolio_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_analytics_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_auto_rebalance_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_autopilot_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_backtest_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_comparison_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_dca_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_export_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_faq_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_goal_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_guide_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_history_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_ladder_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_notification_preferences_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_notifications_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_product_detail_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_receipt_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_recommendations_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_redeem_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_risk_assessment_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_smart_suggestions_page.dart` — standard
+- [x] `features/earn_savings/presentation/pages/savings/savings_what_if_page.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_auto_rebalance_allocation.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_auto_rebalance_drift_history.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_auto_rebalance_settings.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_auto_rebalance_strategy.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_ladder_analysis.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_ladder_builder_config.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_ladder_rung_manager.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_ladder_timeline.dart` — standard
+- [x] `features/earn_savings/presentation/widgets/savings/savings_portfolio_overview.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_advanced_orders_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_analytics_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_api_documentation_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_audit_reports_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_auto_compound_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_community_governance_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_contingency_plan_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_custody_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_dashboard_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_data_export_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_developer_console_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_earn_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_earnings_calendar_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_emergency_actions_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_faq_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_forum_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_guide_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_history_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_institutional_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_insurance_fund_transparency_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_insurance_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_liquid_staking_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_multi_chain_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_notifications_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_proof_of_reserves_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_proposals_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_recommendations_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_regulatory_framework_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_risk_assessment_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_risk_dashboard_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_risk_disclosure_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_risk_score_calculator_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_slashing_history_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_social_feed_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_suitability_assessment_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_tax_guide_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_terms_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_third_party_integrations_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_transaction_reporting_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_validator_health_monitor_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_validator_selection_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_voting_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_webhooks_page.dart` — standard
+- [x] `features/earn_staking/presentation/pages/staking/staking_withdrawal_policy_page.dart` — form
 - [x] `features/enterprise_states/presentation/pages/enterprise_states_page.dart` — standard
+- [x] `features/enterprise_states/presentation/pages/force_update_gate_page.dart` — standard
+- [x] `features/enterprise_states/presentation/pages/maintenance_gate_page.dart` — standard
+- [x] `features/p2p_account/presentation/pages/merchant/p2p_address_proof_page.dart` — standard
+- [x] `features/p2p_account/presentation/pages/merchant/p2p_identity_verification_page.dart` — form
+- [x] `features/p2p_account/presentation/pages/merchant/p2p_kyc_requirements_page.dart` — form
+- [x] `features/p2p_account/presentation/pages/merchant/p2p_kyc_status_page.dart` — form
+- [x] `features/p2p_account/presentation/pages/merchant/p2p_merchant_apply_page_state.dart` — standard
+- [x] `features/p2p_account/presentation/pages/merchant/p2p_selfie_verification_page.dart` — form
+- [x] `features/p2p_account/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart` — standard
+- [x] `features/p2p_account/presentation/pages/payment/p2p_payment_method_history_page.dart` — standard
+- [x] `features/p2p_account/presentation/pages/payment/p2p_payment_method_verification_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_detail_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_evidence_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_resolution_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_disputes_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_insurance_fund_overview_cards.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_insurance_fund_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_insurance_policy_page.dart` — form
+- [x] `features/p2p_dispute/presentation/pages/dispute/p2p_insurance_score_page.dart` — form
+- [x] `features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/ads/p2p_ad_detail_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/ads/p2p_order_book_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/hub/p2p_dashboard_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/hub/p2p_express_confirm_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/hub/p2p_guide_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/hub/p2p_notifications_settings_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/hub/p2p_settings_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/pages/hub/p2p_trading_level_page.dart` — standard
+- [x] `features/p2p_marketplace/presentation/widgets/hub/p2p_express_page_state.dart` — standard
+- [x] `features/p2p_marketplace/presentation/widgets/hub/p2p_home_page_state.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/orders/p2p_chat_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/orders/p2p_order_cancel_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/orders/p2p_order_proof_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/orders/p2p_order_rate_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/orders/p2p_order_timeline_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart` — standard
+- [x] `features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart` — standard
+- [x] `features/p2p_orders/presentation/widgets/orders/p2p_order_page_state.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_achievements_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_aml_screening_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_anti_phishing_code_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_blacklist_add_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_blacklist_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_compliance_overview_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_contribution_history_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_e2e_info_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_fraud_prevention_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_large_transaction_justification_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_login_history_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_report_merchant_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_reviews_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_risk_assessment_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_security_center_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_source_of_funds_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_tax_reporting_page.dart` — standard
+- [x] `features/p2p_security/presentation/pages/security/p2p_transaction_limits_page.dart` — standard
 - [x] `features/rewards/presentation/pages/rewards_hub_page.dart` — standard
 - [x] `features/trade_bots/presentation/widgets/settings/bot_api_documentation_endpoints.dart` — standard
 - [x] `features/trade_bots/presentation/widgets/settings/bot_api_documentation_support_common.dart` — standard

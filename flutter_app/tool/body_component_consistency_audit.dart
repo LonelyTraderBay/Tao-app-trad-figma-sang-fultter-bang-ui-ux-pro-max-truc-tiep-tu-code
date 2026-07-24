@@ -154,6 +154,12 @@ const _highImpactFeatures = <String>{
   'trade',
   'profile',
   'p2p',
+  'p2p_core',
+  'p2p_marketplace',
+  'p2p_orders',
+  'p2p_account',
+  'p2p_security',
+  'p2p_dispute',
   'predictions',
   'markets',
   'rewards',
@@ -163,6 +169,12 @@ const _financialSafetyFeatures = <String>{
   'wallet',
   'trade',
   'p2p',
+  'p2p_core',
+  'p2p_marketplace',
+  'p2p_orders',
+  'p2p_account',
+  'p2p_security',
+  'p2p_dispute',
   'earn',
   'launchpad',
   'dca',
@@ -995,7 +1007,20 @@ String _testScope(String feature) {
     'wallet' => 'flutter test test/features/wallet --reporter=compact',
     'trade' => 'flutter test test/features/trade --reporter=compact',
     'profile' => 'flutter test test/features/profile --reporter=compact',
-    'p2p' => 'flutter test test/features/p2p --reporter=compact',
+    'p2p' =>
+      'flutter test test/features/p2p_core test/features/p2p_marketplace '
+          'test/features/p2p_orders test/features/p2p_account '
+          'test/features/p2p_security test/features/p2p_dispute --reporter=compact',
+    'p2p_core' => 'flutter test test/features/p2p_core --reporter=compact',
+    'p2p_marketplace' =>
+      'flutter test test/features/p2p_marketplace --reporter=compact',
+    'p2p_orders' => 'flutter test test/features/p2p_orders --reporter=compact',
+    'p2p_account' =>
+      'flutter test test/features/p2p_account --reporter=compact',
+    'p2p_security' =>
+      'flutter test test/features/p2p_security --reporter=compact',
+    'p2p_dispute' =>
+      'flutter test test/features/p2p_dispute --reporter=compact',
     'predictions' =>
       'flutter test test/features/predictions --reporter=compact',
     'markets' => 'flutter test test/features/markets --reporter=compact',

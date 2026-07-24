@@ -25,7 +25,7 @@ representative target files and fails if any of them is missing either the
 | --- | --- | --- | --- |
 | `lib/features/trade/presentation/pages/trade_page_part_01.dart` | Trade | `riskReview` | Spot order risk (fees, slippage, balance) |
 | `lib/features/wallet/presentation/pages/withdraw_page.dart` | Wallet | `riskReview` | Withdrawal preview (address, network, amount, fee) |
-| `lib/features/p2p/presentation/widgets/p2p_home_page_part_01.dart` | P2P | `riskReview` | Offer → order → payment proof → dispute escrow contract |
+| `lib/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart` | P2P | `riskReview` | Offer → order → payment proof → dispute escrow contract |
 | `lib/features/earn/presentation/pages/staking_earn_page.dart` | Earn | `riskReview` | Terms, validator setup, risk preview, confirmation, receipt |
 | `lib/features/launchpad/presentation/pages/launchpad_bridge_order_page.dart` | Launchpad | `success` | Bridge order status tracking |
 | `lib/features/predictions/presentation/pages/predictions_home_page.dart` | Predictions | `riskReview` | Event setup, risk preview, confirmation, receipt |
@@ -33,9 +33,9 @@ representative target files and fails if any of them is missing either the
 | `lib/features/predictions/presentation/widgets/prediction_order_receipt_page_sections.dart` | Predictions | `success` | Submitted receipt / recovery state |
 | `lib/features/wallet/presentation/widgets/wallet_address_add_agreement.dart` | Wallet | `riskReview` | Withdrawal-address addition preview |
 | `lib/features/profile/presentation/pages/security_page.dart` | Profile | `riskReview` | Account security review |
-| `lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | P2P | `riskReview` | Payment-method addition preview |
-| `lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` | P2P | `riskReview` | Payment-method ownership verification |
-| `lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` | P2P | `riskReview` | Payment-method cooling-period restriction |
+| `lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_add_page.dart` | P2P | `riskReview` | Payment-method addition preview |
+| `lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_ownership_page.dart` | P2P | `riskReview` | Payment-method ownership verification |
+| `lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart` | P2P | `riskReview` | Payment-method cooling-period restriction |
 
 ## Rules
 
