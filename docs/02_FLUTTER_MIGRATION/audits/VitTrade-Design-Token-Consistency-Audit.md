@@ -14,7 +14,7 @@ Generated from `flutter_app/tool/design_token_consistency_audit.dart`.
 ```text
 generated=2026-06-12
 status_fail=0
-status_warn=54
+status_warn=52
 status_exception=259
 rows=2888
 ```
@@ -111,31 +111,31 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page | `flutter_app/lib/features/dca/presentation/pages/hub/dca_page.dart` | `flutter_app/lib/features/dca/presentation/pages/hub/dca_page_state_overview.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/news/presentation/pages/news_page.dart` | `flutter_app/lib/features/news/presentation/pages/news_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn_savings/presentation/widgets/savings/savings_home_hero.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page.dart` | `flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | shared_widget | `` | `flutter_app/lib/shared/widgets/vit_segmented_choice.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn_savings/presentation/pages/savings/savings_page.dart` | `flutter_app/lib/features/earn_savings/presentation/widgets/savings/savings_home_hero.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/arena/presentation/pages/points/arena_points_ledger_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/news/presentation/pages/news_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/earn_staking/presentation/widgets/staking/staking_dashboard_summary.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/challenge/arena_mode_detail_hero.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/earn_staking/presentation/widgets/staking/staking_earn_hero_tabs.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/arena/presentation/pages/challenge/arena_challenge_detail_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/arena/presentation/pages/hub/arena_home_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_home_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn_staking/presentation/pages/staking/staking_earn_page.dart` | `flutter_app/lib/features/earn_staking/presentation/widgets/staking/staking_earn_hero_tabs.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn_savings/presentation/pages/savings/savings_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/earn_staking/presentation/pages/staking/staking_earn_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/earn_staking/presentation/widgets/staking/staking_earn_hero_tabs.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/earn_staking/presentation/widgets/staking/staking_dashboard_summary.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart` | `flutter_app/lib/features/p2p_marketplace/presentation/widgets/ads/p2p_ad_analytics_overview_cards.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_related_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/arena/presentation/pages/governance/arena_report_case_page.dart` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_related_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_summary_timeline.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/arena/presentation/pages/governance/arena_report_case_page.dart` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_summary_timeline.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_system_appeal.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -2438,7 +2438,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | warn | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_detail_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_detail_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_evidence_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_evidence_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_page.dart` | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_page.dart` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
@@ -2900,7 +2900,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart` | `4 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `4 files` | warn | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_insurance_fund_page.dart` | `4 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p_trust/presentation/pages/security/p2p_blacklist_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p_trust/presentation/pages/security/p2p_device_management_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |

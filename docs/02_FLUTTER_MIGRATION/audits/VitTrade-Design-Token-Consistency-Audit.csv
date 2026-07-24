@@ -2232,7 +2232,7 @@ root_page,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wall
 root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart,warn,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,no,-
+root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_detail_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_detail_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_evidence_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_evidence_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_page.dart,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_page.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
@@ -2694,7 +2694,7 @@ root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/
 root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/orders/p2p_order_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_orders/presentation/pages/wallet/p2p_wallet_transfer_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-root_page_bundle_summary,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,4 files,warn,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,no,-
+root_page_bundle_summary,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_insurance_fund_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/p2p_trust/presentation/pages/security/p2p_blacklist_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p_trust/presentation/pages/security/p2p_device_management_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
