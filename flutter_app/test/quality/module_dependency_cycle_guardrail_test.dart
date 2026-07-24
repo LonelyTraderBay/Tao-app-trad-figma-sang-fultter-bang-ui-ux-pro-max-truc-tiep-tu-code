@@ -140,4 +140,29 @@ void main() {
           '($siblingEdges) — earn_core must remain a leaf. See ADR-011.',
     );
   });
+
+  test('p2p_core does not import p2p siblings '
+      '(ADR-012: p2p_core is a leaf kernel)', () {
+    const maxP2pCoreSiblingEdges = 0;
+    const p2pSiblings = {
+      'p2p_marketplace',
+      'p2p_orders',
+      'p2p_account',
+      'p2p_trust',
+      'p2p',
+    };
+
+    final edges = _buildFeatureGraph();
+    final siblingEdges = (edges['p2p_core'] ?? const <String>{})
+        .where(p2pSiblings.contains)
+        .toList();
+
+    expect(
+      siblingEdges.length,
+      lessThanOrEqualTo(maxP2pCoreSiblingEdges),
+      reason:
+          'p2p_core imports/exports a sibling p2p module '
+          '($siblingEdges) — p2p_core must remain a leaf. See ADR-012.',
+    );
+  });
 }

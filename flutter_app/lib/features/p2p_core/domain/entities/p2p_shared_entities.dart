@@ -1,7 +1,5 @@
-part of 'p2p_entities.dart';
-
 // Cross-domain vocabulary used by multiple p2p sub-domains — not owned by
-// any single one, so kept separate from the 13 per-domain entity files.
+// any single one, so kept in p2p_core (ADR-012 leaf kernel).
 
 /// Buy or sell direction of a P2P trade.
 enum P2PTradeType { buy, sell }
