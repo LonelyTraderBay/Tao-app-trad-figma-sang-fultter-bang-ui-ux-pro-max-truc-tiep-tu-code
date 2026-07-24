@@ -49,6 +49,7 @@ class VitP2PFlowScaffold extends StatelessWidget {
     this.bottomInset,
     this.shellRenderMode,
     this.backgroundColor = AppColors.bg,
+    this.rhythm = VitPageRhythm.standard,
     this.contentGap = VitContentGap.defaultGap,
     this.scrollChild,
     this.onRefresh,
@@ -70,6 +71,7 @@ class VitP2PFlowScaffold extends StatelessWidget {
   final double? bottomInset;
   final ShellRenderMode? shellRenderMode;
   final Color backgroundColor;
+  final VitPageRhythm rhythm;
   final VitContentGap contentGap;
   final Widget? scrollChild;
   final Future<void> Function()? onRefresh;
@@ -88,7 +90,7 @@ class VitP2PFlowScaffold extends StatelessWidget {
       child:
           scrollChild ??
           VitPageContent(
-            rhythm: VitPageRhythm.standard,
+            rhythm: rhythm,
             padding: VitContentPadding.compact,
             density: VitDensity.compact,
             gap: contentGap,

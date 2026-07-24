@@ -40,6 +40,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
     this.shellRenderMode,
     this.backgroundColor = AppColors.bg,
     this.contentGap = VitContentGap.defaultGap,
+    this.rhythm = VitPageRhythm.standard,
     this.scrollChild,
   });
 
@@ -59,6 +60,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
   final ShellRenderMode? shellRenderMode;
   final Color backgroundColor;
   final VitContentGap contentGap;
+  final VitPageRhythm rhythm;
   final Widget? scrollChild;
 
   @override
@@ -87,7 +89,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
             child:
                 scrollChild ??
                 VitPageContent(
-                  rhythm: VitPageRhythm.standard,
+                  rhythm: rhythm,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   gap: contentGap,
