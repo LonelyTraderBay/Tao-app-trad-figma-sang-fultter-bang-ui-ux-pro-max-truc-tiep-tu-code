@@ -312,7 +312,7 @@ jobs:
           test/features/home/golden
           test/features/trade/golden
           test/features/wallet/golden
-          test/features/p2p/golden
+          test/features/p2p_core/golden
           test/features/earn_core/golden
           --reporter=compact
 
@@ -449,7 +449,7 @@ jobs:
           test/features/home/golden
           test/features/trade/golden
           test/features/wallet/golden
-          test/features/p2p/golden
+          test/features/p2p_core/golden
           test/features/earn_core/golden
           --reporter=compact
 
