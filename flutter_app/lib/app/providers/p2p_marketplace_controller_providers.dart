@@ -11,7 +11,7 @@ final p2pHomeProvider =
       ({P2PTradeType tradeType, String asset, String fiat})
     >((ref, request) {
       return ref
-          .watch(p2pRepositoryProvider)
+          .watch(p2pMarketplaceRepositoryProvider)
           .getHome(
             tradeType: request.tradeType,
             asset: request.asset,
@@ -20,7 +20,7 @@ final p2pHomeProvider =
     });
 
 final p2pExpressProvider = FutureProvider<P2PExpressSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getExpress(),
+  (ref) => ref.watch(p2pMarketplaceRepositoryProvider).getExpress(),
 );
 
 final p2pExpressConfirmProvider =
@@ -36,7 +36,7 @@ final p2pExpressConfirmProvider =
       })
     >((ref, request) {
       return ref
-          .watch(p2pRepositoryProvider)
+          .watch(p2pMarketplaceRepositoryProvider)
           .getExpressConfirm(
             tradeType: request.tradeType,
             asset: request.asset,
@@ -49,47 +49,50 @@ final p2pExpressConfirmProvider =
 
 final p2pAdAnalyticsProvider =
     FutureProvider.family<P2PAdAnalyticsSnapshot, String>(
-      (ref, adId) => ref.watch(p2pRepositoryProvider).getAdAnalytics(adId),
+      (ref, adId) =>
+          ref.watch(p2pMarketplaceRepositoryProvider).getAdAnalytics(adId),
     );
 
 final p2pAdDetailProvider = FutureProvider.family<P2PAdDetailSnapshot, String>(
-  (ref, adId) => ref.watch(p2pRepositoryProvider).getAdDetail(adId),
+  (ref, adId) => ref.watch(p2pMarketplaceRepositoryProvider).getAdDetail(adId),
 );
 
 final p2pMyAdsProvider = FutureProvider<P2PMyAdsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getMyAds(),
+  (ref) => ref.watch(p2pMarketplaceRepositoryProvider).getMyAds(),
 );
 
 final p2pCreateAdProvider = FutureProvider<P2PCreateAdSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getCreateAd(),
+  (ref) => ref.watch(p2pMarketplaceRepositoryProvider).getCreateAd(),
 );
 
 final p2pTradingLevelProvider = FutureProvider<P2PTradingLevelSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getTradingLevel(),
+  (ref) => ref.watch(p2pMarketplaceRepositoryProvider).getTradingLevel(),
 );
 
 final p2pOrderBookProvider =
     FutureProvider.family<P2POrderBookSnapshot, String>(
       (ref, selectedAsset) => ref
-          .watch(p2pRepositoryProvider)
+          .watch(p2pMarketplaceRepositoryProvider)
           .getOrderBook(selectedAsset: selectedAsset),
     );
 
 final p2pDashboardProvider =
     FutureProvider.family<P2PDashboardSnapshot, String>(
-      (ref, timeFilter) =>
-          ref.watch(p2pRepositoryProvider).getDashboard(timeFilter: timeFilter),
+      (ref, timeFilter) => ref
+          .watch(p2pMarketplaceRepositoryProvider)
+          .getDashboard(timeFilter: timeFilter),
     );
 
 final p2pNotificationSettingsProvider =
     FutureProvider<P2PNotificationSettingsSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getNotificationSettings(),
+      (ref) =>
+          ref.watch(p2pMarketplaceRepositoryProvider).getNotificationSettings(),
     );
 
 final p2pSettingsProvider = FutureProvider<P2PSettingsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getSettings(),
+  (ref) => ref.watch(p2pMarketplaceRepositoryProvider).getSettings(),
 );
 
 final p2pGuideProvider = FutureProvider<P2PGuideSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getGuide(),
+  (ref) => ref.watch(p2pMarketplaceRepositoryProvider).getGuide(),
 );

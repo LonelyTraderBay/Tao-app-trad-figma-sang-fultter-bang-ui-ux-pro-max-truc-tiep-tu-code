@@ -13,3 +13,19 @@ final p2pRepositoryProvider = Provider<P2PRepository>(
     failClosed: () => const FailClosedP2PRepository(),
   ),
 );
+
+final p2pMarketplaceRepositoryProvider = Provider<P2PMarketplaceRepository>(
+  (ref) => ref.watch(p2pRepositoryProvider),
+);
+
+final p2pOrdersRepositoryProvider = Provider<P2POrdersRepository>(
+  (ref) => ref.watch(p2pRepositoryProvider),
+);
+
+final p2pAccountRepositoryProvider = Provider<P2PAccountRepository>(
+  (ref) => ref.watch(p2pRepositoryProvider),
+);
+
+final p2pTrustRepositoryProvider = Provider<P2PTrustRepository>(
+  (ref) => ref.watch(p2pRepositoryProvider),
+);
