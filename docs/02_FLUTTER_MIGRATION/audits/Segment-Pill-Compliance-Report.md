@@ -44,7 +44,8 @@
 | markets | 34 |
 | news | 1 |
 | notifications | 1 |
-| p2p | 46 |
+| p2p | 27 |
+| p2p_marketplace | 19 |
 | predictions | 22 |
 | profile | 5 |
 | referral | 2 |

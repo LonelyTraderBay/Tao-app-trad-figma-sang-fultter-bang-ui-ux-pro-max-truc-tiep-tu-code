@@ -7,7 +7,7 @@ const shellWidgetToVpcPath = <String, String>{
   'VitWalletDetailScaffold':
       'features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart',
   'VitP2PFlowScaffold':
-      'features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart',
+      'features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart',
   'VitTradeHubScaffold':
       'features/trade_core/presentation/widgets/trade_module_layout.dart',
   'VitTradeSimpleShell':

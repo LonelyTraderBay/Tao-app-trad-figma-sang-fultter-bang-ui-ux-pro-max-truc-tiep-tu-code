@@ -4,7 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/ads/p2p_create_ad_preview_badge.dart';
+import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/widgets/ads/p2p_create_ad_preview_badge.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 

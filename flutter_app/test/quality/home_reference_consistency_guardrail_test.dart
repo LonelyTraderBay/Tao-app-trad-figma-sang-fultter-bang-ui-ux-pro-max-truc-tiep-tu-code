@@ -187,9 +187,8 @@ void main() {
       ],
       'lib/features/markets/presentation/pages/research/token_unlocks_page.dart':
           ['_unlockListGap = AppSpacing.rowGap'],
-      'lib/features/p2p/presentation/pages/ads/p2p_my_ads_page.dart': [
-        'if (index > 0) const SizedBox(height: AppSpacing.rowGap)',
-      ],
+      'lib/features/p2p_marketplace/presentation/pages/ads/p2p_my_ads_page.dart':
+          ['if (index > 0) const SizedBox(height: AppSpacing.rowGap)'],
       'lib/features/markets/presentation/widgets/research/market_news_page_sections.dart':
           ['item != news.last', 'SizedBox(height: AppSpacing.rowGap)'],
       'lib/features/profile/presentation/widgets/vip_history_widgets.dart': [

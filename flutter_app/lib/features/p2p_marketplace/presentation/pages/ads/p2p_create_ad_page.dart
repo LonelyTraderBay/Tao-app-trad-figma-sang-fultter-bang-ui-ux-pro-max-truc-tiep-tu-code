@@ -14,8 +14,8 @@ import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/ads/p2p_create_ad_sections.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart';
+import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/widgets/ads/p2p_create_ad_sections.dart';
+import 'package:vit_trade_flutter/features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../../widgets/ads/p2p_create_ad_page_sections.dart';
