@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p_core/data/p2p_repository.dart';
 
 /// Direct smoke test for [MockP2PRepository]: home/express intake and the
 /// order lifecycle (order detail, timeline, rate, cancel, proof, chat, my
@@ -18,7 +18,7 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 /// once, asserting the call does not throw and returns a plausible,
 /// well-formed snapshot. ID arguments reuse the literal values already
 /// proven to work in the corresponding page tests (see
-/// `test/features/p2p/p2p_*_page_test.dart` and `p2p_controller_test.dart`).
+/// `test/features/p2p_core/p2p_*_page_test.dart` and `p2p_controller_test.dart`).
 void main() {
   const repository = MockP2PRepository(loadDelay: Duration.zero);
 

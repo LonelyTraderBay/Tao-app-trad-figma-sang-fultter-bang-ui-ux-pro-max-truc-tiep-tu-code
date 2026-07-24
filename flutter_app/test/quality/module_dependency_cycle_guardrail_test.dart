@@ -149,7 +149,6 @@ void main() {
       'p2p_orders',
       'p2p_account',
       'p2p_trust',
-      'p2p',
     };
 
     final edges = _buildFeatureGraph();

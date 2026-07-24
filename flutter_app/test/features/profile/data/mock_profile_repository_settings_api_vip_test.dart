@@ -3,7 +3,7 @@ import 'package:vit_trade_flutter/features/profile/data/repositories/mock_profil
 
 /// Repository-layer smoke test for [MockProfileRepository] under the
 /// `test/features/<feature>/data/` convention (see
-/// `test/features/p2p/data/mock_p2p_repository_orders_test.dart`).
+/// `test/features/p2p_core/data/mock_p2p_repository_orders_test.dart`).
 ///
 /// Every method on `ProfileRepository` already gets an isA<>/isNotEmpty
 /// smoke pass in the sibling

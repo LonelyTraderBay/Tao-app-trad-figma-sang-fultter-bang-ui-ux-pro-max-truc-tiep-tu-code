@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
+import 'package:vit_trade_flutter/features/p2p_core/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p_controller.dart';
 
 void main() {
   test(

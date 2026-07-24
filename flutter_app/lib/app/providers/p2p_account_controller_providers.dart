@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:vit_trade_flutter/features/p2p/data/providers/p2p_repository_provider.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
+import 'package:vit_trade_flutter/features/p2p_core/data/providers/p2p_repository_provider.dart';
+import 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p_controller.dart';
 
-export 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
+export 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p_controller.dart';
 
 final p2pMerchantApplyProvider = FutureProvider<P2PMerchantApplySnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getMerchantApply(),

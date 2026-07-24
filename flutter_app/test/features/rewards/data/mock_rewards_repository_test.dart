@@ -3,7 +3,7 @@ import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart'
 
 /// Repository-layer smoke test for [MockRewardsRepository] under the
 /// `test/features/<feature>/data/` convention (see
-/// `test/features/p2p/data/mock_p2p_repository_orders_test.dart`).
+/// `test/features/p2p_core/data/mock_p2p_repository_orders_test.dart`).
 ///
 /// [RewardsRepository] exposes a single method, [RewardsRepository.getHub],
 /// already exercised (isA<>/isNotEmpty) by the sibling

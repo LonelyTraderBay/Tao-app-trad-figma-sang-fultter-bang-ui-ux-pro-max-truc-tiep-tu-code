@@ -3,7 +3,7 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 
 /// Repository-layer smoke test for [MockDcaRepository] under the
 /// `test/features/<feature>/data/` convention (see
-/// `test/features/p2p/data/mock_p2p_repository_orders_test.dart`).
+/// `test/features/p2p_core/data/mock_p2p_repository_orders_test.dart`).
 ///
 /// Every method on [DcaRepository] already gets an isA<>/isNotEmpty smoke
 /// pass in the sibling `test/features/dca/mock_dca_repository_test.dart`.
