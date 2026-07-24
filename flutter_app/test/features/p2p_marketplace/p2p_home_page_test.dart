@@ -17,9 +17,9 @@ import 'package:vit_trade_flutter/features/p2p_account/presentation/pages/mercha
 import 'package:vit_trade_flutter/features/p2p_orders/presentation/pages/orders/p2p_fund_lock_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart';
 import 'package:vit_trade_flutter/features/p2p_account/presentation/pages/payment/p2p_payment_method_history_page.dart';
-import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/security/p2p_compliance_overview_page.dart';
-import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/security/p2p_contribution_history_page.dart';
-import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/security/p2p_login_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p_security/presentation/pages/security/p2p_compliance_overview_page.dart';
+import 'package:vit_trade_flutter/features/p2p_security/presentation/pages/security/p2p_contribution_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p_security/presentation/pages/security/p2p_login_history_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
