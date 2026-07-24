@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/p2p_core/data/providers/p2p_repository_provider.dart';
 import 'package:vit_trade_flutter/features/p2p_core/data/repositories/mock_p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p_core/domain/entities/p2p_entities.dart';
-import 'package:vit_trade_flutter/features/p2p_core/domain/repositories/p2p_repository.dart';
 
 void main() {
   late ProviderContainer container;
