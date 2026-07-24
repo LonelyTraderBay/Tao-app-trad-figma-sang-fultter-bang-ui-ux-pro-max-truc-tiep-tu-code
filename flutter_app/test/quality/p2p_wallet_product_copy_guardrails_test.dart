@@ -173,7 +173,7 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart',
+              'lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_add_page.dart',
           roles: {
             'preview': [RegExp(r'\bpreview\b|_PaymentPreview')],
             'confirm': [RegExp(r'confirmMessage|confirmTitle|\bconfirm\b')],

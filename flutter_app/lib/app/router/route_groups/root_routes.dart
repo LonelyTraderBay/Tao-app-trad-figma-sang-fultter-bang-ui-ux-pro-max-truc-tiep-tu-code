@@ -78,9 +78,11 @@ ShellRoute _appShellRoute(ShellRenderMode shellRenderMode) {
       ...tradeTerminalRoutes(shellRenderMode),
       ...tradeRoutes(shellRenderMode),
       ...adminRoutes(shellRenderMode),
-      // NOTE: marketplace + orders before residual `p2pRoutes` (ADR-012 PR1/PR2).
+      // NOTE: marketplace + orders + account before residual `p2pRoutes`
+      // (ADR-012 PR1–PR3).
       ...p2pMarketplaceRoutes(shellRenderMode),
       ...p2pOrdersRoutes(shellRenderMode),
+      ...p2pAccountRoutes(shellRenderMode),
       ...p2pRoutes(shellRenderMode),
       ...supportRoutes(shellRenderMode),
       ...launchpadRoutes(shellRenderMode),

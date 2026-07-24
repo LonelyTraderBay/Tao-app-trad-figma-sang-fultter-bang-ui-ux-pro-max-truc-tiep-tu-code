@@ -13,10 +13,10 @@ import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hu
 import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hub/p2p_guide_page.dart';
 import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart';
 import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hub/p2p_notifications_settings_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart';
+import 'package:vit_trade_flutter/features/p2p_account/presentation/pages/merchant/p2p_merchant_profile_page.dart';
 import 'package:vit_trade_flutter/features/p2p_orders/presentation/pages/orders/p2p_fund_lock_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p_account/presentation/pages/payment/p2p_payment_method_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_contribution_history_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_login_history_page.dart';

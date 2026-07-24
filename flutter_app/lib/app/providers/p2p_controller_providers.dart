@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_cont
 export 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
 export 'p2p_marketplace_controller_providers.dart';
 export 'p2p_orders_controller_providers.dart';
+export 'p2p_account_controller_providers.dart';
 
 final p2pDisputeDetailProvider =
     FutureProvider.family<P2PDisputeDetailSnapshot, String>(
@@ -53,16 +54,6 @@ final p2pDisputesProvider = FutureProvider<P2PDisputesSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getDisputes(),
 );
 
-final p2pMerchantApplyProvider = FutureProvider<P2PMerchantApplySnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getMerchantApply(),
-);
-
-final p2pMerchantProfileProvider =
-    FutureProvider.family<P2PMerchantProfileSnapshot, String>(
-      (ref, merchantId) =>
-          ref.watch(p2pRepositoryProvider).getMerchantProfile(merchantId),
-    );
-
 final p2pReportMerchantProvider =
     FutureProvider.family<P2PReportMerchantSnapshot, String>(
       (ref, merchantId) =>
@@ -71,64 +62,6 @@ final p2pReportMerchantProvider =
 
 final p2pReviewsProvider = FutureProvider<P2PReviewsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getReviews(),
-);
-
-final p2pPaymentMethodAddProvider = FutureProvider<P2PPaymentMethodAddSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodAdd(),
-);
-
-final p2pPaymentMethodVerificationProvider =
-    FutureProvider.family<P2PPaymentMethodVerificationSnapshot, String>(
-      (ref, methodId) => ref
-          .watch(p2pRepositoryProvider)
-          .getPaymentMethodVerification(methodId),
-    );
-
-final p2pPaymentMethodOwnershipProvider =
-    FutureProvider.family<P2PPaymentMethodOwnershipSnapshot, String>(
-      (ref, methodId) =>
-          ref.watch(p2pRepositoryProvider).getPaymentMethodOwnership(methodId),
-    );
-
-// GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>>.
-final p2pPaymentMethodOwnershipControllerProvider =
-    Provider.family<AsyncValue<P2PPaymentMethodOwnershipController>, String>((
-      ref,
-      methodId,
-    ) {
-      return ref
-          .watch(p2pPaymentMethodOwnershipProvider(methodId))
-          .whenData(
-            (snapshot) => P2PPaymentMethodOwnershipController(
-              state: P2PPaymentMethodOwnershipViewState(snapshot: snapshot),
-            ),
-          );
-    });
-
-final p2pPaymentMethodCoolingPeriodProvider =
-    FutureProvider<P2PPaymentMethodCoolingPeriodSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodCoolingPeriod(),
-    );
-
-// GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>>.
-final p2pPaymentMethodCoolingPeriodControllerProvider =
-    Provider<AsyncValue<P2PPaymentMethodCoolingPeriodController>>((ref) {
-      return ref
-          .watch(p2pPaymentMethodCoolingPeriodProvider)
-          .whenData(
-            (snapshot) => P2PPaymentMethodCoolingPeriodController(
-              state: P2PPaymentMethodCoolingPeriodViewState(snapshot: snapshot),
-            ),
-          );
-    });
-
-final p2pPaymentMethodHistoryProvider =
-    FutureProvider<P2PPaymentMethodHistorySnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodHistory(),
-    );
-
-final p2pPaymentMethodsProvider = FutureProvider<P2PPaymentMethodsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethods(),
 );
 
 final p2pInsuranceFundProvider = FutureProvider<P2PInsuranceFundSnapshot>(
@@ -157,33 +90,6 @@ final p2pClaimDetailProvider =
     FutureProvider.family<P2PClaimDetailSnapshot, String>(
       (ref, claimId) =>
           ref.watch(p2pRepositoryProvider).getClaimDetail(claimId),
-    );
-
-final p2pKycRequirementsProvider = FutureProvider<P2PKycRequirementsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getKycRequirements(),
-);
-
-final p2pKycStatusProvider = FutureProvider<P2PKycStatusSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getKycStatus(),
-);
-
-final p2pIdentityVerificationProvider =
-    FutureProvider<P2PIdentityVerificationSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getIdentityVerification(),
-    );
-
-final p2pAddressProofProvider = FutureProvider<P2PAddressProofSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getAddressProof(),
-);
-
-final p2pSelfieVerificationProvider =
-    FutureProvider<P2PSelfieVerificationSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getSelfieVerification(),
-    );
-
-final p2pVideoVerificationProvider =
-    FutureProvider<P2PVideoVerificationSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getVideoVerification(),
     );
 
 final p2pSecurityCenterProvider = FutureProvider<P2PSecurityCenterSnapshot>(
