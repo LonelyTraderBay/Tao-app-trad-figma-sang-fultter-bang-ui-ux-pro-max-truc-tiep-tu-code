@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_large_transaction_justification_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart';
+import 'package:vit_trade_flutter/features/p2p_orders/presentation/pages/orders/p2p_my_orders_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

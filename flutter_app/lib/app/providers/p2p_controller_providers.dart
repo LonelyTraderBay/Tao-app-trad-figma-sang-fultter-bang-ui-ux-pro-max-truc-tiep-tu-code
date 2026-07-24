@@ -5,36 +5,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_cont
 
 export 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
 export 'p2p_marketplace_controller_providers.dart';
-
-final p2pOrderTimelineProvider =
-    FutureProvider.family<P2POrderTimelineSnapshot, String>(
-      (ref, orderId) =>
-          ref.watch(p2pRepositoryProvider).getOrderTimeline(orderId),
-    );
-
-final p2pOrderRateProvider =
-    FutureProvider.family<P2POrderRateSnapshot, String>(
-      (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderRate(orderId),
-    );
-
-final p2pOrderCancelProvider =
-    FutureProvider.family<P2POrderCancelSnapshot, String>(
-      (ref, orderId) =>
-          ref.watch(p2pRepositoryProvider).getOrderCancel(orderId),
-    );
-
-final p2pOrderProofProvider =
-    FutureProvider.family<P2POrderProofSnapshot, String>(
-      (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderProof(orderId),
-    );
-
-final p2pOrderProvider = FutureProvider.family<P2POrderSnapshot, String>(
-  (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrder(orderId),
-);
-
-final p2pChatProvider = FutureProvider.family<P2PChatSnapshot, String>(
-  (ref, orderId) => ref.watch(p2pRepositoryProvider).getChat(orderId),
-);
+export 'p2p_orders_controller_providers.dart';
 
 final p2pDisputeDetailProvider =
     FutureProvider.family<P2PDisputeDetailSnapshot, String>(
@@ -188,18 +159,6 @@ final p2pClaimDetailProvider =
           ref.watch(p2pRepositoryProvider).getClaimDetail(claimId),
     );
 
-final p2pEscrowBalanceProvider =
-    FutureProvider.family<P2PEscrowBalanceSnapshot, String>(
-      (ref, asset) =>
-          ref.watch(p2pRepositoryProvider).getEscrowBalance(asset: asset),
-    );
-
-final p2pEscrowDetailProvider =
-    FutureProvider.family<P2PEscrowDetailSnapshot, String>(
-      (ref, orderId) =>
-          ref.watch(p2pRepositoryProvider).getEscrowDetail(orderId),
-    );
-
 final p2pKycRequirementsProvider = FutureProvider<P2PKycRequirementsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getKycRequirements(),
 );
@@ -261,27 +220,6 @@ final p2pFraudPreventionProvider = FutureProvider<P2PFraudPreventionSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getFraudPrevention(),
 );
 
-final p2pWalletTransferProvider =
-    FutureProvider.family<
-      P2PWalletTransferSnapshot,
-      ({String asset, String type})
-    >((ref, request) {
-      return ref
-          .watch(p2pRepositoryProvider)
-          .getWalletTransfer(asset: request.asset, type: request.type);
-    });
-
-final p2pFundLockHistoryProvider =
-    FutureProvider.family<P2PFundLockHistorySnapshot, bool>(
-      (ref, walletHistoryAlias) => ref
-          .watch(p2pRepositoryProvider)
-          .getFundLockHistory(walletHistoryAlias: walletHistoryAlias),
-    );
-
-final p2pWalletProvider = FutureProvider<P2PWalletSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getWallet(),
-);
-
 final p2pLimitTrackerProvider = FutureProvider<P2PLimitTrackerSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getLimitTracker(),
 );
@@ -338,10 +276,6 @@ final p2pBlacklistAddProvider = FutureProvider<P2PBlacklistAddSnapshot>(
 
 final p2pBlacklistProvider = FutureProvider<P2PBlacklistSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getBlacklist(),
-);
-
-final p2pMyOrdersProvider = FutureProvider<P2PMyOrdersSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getMyOrders(),
 );
 
 /// STATE-S23: view-state bất biến của Cài đặt 2FA P2P — methods/thresholds
