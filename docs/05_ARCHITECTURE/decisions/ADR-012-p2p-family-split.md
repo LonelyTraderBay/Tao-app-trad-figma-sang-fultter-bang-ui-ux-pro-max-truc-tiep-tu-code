@@ -40,9 +40,12 @@ ranh giới sở hữu mờ, khó sửa song song.
 ## Hệ quả / nợ còn lại
 
 - Cycle bị cấm: guardrail `maxP2pCoreSiblingEdges = 0` trong
-  `test/quality/module_dependency_cycle_guardrail_test.dart`.
-- `p2p_trust` vẫn lớn (~33 trang); wave-2 có thể tách
-  `p2p_security` / `p2p_dispute` nếu cần — **không** thuộc ADR này.
+  `test/quality/module_dependency_cycle_guardrail_test.dart`. Sibling list
+  hiện tại: marketplace / orders / account / **security** / **dispute**.
+- **Wave-2 done (PR8):** `p2p_trust` đã tách thành `p2p_security` +
+  `p2p_dispute` (presentation + routes + controller providers).
+  `P2PTrustRepository` + `p2pTrustRepositoryProvider` **vẫn** ở `p2p_core`
+  — cả hai sibling watch cùng typed provider (không tách interface repo thêm).
 - Baseline mock fixture / audit CSV regen theo từng PR move; PR5 xóa residual
   module `p2p` khỏi home-ref.
 - Wave-1b **done (PR7):** 4 sibling interfaces + typed providers trong
@@ -55,3 +58,5 @@ PR0 ADR+skeleton core → PR1 marketplace → PR2 orders → PR3 account →
 PR4 trust → **PR5 xóa monolith `features/p2p` + chốt ADR** (hoàn tất wave-1).
 Optional wave-1b: Task 6 / PR7 tách repository interfaces (**done** —
 interfaces + typed providers trong `p2p_core`; composite facade giữ nguyên).
+Optional wave-2: PR8 tách `p2p_trust` → `p2p_security` + `p2p_dispute`
+(**done** — repo interface trust vẫn composite trong core).

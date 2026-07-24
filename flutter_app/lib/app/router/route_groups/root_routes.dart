@@ -78,11 +78,13 @@ ShellRoute _appShellRoute(ShellRenderMode shellRenderMode) {
       ...tradeTerminalRoutes(shellRenderMode),
       ...tradeRoutes(shellRenderMode),
       ...adminRoutes(shellRenderMode),
-      // ADR-012: P2P family route groups (marketplace → orders → account → trust).
+      // ADR-012: P2P family route groups
+      // (marketplace → orders → account → security → dispute).
       ...p2pMarketplaceRoutes(shellRenderMode),
       ...p2pOrdersRoutes(shellRenderMode),
       ...p2pAccountRoutes(shellRenderMode),
-      ...p2pTrustRoutes(shellRenderMode),
+      ...p2pSecurityRoutes(shellRenderMode),
+      ...p2pDisputeRoutes(shellRenderMode),
       ...supportRoutes(shellRenderMode),
       ...launchpadRoutes(shellRenderMode),
       ...arenaCoreRoutes(shellRenderMode),

@@ -45,9 +45,10 @@
 | news | 1 |
 | notifications | 1 |
 | p2p_account | 6 |
+| p2p_dispute | 4 |
 | p2p_marketplace | 19 |
 | p2p_orders | 9 |
-| p2p_trust | 12 |
+| p2p_security | 8 |
 | predictions | 22 |
 | profile | 5 |
 | referral | 2 |
