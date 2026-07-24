@@ -44,6 +44,7 @@ import 'package:vit_trade_flutter/app/router/route_groups/p2p_orders_routes.dart
 import 'package:vit_trade_flutter/app/router/route_groups/p2p_account_routes.dart';
 import 'package:vit_trade_flutter/app/router/route_groups/p2p_route_ids.dart';
 import 'package:vit_trade_flutter/app/router/route_groups/p2p_routes.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/p2p_trust_routes.dart';
 import 'package:vit_trade_flutter/app/router/route_groups/predictions_route_ids.dart';
 import 'package:vit_trade_flutter/app/router/route_groups/predictions_routes.dart';
 import 'package:vit_trade_flutter/app/router/route_groups/profile_route_ids.dart';

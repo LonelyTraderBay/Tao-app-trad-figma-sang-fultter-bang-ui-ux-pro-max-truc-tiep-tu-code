@@ -25,11 +25,12 @@ Generated from `flutter_app/tool/home_reference_consistency_audit.dart`. Measure
 | news | 1 | 1 | pass |
 | notifications | 1 | 1 | pass |
 | onboarding | 0 | 0 | pass |
-| p2p | 1 | 1 | pass |
+| p2p | 0 | 0 | pass |
 | p2p_account | 0 | 0 | pass |
 | p2p_core | 0 | 0 | pass |
 | p2p_marketplace | 0 | 0 | pass |
 | p2p_orders | 0 | 0 | pass |
+| p2p_trust | 1 | 1 | pass |
 | predictions | 0 | 0 | pass |
 | profile | 0 | 0 | pass |
 | referral | 0 | 0 | pass |
@@ -49,7 +50,7 @@ Generated from `flutter_app/tool/home_reference_consistency_audit.dart`. Measure
 | dca | `flutter_app/lib/features/dca/presentation/pages/hub/dca_page_state_overview.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | news | `flutter_app/lib/features/news/presentation/pages/news_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | notifications | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
-| p2p | `flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| p2p_trust | `flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | rewards | `flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | rewards | `flutter_app/lib/features/rewards/presentation/widgets/rewards_hub_hero_section.dart` | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | support | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
