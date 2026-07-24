@@ -549,9 +549,9 @@ final class AppRoutePaths {
       P2PRoutePaths.p2pSecuritySuspiciousActivity;
   static const String p2pSecurityWhitelist = P2PRoutePaths.p2pSecurityWhitelist;
   static const String settingsSecurityBiometric =
-      P2PRoutePaths.settingsSecurityBiometric;
+      ProfileRoutePaths.settingsSecurityBiometric;
   static const String settingsSecurityChangePassword =
-      P2PRoutePaths.settingsSecurityChangePassword;
+      ProfileRoutePaths.settingsSecurityChangePassword;
   static String p2pMerchant(String merchantId) =>
       P2PRoutePaths.p2pMerchant(merchantId);
   static String p2pReport(String merchantId) =>

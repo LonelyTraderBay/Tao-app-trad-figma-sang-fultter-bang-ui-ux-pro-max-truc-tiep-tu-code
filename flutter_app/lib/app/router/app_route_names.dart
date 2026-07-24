@@ -708,9 +708,9 @@ final class AppRouteNames {
   static const String sc404P2PWhitelistMode =
       P2PRouteNames.sc404P2PWhitelistMode;
   static const String sc405SettingsSecurityBiometric =
-      P2PRouteNames.sc405SettingsSecurityBiometric;
+      ProfileRouteNames.sc405SettingsSecurityBiometric;
   static const String sc406SettingsSecurityChangePassword =
-      P2PRouteNames.sc406SettingsSecurityChangePassword;
+      ProfileRouteNames.sc406SettingsSecurityChangePassword;
   static const String sc407P2PTaxReportDetail =
       P2PRouteNames.sc407P2PTaxReportDetail;
   static const String sc408DcaRebalanceEdit =

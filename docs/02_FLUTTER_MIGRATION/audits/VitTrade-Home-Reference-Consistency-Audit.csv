@@ -920,7 +920,7 @@ p2p_orders,root_page,flutter_app/lib/features/p2p_orders/presentation/widgets/wa
 p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page.dart,0,0,0,0,0,0,0,0,no,-
 p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_common.dart,0,0,0,0,0,0,0,0,no,-
 p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_sections.dart,0,0,0,0,0,0,0,0,no,-
-p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart,0,0,0,0,1,0,0,1,no,-
+p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_claim_detail_page_state.dart,0,0,0,0,0,0,0,0,no,-
 p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_detail_page.dart,0,0,0,0,0,0,0,0,no,-
 p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_evidence_page.dart,0,0,0,0,0,0,0,0,no,-
 p2p_trust,root_page,flutter_app/lib/features/p2p_trust/presentation/pages/dispute/p2p_dispute_page.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
