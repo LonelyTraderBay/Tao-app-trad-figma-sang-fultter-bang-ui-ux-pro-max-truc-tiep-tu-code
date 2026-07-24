@@ -29,5 +29,5 @@
 
 # Largest mock-repository fixture families in the repo — high merge-conflict
 # risk when multiple devs touch different sub-domains of the same feature.
-/flutter_app/lib/features/earn/data/ @LonelyTraderBay
-/flutter_app/lib/features/p2p/data/  @LonelyTraderBay
+/flutter_app/lib/features/earn_core/data/ @LonelyTraderBay
+/flutter_app/lib/features/p2p_core/data/  @LonelyTraderBay

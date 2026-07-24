@@ -1,4 +1,4 @@
-import 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart';
+import 'package:vit_trade_flutter/features/p2p_core/domain/entities/p2p_entities.dart';
 
 /// Abstract data-access contract every P2P screen depends on; implemented by mock and remote repositories.
 abstract interface class P2PRepository {

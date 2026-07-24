@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart
 import 'package:vit_trade_flutter/features/earn_core/data/repositories/mock_earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn_core/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/repositories/mock_launchpad_repository.dart';
-import 'package:vit_trade_flutter/features/p2p/data/repositories/mock_p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p_core/data/repositories/mock_p2p_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/data/repositories/mock_predictions_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/data/repositories/mock_trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/data/repositories/mock_trade_copy_trading_repository.dart';

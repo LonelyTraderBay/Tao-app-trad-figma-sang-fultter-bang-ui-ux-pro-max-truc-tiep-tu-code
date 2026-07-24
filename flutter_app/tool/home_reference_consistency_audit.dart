@@ -40,7 +40,6 @@ const Map<String, int> _allModuleDivergenceBaselines = <String, int>{
   'news': 1,
   'notifications': 1,
   'onboarding': 0,
-  'p2p': 0,
   'p2p_account': 0,
   'p2p_core': 0,
   'p2p_marketplace': 0,

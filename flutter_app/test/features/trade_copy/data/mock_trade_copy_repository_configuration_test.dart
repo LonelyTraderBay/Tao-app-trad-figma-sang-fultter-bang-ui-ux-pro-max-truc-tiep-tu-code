@@ -3,7 +3,7 @@ import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository
 
 /// Repository-layer smoke test for [MockTradeCopyTradingRepository] under
 /// the `test/features/<feature>/data/` convention (see
-/// `test/features/p2p/data/mock_p2p_repository_orders_test.dart`).
+/// `test/features/p2p_core/data/mock_p2p_repository_orders_test.dart`).
 ///
 /// Every method on `TradeCopyTradingRepository` already gets an isA<>
 /// smoke pass in the sibling

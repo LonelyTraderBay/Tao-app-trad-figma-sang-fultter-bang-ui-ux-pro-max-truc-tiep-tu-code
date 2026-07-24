@@ -6,11 +6,11 @@
 // test/features/home/golden/home_page_golden_test.dart) and Flutter 3.41.9
 // stable (matches .github/workflows/flutter-ci.yml) — goldens are sensitive
 // to Skia/renderer version, so regenerate with that Flutter version on
-// Windows: `flutter test --update-goldens test/features/p2p/golden/`.
+// Windows: `flutter test --update-goldens test/features/p2p_core/golden/`.
 //
 // Only a "data" state is captured here: MockP2PRepository (unlike
 // MockTradeRepository/MockHomeRepository) has no `loadDelay`/`simulateError`
-// constructor knobs — see test/features/p2p/p2p_home_page_test.dart, which
+// constructor knobs — see test/features/p2p_core/p2p_home_page_test.dart, which
 // pumps the default ProviderScope() the same way. There is no
 // distinguishable loading/error state to override for this repository.
 import 'dart:io' show Platform;

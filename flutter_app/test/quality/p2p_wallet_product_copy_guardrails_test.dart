@@ -194,7 +194,7 @@ void main() {
           paths: [
             'lib/features/p2p_marketplace/presentation/pages/ads/p2p_create_ad_page.dart',
             'lib/features/p2p_marketplace/presentation/widgets/ads/p2p_create_ad_sections.dart',
-            'lib/features/p2p/presentation/controllers/p2p_controller.dart',
+            'lib/features/p2p_core/presentation/controllers/p2p_controller.dart',
           ],
           roles: {
             'preview': [RegExp(r'\bpreview\b|_LivePreviewCard')],

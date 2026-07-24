@@ -1,9 +1,9 @@
-export 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart';
-export 'package:vit_trade_flutter/features/p2p/domain/repositories/p2p_repository.dart';
+export 'package:vit_trade_flutter/features/p2p_core/domain/entities/p2p_entities.dart';
+export 'package:vit_trade_flutter/features/p2p_core/domain/repositories/p2p_repository.dart';
 
 import 'package:vit_trade_flutter/core/utils/data_masking.dart';
-import 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_flow_status.dart';
+import 'package:vit_trade_flutter/features/p2p_core/domain/entities/p2p_entities.dart';
+import 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p_flow_status.dart';
 
 export 'p2p_flow_status.dart';
 

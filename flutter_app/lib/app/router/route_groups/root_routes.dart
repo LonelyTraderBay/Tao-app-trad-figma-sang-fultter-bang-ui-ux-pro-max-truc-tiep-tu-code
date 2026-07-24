@@ -78,13 +78,11 @@ ShellRoute _appShellRoute(ShellRenderMode shellRenderMode) {
       ...tradeTerminalRoutes(shellRenderMode),
       ...tradeRoutes(shellRenderMode),
       ...adminRoutes(shellRenderMode),
-      // NOTE: marketplace + orders + account + trust before residual `p2pRoutes`
-      // (ADR-012 PR1–PR4). Residual returns [] until PR5 deletes mount.
+      // ADR-012: P2P family route groups (marketplace → orders → account → trust).
       ...p2pMarketplaceRoutes(shellRenderMode),
       ...p2pOrdersRoutes(shellRenderMode),
       ...p2pAccountRoutes(shellRenderMode),
       ...p2pTrustRoutes(shellRenderMode),
-      ...p2pRoutes(shellRenderMode),
       ...supportRoutes(shellRenderMode),
       ...launchpadRoutes(shellRenderMode),
       ...arenaCoreRoutes(shellRenderMode),

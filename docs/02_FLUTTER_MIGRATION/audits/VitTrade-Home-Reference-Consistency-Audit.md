@@ -25,7 +25,6 @@ Generated from `flutter_app/tool/home_reference_consistency_audit.dart`. Measure
 | news | 1 | 1 | pass |
 | notifications | 1 | 1 | pass |
 | onboarding | 0 | 0 | pass |
-| p2p | 0 | 0 | pass |
 | p2p_account | 0 | 0 | pass |
 | p2p_core | 0 | 0 | pass |
 | p2p_marketplace | 0 | 0 | pass |

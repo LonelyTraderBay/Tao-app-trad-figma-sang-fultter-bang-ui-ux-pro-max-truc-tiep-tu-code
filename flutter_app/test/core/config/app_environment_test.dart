@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
 import 'package:vit_trade_flutter/features/earn_core/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/notifications/data/notifications_repository.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p_core/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
