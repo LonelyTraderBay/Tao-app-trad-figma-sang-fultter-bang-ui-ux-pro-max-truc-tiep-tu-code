@@ -42,6 +42,8 @@ scripts/headroom/vittrade.headroom.local.env
 .tokensave/
 .gitnexus/
 .kilo/
+# Superpowers / SDD agent scratch (briefs, reports, review diffs) — never commit
+.superpowers/
 
 # Root-level scratch files
 /tmp_*
