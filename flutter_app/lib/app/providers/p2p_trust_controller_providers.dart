@@ -8,13 +8,13 @@ export 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p
 final p2pDisputeDetailProvider =
     FutureProvider.family<P2PDisputeDetailSnapshot, String>(
       (ref, disputeId) =>
-          ref.watch(p2pRepositoryProvider).getDisputeDetail(disputeId),
+          ref.watch(p2pTrustRepositoryProvider).getDisputeDetail(disputeId),
     );
 
 final p2pDisputeEvidenceProvider =
     FutureProvider.family<P2PDisputeEvidenceSnapshot, String>(
       (ref, disputeId) =>
-          ref.watch(p2pRepositoryProvider).getDisputeEvidence(disputeId),
+          ref.watch(p2pTrustRepositoryProvider).getDisputeEvidence(disputeId),
     );
 
 // GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>> — .whenData()
@@ -38,122 +38,122 @@ final p2pDisputeEvidenceControllerProvider =
 final p2pDisputeResolutionProvider =
     FutureProvider.family<P2PDisputeResolutionSnapshot, String>(
       (ref, disputeId) =>
-          ref.watch(p2pRepositoryProvider).getDisputeResolution(disputeId),
+          ref.watch(p2pTrustRepositoryProvider).getDisputeResolution(disputeId),
     );
 
 final p2pDisputeOpenProvider =
     FutureProvider.family<P2PDisputeOpenSnapshot, String>(
       (ref, orderId) =>
-          ref.watch(p2pRepositoryProvider).getDisputeOpen(orderId),
+          ref.watch(p2pTrustRepositoryProvider).getDisputeOpen(orderId),
     );
 
 final p2pDisputesProvider = FutureProvider<P2PDisputesSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getDisputes(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getDisputes(),
 );
 
 final p2pReportMerchantProvider =
     FutureProvider.family<P2PReportMerchantSnapshot, String>(
       (ref, merchantId) =>
-          ref.watch(p2pRepositoryProvider).getReportMerchant(merchantId),
+          ref.watch(p2pTrustRepositoryProvider).getReportMerchant(merchantId),
     );
 
 final p2pReviewsProvider = FutureProvider<P2PReviewsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getReviews(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getReviews(),
 );
 
 final p2pInsuranceFundProvider = FutureProvider<P2PInsuranceFundSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getInsuranceFund(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getInsuranceFund(),
 );
 
 final p2pInsuranceCertificateProvider =
     FutureProvider<P2PInsuranceCertificateSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getInsuranceCertificate(),
+      (ref) => ref.watch(p2pTrustRepositoryProvider).getInsuranceCertificate(),
     );
 
 final p2pInsuranceScoreProvider = FutureProvider<P2PInsuranceScoreSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getInsuranceScore(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getInsuranceScore(),
 );
 
 final p2pInsurancePolicyProvider = FutureProvider<P2PInsurancePolicySnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getInsurancePolicy(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getInsurancePolicy(),
 );
 
 final p2pContributionHistoryProvider =
     FutureProvider<P2PContributionHistorySnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getContributionHistory(),
+      (ref) => ref.watch(p2pTrustRepositoryProvider).getContributionHistory(),
     );
 
 final p2pClaimDetailProvider =
     FutureProvider.family<P2PClaimDetailSnapshot, String>(
       (ref, claimId) =>
-          ref.watch(p2pRepositoryProvider).getClaimDetail(claimId),
+          ref.watch(p2pTrustRepositoryProvider).getClaimDetail(claimId),
     );
 
 final p2pSecurityCenterProvider = FutureProvider<P2PSecurityCenterSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getSecurityCenter(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getSecurityCenter(),
 );
 
 final p2pTwoFactorSettingsProvider =
     FutureProvider<P2PTwoFactorSettingsSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getTwoFactorSettings(),
+      (ref) => ref.watch(p2pTrustRepositoryProvider).getTwoFactorSettings(),
     );
 
 final p2pDeviceManagementProvider = FutureProvider<P2PDeviceManagementSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getDeviceManagement(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getDeviceManagement(),
 );
 
 final p2pAntiPhishingCodeProvider = FutureProvider<P2PAntiPhishingCodeSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getAntiPhishingCode(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getAntiPhishingCode(),
 );
 
 final p2pLoginHistoryProvider = FutureProvider<P2PLoginHistorySnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getLoginHistory(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getLoginHistory(),
 );
 
 final p2pSuspiciousActivityProvider =
     FutureProvider<P2PSuspiciousActivitySnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getSuspiciousActivity(),
+      (ref) => ref.watch(p2pTrustRepositoryProvider).getSuspiciousActivity(),
     );
 
 final p2pE2EInfoProvider = FutureProvider<P2PE2EInfoSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getE2EInfo(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getE2EInfo(),
 );
 
 final p2pFraudPreventionProvider = FutureProvider<P2PFraudPreventionSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getFraudPrevention(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getFraudPrevention(),
 );
 
 final p2pLimitTrackerProvider = FutureProvider<P2PLimitTrackerSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getLimitTracker(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getLimitTracker(),
 );
 
 final p2pTransactionLimitsProvider =
     FutureProvider<P2PTransactionLimitsSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getTransactionLimits(),
+      (ref) => ref.watch(p2pTrustRepositoryProvider).getTransactionLimits(),
     );
 
 final p2pComplianceOverviewProvider =
     FutureProvider<P2PComplianceOverviewSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getComplianceOverview(),
+      (ref) => ref.watch(p2pTrustRepositoryProvider).getComplianceOverview(),
     );
 
 final p2pAmlScreeningProvider = FutureProvider<P2PAmlScreeningSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getAmlScreening(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getAmlScreening(),
 );
 
 final p2pSourceOfFundsProvider = FutureProvider<P2PSourceOfFundsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getSourceOfFunds(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getSourceOfFunds(),
 );
 
 final p2pLargeTransactionJustificationProvider =
     FutureProvider.family<P2PLargeTransactionJustificationSnapshot, double>(
       (ref, amount) => ref
-          .watch(p2pRepositoryProvider)
+          .watch(p2pTrustRepositoryProvider)
           .getLargeTransactionJustification(amount: amount),
     );
 
 final p2pRiskAssessmentProvider = FutureProvider<P2PRiskAssessmentSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getRiskAssessment(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getRiskAssessment(),
 );
 
 final p2pTaxReportingProvider =
@@ -162,7 +162,7 @@ final p2pTaxReportingProvider =
       ({int selectedYear, String selectedJurisdiction})
     >((ref, request) {
       return ref
-          .watch(p2pRepositoryProvider)
+          .watch(p2pTrustRepositoryProvider)
           .getTaxReporting(
             selectedYear: request.selectedYear,
             selectedJurisdiction: request.selectedJurisdiction,
@@ -170,15 +170,15 @@ final p2pTaxReportingProvider =
     });
 
 final p2pAchievementsProvider = FutureProvider<P2PAchievementsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getAchievements(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getAchievements(),
 );
 
 final p2pBlacklistAddProvider = FutureProvider<P2PBlacklistAddSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getBlacklistAdd(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getBlacklistAdd(),
 );
 
 final p2pBlacklistProvider = FutureProvider<P2PBlacklistSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getBlacklist(),
+  (ref) => ref.watch(p2pTrustRepositoryProvider).getBlacklist(),
 );
 
 /// STATE-S23: view-state bất biến của Cài đặt 2FA P2P — methods/thresholds

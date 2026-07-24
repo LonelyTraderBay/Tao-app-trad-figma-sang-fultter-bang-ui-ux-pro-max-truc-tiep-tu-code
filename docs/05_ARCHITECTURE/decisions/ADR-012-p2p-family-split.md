@@ -26,10 +26,13 @@ ranh giới sở hữu mờ, khó sửa song song.
    không đổi — chỉ đổi package path + ownership.
 4. **Route groups:** bốn file `p2p_*_routes.dart`; `p2p_route_ids.dart` giữ unified
    (tránh mass-rename path constants). Monolith `p2p_routes.dart` đã xóa ở PR5.
-5. **Repository (wave-1 = Earn parity):** giữ **một** `P2PRepository` (+ mock /
-   fixtures / provider) trong `p2p_core` sau PR5 — giống `EarnRepository` trong
-   `earn_core`. Tách interface mock/remote theo sibling = **optional wave-1b**
-   (plan Task 6), không thuộc DoD wave-1.
+5. **Repository:** wave-1 giữ **một** mock / fixtures / `p2pRepositoryProvider`
+   trong `p2p_core` (Earn parity). **Wave-1b (Task 6 / PR7 — done):** bốn
+   interface sibling-owned sống **trong** `p2p_core` —
+   `P2PMarketplaceRepository` / `P2POrdersRepository` / `P2PAccountRepository` /
+   `P2PTrustRepository` — plus typed providers (`p2p*RepositoryProvider`)
+   delegate về cùng instance; `P2PRepository` vẫn là composite facade
+   `implements` cả bốn (tránh core→sibling edge nếu interface nằm ở sibling).
 6. **Providers:** tách `p2p_*_controller_providers.dart` theo sibling tại
    `app/providers/`; facade `p2p_controller_providers.dart` chỉ re-export bốn
    sibling (Earn-style).
@@ -42,12 +45,13 @@ ranh giới sở hữu mờ, khó sửa song song.
   `p2p_security` / `p2p_dispute` nếu cần — **không** thuộc ADR này.
 - Baseline mock fixture / audit CSV regen theo từng PR move; PR5 xóa residual
   module `p2p` khỏi home-ref.
-- Wave-1b (optional): tách `P2PMarketplaceRepository` / orders / account / trust
-  nếu còn bandwidth sau khi PR5 ổn định.
+- Wave-1b **done (PR7):** 4 sibling interfaces + typed providers trong
+  `p2p_core`; composite `P2PRepository` facade giữ nguyên cho mock/fail-closed.
 - Đánh đổi: nhiều import package hơn; bù lại blast radius và ownership rõ.
 
 ## Lộ trình thực thi (tóm tắt)
 
 PR0 ADR+skeleton core → PR1 marketplace → PR2 orders → PR3 account →
 PR4 trust → **PR5 xóa monolith `features/p2p` + chốt ADR** (hoàn tất wave-1).
-Optional wave-1b: Task 6 tách repository interfaces.
+Optional wave-1b: Task 6 / PR7 tách repository interfaces (**done** —
+interfaces + typed providers trong `p2p_core`; composite facade giữ nguyên).

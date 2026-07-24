@@ -6,30 +6,32 @@ import 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p
 export 'package:vit_trade_flutter/features/p2p_core/presentation/controllers/p2p_controller.dart';
 
 final p2pMerchantApplyProvider = FutureProvider<P2PMerchantApplySnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getMerchantApply(),
+  (ref) => ref.watch(p2pAccountRepositoryProvider).getMerchantApply(),
 );
 
 final p2pMerchantProfileProvider =
     FutureProvider.family<P2PMerchantProfileSnapshot, String>(
-      (ref, merchantId) =>
-          ref.watch(p2pRepositoryProvider).getMerchantProfile(merchantId),
+      (ref, merchantId) => ref
+          .watch(p2pAccountRepositoryProvider)
+          .getMerchantProfile(merchantId),
     );
 
 final p2pPaymentMethodAddProvider = FutureProvider<P2PPaymentMethodAddSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodAdd(),
+  (ref) => ref.watch(p2pAccountRepositoryProvider).getPaymentMethodAdd(),
 );
 
 final p2pPaymentMethodVerificationProvider =
     FutureProvider.family<P2PPaymentMethodVerificationSnapshot, String>(
       (ref, methodId) => ref
-          .watch(p2pRepositoryProvider)
+          .watch(p2pAccountRepositoryProvider)
           .getPaymentMethodVerification(methodId),
     );
 
 final p2pPaymentMethodOwnershipProvider =
     FutureProvider.family<P2PPaymentMethodOwnershipSnapshot, String>(
-      (ref, methodId) =>
-          ref.watch(p2pRepositoryProvider).getPaymentMethodOwnership(methodId),
+      (ref, methodId) => ref
+          .watch(p2pAccountRepositoryProvider)
+          .getPaymentMethodOwnership(methodId),
     );
 
 // GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>>.
@@ -49,7 +51,9 @@ final p2pPaymentMethodOwnershipControllerProvider =
 
 final p2pPaymentMethodCoolingPeriodProvider =
     FutureProvider<P2PPaymentMethodCoolingPeriodSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodCoolingPeriod(),
+      (ref) => ref
+          .watch(p2pAccountRepositoryProvider)
+          .getPaymentMethodCoolingPeriod(),
     );
 
 // GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>>.
@@ -66,36 +70,38 @@ final p2pPaymentMethodCoolingPeriodControllerProvider =
 
 final p2pPaymentMethodHistoryProvider =
     FutureProvider<P2PPaymentMethodHistorySnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodHistory(),
+      (ref) =>
+          ref.watch(p2pAccountRepositoryProvider).getPaymentMethodHistory(),
     );
 
 final p2pPaymentMethodsProvider = FutureProvider<P2PPaymentMethodsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethods(),
+  (ref) => ref.watch(p2pAccountRepositoryProvider).getPaymentMethods(),
 );
 
 final p2pKycRequirementsProvider = FutureProvider<P2PKycRequirementsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getKycRequirements(),
+  (ref) => ref.watch(p2pAccountRepositoryProvider).getKycRequirements(),
 );
 
 final p2pKycStatusProvider = FutureProvider<P2PKycStatusSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getKycStatus(),
+  (ref) => ref.watch(p2pAccountRepositoryProvider).getKycStatus(),
 );
 
 final p2pIdentityVerificationProvider =
     FutureProvider<P2PIdentityVerificationSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getIdentityVerification(),
+      (ref) =>
+          ref.watch(p2pAccountRepositoryProvider).getIdentityVerification(),
     );
 
 final p2pAddressProofProvider = FutureProvider<P2PAddressProofSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getAddressProof(),
+  (ref) => ref.watch(p2pAccountRepositoryProvider).getAddressProof(),
 );
 
 final p2pSelfieVerificationProvider =
     FutureProvider<P2PSelfieVerificationSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getSelfieVerification(),
+      (ref) => ref.watch(p2pAccountRepositoryProvider).getSelfieVerification(),
     );
 
 final p2pVideoVerificationProvider =
     FutureProvider<P2PVideoVerificationSnapshot>(
-      (ref) => ref.watch(p2pRepositoryProvider).getVideoVerification(),
+      (ref) => ref.watch(p2pAccountRepositoryProvider).getVideoVerification(),
     );
