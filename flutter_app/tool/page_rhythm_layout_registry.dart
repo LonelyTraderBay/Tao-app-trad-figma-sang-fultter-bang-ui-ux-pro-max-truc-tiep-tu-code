@@ -62,7 +62,7 @@ const widgetClassPageOverrides = <String, String>{
   'PredictionTournamentDetailPage':
       'features/predictions/presentation/pages/prediction_tournaments_page.dart',
   'P2PWhitelistModePage':
-      'features/p2p/presentation/pages/security/p2p_security_center_page.dart',
+      'features/p2p_trust/presentation/pages/security/p2p_security_center_page.dart',
   'PredictionAdvancedChartPage':
       'features/predictions/presentation/pages/prediction_advanced_chart_page.dart',
 };

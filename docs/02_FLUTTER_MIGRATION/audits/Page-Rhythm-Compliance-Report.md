@@ -68,13 +68,13 @@ Screen rollup: 413 real_page routes, L1 pass 413, L2 pass 413 warn 0, unknown 0,
 
 ### onboarding (1 routes, L2 warn 0, unknown 0)
 
-### p2p (35 routes, L2 warn 0, unknown 0)
-
 ### p2p_account (16 routes, L2 warn 0, unknown 0)
 
 ### p2p_marketplace (13 routes, L2 warn 0, unknown 0)
 
 ### p2p_orders (13 routes, L2 warn 0, unknown 0)
+
+### p2p_trust (35 routes, L2 warn 0, unknown 0)
 
 ### predictions (18 routes, L2 warn 0, unknown 0)
 
