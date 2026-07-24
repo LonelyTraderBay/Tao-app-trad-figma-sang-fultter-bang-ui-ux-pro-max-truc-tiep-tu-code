@@ -17,7 +17,7 @@ class _ChatHeader extends StatelessWidget {
           children: [
             _RoundIconButton(
               icon: Icons.arrow_back_rounded,
-              tooltip: 'Back to P2P order detail',
+              tooltip: 'Quay lại chi tiết đơn P2P',
               onPressed: () =>
                   context.go(AppRoutePaths.p2pOrder(snapshot.orderId)),
             ),
@@ -75,7 +75,7 @@ class _ChatHeader extends StatelessWidget {
             ),
             _SmallHeaderButton(
               key: P2PChatPage.detailKey,
-              tooltip: 'Open P2P order detail',
+              tooltip: 'Mở chi tiết đơn P2P',
               label: 'Chi tiết',
               onPressed: () =>
                   context.go(AppRoutePaths.p2pOrder(snapshot.orderId)),
@@ -84,7 +84,7 @@ class _ChatHeader extends StatelessWidget {
             _RoundIconButton(
               key: P2PChatPage.e2eKey,
               icon: Icons.lock_outline_rounded,
-              tooltip: 'Open E2E encryption info',
+              tooltip: 'Mở thông tin mã hóa E2E',
               color: AppColors.buy,
               onPressed: () => context.go(AppRoutePaths.p2pE2EInfo),
             ),

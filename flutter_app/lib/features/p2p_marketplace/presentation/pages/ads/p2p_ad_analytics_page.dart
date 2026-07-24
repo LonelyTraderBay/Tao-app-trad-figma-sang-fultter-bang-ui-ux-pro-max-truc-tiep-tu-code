@@ -139,7 +139,7 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                                   state: VitHighRiskUiState.riskReview,
                                   title: 'Ad performance review',
                                   message:
-                                      'Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.',
+                                      'Đã xem danh tính tin, phễu chuyển đổi, xu hướng khối lượng, tỷ lệ thanh toán, khoảng đối thủ và bước tối ưu trước khi thay đổi.',
                                   contractId: 'p2p-ad-analytics-review',
                                 ),
                               ),
