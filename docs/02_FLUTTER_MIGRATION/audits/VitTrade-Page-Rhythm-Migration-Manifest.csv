@@ -86,7 +86,7 @@ batch,cluster,file,tier,status
 0,wallet,flutter_app/lib/features/wallet/presentation/pages/transfer/withdraw_limits_page.dart,form,done
 0,wallet,flutter_app/lib/features/wallet/presentation/widgets/address/wallet_address_add_preview.dart,form,done
 0,wallet,flutter_app/lib/features/wallet/presentation/widgets/assets/wallet_buy_crypto_result_sections.dart,standard,done
-1,wallet,flutter_app/lib/features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart,standard,pending
+0,wallet,flutter_app/lib/features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart,standard,done
 0,wallet,flutter_app/lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart,standard,done
 0,profile,flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart,standard,done
 0,profile,flutter_app/lib/features/profile/presentation/pages/api_key_create_page.dart,standard,done
@@ -252,7 +252,7 @@ batch,cluster,file,tier,status
 0,p2p_account,flutter_app/lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart,standard,done
 0,p2p_account,flutter_app/lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_history_page.dart,standard,done
 0,p2p_account,flutter_app/lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_verification_page.dart,form,done
-2,p2p_core,flutter_app/lib/features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart,standard,pending
+0,p2p_core,flutter_app/lib/features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart,standard,done
 0,p2p_dispute,flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_dispute_detail_page.dart,form,done
 0,p2p_dispute,flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_dispute_evidence_page.dart,form,done
 0,p2p_dispute,flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_dispute_page.dart,form,done
