@@ -88,6 +88,16 @@ List<RouteBase> profileRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc413SettingsSecurity,
       builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
+    GoRoute(
+      path: AppRoutePaths.settingsSecurityBiometric,
+      name: AppRouteNames.sc405SettingsSecurityBiometric,
+      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
+    ),
+    GoRoute(
+      path: AppRoutePaths.settingsSecurityChangePassword,
+      name: AppRouteNames.sc406SettingsSecurityChangePassword,
+      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
+    ),
     ...profileOutgoingPlaceholders,
   ];
 }

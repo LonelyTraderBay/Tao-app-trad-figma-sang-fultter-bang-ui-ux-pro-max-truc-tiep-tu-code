@@ -354,7 +354,7 @@ class _BenchmarkMetricRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(benchmark.toneKey);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: P2PSpacingTokens.p2pClaimInfoRowPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

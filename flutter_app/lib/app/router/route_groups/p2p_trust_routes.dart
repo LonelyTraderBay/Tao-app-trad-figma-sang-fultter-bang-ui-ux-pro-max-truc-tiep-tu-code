@@ -33,7 +33,6 @@ import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/dispute/
 import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/dispute/p2p_disputes_page.dart';
 import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/security/p2p_report_merchant_page.dart';
 import 'package:vit_trade_flutter/features/p2p_trust/presentation/pages/security/p2p_reviews_page.dart';
-import 'package:vit_trade_flutter/features/profile/presentation/pages/security_page.dart';
 
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 
@@ -116,16 +115,6 @@ List<RouteBase> p2pTrustRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.p2pSecurityWhitelist,
       name: AppRouteNames.sc404P2PWhitelistMode,
       builder: (_, _) => P2PWhitelistModePage(shellRenderMode: shellRenderMode),
-    ),
-    GoRoute(
-      path: AppRoutePaths.settingsSecurityBiometric,
-      name: AppRouteNames.sc405SettingsSecurityBiometric,
-      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
-    ),
-    GoRoute(
-      path: AppRoutePaths.settingsSecurityChangePassword,
-      name: AppRouteNames.sc406SettingsSecurityChangePassword,
-      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: '/p2p/report/:merchantId',

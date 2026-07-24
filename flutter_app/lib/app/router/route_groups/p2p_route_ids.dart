@@ -61,10 +61,6 @@ final class P2PRoutePaths {
   static const String p2pSecuritySuspiciousActivity =
       '/p2p/security/suspicious-activity';
   static const String p2pSecurityWhitelist = '/p2p/security/whitelist';
-  static const String settingsSecurityBiometric =
-      '/settings/security/biometric';
-  static const String settingsSecurityChangePassword =
-      '/settings/security/change-password';
   static String p2pMerchant(String merchantId) => '/p2p/merchant/$merchantId';
   static String p2pReport(String merchantId) => '/p2p/report/$merchantId';
   static const String p2pBlacklist = '/p2p/blacklist';
@@ -186,9 +182,5 @@ final class P2PRouteNames {
   static const String sc402P2PKycVerify = 'sc402P2PKycVerify';
   static const String sc403P2PKycFaceMatch = 'sc403P2PKycFaceMatch';
   static const String sc404P2PWhitelistMode = 'sc404P2PWhitelistMode';
-  static const String sc405SettingsSecurityBiometric =
-      'sc405SettingsSecurityBiometric';
-  static const String sc406SettingsSecurityChangePassword =
-      'sc406SettingsSecurityChangePassword';
   static const String sc407P2PTaxReportDetail = 'sc407P2PTaxReportDetail';
 }

@@ -2,6 +2,10 @@ final class ProfileRoutePaths {
   const ProfileRoutePaths._();
 
   static const String settingsSecurity = '/settings/security';
+  static const String settingsSecurityBiometric =
+      '/settings/security/biometric';
+  static const String settingsSecurityChangePassword =
+      '/settings/security/change-password';
   static const String profilePredictions = '/profile/predictions';
   static const String profile = '/profile';
   static const String profileEdit = '/profile/edit';
@@ -34,4 +38,8 @@ final class ProfileRouteNames {
   static const String sc167ProfilePredictions = 'sc167ProfilePredictions';
   static const String sc168MyArena = 'sc168MyArena';
   static const String sc413SettingsSecurity = 'sc413SettingsSecurity';
+  static const String sc405SettingsSecurityBiometric =
+      'sc405SettingsSecurityBiometric';
+  static const String sc406SettingsSecurityChangePassword =
+      'sc406SettingsSecurityChangePassword';
 }
