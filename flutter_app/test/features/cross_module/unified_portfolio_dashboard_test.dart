@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_ho
 import 'package:vit_trade_flutter/features/cross_module/data/unified_portfolio_repository.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/hub/dca_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_home_page.dart';
+import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/hub/wallet_page.dart';

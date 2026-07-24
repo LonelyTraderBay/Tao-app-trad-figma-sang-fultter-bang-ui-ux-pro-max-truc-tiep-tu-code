@@ -17,7 +17,7 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/laun
 import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/pair_detail_page.dart';
 import 'package:vit_trade_flutter/features/notifications/presentation/pages/notifications_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_home_page.dart';
+import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';

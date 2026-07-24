@@ -922,7 +922,7 @@ List<String> _extraSourceForPageGroup(
     'VitP2PFlowScaffold(': [
       (
         path:
-            'lib/features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart',
+            'lib/features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart',
         className: null,
       ),
     ],
