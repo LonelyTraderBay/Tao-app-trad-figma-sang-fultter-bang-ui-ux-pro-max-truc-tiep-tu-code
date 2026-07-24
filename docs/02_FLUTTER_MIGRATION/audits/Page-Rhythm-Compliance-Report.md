@@ -1,6 +1,6 @@
 # Page Rhythm Compliance Report
 
-Generated: 2026-07-23
+Generated: 2026-07-24
 
 Source: `VitTrade-Page-Rhythm-Screen-Compliance.csv`
 
@@ -68,7 +68,9 @@ Screen rollup: 413 real_page routes, L1 pass 413, L2 pass 413 warn 0, unknown 0,
 
 ### onboarding (1 routes, L2 warn 0, unknown 0)
 
-### p2p (77 routes, L2 warn 0, unknown 0)
+### p2p (64 routes, L2 warn 0, unknown 0)
+
+### p2p_marketplace (13 routes, L2 warn 0, unknown 0)
 
 ### predictions (18 routes, L2 warn 0, unknown 0)
 
