@@ -13,11 +13,11 @@
 | Metric | Giá trị |
 | --- | --- |
 | Tổng file `VitPageContent` | 350 |
-| Đã migrate (`done`) | 348 |
-| Còn lại (`pending`) | 2 |
-| Batch cuối | 02 |
-| **Batch tiếp theo** | **01** |
-| Ngày generate | 2026-07-24 |
+| Đã migrate (`done`) | 350 |
+| Còn lại (`pending`) | 0 |
+| Batch cuối | 01 |
+| **Batch tiếp theo** | **00** |
+| Ngày generate | 2026-07-25 |
 
 ---
 
@@ -101,34 +101,14 @@ Sau mỗi batch, cập nhật block này:
 
 ```yaml
 last_completed_batch: 0
-next_batch: 1
-pending_files: 2
+next_batch: COMPLETE
+pending_files: 0
 last_verify: <flutter analyze OK | date>
 ```
 
 ---
 
 ## Danh sách batch
-
-### Batch 01 — wallet
-
-Trạng thái: ⏳ PENDING
-
-| # | File | Tier | Status |
-| --- | --- | --- | --- |
-| 1 | `features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart` | standard | pending |
-
-**Gate:** `flutter analyze lib/features/wallet/`
-
-### Batch 02 — p2p_core
-
-Trạng thái: ⏳ PENDING
-
-| # | File | Tier | Status |
-| --- | --- | --- | --- |
-| 1 | `features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart` | standard | pending |
-
-**Gate:** `flutter analyze lib/features/p2p_core/`
 
 ---
 
@@ -221,6 +201,7 @@ Trạng thái: ⏳ PENDING
 - [x] `features/wallet/presentation/pages/transfer/withdraw_limits_page.dart` — form
 - [x] `features/wallet/presentation/widgets/address/wallet_address_add_preview.dart` — form
 - [x] `features/wallet/presentation/widgets/assets/wallet_buy_crypto_result_sections.dart` — standard
+- [x] `features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart` — standard
 - [x] `features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart` — standard
 - [x] `features/profile/presentation/pages/activity_log_page.dart` — standard
 - [x] `features/profile/presentation/pages/api_key_create_page.dart` — standard
@@ -386,6 +367,7 @@ Trạng thái: ⏳ PENDING
 - [x] `features/p2p_account/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart` — standard
 - [x] `features/p2p_account/presentation/pages/payment/p2p_payment_method_history_page.dart` — standard
 - [x] `features/p2p_account/presentation/pages/payment/p2p_payment_method_verification_page.dart` — form
+- [x] `features/p2p_core/presentation/widgets/vit_p2p_flow_scaffold.dart` — standard
 - [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_detail_page.dart` — form
 - [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_evidence_page.dart` — form
 - [x] `features/p2p_dispute/presentation/pages/dispute/p2p_dispute_page.dart` — form

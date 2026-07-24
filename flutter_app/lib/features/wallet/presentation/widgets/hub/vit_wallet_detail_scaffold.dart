@@ -40,7 +40,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
     this.shellRenderMode,
     this.backgroundColor = AppColors.bg,
     this.contentGap = VitContentGap.defaultGap,
-    this.rhythm = VitPageRhythm.form,
+    this.rhythm = VitPageRhythm.standard,
     this.scrollChild,
   });
 

@@ -23,7 +23,11 @@ void main(List<String> args) {
     final tier = _suggestTier(normalized);
     final migrated =
         source.contains('rhythm: VitPageRhythm') ||
-        source.contains('rhythm: VitPageRhythm.');
+        source.contains('rhythm: VitPageRhythm.') ||
+        // Shared scaffolds pass `rhythm:` through a field defaulted to
+        // `VitPageRhythm.*` (callers may override per page).
+        (RegExp(r'\brhythm:\s*rhythm\b').hasMatch(source) &&
+            RegExp(r'VitPageRhythm\.\w+').hasMatch(source));
     rows.add(
       _Row(
         cluster: _cluster(normalized),
