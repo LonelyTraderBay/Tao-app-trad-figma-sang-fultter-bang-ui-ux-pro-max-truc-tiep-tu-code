@@ -39,8 +39,8 @@ Cursor sessions: follow the same agent runbook manually (read-only); do not inve
 | markets | `flutter_app/lib/features/markets/` | **P6.1** | 0 broken (1 legitimate) | PASS | **done 2026-07-22** |
 | trade | `flutter_app/lib/features/trade/` (+ bots/copy) | **P6.1** | 0 broken (1 demo legitimate) | PASS | **done 2026-07-22** |
 | wallet | `flutter_app/lib/features/wallet/` | **P6.1** | 0 | PASS | **done 2026-07-22** |
-| earn | `flutter_app/lib/features/earn/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
-| p2p | `flutter_app/lib/features/p2p/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
+| earn | `flutter_app/lib/features/earn_*/` (family) | **P6.2** | 0 | PASS | **done 2026-07-22** |
+| p2p (family) | `flutter_app/lib/features/p2p_core/` + `p2p_marketplace/` + `p2p_orders/` + `p2p_account/` + `p2p_security/` + `p2p_dispute/` | **P6.2** | 0 | PASS | **done 2026-07-22** (paths updated post ADR-012 PR8 · 2026-07-24) |
 | arena | `flutter_app/lib/features/arena/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
 | predictions | `flutter_app/lib/features/predictions/` | **P6.2** | 0 | PASS | **done 2026-07-22** |
 | launchpad / rewards / referral / dca / support / news / discovery | related Discovery family | P6.2 | 0 broken (1 launchpad ended-pool legitimate) | PASS | **done 2026-07-22** |

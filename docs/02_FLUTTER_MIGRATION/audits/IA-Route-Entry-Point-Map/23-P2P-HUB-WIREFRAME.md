@@ -6,8 +6,8 @@ Nguồn:
 - [`Hub-Content-Contract.md`](./Hub-Content-Contract.md) — marketplace = list/hero first; tools = drawer/sheet, không tile-stack above fold
 - [`18-APP-SHELL-BOTTOM-NAV-SPEC.md`](./18-APP-SHELL-BOTTOM-NAV-SPEC.md) — **D1**: mọi `/p2p*` highlight **Trade**
 - Entry Home: [`17-HOME-PROFILE-MENU-WIREFRAME.md`](./17-HOME-PROFILE-MENU-WIREFRAME.md) — Sản phẩm › Giao dịch › P2P
-- Production: `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_home_page.dart` (+ parts state / offer list / common)
-- Express: `pages/hub/p2p_express_page.dart`
+- Production: `flutter_app/lib/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart` (+ parts state / offer list / common)
+- Express: `p2p_marketplace/.../pages/hub/p2p_express_page.dart`
 - Paths: `p2p_route_ids.dart` / `AppRoutePaths.p2p*`
 
 Phạm vi: **Marketplace (quảng cáo + Express + tạo tin + đơn)** vs **Công cụ P2P (drawer / sheet ~11 HUB)**; insurance **GOM → Profile › Pháp lý**.  
