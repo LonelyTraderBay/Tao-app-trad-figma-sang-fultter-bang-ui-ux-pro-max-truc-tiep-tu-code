@@ -6,37 +6,44 @@ This file exists to keep the Phase 4 Wallet production path fail-closed without
 inventing a remote repository. No remote implementation should be wired from
 this document until the backend contract is confirmed by the API owner.
 
-## Required Endpoint Groups
+P0 scope is taken from `ke-hoach-san-sang-production.md` (Wallet overview,
+assets, history, deposit, withdraw, transfer, address book, token approval).
+
+## Required Endpoints
 
 | Flow | Method | Path | Notes |
 | --- | --- | --- | --- |
-| Portfolio overview | `GET` | `/wallet/overview` | Must return balances, available/in-order/frozen amounts, asset rows, and enabled actions. |
-| Transactions | `GET` | `/wallet/transactions` | Must support filters, detail lookup, network metadata, and masked addresses. |
-| Deposit | `GET` | `/wallet/deposit-options` | Must return asset-scoped networks, deposit address, memo rules, fees, and confirmation requirements. |
-| Withdraw preview | `POST` | `/wallet/withdrawals/preview` | Must return fee, limits, memo requirements, destination validation, and received amount before confirm. |
-| Withdraw confirm | `POST` | `/wallet/withdrawals` | Must require preview id, 2FA/session proof, audit trail id, and idempotency key. |
-| Address book | `GET/POST/PATCH` | `/wallet/address-book` | Must support whitelist state, favorite state, network validation, and masked display. |
-| Token approvals | `GET/POST` | `/wallet/token-approvals` | Must support active approvals, revoke preview, revoke confirm, and risk labels. |
-| Limits/health/tools | `GET` | `/wallet/limits`, `/wallet/health`, `/wallet/tools/*` | Must return read-only status and clear unavailable states. |
+| Overview | `GET` | `/wallet/overview` | Must return portfolio summary and enabled high-risk actions. |
+| Assets | `GET` | `/wallet/assets` | Must return asset rows with availability and precision metadata. |
+| Transactions | `GET` | `/wallet/transactions` | Must support filters/pagination and masked address display fields. |
+| Deposit address | `POST` | `/wallet/deposits/address` | Must return asset/network-scoped deposit address and memo rules. |
+| Withdraw preview | `POST` | `/wallet/withdrawals/preview` | Must return fee, limits, risk, received amount, and next steps before confirm. |
+| Withdraw confirm | `POST` | `/wallet/withdrawals/confirm` | Must require preview binding, 2FA/session proof, audit trail, and idempotency. |
+| Transfer preview | `POST` | `/wallet/transfers/preview` | Must validate destination, amount, fee/limits, and risk before confirm. |
+| Transfer confirm | `POST` | `/wallet/transfers/confirm` | Must require preview binding, session proof, audit trail, and idempotency. |
+| Address book list | `GET` | `/wallet/address-book` | Must return saved destinations with masked display and network/asset binding. |
+| Address book add | `POST` | `/wallet/address-book` | Must validate network/address/memo and support whitelist/favorite semantics. |
+| Token approvals list | `GET` | `/wallet/token-approvals` | Must return active approvals with risk labels. |
+| Token approval revoke preview | `POST` | `/wallet/token-approvals/revoke-preview` | Must show revoke impact and confirmation requirements before confirm. |
+| Token approval revoke confirm | `POST` | `/wallet/token-approvals/revoke-confirm` | Must require preview binding, session proof, audit trail, and idempotency. |
 
 ## DTOs To Confirm
 
-- Balance DTOs for total, available, in-order, frozen, asset symbol, precision,
-  fiat value, and 24h change.
-- Deposit/withdraw network DTOs for min/max, fee, memo, confirmation, enabled
-  flags, maintenance status, and risk copy.
-- Withdraw preview/confirm DTOs with idempotency, 2FA/session proof, fees,
-  limits, next steps, and audit trail id.
-- Address-book DTOs with masked address, whitelist state, favorite state,
-  network/asset, and validation errors.
+- Request DTOs for asset/network selection, deposit address lookup, withdraw
+  and transfer amounts, address-book entries, and token-approval revoke ids.
+- Response DTOs for overview, asset rows, transaction history, deposit address,
+  withdraw/transfer preview and confirm receipts, address-book entries, and
+  token-approval rows.
+- Preview/confirm DTOs with preview id, fees, limits, risk level, 2FA flags,
+  estimated arrival / next steps, audit trail id, and idempotency key.
 - Error DTO shape with stable machine codes for insufficient balance, limit
-  exceeded, invalid address, memo required, network disabled, timeout/offline,
-  rate limit, locked account, and service unavailable.
+  exceeded, invalid address, memo required, network disabled, preview expired,
+  rate limit, locked account, offline/timeout, and service unavailable.
 
 ## Production Guardrail
 
 Until this contract is signed and DTO tests exist, Wallet uses
-`FailClosedWalletRepository` whenever `enableMockData == false`. The repository
-returns empty/error-state snapshots, disables high-risk actions through zero
-availability and unavailable network metadata, and never wires mock data into
-production.
+`FailClosedWalletRepository` whenever `enableMockData == false`. That repository
+throws `WalletBackendContractMissingException` and the presentation layer
+renders a controlled error state instead of using mock data or crashing on
+provider read.

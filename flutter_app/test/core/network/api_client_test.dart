@@ -6,6 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/core/config/app_environment.dart';
 import 'package:vit_trade_flutter/core/data/offline_failure.dart';
 import 'package:vit_trade_flutter/core/network/api_client.dart';
+import 'package:vit_trade_flutter/core/network/api_error_mapper.dart';
+import 'package:vit_trade_flutter/core/network/safe_retry.dart';
+import 'package:vit_trade_flutter/core/network/session_refresh.dart';
 
 void main() {
   AppConfig config() {
@@ -42,42 +45,46 @@ void main() {
     expect(client.dio.interceptors.whereType<InterceptorsWrapper>(), isEmpty);
   });
 
-  // SEC-S46 / P0.4: error-mapping luôn có; auth → refresh → error-mapping.
+  // SEC-S46 / P0.4 / Task 1.6: safe-retry + error-mapping luôn có;
+  // auth → refresh → safe-retry → error-mapping.
   // Dio 5 có thể kèm ImplyContentTypeInterceptor sẵn — chỉ đếm interceptor ta gắn.
-  test('interceptor mặc định: error-mapping có mặt, auth/refresh tùy chọn', () {
-    final bare = ApiClient(config: config());
-    expect(bare.dio.interceptors.whereType<InterceptorsWrapper>().length, 1);
-    expect(
-      bare.dio.interceptors.whereType<QueuedInterceptorsWrapper>(),
-      isEmpty,
-    );
+  test(
+    'interceptor mặc định: safe-retry + error-mapping; auth/refresh tùy chọn',
+    () {
+      final bare = ApiClient(config: config());
+      expect(bare.dio.interceptors.whereType<InterceptorsWrapper>().length, 2);
+      expect(
+        bare.dio.interceptors.whereType<QueuedInterceptorsWrapper>(),
+        isEmpty,
+      );
 
-    final withAuth = ApiClient(
-      config: config(),
-      tokenProvider: () async => 'token-thu',
-    );
-    expect(
-      withAuth.dio.interceptors.whereType<InterceptorsWrapper>().length,
-      2,
-    );
+      final withAuth = ApiClient(
+        config: config(),
+        tokenProvider: () async => 'token-thu',
+      );
+      expect(
+        withAuth.dio.interceptors.whereType<InterceptorsWrapper>().length,
+        3,
+      );
 
-    final withRefresh = ApiClient(
-      config: config(),
-      tokenProvider: () async => 'token-thu',
-      refreshAccessToken: () async => 'token-moi',
-      onRefreshFailed: () async {},
-    );
-    expect(
-      withRefresh.dio.interceptors.whereType<InterceptorsWrapper>().length,
-      2,
-    );
-    expect(
-      withRefresh.dio.interceptors
-          .whereType<QueuedInterceptorsWrapper>()
-          .length,
-      1,
-    );
-  });
+      final withRefresh = ApiClient(
+        config: config(),
+        tokenProvider: () async => 'token-thu',
+        refreshAccessToken: () async => 'token-moi',
+        onRefreshFailed: () async {},
+      );
+      expect(
+        withRefresh.dio.interceptors.whereType<InterceptorsWrapper>().length,
+        3,
+      );
+      expect(
+        withRefresh.dio.interceptors
+            .whereType<QueuedInterceptorsWrapper>()
+            .length,
+        1,
+      );
+    },
+  );
 
   test(
     'authTokenInterceptor gắn Bearer khi có token, bỏ qua khi null',
@@ -134,14 +141,23 @@ void main() {
 
   group('apiUserMessageForStatus', () {
     test('map đủ status P0.3 sang tiếng Việt', () {
-      expect(apiUserMessageForStatus(400), contains('không hợp lệ'));
-      expect(apiUserMessageForStatus(401), contains('Phiên'));
-      expect(apiUserMessageForStatus(403), contains('quyền'));
-      expect(apiUserMessageForStatus(404), contains('không còn tồn tại'));
-      expect(apiUserMessageForStatus(409), contains('Trạng thái'));
-      expect(apiUserMessageForStatus(422), contains('chưa hợp lệ'));
-      expect(apiUserMessageForStatus(429), contains('quá nhanh'));
-      expect(apiUserMessageForStatus(500), contains('gián đoạn'));
+      const cases = <int, String>{
+        400: 'không hợp lệ',
+        401: 'Phiên',
+        403: 'quyền',
+        404: 'không còn tồn tại',
+        409: 'Trạng thái',
+        422: 'chưa hợp lệ',
+        429: 'quá nhanh',
+        500: 'gián đoạn',
+      };
+      for (final entry in cases.entries) {
+        expect(
+          apiUserMessageForStatus(entry.key),
+          contains(entry.value),
+          reason: 'status ${entry.key}',
+        );
+      }
     });
 
     test('500 kèm traceId cho support, không lộ message BE', () {
@@ -190,20 +206,6 @@ void main() {
         data: {'code': 'NETWORK_UNAVAILABLE'},
       );
       expect(mapped, isA<OfflineFailure>());
-    });
-
-    test('body JSON string vẫn parse được', () {
-      final mapped =
-          mapBadResponseToApiFailure(
-                statusCode: 409,
-                data: jsonEncode({
-                  'code': 'LIMIT_EXCEEDED',
-                  'trace_id': 'req_snake',
-                }),
-              )
-              as ApiFailure;
-      expect(mapped.code, 'LIMIT_EXCEEDED');
-      expect(mapped.traceId, 'req_snake');
     });
 
     test('code lạ fallback HTTP status, không dùng message BE', () {
@@ -277,6 +279,157 @@ void main() {
 
     await expectLater(dio.get<dynamic>('/vi-du'), throwsA(isA<DioException>()));
     expect(failedCalls, 1);
+  });
+
+  group('safeRetryInterceptor', () {
+    test('GET: connectionTimeout rồi 200 → retry thành công', () async {
+      final adapter = _SequencedMixedAdapter([
+        const _AdapterStep.fail(DioExceptionType.connectionTimeout),
+        const _AdapterStep.status(200),
+      ]);
+      final dio = Dio(BaseOptions(baseUrl: 'https://khong-goi.example'))
+        ..httpClientAdapter = adapter;
+      dio.interceptors.add(safeRetryInterceptor(dio: dio));
+
+      final response = await dio.get<dynamic>('/vi-du');
+      expect(response.statusCode, 200);
+      expect(adapter.fetchCount, 2);
+    });
+
+    test('GET: 503 ×2 rồi 200 → đúng max 2 retries', () async {
+      final adapter = _SequencedMixedAdapter([
+        const _AdapterStep.status(503),
+        const _AdapterStep.status(503),
+        const _AdapterStep.status(200),
+      ]);
+      final dio = Dio(BaseOptions(baseUrl: 'https://khong-goi.example'))
+        ..httpClientAdapter = adapter;
+      dio.interceptors.add(safeRetryInterceptor(dio: dio));
+
+      final response = await dio.get<dynamic>('/vi-du');
+      expect(response.statusCode, 200);
+      expect(adapter.fetchCount, 3);
+    });
+
+    test(
+      'GET: hết 2 retries vẫn lỗi → map OfflineFailure/ApiFailure',
+      () async {
+        final adapter = _SequencedMixedAdapter([
+          const _AdapterStep.status(503),
+          const _AdapterStep.status(503),
+          const _AdapterStep.status(503),
+        ]);
+        final dio = Dio(BaseOptions(baseUrl: 'https://khong-goi.example'))
+          ..httpClientAdapter = adapter;
+        dio.interceptors.add(safeRetryInterceptor(dio: dio));
+        dio.interceptors.add(errorMappingInterceptor());
+
+        try {
+          await dio.get<dynamic>('/vi-du');
+          fail('phải ném DioException');
+        } on DioException catch (exception) {
+          expect(adapter.fetchCount, 3);
+          final failure = exception.error as ApiFailure;
+          expect(failure.statusCode, 503);
+          expect(failure.userMessage, contains('gián đoạn'));
+        }
+      },
+    );
+
+    test('POST: 503 không retry (bảo vệ high-risk mutate)', () async {
+      final adapter = _SequencedMixedAdapter([
+        const _AdapterStep.status(503),
+        const _AdapterStep.status(200),
+      ]);
+      final dio = Dio(BaseOptions(baseUrl: 'https://khong-goi.example'))
+        ..httpClientAdapter = adapter;
+      dio.interceptors.add(safeRetryInterceptor(dio: dio));
+
+      await expectLater(
+        dio.post<dynamic>('/withdraw/confirm'),
+        throwsA(isA<DioException>()),
+      );
+      expect(adapter.fetchCount, 1);
+    });
+
+    test('PUT/PATCH/DELETE: lỗi tạm thời không retry', () async {
+      for (final method in ['PUT', 'PATCH', 'DELETE']) {
+        final adapter = _SequencedMixedAdapter([
+          const _AdapterStep.fail(DioExceptionType.connectionError),
+          const _AdapterStep.status(200),
+        ]);
+        final dio = Dio(BaseOptions(baseUrl: 'https://khong-goi.example'))
+          ..httpClientAdapter = adapter;
+        dio.interceptors.add(safeRetryInterceptor(dio: dio));
+
+        await expectLater(
+          dio.request<dynamic>('/resource', options: Options(method: method)),
+          throwsA(isA<DioException>()),
+        );
+        expect(adapter.fetchCount, 1, reason: method);
+      }
+    });
+
+    test('GET: 400 không retry', () async {
+      final adapter = _SequencedMixedAdapter([
+        const _AdapterStep.status(400),
+        const _AdapterStep.status(200),
+      ]);
+      final dio = Dio(BaseOptions(baseUrl: 'https://khong-goi.example'))
+        ..httpClientAdapter = adapter;
+      dio.interceptors.add(safeRetryInterceptor(dio: dio));
+
+      await expectLater(
+        dio.get<dynamic>('/vi-du'),
+        throwsA(isA<DioException>()),
+      );
+      expect(adapter.fetchCount, 1);
+    });
+
+    test('isTransientDioFailure: chỉ timeout kết nối/nhận + 502/503/504', () {
+      RequestOptions opts() => RequestOptions(path: '/x');
+
+      expect(
+        isTransientDioFailure(
+          DioException(
+            requestOptions: opts(),
+            type: DioExceptionType.connectionTimeout,
+          ),
+        ),
+        isTrue,
+      );
+      expect(
+        isTransientDioFailure(
+          DioException(
+            requestOptions: opts(),
+            type: DioExceptionType.sendTimeout,
+          ),
+        ),
+        isFalse,
+      );
+      expect(
+        isTransientDioFailure(
+          DioException(
+            requestOptions: opts(),
+            type: DioExceptionType.badResponse,
+            response: Response(requestOptions: opts(), statusCode: 500),
+          ),
+        ),
+        isFalse,
+      );
+      expect(
+        isTransientDioFailure(
+          DioException(
+            requestOptions: opts(),
+            type: DioExceptionType.badResponse,
+            response: Response(requestOptions: opts(), statusCode: 502),
+          ),
+        ),
+        isTrue,
+      );
+      expect(isSafeRetryMethod('get'), isTrue);
+      expect(isSafeRetryMethod('POST'), isFalse);
+    });
   });
 
   test('pinning bật theo cờ: fail-closed, không đổi adapter khi không pin', () {
@@ -389,6 +542,48 @@ final class _SequencedStatusAdapter implements HttpClientAdapter {
     return ResponseBody.fromString(
       '{}',
       status,
+      headers: {
+        Headers.contentTypeHeader: [Headers.jsonContentType],
+      },
+    );
+  }
+
+  @override
+  void close({bool force = false}) {}
+}
+
+/// Bước giả lập adapter: trả HTTP status hoặc ném [DioExceptionType].
+final class _AdapterStep {
+  const _AdapterStep.status(this.statusCode) : failType = null;
+  const _AdapterStep.fail(this.failType) : statusCode = null;
+
+  final int? statusCode;
+  final DioExceptionType? failType;
+}
+
+/// Adapter tuần tự cho safe-retry (timeout / status lẫn nhau).
+final class _SequencedMixedAdapter implements HttpClientAdapter {
+  _SequencedMixedAdapter(this.steps);
+
+  final List<_AdapterStep> steps;
+  var fetchCount = 0;
+
+  @override
+  Future<ResponseBody> fetch(
+    RequestOptions options,
+    Stream<List<int>>? requestStream,
+    Future<void>? cancelFuture,
+  ) async {
+    final index = fetchCount.clamp(0, steps.length - 1);
+    fetchCount++;
+    final step = steps[index];
+    final failType = step.failType;
+    if (failType != null) {
+      throw DioException(requestOptions: options, type: failType);
+    }
+    return ResponseBody.fromString(
+      '{}',
+      step.statusCode!,
       headers: {
         Headers.contentTypeHeader: [Headers.jsonContentType],
       },

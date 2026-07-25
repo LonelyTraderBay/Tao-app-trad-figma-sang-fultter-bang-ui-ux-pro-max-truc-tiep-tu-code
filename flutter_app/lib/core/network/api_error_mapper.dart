@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 import 'package:vit_trade_flutter/core/data/offline_failure.dart';
@@ -141,9 +139,6 @@ String? apiUserMessageForBusinessCode(
       return 'Số dư không đủ để thực hiện giao dịch.';
     case 'LIMIT_EXCEEDED':
       return 'Vượt hạn mức giao dịch. Kiểm tra hạn mức ngày/tháng và thử lại.';
-    case 'NETWORK_UNAVAILABLE':
-      // Caller nên chuyển OfflineFailure trước khi gọi hàm này.
-      return 'Mất kết nối. Kiểm tra mạng và thử lại.';
     default:
       return null;
   }
@@ -176,14 +171,6 @@ Map<String, Object?>? _asStringKeyedMap(Object? value) {
       for (final entry in value.entries)
         if (entry.key is String) entry.key as String: entry.value,
     };
-  }
-  if (value is String && value.isNotEmpty) {
-    try {
-      final decoded = jsonDecode(value);
-      return _asStringKeyedMap(decoded);
-    } on FormatException {
-      return null;
-    }
   }
   return null;
 }
