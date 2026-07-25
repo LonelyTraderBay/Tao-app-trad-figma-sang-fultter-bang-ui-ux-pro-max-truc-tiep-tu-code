@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/tools/wallet_token_approval_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
@@ -19,71 +20,134 @@ class WalletTokenRevokeSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Confirm / risk-review sheets prefer calmer density (craft #6).
+    const confirmDensity = VitDensity.standard;
     final lines = preview.body.split('\n');
     final intro = lines.first;
     final rows = [
       for (final line in lines.skip(1)) _TokenPreviewRow.fromLine(line),
     ].whereType<_TokenPreviewRow>().toList(growable: false);
+    final allowanceMatches = [
+      for (final row in rows)
+        if (row.label == 'Hạn mức') row.value,
+    ];
+    final allowance = allowanceMatches.isEmpty ? null : allowanceMatches.first;
+    final detailRows = rows
+        .where((row) => row.label != 'Hạn mức')
+        .toList(growable: false);
 
     return VitSheetPanel(
       title: preview.title,
-      child: VitInsetScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: preview.bulk
-                  ? 'Bulk revoke preview'
-                  : 'Token revoke preview',
-              message: intro,
-              contractId: preview.bulk
-                  ? 'Multiple high-risk approvals'
-                  : 'Single approval review',
-              density: VitDensity.compact,
-            ),
-            const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
-            VitCard(
-              density: VitDensity.compact,
-              variant: VitCardVariant.inner,
-              borderColor: walletTokenApprovalBorder,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var i = 0; i < rows.length; i++)
-                    VitInfoRow(
-                      label: rows[i].label,
-                      value: rows[i].value,
-                      density: VitDensity.compact,
-                      showDivider: i != rows.length - 1,
-                    ),
-                ],
-              ),
-            ),
-            const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
-            Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: ListView(
               children: [
-                Expanded(
-                  child: _TokenSheetButton(
-                    key: walletTokenApprovalRevokeSheetCancelKey,
-                    label: 'Hủy',
-                    onTap: () => Navigator.of(context).pop(),
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: preview.bulk
+                      ? 'Xem trước thu hồi hàng loạt'
+                      : 'Xem trước thu hồi token',
+                  message: intro,
+                  // Snapshot has no highRiskContractId — do not invent one.
+                  density: confirmDensity,
+                ),
+                if (allowance != null) ...[
+                  const SizedBox(
+                    height: WalletSpacingTokens.walletTokenNoticeGap,
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: AppSpacing.x4,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Hạn mức',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Text(
+                            allowance,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
+                            style: AppTextStyles.amountSm.copyWith(
+                              color: AppColors.text1,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.border,
+                  ),
+                ],
+                const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
+                VitCard(
+                  density: confirmDensity,
+                  variant: VitCardVariant.inner,
+                  borderColor: walletTokenApprovalBorder,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (var i = 0; i < detailRows.length; i++)
+                        VitInfoRow(
+                          label: detailRows[i].label,
+                          value: detailRows[i].value,
+                          density: confirmDensity,
+                          showDivider: i != detailRows.length - 1,
+                        ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.rowGapRegular),
-                Expanded(
-                  child: _TokenSheetButton(
-                    key: walletTokenApprovalRevokeSheetConfirmKey,
-                    label: preview.confirmLabel,
-                    danger: true,
-                    onTap: () => Navigator.of(context).pop(),
+                const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  density: confirmDensity,
+                  borderColor: AppColors.riskWarning.withValues(alpha: .24),
+                  child: Text(
+                    'Không hoàn tác sau khi xác nhận. Bước tiếp theo: phát sóng giao dịch thu hồi trên mạng và cập nhật danh sách phê duyệt.',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.riskWarning,
+                    ),
                   ),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
+          Row(
+            children: [
+              Expanded(
+                child: _TokenSheetButton(
+                  key: walletTokenApprovalRevokeSheetCancelKey,
+                  label: 'Hủy',
+                  onTap: () => Navigator.of(context).pop(),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.rowGapRegular),
+              Expanded(
+                child: _TokenSheetButton(
+                  key: walletTokenApprovalRevokeSheetConfirmKey,
+                  label: preview.confirmLabel,
+                  danger: true,
+                  onTap: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

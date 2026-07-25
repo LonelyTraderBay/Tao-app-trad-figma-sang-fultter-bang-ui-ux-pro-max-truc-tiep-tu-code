@@ -73,6 +73,9 @@ final class DensityRouteEntry {
 
 void main(List<String> args) {
   final checkOnly = args.contains('--check');
+  final checkAllowlist = args.contains('--check-allowlist');
+  final routesFilter = _parseCsvOption(args, '--routes');
+  final baselinePath = _parseOption(args, '--baseline');
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
@@ -96,13 +99,40 @@ void main(List<String> args) {
   }
 
   final bodyRows = _readBodyRows(bodyCsvFile);
-  final entries = _collectDensityEntries(bodyRows, repoRoot)
+  var entries = _collectDensityEntries(bodyRows, repoRoot)
     ..sort(_compareDensityEntries);
+
+  if (checkAllowlist) {
+    _runAllowlistCheck(
+      entries: entries,
+      baselinePath: baselinePath,
+      routesFilter: routesFilter,
+      appRoot: appRoot,
+    );
+    return;
+  }
+
+  if (routesFilter != null && routesFilter.isNotEmpty) {
+    entries = entries
+        .where((entry) => routesFilter.contains(entry.route))
+        .toList(growable: false);
+  }
+
   final markdown = _renderMarkdown(entries);
   final csv = _renderCsv(entries);
   final summary = _renderSummary(entries);
 
   if (checkOnly) {
+    // Whole-app artifact sync only — do not combine with --routes filter.
+    if (routesFilter != null) {
+      stderr.writeln(
+        '`--check` compares full artifacts; use `--check-allowlist` '
+        'with `--baseline=` for P0 route ratchet.',
+      );
+      exitCode = 1;
+      return;
+    }
+
     final failures = <String>[];
     if (!markdownFile.existsSync()) {
       failures.add('UI fullscreen density markdown artifact is missing.');
@@ -139,6 +169,135 @@ void main(List<String> args) {
   stdout.writeln('Wrote ${markdownFile.path}');
   stdout.writeln('Wrote ${csvFile.path}');
   stdout.write(summary);
+}
+
+/// Ratchet: live-score allowlisted routes must not exceed baseline max scores.
+/// Does not require whole-app markdown/CSV artifacts to be current.
+void _runAllowlistCheck({
+  required List<DensityRouteEntry> entries,
+  required String? baselinePath,
+  required Set<String>? routesFilter,
+  required Directory appRoot,
+}) {
+  if (baselinePath == null || baselinePath.isEmpty) {
+    stderr.writeln(
+      '`--check-allowlist` requires '
+      '`--baseline=path/to/baseline.txt`.',
+    );
+    exitCode = 1;
+    return;
+  }
+
+  final baselineFile = File(
+    baselinePath.contains(':') || baselinePath.startsWith('/')
+        ? baselinePath
+        : '${appRoot.path}${Platform.pathSeparator}'
+              '${baselinePath.replaceAll('/', Platform.pathSeparator)}',
+  );
+  if (!baselineFile.existsSync()) {
+    stderr.writeln('Allowlist baseline missing: ${baselineFile.path}');
+    exitCode = 1;
+    return;
+  }
+
+  final baseline = _readAllowlistBaseline(baselineFile);
+  if (baseline == null) {
+    exitCode = 1;
+    return;
+  }
+  if (baseline.isEmpty) {
+    stderr.writeln('Allowlist baseline is empty: ${baselineFile.path}');
+    exitCode = 1;
+    return;
+  }
+
+  final requiredRoutes = routesFilter == null || routesFilter.isEmpty
+      ? baseline.keys.toSet()
+      : routesFilter;
+  final byRoute = {for (final entry in entries) entry.route: entry};
+  final failures = <String>[];
+
+  for (final route in requiredRoutes.toList()..sort()) {
+    final maxScore = baseline[route];
+    if (maxScore == null) {
+      failures.add('$route: not listed in baseline (add max density_score).');
+      continue;
+    }
+    final entry = byRoute[route];
+    if (entry == null) {
+      failures.add('$route: missing from body-component density inventory.');
+      continue;
+    }
+    if (entry.densityScore > maxScore) {
+      failures.add(
+        '$route: density_score ${entry.densityScore} > baseline '
+        'max $maxScore (${entry.densityPriority}; ${entry.pageFile}).',
+      );
+    }
+  }
+
+  if (failures.isNotEmpty) {
+    for (final failure in failures) {
+      stderr.writeln(failure);
+    }
+    stderr.writeln(
+      'P0 density allowlist regressed. Fix the page density or, only when '
+      'intentionally accepting a higher score, raise the baseline max.',
+    );
+    exitCode = 1;
+    return;
+  }
+
+  stdout.writeln('allowlist_routes=${requiredRoutes.length}');
+  for (final route in requiredRoutes.toList()..sort()) {
+    final entry = byRoute[route]!;
+    stdout.writeln(
+      '$route\tdensity_score=${entry.densityScore}\t'
+      'max=${baseline[route]}\t${entry.densityPriority}',
+    );
+  }
+  stdout.writeln('UI fullscreen density P0 allowlist is within baseline.');
+}
+
+Map<String, int>? _readAllowlistBaseline(File file) {
+  final scores = <String, int>{};
+  for (final raw in file.readAsLinesSync()) {
+    final line = raw.trim();
+    if (line.isEmpty || line.startsWith('#')) continue;
+    final parts = line.split(',');
+    if (parts.length < 2) {
+      stderr.writeln('Invalid baseline line (need route,max_score): $raw');
+      return null;
+    }
+    final route = parts[0].trim();
+    final maxScore = int.tryParse(parts[1].trim());
+    if (route.isEmpty || maxScore == null) {
+      stderr.writeln('Invalid baseline line (need route,max_score): $raw');
+      return null;
+    }
+    scores[route] = maxScore;
+  }
+  return scores;
+}
+
+String? _parseOption(List<String> args, String name) {
+  final prefix = '$name=';
+  for (final arg in args) {
+    if (arg.startsWith(prefix)) {
+      return arg.substring(prefix.length).trim();
+    }
+  }
+  return null;
+}
+
+Set<String>? _parseCsvOption(List<String> args, String name) {
+  final raw = _parseOption(args, name);
+  if (raw == null || raw.isEmpty) return null;
+  return raw
+      .split(',')
+      .map((part) => part.trim())
+      .where((part) => part.isNotEmpty)
+      .toSet();
 }
 
 Directory _findAppRoot() {

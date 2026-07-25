@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/security_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/transfer_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/withdraw_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart';
 
@@ -131,6 +134,80 @@ void main() {
 
     expect(semanticsLabel('Hủy xem trước thu hồi token'), findsOneWidget);
     expect(semanticsLabel('Xác nhận'), findsOneWidget);
+  });
+
+  testWidgets('SC-146 Transfer confirm exposes money CTA semantics', (
+    tester,
+  ) async {
+    await pumpRoute(tester, AppRoutePaths.walletTransfer);
+
+    expect(
+      semanticsLabel(RegExp(r'Số tiền chuyển nội bộ')),
+      findsOneWidget,
+    );
+    expect(
+      semanticsLabel(RegExp(r'Chuyển khoản nội bộ đã tắt')),
+      findsOneWidget,
+    );
+
+    await tester.ensureVisible(find.byKey(TransferPage.maxKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(TransferPage.maxKey));
+    await tester.pumpAndSettle();
+
+    expect(semanticsLabel('Xem trước chuyển khoản nội bộ'), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(TransferPage.submitKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(TransferPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(
+      semanticsLabel(RegExp(r'Số tiền chuyển [\d,]+\.\d+')),
+      findsOneWidget,
+    );
+    expect(semanticsLabel('Hủy xác nhận chuyển nội bộ'), findsOneWidget);
+    expect(semanticsLabel('Xác nhận chuyển nội bộ'), findsOneWidget);
+  });
+
+  testWidgets('SC-048 Trade exposes buy/sell and confirm CTA semantics', (
+    tester,
+  ) async {
+    await pumpRoute(tester, AppRoutePaths.trade);
+
+    expect(semanticsLabel('Chọn mua'), findsOneWidget);
+    expect(semanticsLabel('Chọn bán'), findsOneWidget);
+    expect(semanticsLabel(RegExp(r'Số lượng mua .+')), findsOneWidget);
+    expect(
+      semanticsLabel('Nhập số lượng để tiếp tục đặt lệnh'),
+      findsOneWidget,
+    );
+
+    await tester.scrollUntilVisible(
+      find.byKey(TradePage.pctKey(25)),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(TradePage.pctKey(25)));
+    await tester.pumpAndSettle();
+
+    expect(semanticsLabel('Xác nhận mua lệnh Spot'), findsOneWidget);
+
+    await tester.tap(find.byKey(TradePage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(semanticsLabel('Huỷ xem trước lệnh giao dịch'), findsOneWidget);
+    expect(semanticsLabel('Xác nhận gửi lệnh giao dịch'), findsOneWidget);
+  });
+
+  testWidgets('SC-158 Security save exposes anti-phishing CTA semantics', (
+    tester,
+  ) async {
+    await pumpRoute(tester, AppRoutePaths.profileSecurity);
+
+    expect(semanticsLabel('Mã chống lừa đảo'), findsOneWidget);
+    expect(semanticsLabel('Lưu mã chống lừa đảo'), findsOneWidget);
+    expect(find.byKey(SecurityPage.antiPhishingSaveKey), findsOneWidget);
   });
 
   testWidgets('SC-036 Prediction risk calculator exposes tabs and scenarios', (

@@ -155,8 +155,14 @@ void main() {
     expect(find.byKey(TradePage.buySideKey), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
     expect(find.text('Tiếp theo'), findsOneWidget);
-    expect(find.textContaining('Số dư khả dụng'), findsOneWidget);
-    expect(find.text('Giá thị trường có thể thay đổi'), findsOneWidget);
+    expect(find.textContaining('Số dư khả dụng'), findsAtLeastNWidgets(1));
+    expect(find.text('Trượt giá'), findsWidgets);
+    expect(
+      find.textContaining('Giá thị trường có thể thay đổi'),
+      findsOneWidget,
+    );
+    expect(find.text('Đánh giá rủi ro'), findsOneWidget);
+    expect(find.textContaining('Không hoàn tác sau khi xác nhận gửi'), findsWidgets);
   });
 
   testWidgets('SC-048 first viewport reaches order side switch', (

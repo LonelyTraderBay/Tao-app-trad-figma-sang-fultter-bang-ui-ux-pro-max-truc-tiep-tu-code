@@ -154,7 +154,9 @@ void main() {
       expect(preview.maskedAddress, 'TQnKxx...z123');
       expect(
         preview.auditTrailNote,
-        'High-risk action: preview + confirm + audit trail required.',
+        'Rủi ro cao: cần xem trước, xác nhận và ghi nhật ký kiểm toán. '
+        'Không hoàn tác sau khi lưu. Bước tiếp theo: địa chỉ có thể dùng '
+        'để rút tiền theo mạng đã chọn.',
       );
     },
   );
@@ -174,13 +176,13 @@ void main() {
 
     final single = controller.revokePreview(approval);
     expect(controller.revokeValidationMessage(approval), isNull);
-    expect(single.title, 'Revoke WETH approval');
+    expect(single.title, 'Thu hồi phê duyệt WETH');
     expect(single.bulk, isFalse);
     expect(single.body, contains('bên chi tiêu, token, hạn mức'));
 
     final bulk = controller.revokePreview(null);
     expect(controller.revokeValidationMessage(null), isNull);
-    expect(bulk.title, 'Revoke all high-risk approvals');
+    expect(bulk.title, 'Thu hồi tất cả phê duyệt rủi ro cao');
     expect(bulk.bulk, isTrue);
   });
 }

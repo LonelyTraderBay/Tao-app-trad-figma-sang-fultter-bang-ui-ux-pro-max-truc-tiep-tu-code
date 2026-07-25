@@ -286,10 +286,10 @@ final class TokenApprovalController {
 
   String? revokeValidationMessage(WalletTokenApproval? approval) {
     if (state.status == WalletHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before previewing token revocation.';
+      return 'Ngoại tuyến: kết nối lại trước khi xem trước thu hồi token.';
     }
     if (state.status.isBusy) {
-      return 'Token revocation is already in progress.';
+      return 'Thu hồi token đang được xử lý.';
     }
     if (approval != null &&
         !state.snapshot.approvals.any((item) => item.id == approval.id)) {
@@ -305,21 +305,21 @@ final class TokenApprovalController {
     final bulk = approval == null;
     final body = bulk
         ? 'Xem lại bên chi tiêu, token, hạn mức, ước tính gas và các quyền bị ảnh hưởng trước khi xác nhận thu hồi này.\n'
-              'Spender: multiple high-risk contracts\n'
-              'Token: multiple approved assets\n'
-              'Allowance: high-risk or unlimited approvals\n'
+              'Bên chi tiêu: nhiều hợp đồng rủi ro cao\n'
+              'Token: nhiều tài sản đã phê duyệt\n'
+              'Hạn mức: phê duyệt rủi ro cao hoặc không giới hạn\n'
               'Ước tính gas: mỗi lượt thu hồi cần một giao dịch riêng; phải xem lại phí mạng trước khi phát sóng.\n'
-              'Impact: removes the highlighted high-risk permissions only.'
+              'Tác động: chỉ gỡ các quyền rủi ro cao đang được tô nổi.'
         : 'Xem lại bên chi tiêu, token, hạn mức, ước tính gas và các quyền bị ảnh hưởng trước khi xác nhận thu hồi này.\n'
-              'Spender: ${approval.spenderName} (${approval.maskedSpender})\n'
+              'Bên chi tiêu: ${approval.spenderName} (${approval.maskedSpender})\n'
               'Token: ${approval.token}\n'
-              'Allowance: ${approval.amountLabel}\n'
+              'Hạn mức: ${approval.amountLabel}\n'
               'Ước tính gas: cần xem trước trước khi phát sóng; phải xác nhận phí mạng.\n'
               'Tác động: xóa hạn mức token này cho bên chi tiêu đã chọn.';
     return TokenRevokePreview(
       title: bulk
-          ? 'Revoke all high-risk approvals'
-          : 'Revoke ${approval.token} approval',
+          ? 'Thu hồi tất cả phê duyệt rủi ro cao'
+          : 'Thu hồi phê duyệt ${approval.token}',
       body: body,
       confirmLabel: 'Xác nhận',
       bulk: bulk,

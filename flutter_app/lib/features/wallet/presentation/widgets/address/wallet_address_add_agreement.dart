@@ -104,9 +104,9 @@ class AddressWarningCard extends StatelessWidget {
       state: VitHighRiskUiState.riskReview,
       title: 'Lưu ý quan trọng',
       message:
-          'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục.',
+          'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục. Không hoàn tác sau khi xác nhận.',
       contractId: highRiskContractId,
-      density: VitDensity.compact,
+      density: VitDensity.standard,
     );
   }
 }

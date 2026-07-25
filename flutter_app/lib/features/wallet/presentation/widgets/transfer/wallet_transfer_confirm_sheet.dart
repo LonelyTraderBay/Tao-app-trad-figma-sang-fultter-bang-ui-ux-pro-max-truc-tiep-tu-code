@@ -20,102 +20,126 @@ class TransferConfirmSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Confirm sheets prefer calmer density than the compact form (craft #6).
+    const confirmDensity = VitDensity.standard;
+    final amountLabel = '${formatTransferAssetAmount(amount)} ${asset.symbol}';
+
     return VitSheetPanel(
-      title: 'X\u00e1c nh\u1eadn chuy\u1ec3n n\u1ed9i b\u1ed9',
+      title: 'Xác nhận chuyển nội bộ',
       child: ListView(
         shrinkWrap: true,
         children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x4,
+              vertical: AppSpacing.x3,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Số lượng',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Semantics(
+                    label: 'Số tiền chuyển $amountLabel',
+                    child: Text(
+                      amountLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: AppTextStyles.amountSm.copyWith(
+                        color: _transferPrimary,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.border,
+          ),
           VitInfoRow(
-            label: 'T\u1eeb',
+            label: 'Từ',
             value: fromWallet.name,
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           VitInfoRow(
-            label: '\u0110\u1ebfn',
+            label: 'Đến',
             value: toWallet.name,
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           VitInfoRow(
-            label: 'T\u00e0i s\u1ea3n',
+            label: 'Tài sản',
             value: asset.symbol,
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           VitInfoRow(
-            label: 'S\u1ed1 l\u01b0\u1ee3ng',
-            value: '${formatTransferAssetAmount(amount)} ${asset.symbol}',
-            valueColor: _transferPrimary,
-            density: VitDensity.compact,
-            showDivider: true,
-          ),
-          VitInfoRow(
-            label: 'Gi\u00e1 tr\u1ecb',
+            label: 'Giá trị',
             value: formatTransferUsd(usdValue),
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           const VitInfoRow(
-            label: 'Ph\u00ed',
-            value: 'Mi\u1ec5n ph\u00ed',
+            label: 'Phí',
+            value: 'Miễn phí',
             valueColor: _transferGreen,
-            density: VitDensity.compact,
+            density: confirmDensity,
           ),
           const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
-          const _ConfirmNote(),
+          VitCard(
+            variant: VitCardVariant.inner,
+            density: confirmDensity,
+            borderColor: _transferPrimary.withValues(alpha: .20),
+            child: Text(
+              'Không hoàn tác sau khi xác nhận. Bước tiếp theo: hệ thống ghi nhận lệnh chuyển nội bộ giữa các ví VitTrade.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ),
           const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Row(
             children: [
               Expanded(
-                child: VitCtaButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  variant: VitCtaButtonVariant.secondary,
-                  height: AppSpacing.inputHeight,
-                  child: const Text('Hu\u1ef7'),
+                child: Semantics(
+                  button: true,
+                  enabled: true,
+                  label: 'Hủy xác nhận chuyển nội bộ',
+                  child: VitCtaButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    variant: VitCtaButtonVariant.secondary,
+                    height: AppSpacing.ctaHeight,
+                    child: const Text('Hủy'),
+                  ),
                 ),
               ),
               const SizedBox(width: _transferInlineGap),
               Expanded(
-                child: VitCtaButton(
+                child: Semantics(
                   key: const Key('sc146_transfer_confirm'),
-                  onPressed: onConfirm,
-                  variant: VitCtaButtonVariant.primary,
-                  height: AppSpacing.inputHeight,
-                  child: const Text('X\u00e1c nh\u1eadn'),
+                  button: true,
+                  enabled: true,
+                  label: 'Xác nhận chuyển nội bộ',
+                  child: VitCtaButton(
+                    onPressed: onConfirm,
+                    variant: VitCtaButtonVariant.primary,
+                    height: AppSpacing.ctaHeight,
+                    child: const Text('Xác nhận'),
+                  ),
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ConfirmNote extends StatelessWidget {
-  const _ConfirmNote();
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      borderColor: _transferPrimary.withValues(alpha: .20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: _transferPrimary,
-            size: _transferActionIcon,
-          ),
-          const SizedBox(width: _transferInlineGap),
-          Expanded(
-            child: Text(
-              'Chuy\u1ec3n n\u1ed9i b\u1ed9 x\u1eed l\u00fd ngay l\u1eadp t\u1ee9c. Ki\u1ec3m tra v\u00ed ngu\u1ed3n, v\u00ed nh\u1eadn, s\u1ed1 l\u01b0\u1ee3ng v\u00e0 ph\u00ed tr\u01b0\u1edbc khi x\u00e1c nh\u1eadn.',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
           ),
         ],
       ),

@@ -163,6 +163,12 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Mi\u1ec5n ph\u00ed'), findsOneWidget);
+    expect(
+      find.textContaining(
+        'Bước tiếp theo: hệ thống ghi nhận lệnh chuyển nội bộ',
+      ),
+      findsOneWidget,
+    );
 
     await tester.ensureVisible(find.byKey(TransferPage.confirmKey));
     await tester.pumpAndSettle();

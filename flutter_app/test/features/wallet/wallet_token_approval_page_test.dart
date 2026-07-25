@@ -103,23 +103,27 @@ void main() {
 
     await tester.tap(find.byKey(WalletTokenApprovalPage.revokeKey('a3')));
     await tester.pumpAndSettle();
-    expect(find.text('Revoke WETH approval'), findsOneWidget);
+    expect(find.text('Thu hồi phê duyệt WETH'), findsOneWidget);
     expect(
       find.textContaining('Xem lại bên chi tiêu, token, hạn mức'),
       findsOneWidget,
     );
-    expect(find.text('Spender'), findsOneWidget);
+    expect(find.text('Bên chi tiêu'), findsOneWidget);
     expect(find.text('Unknown Contract (0x1234...7890)'), findsOneWidget);
     expect(find.text('Token'), findsOneWidget);
     expect(find.text('WETH'), findsWidgets);
-    expect(find.text('Allowance'), findsOneWidget);
+    expect(find.text('Hạn mức'), findsOneWidget);
     expect(find.textContaining('Unlimited'), findsWidgets);
     expect(find.text('Ước tính gas'), findsOneWidget);
     expect(find.text('Tác động'), findsOneWidget);
+    expect(
+      find.textContaining('Không hoàn tác sau khi xác nhận'),
+      findsWidgets,
+    );
     expect(find.textContaining('mock flow'), findsNothing);
     await tester.tap(find.byKey(WalletTokenApprovalPage.revokeSheetCancelKey));
     await tester.pumpAndSettle();
-    expect(find.text('Revoke WETH approval'), findsNothing);
+    expect(find.text('Thu hồi phê duyệt WETH'), findsNothing);
 
     await tester.tap(
       find.byKey(WalletTokenApprovalPage.tabKey('L\u1ECBch s\u1EED')),

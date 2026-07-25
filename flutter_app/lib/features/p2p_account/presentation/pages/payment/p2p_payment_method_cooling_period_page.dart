@@ -109,9 +109,11 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                             if (snapshot.highRiskContractId != null)
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'Xem lại thời gian chờ phương thức',
+                                title: 'Đang hạn chế phương thức mới',
                                 message:
-                                    'Phương thức thanh toán mới bị hạn chế cho đến khi hết thời gian chờ. Giữ hạn mức escrow, tranh chấp và rút tiền hiển thị trước khi cho phép sử dụng.',
+                                    'Phương thức thanh toán mới bị hạn chế đến hết thời gian chờ. '
+                                    'Hạn mức lệnh P2P, ký quỹ escrow và tranh chấp vẫn áp dụng. '
+                                    'Bước tiếp theo: dùng phương thức đã xác minh khác hoặc chờ hết hạn.',
                                 contractId: snapshot.highRiskContractId,
                               ),
                           ],
@@ -165,7 +167,7 @@ class _CoolingHero extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Đang cooling period',
+                      'Đang trong thời gian chờ',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppModuleAccents.p2p,
                       ),
@@ -294,7 +296,7 @@ class _ReasonCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
-                  'Tại sao có cooling period?',
+                  'Tại sao có thời gian chờ?',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.baseMedium.copyWith(

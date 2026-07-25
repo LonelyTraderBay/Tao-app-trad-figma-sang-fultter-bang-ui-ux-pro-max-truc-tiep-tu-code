@@ -36,6 +36,7 @@ class VitTradeSpotSideSwitch extends StatelessWidget {
           value: TradeOrderSide.buy,
           label: 'MUA',
           accentColor: AppColors.buy,
+          semanticLabel: 'Chọn mua',
         ),
         VitSegmentedChoiceOption(
           key: sellKey,
@@ -43,6 +44,7 @@ class VitTradeSpotSideSwitch extends StatelessWidget {
           value: TradeOrderSide.sell,
           label: 'BÁN',
           accentColor: AppColors.sell,
+          semanticLabel: 'Chọn bán',
         ),
       ],
     );

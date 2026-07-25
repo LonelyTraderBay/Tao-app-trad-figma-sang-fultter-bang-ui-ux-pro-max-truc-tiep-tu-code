@@ -182,9 +182,11 @@ class _P2PPaymentMethodAddPageState
             if (snapshot.highRiskContractId != null)
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Xem lại thêm phương thức thanh toán',
+                title: 'Cần xem trước phương thức thanh toán',
                 message:
-                    'Loại thanh toán, phương thức đã chọn, xem trước tài khoản đã che, rủi ro sở hữu, thông báo hạn mức, hộp thoại xác nhận và trạng thái đang gửi vẫn hiển thị trước khi lưu.',
+                    'Phương thức đã chọn, tài khoản đã che, rủi ro sở hữu và hạn mức phải khớp trước khi lưu. '
+                    'Không hoàn tác ngay sau khi xác nhận. '
+                    'Bước tiếp theo: kiểm tra sở hữu và thời gian chờ trước khi dùng cho lệnh P2P.',
                 contractId: snapshot.highRiskContractId,
               ),
             Semantics(
@@ -197,7 +199,7 @@ class _P2PPaymentMethodAddPageState
                 onPressed: _isValidFor(controller) && !_submitting
                     ? () => _confirmSave(context, controller)
                     : null,
-                child: Text(_submitting ? 'Đang lưu...' : 'Thêm phương thức'),
+                child: Text(_submitting ? 'Đang lưu…' : 'Thêm phương thức'),
               ),
             ),
           ],
@@ -255,7 +257,10 @@ class _P2PPaymentMethodAddPageState
         ),
         VitFinancialSafetyItem(label: 'Giới hạn', value: preview.limitMessage),
       ],
-      footer: preview.confirmMessage,
+      footer:
+          '${preview.confirmMessage}\n'
+          'Không hoàn tác sau khi xác nhận. '
+          'Bước tiếp theo: xác minh sở hữu và chờ hết thời gian hạn chế trước khi dùng lệnh giá trị cao.',
     );
 
     if (!context.mounted || !confirmed) return;

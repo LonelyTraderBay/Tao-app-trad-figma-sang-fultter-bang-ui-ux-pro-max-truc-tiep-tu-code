@@ -125,7 +125,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.none,
-          density: VitDensity.compact,
+          density: VitDensity.relaxed,
           fullBleed: true,
           children: snapshotAsync.when(
             loading: () => const [VitSkeletonList()],
@@ -144,11 +144,13 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                 VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
                   title:
-                      'R\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
+                      'C\u1EA7n r\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
                   message:
-                      'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc c\u00E1c thao t\u00E1c nh\u1EA1y c\u1EA3m.',
+                      'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc thao t\u00E1c nh\u1EA1y c\u1EA3m. '
+                      'Kh\u00F4ng ho\u00E0n t\u00E1c sau khi x\u00E1c nh\u1EADn thay \u0111\u1ED5i b\u1EA3o m\u1EADt. '
+                      'B\u01B0\u1EDBc ti\u1EBFp theo: b\u1EADt \u0111\u1EE7 l\u1EDBp b\u1EA3o v\u1EC7 c\u00F2n thi\u1EBFu.',
                   contractId: snapshot.highRiskContractId,
-                  density: VitDensity.compact,
+                  density: VitDensity.relaxed,
                 ),
               _SecurityList(items: snapshot.items, onItemTap: _handleItemTap),
               if (_showDevices) ...[_DeviceList(devices: snapshot.devices)],
@@ -185,7 +187,14 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
           label: 'Mã chống lừa đảo',
           value: _antiPhishingController.text,
         ),
+        const VitConfirmDialogRow(
+          label: 'Hiển thị',
+          value: 'Email VitTrade thật',
+        ),
       ],
+      message:
+          'Không hoàn tác ngay sau khi lưu. '
+          'Bước tiếp theo: mở email VitTrade và kiểm tra mã hiển thị khớp.',
       confirmKey: SecurityPage.antiPhishingConfirmKey,
       cancelKey: SecurityPage.antiPhishingCancelKey,
     );

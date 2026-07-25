@@ -139,7 +139,9 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Ký quỹ escrow đang bảo vệ P2P',
                                 message:
-                                    'Danh sách tin, tạo đơn, bằng chứng thanh toán và tranh chấp được theo dõi trong cùng hợp đồng an toàn P2P.',
+                                    'Tin đăng, tạo đơn, bằng chứng thanh toán và tranh chấp được theo dõi trong cùng hợp đồng escrow. '
+                                    'Không hoàn tác sau khi xác nhận thanh toán. '
+                                    'Bước tiếp theo: giữ tiền trong ký quỹ đến khi hai bên hoàn tất hoặc mở tranh chấp.',
                                 contractId: snapshot.highRiskContractId,
                               ),
                             if (showOfflineWithCache) ...[

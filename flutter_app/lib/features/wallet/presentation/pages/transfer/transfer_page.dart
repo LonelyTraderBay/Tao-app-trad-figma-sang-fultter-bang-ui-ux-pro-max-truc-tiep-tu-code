@@ -126,13 +126,13 @@ class _TransferPageState extends ConsumerState<TransferPage> {
             ),
             if (_amount > 0) TransferAmountEstimate(usdValue: usdValue),
             if (_amount > 0)
-              VitHighRiskStatePanel(
+              const VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 title: 'Xem lại trước khi chuyển',
                 message:
-                    'Kiểm tra ví nguồn, ví nhận, số lượng, phí và chi tiết xác nhận trước khi gửi.',
-                contractId:
-                    '${fromWallet.name} → ${toWallet.name} / ${asset.symbol}',
+                    'Kiểm tra ví nguồn, ví nhận, số lượng và phí trước khi xác nhận. '
+                    'Không hoàn tác sau khi xác nhận. Bước tiếp theo: ghi nhận lệnh chuyển nội bộ.',
+                // WalletTransferSnapshot has no highRiskContractId — do not invent one.
               ),
             if (validationMessage != null)
               TransferValidationNotice(message: validationMessage),

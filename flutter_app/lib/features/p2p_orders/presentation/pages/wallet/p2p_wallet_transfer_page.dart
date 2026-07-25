@@ -182,6 +182,10 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                         child: VitPageContent(
                           rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.none,
+                          // Confirm step uses relaxed breathing room (SDD B2).
+                          density: _showConfirm
+                              ? VitDensity.relaxed
+                              : VitDensity.compact,
                           fullBleed: true,
                           gap: VitContentGap.tight,
                           children: [

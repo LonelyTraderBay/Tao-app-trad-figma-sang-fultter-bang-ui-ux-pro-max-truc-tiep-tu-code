@@ -23,7 +23,7 @@ representative target files and fails if any of them is missing either the
 
 | File | Module | Panel state used | What it tracks |
 | --- | --- | --- | --- |
-| `lib/features/trade/presentation/pages/trade_page_part_01.dart` | Trade | `riskReview` | Spot order risk (fees, slippage, balance) |
+| `lib/features/trade/presentation/widgets/hub/trade_page_state.dart` | Trade | `riskReview` | Spot order risk (fees, slippage, balance) |
 | `lib/features/wallet/presentation/pages/withdraw_page.dart` | Wallet | `riskReview` | Withdrawal preview (address, network, amount, fee) |
 | `lib/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart` | P2P | `riskReview` | Offer → order → payment proof → dispute escrow contract |
 | `lib/features/earn/presentation/pages/staking_earn_page.dart` | Earn | `riskReview` | Terms, validator setup, risk preview, confirmation, receipt |
@@ -57,6 +57,35 @@ representative target files and fails if any of them is missing either the
    `VitHighRiskStatePanel` + `highRiskContractId` even before it is added to
    the guardrail's target set.
 
+## Craft checklist (Trust polish)
+
+Mandatory for Wave A polish (Tasks A2–A5) and any new high-risk
+preview/confirm surface. Reviewers treat each item as a PASS/FAIL gate —
+not guidance.
+
+1. **Amount typography scale** — Preview and Confirm must use the same
+   `AppTextStyles` amount scale (`amount*` / `heroNumber` family). Do not
+   shrink the confirmed amount with an ad-hoc smaller style on the confirm
+   step.
+2. **Risk facts before final CTA** — Immediately above the final confirm
+   CTA, show fee + network + masked address (or the flow’s equivalent risk
+   facts) **and** irreversible / next-step copy in Vietnamese with full
+   diacritics (e.g. “Không hoàn tác sau khi xác nhận”, “Bước tiếp theo:
+   …”).
+3. **Final CTA enablement** — Keep the final CTA disabled until all
+   prerequisites are met (amount, destination, acknowledgements, etc.).
+   The enabled state must be visually obvious (primary filled / active
+   contrast — not a subtle opacity-only change).
+4. **vi-VN copy only** — All user-facing strings use full Vietnamese with
+   diacritics. Do not add new English UI strings; if a touched string is
+   still English baseline debt, translate it in the same change.
+5. **Shared risk panel (Rules)** — Keep `VitHighRiskStatePanel` +
+   `highRiskContractId` per Rules above; craft polish does not replace the
+   panel with a local banner.
+6. **Confirm density** — Prefer calmer density on confirm / risk-review
+   steps (`VitDensity.relaxed` or equivalent extra breathing room) versus
+   dense trade / list surfaces (`.compact` / `.tool`).
+
 ## What `VitHighRiskStatePanel` renders
 
 Defined in `lib/shared/widgets/vit_high_risk_state_panel.dart`. It is a
@@ -84,10 +113,10 @@ the matching shared primitive per state:
 if (snapshot.highRiskContractId != null)
   VitHighRiskStatePanel(
     state: VitHighRiskUiState.riskReview,
-    title: 'Withdrawal preview required',
+    title: 'Cần xem trước lệnh rút',
     message:
-        'Address, network, amount, fee, and confirmation are tracked as '
-        'one wallet money-movement contract.',
+        'Địa chỉ, mạng, số tiền, phí và bước xác nhận được theo dõi '
+        'trong cùng một hợp đồng chuyển tiền ví.',
     contractId: snapshot.highRiskContractId,
   ),
 ```

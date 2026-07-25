@@ -66,13 +66,13 @@ final class P2PPaymentMethodAddController {
     required String ownerName,
   }) {
     if (state.status == P2PHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before adding a payment method.';
+      return 'Mất kết nối: hãy kết nối lại trước khi thêm phương thức thanh toán.';
     }
     if (state.status.isBusy) {
-      return 'Confirmation is already in progress.';
+      return 'Đang xác nhận — vui lòng chờ.';
     }
     if (selectedMethod == null || selectedMethod.trim().isEmpty) {
-      return 'Select a payment method before preview.';
+      return 'Chọn phương thức thanh toán trước khi xem trước.';
     }
     if (account.trim().isEmpty) {
       return 'Nhập số tài khoản hoặc địa chỉ ví trước khi xem trước.';
@@ -96,7 +96,7 @@ final class P2PPaymentMethodAddController {
       ownershipRiskMessage:
           'Xem xét quyền sở hữu: chủ tài khoản phải khớp với hồ sơ P2P đã xác minh trước khi kích hoạt.',
       limitMessage:
-          'Limits: new payment methods stay under security review before high-value orders.',
+          'Giới hạn: phương thức mới ở chế độ xem xét bảo mật trước khi dùng lệnh giá trị cao.',
       confirmTitle: state.snapshot.confirmTitle,
       confirmMessage: state.snapshot.confirmMessage,
       saveRoute: state.snapshot.saveRoute,

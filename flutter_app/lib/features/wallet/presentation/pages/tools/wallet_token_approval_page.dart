@@ -105,14 +105,14 @@ class _WalletTokenApprovalPageState
                           final snapshot = controller.state.snapshot;
                           return [
                             WalletTokenSecurityOverview(snapshot: snapshot),
-                            VitHighRiskStatePanel(
+                            const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Xem lại rủi ro phê duyệt',
                               message:
-                                  'Xem trước spender, token, hạn mức, ước tính gas và tác động trước khi thu hồi.',
-                              contractId:
-                                  '${snapshot.criticalCount} nghiêm trọng / ${snapshot.unlimitedCount} không giới hạn',
-                              density: VitDensity.compact,
+                                  'Xem trước bên chi tiêu, token, hạn mức, ước tính gas và tác động trước khi thu hồi. '
+                                  'Không hoàn tác sau khi xác nhận trên chuỗi.',
+                              // WalletTokenApprovalSnapshot has no highRiskContractId — do not invent one.
+                              density: VitDensity.standard,
                             ),
                             WalletTokenApprovalTabs(
                               activeTab: _tab,

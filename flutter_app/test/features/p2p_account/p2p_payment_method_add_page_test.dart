@@ -45,7 +45,7 @@ void main() {
       expect(snapshot.defaultBankAccountHint, '0071000123456');
       expect(snapshot.ownerNameHint, 'NGUYEN VAN A');
       expect(snapshot.saveRoute, AppRoutePaths.p2pPaymentMethods);
-      expect(snapshot.contractNotes, contains('High-risk action'));
+      expect(snapshot.contractNotes, contains('Hành động rủi ro cao'));
       expect(
         snapshot.supportedStates,
         containsAll([
@@ -117,7 +117,7 @@ void main() {
     expect(find.text('Chủ tài khoản'), findsOneWidget);
     expect(find.text('007...3456'), findsOneWidget);
     expect(find.textContaining('Xem xét quyền sở hữu'), findsOneWidget);
-    expect(find.textContaining('Limits:'), findsOneWidget);
+    expect(find.textContaining('Giới hạn:'), findsOneWidget);
 
     await tester.ensureVisible(
       find.byKey(P2PPaymentMethodAddPage.saveButtonKey),

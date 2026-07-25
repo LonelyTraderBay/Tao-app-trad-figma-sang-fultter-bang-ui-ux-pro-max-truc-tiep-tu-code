@@ -43,7 +43,7 @@ void main() {
     expect(snapshot.documents.first.id, 'bank_card');
     expect(snapshot.documents.last.optional, isTrue);
     expect(snapshot.saveRoute, AppRoutePaths.p2pPaymentMethods);
-    expect(snapshot.contractNotes, contains('High-risk action'));
+    expect(snapshot.contractNotes, contains('Hành động rủi ro cao'));
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -67,7 +67,7 @@ void main() {
     expect(find.text('Tài liệu cần thiết'), findsOneWidget);
     expect(find.text('Ảnh thẻ ATM'), findsOneWidget);
     expect(find.text('Selfie với thẻ'), findsOneWidget);
-    expect(find.text('Bank statement (optional)'), findsOneWidget);
+    expect(find.text('Sao kê ngân hàng (tùy chọn)'), findsOneWidget);
     expect(find.text('Tùy chọn'), findsOneWidget);
     expect(find.text('Tải lên'), findsNWidgets(3));
     expect(find.text('Gửi xác minh'), findsOneWidget);
@@ -86,7 +86,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Đã upload'), findsNWidgets(2));
+    expect(find.text('Đã tải lên'), findsNWidgets(2));
     await tester.tap(find.byKey(P2PPaymentMethodOwnershipPage.submitButtonKey));
     await tester.pumpAndSettle();
 
@@ -110,14 +110,14 @@ void main() {
       find.byKey(P2PPaymentMethodOwnershipPage.uploadKey('bank_card')),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Đã upload'), findsOneWidget);
+    expect(find.text('Đã tải lên'), findsOneWidget);
 
     await tester.tap(
       find.byKey(P2PPaymentMethodOwnershipPage.removeKey('bank_card')),
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Đã upload'), findsNothing);
+    expect(find.text('Đã tải lên'), findsNothing);
     expect(
       find.byKey(P2PPaymentMethodOwnershipPage.uploadKey('bank_card')),
       findsOneWidget,

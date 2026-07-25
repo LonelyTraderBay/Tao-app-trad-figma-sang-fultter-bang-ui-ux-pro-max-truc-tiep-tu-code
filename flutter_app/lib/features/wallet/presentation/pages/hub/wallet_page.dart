@@ -96,9 +96,10 @@ class _WalletPageState extends ConsumerState<WalletPage> {
         key: WalletPage.contentKey,
         bottomInset: bottomInset,
         child: VitPageContent(
+          // Tab-root rhythm stays compact; overview density is standard (SDD B2).
           rhythm: VitPageRhythm.compact,
-          padding: VitContentPadding.compact,
-          density: VitDensity.compact,
+          padding: VitContentPadding.defaultPadding,
+          density: VitDensity.standard,
           children: [
             // GD4-F2: pendingDeposits ch\u1EC9 l\u00E0 banner ph\u1EE5, kh\u00F4ng ch\u1EB7n to\u00E0n
             // trang khi v\u1EABn \u0111ang t\u1EA3i/l\u1ED7i \u2014 d\u00F9ng .value (xem

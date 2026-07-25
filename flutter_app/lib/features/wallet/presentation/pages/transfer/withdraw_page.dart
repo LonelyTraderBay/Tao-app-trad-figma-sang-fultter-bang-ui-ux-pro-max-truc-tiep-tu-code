@@ -159,10 +159,10 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
 
-                title: 'Withdrawal preview required',
+                title: 'Cần xem trước lệnh rút',
 
                 message:
-                    'Address, network, amount, fee, and confirmation are tracked as one wallet money-movement contract.',
+                    'Địa chỉ, mạng, số tiền, phí và xác nhận được theo dõi trong một hợp đồng chuyển tiền ví. Không hoàn tác sau khi xác nhận.',
 
                 contractId: snapshot.highRiskContractId,
               ),
