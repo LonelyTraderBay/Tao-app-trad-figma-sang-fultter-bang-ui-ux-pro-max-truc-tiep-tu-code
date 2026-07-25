@@ -6,24 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/core/config/app_environment.dart';
 import 'package:vit_trade_flutter/core/network/api_error_mapper.dart';
+import 'package:vit_trade_flutter/core/network/safe_retry.dart';
 import 'package:vit_trade_flutter/core/network/session_refresh.dart';
 import 'package:vit_trade_flutter/core/storage/secure_store.dart';
-
-export 'package:vit_trade_flutter/core/network/api_error_mapper.dart'
-    show
-        ApiFailure,
-        apiUserMessageForBusinessCode,
-        apiUserMessageForStatus,
-        mapBadResponseToApiFailure,
-        mapDioExceptionToDomain;
-export 'package:vit_trade_flutter/core/network/session_refresh.dart'
-    show
-        SessionAccessTokenRefresher,
-        SessionInvalidatedHandler,
-        kAuthRetriedExtra,
-        sessionAccessTokenRefresherProvider,
-        sessionInvalidatedHandlerProvider,
-        sessionRefreshInterceptor;
 
 /// Provider cấu hình môi trường đang chạy (đọc từ dart-defines).
 final appConfigProvider = Provider<AppConfig>((ref) => AppConfig.current);
@@ -90,7 +75,7 @@ final class ApiClient {
 
   /// [dio] test-injectable; khi tự dựng Dio sẽ gắn sẵn chuỗi interceptor
   /// SEC-S46 theo thứ tự: auth-token (nếu có) → session-refresh (nếu có) →
-  /// error-mapping.
+  /// safe-retry (GET tạm thời) → error-mapping.
   /// [pinnedSpkiSha256] không rỗng ⇒ bật certificate pinning fail-closed
   /// (xem [_configurePinning]) — dự kiến chỉ bật ở production khi backend
   /// thật về; danh sách hash KHÔNG hardcode ở đây mà truyền theo môi trường.
@@ -115,6 +100,7 @@ final class ApiClient {
           ),
         );
       }
+      this.dio.interceptors.add(safeRetryInterceptor(dio: this.dio));
       this.dio.interceptors.add(errorMappingInterceptor());
       if (pinnedSpkiSha256.isNotEmpty) {
         _configurePinning(this.dio, pinnedSpkiSha256);

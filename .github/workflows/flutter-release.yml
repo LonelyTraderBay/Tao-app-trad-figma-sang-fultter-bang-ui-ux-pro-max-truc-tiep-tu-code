@@ -1,0 +1,155 @@
+# SDD Task 1.5 — Release CI skeleton (non-required check).
+#
+# Separate from Flutter CI / "Enterprise Flutter Gates" so PR debug gates
+# stay unchanged. Does NOT replace `.github/workflows/release.yml` (fail-closed
+# signed AAB on tags for store releases).
+#
+# Triggers: manual workflow_dispatch (default) + optional v* tags.
+#
+# Signing policy (prefer non-bricking dispatch):
+#   - If VITTRADE_KEYSTORE_BASE64 + VITTRADE_KEYSTORE_PASSWORD +
+#     VITTRADE_KEY_ALIAS + VITTRADE_KEY_PASSWORD are all set → decode keystore
+#     and build a real signed release APK (flavor prod).
+#   - If any secret is missing → log a clear notice and build release APK
+#     signed with the Android debug keystore so Gradle's release signing
+#     guard in android/app/build.gradle.kts still passes (CI skeleton only;
+#     NOT for Play Store). True unsigned release is blocked by that guard.
+#
+# Dart-defines (production-shaped compile):
+#   APP_ENV=production
+#   ENABLE_MOCK_DATA=false
+#   API_BASE_URL=https://api.vittrade.invalid
+#     (.invalid is RFC 2606 reserved — placeholder until a real staging/prod
+#     URL is wired; empty URL is unsafe for Uri.parse in AppConfig.)
+name: Flutter Release
+
+"on":
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-android:
+    name: Build release APK (flavor prod)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Java
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('flutter_app/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: Cache Gradle
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('flutter_app/android/**/*.gradle*', 'flutter_app/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Resolve signing without failing the job when secrets are absent
+      # (workflow_dispatch must stay green by default).
+      - name: Resolve signing mode
+        id: signing
+        env:
+          KEYSTORE_BASE64: ${{ secrets.VITTRADE_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.VITTRADE_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.VITTRADE_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.VITTRADE_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ] && [ -n "$KEYSTORE_PASSWORD" ] \
+            && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
+            echo 'mode=release' >> "$GITHUB_OUTPUT"
+            echo 'Signing secrets present — will build with release keystore.'
+          else
+            echo 'mode=debug-keystore' >> "$GITHUB_OUTPUT"
+            echo '::notice title=Release CI skeleton::VITTRADE_* signing secrets are NOT configured. Building release APK signed with the Android debug keystore (CI skeleton only — NOT for Play Store). Configure VITTRADE_KEYSTORE_BASE64, VITTRADE_KEYSTORE_PASSWORD, VITTRADE_KEY_ALIAS, VITTRADE_KEY_PASSWORD for a store-signed artifact. Fail-closed store releases remain in release.yml.'
+          fi
+        working-directory: ${{ github.workspace }}
+
+      - name: Decode release keystore
+        if: steps.signing.outputs.mode == 'release'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.VITTRADE_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.VITTRADE_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.VITTRADE_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.VITTRADE_KEY_PASSWORD }}
+        run: |
+          # storeFile in android/app/build.gradle.kts resolves relative to
+          # the app module — write the keystore under android/app/.
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > android/app/release-keystore.jks
+          {
+            echo 'VITTRADE_KEYSTORE_PATH=release-keystore.jks'
+            echo "VITTRADE_KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "VITTRADE_KEY_ALIAS=$KEY_ALIAS"
+            echo "VITTRADE_KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+      - name: Prepare debug keystore for missing-secret path
+        if: steps.signing.outputs.mode == 'debug-keystore'
+        run: |
+          mkdir -p "$HOME/.android"
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            keytool -genkeypair -keystore "$HOME/.android/debug.keystore" \
+              -storepass android -alias androiddebugkey -keypass android \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname 'CN=Android Debug,O=Android,C=US'
+          fi
+          cp "$HOME/.android/debug.keystore" android/app/ci-debug-release.jks
+          {
+            echo 'VITTRADE_KEYSTORE_PATH=ci-debug-release.jks'
+            echo 'VITTRADE_KEYSTORE_PASSWORD=android'
+            echo 'VITTRADE_KEY_ALIAS=androiddebugkey'
+            echo 'VITTRADE_KEY_PASSWORD=android'
+          } >> "$GITHUB_ENV"
+
+      - name: Build release APK (flavor prod)
+        run: >
+          flutter build apk
+          --release
+          --flavor prod
+          --dart-define=APP_ENV=production
+          --dart-define=ENABLE_MOCK_DATA=false
+          --dart-define=API_BASE_URL=https://api.vittrade.invalid
+
+      - name: Upload release APK artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: vittrade-release-apk-${{ steps.signing.outputs.mode }}
+          path: |
+            flutter_app/build/app/outputs/flutter-apk/app-prod-release.apk
+            flutter_app/build/app/outputs/apk/prod/release/*.apk
+          if-no-files-found: error
