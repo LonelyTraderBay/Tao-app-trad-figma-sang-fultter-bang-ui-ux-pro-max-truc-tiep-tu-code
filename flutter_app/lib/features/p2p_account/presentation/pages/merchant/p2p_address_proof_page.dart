@@ -193,9 +193,9 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                             ],
                             const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Address proof state review',
+                              title: 'Xem lại chứng minh địa chỉ',
                               message:
-                                  'Document type, upload status, extracted address, manual confirmation, and next verification step remain visible before submitting P2P address proof.',
+                                  'Loại tài liệu, trạng thái tải lên, địa chỉ đã trích xuất, xác nhận thủ công và bước xác minh tiếp theo vẫn hiển thị trước khi gửi chứng minh địa chỉ P2P.',
                               contractId: 'SC-250',
                             ),
                           ],
