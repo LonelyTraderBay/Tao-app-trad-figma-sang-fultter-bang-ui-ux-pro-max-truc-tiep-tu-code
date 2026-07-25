@@ -147,9 +147,9 @@ class _P2PDisputeEvidencePageState
                             ),
                             const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Evidence submission review',
+                              title: 'Xem lại gửi bằng chứng',
                               message:
-                                  'Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.',
+                                  'Tài liệu bắt buộc, trạng thái tải lên, ghi chú backend fail-closed, đối tượng tranh chấp và bước biên nhận tiếp theo đã được xem trước khi gửi bằng chứng.',
                               contractId: 'p2p-dispute-evidence-review',
                             ),
                           ],

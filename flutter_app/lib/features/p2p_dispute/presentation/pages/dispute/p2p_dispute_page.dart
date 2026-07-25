@@ -168,9 +168,9 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                           ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Dispute submission review',
+                            title: 'Xem lại gửi tranh chấp',
                             message:
-                                'Reason, description, uploaded evidence, escrow impact, case target and next dispute step are reviewed before submission.',
+                                'Lý do, mô tả, bằng chứng đã tải, ảnh hưởng escrow, đối tượng vụ việc và bước tranh chấp tiếp theo đã được xem trước khi gửi.',
                             contractId: 'p2p-dispute-open-review',
                           ),
                         ],

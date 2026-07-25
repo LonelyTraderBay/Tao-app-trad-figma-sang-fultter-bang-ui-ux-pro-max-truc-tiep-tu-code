@@ -33,7 +33,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Express Trade',
+            title: 'Giao dịch Express',
             subtitle: 'Mua bán nhanh',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
@@ -150,9 +150,9 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
                       _HowItWorksCard(steps: snapshot.steps),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Express trade state review',
+                        title: 'Xem lại trạng thái Express',
                         message:
-                            'Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.',
+                            'Phía giao dịch, tài sản, số tiền fiat, ước tính crypto, phương thức thanh toán, chào tốt nhất, ghi chú escrow và trạng thái CTA tắt vẫn hiện trước khi xác nhận.',
                         contractId: 'SC-211',
                         density: VitDensity.compact,
                       ),

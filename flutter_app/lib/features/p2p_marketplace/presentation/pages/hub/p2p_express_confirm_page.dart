@@ -182,9 +182,9 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                             ),
                             const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Express order confirmation review',
+                              title: 'Xem lại xác nhận đơn Express',
                               message:
-                                  'Trade direction, fiat amount, crypto amount, merchant, payment method, escrow note, fee, warning, cancel and confirm actions are reviewed before order creation.',
+                                  'Hướng giao dịch, số tiền fiat, số crypto, merchant, phương thức thanh toán, ghi chú escrow, phí, cảnh báo, hủy và xác nhận đã được xem trước khi tạo đơn.',
                               contractId: 'SC-210',
                             ),
                           ],
