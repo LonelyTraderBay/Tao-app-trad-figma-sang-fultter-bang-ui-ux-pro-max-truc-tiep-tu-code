@@ -127,9 +127,9 @@ class _P2PDisputeResolutionPageState
                           ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Dispute resolution review',
+                            title: 'Xem lại kết quả giải quyết',
                             message:
-                                'Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.',
+                                'Quyết định, số tiền hoàn, ghi chú hòa giải, trạng thái kháng cáo, danh sách tranh chấp và bước vụ việc tiếp theo đã được xem trước khi đóng.',
                             contractId: 'p2p-dispute-resolution-review',
                           ),
                         ],
