@@ -102,9 +102,9 @@ class _P2PSuspiciousActivityPageState
               padding: P2PSpacingTokens.p2pComplianceCompactCardPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Suspicious activity review',
+                title: 'Xem lại trạng thái cảnh báo',
                 message:
-                    'Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.',
+                    'Mức độ cảnh báo, trạng thái đã xem, thao tác bỏ qua, rủi ro tài khoản và bước bảo mật tiếp theo đã được xem trước khi xóa cảnh báo.',
                 contractId: 'p2p-suspicious-activity-review',
               ),
             ),

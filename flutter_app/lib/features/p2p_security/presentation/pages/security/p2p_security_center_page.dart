@@ -196,9 +196,9 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                               VitHighRiskStatePanel(
                                 density: VitDensity.compact,
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'Security center state review',
+                                title: 'Xem lại trạng thái trung tâm bảo mật',
                                 message:
-                                    'Security score, feature status, quick actions, recent events, settings route, and login history route stay visible before sensitive P2P security changes.',
+                                    'Điểm bảo mật, trạng thái tính năng, thao tác nhanh, sự kiện gần đây, lộ trình cài đặt và lịch sử đăng nhập vẫn hiển thị trước các thay đổi bảo mật P2P nhạy cảm.',
                                 contractId: 'SC-253',
                               ),
                             ],

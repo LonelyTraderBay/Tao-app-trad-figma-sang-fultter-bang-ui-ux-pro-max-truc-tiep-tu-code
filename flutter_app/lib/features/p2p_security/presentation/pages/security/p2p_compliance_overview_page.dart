@@ -117,9 +117,9 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                           _ComplianceChecklist(items: snapshot.items),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Compliance checklist review',
+                            title: 'Xem lại danh sách tuân thủ',
                             message:
-                                'Checklist status, route targets, incomplete requirements and next compliance action are reviewed before opening P2P flows.',
+                                'Trạng thái danh sách, đích lộ trình, yêu cầu chưa hoàn tất và thao tác tuân thủ tiếp theo đã được xem trước khi mở các luồng P2P.',
                             contractId: 'p2p-compliance-overview-review',
                           ),
                         ],
