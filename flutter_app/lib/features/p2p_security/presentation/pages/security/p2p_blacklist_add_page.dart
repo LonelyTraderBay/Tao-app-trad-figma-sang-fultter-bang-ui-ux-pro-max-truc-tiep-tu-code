@@ -174,9 +174,9 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                           ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Blacklist action review',
+                            title: 'Xem lại thao tác chặn',
                             message:
-                                'Username, reason, note, warning, submitting state and undo/support next step are reviewed before blocking a merchant.',
+                                'Tên người dùng, lý do, ghi chú, cảnh báo, trạng thái đang gửi và bước hoàn tác/hỗ trợ tiếp theo đã được xem trước khi chặn merchant.',
                             contractId: 'p2p-blacklist-add-review',
                           ),
                         ],

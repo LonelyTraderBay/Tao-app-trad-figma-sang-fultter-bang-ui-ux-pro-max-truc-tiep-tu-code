@@ -175,9 +175,9 @@ class _P2PAntiPhishingCodePageState
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
-                                  title: 'Anti-phishing code state review',
+                                  title: 'Xem lại trạng thái mã chống phishing',
                                   message:
-                                      'Current code visibility, edit state, examples, warning copy, and save readiness stay visible before changing P2P email security.',
+                                      'Khả năng hiển thị mã hiện tại, trạng thái chỉnh sửa, ví dụ, nội dung cảnh báo và mức sẵn sàng lưu vẫn hiển thị trước khi thay đổi bảo mật email P2P.',
                                   contractId: 'SC-256',
                                 ),
                               ],

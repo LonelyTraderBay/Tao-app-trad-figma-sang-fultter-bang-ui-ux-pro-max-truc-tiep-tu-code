@@ -123,9 +123,9 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                             ),
                             const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'P2P risk score review',
+                              title: 'Xem lại điểm rủi ro P2P',
                               message:
-                                  'Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.',
+                                  'Điểm rủi ro, trọng số yếu tố, tín hiệu tài khoản, ảnh hưởng hạn mức và bước xem xét tiếp theo được kiểm tra trước khi mức phơi nhiễm P2P thay đổi.',
                               contractId: 'p2p-risk-assessment-review',
                             ),
                           ],

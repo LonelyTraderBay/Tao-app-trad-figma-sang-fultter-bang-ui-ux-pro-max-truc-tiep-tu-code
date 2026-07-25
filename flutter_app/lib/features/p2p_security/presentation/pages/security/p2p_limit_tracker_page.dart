@@ -104,9 +104,9 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
               padding: P2PSpacingTokens.p2pLimitTrackerCompactPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'P2P limit review',
+                title: 'Xem lại hạn mức P2P',
                 message:
-                    'Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.',
+                    'Khoảng thời gian đã chọn, khối lượng đã dùng, hạn mức còn lại, phân tích lịch sử và bước quản lý hạn mức tiếp theo đã được xem trước khi hoạt động P2P thêm.',
                 contractId: 'p2p-limit-tracker-review',
               ),
             ),
