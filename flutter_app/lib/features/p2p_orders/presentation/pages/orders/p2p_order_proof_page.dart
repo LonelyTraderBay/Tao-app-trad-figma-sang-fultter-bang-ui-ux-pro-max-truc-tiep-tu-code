@@ -167,9 +167,10 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                             children: [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'Payment proof state review',
+                                title:
+                                    'Xem lại trạng thái bằng chứng thanh toán',
                                 message:
-                                    'Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.',
+                                    'Tóm tắt đơn, nguồn tải lên, số tệp đính kèm, thao tác xóa, hướng dẫn, cảnh báo, xác nhận bị vô hiệu hóa, trạng thái tải lên và đang gửi vẫn hiển thị trước khi gửi bằng chứng.',
                                 contractId: 'SC-215',
                               ),
                             ],

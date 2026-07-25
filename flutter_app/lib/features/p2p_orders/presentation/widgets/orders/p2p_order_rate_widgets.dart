@@ -35,7 +35,13 @@ class _MerchantSummary extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  '${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}',
+                  [
+                    order.typeLabel,
+                    _formatAmount(order.amount),
+                    order.asset,
+                    '-',
+                    _formatVnd(order.totalVnd),
+                  ].join(' '),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
