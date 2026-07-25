@@ -74,9 +74,9 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
             padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
             child: VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
-              title: 'Fund lock history review',
+              title: 'Xem lại lịch sử khóa tiền',
               message:
-                  'Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.',
+                  'Bản ghi khóa và giải phóng, số lượng tài sản, tham chiếu đơn, lộ trình alias và bước ví/P2P tiếp theo đã được xem trước khi thao tác.',
               contractId: 'p2p-fund-lock-history-review',
             ),
           ),

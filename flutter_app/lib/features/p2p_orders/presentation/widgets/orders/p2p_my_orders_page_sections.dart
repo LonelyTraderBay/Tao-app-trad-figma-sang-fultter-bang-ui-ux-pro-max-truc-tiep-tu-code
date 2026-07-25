@@ -186,7 +186,7 @@ class _OrderCard extends StatelessWidget {
               Expanded(
                 child: _OrderMetric(
                   label: 'Số lượng',
-                  value: '${_formatCrypto(order.amount)} ${order.asset}',
+                  value: [_formatCrypto(order.amount), order.asset].join(' '),
                 ),
               ),
               Expanded(

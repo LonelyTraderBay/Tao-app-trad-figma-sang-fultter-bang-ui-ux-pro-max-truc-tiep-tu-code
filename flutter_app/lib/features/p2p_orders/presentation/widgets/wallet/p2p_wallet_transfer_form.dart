@@ -190,7 +190,13 @@ class _WalletSide extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
-          '${balance.balanceLabel}: ${_formatAvailable(balance.available, balance.asset)} ${balance.asset}',
+          [
+            balance.balanceLabel,
+            ': ',
+            _formatAvailable(balance.available, balance.asset),
+            ' ',
+            balance.asset,
+          ].join(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

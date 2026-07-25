@@ -109,9 +109,9 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                             if (snapshot.highRiskContractId != null)
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'Payment method cooling review',
+                                title: 'Xem lại thời gian chờ phương thức',
                                 message:
-                                    'New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.',
+                                    'Phương thức thanh toán mới bị hạn chế cho đến khi hết thời gian chờ. Giữ hạn mức escrow, tranh chấp và rút tiền hiển thị trước khi cho phép sử dụng.',
                                 contractId: snapshot.highRiskContractId,
                               ),
                           ],

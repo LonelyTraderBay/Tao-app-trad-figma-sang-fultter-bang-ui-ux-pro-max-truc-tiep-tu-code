@@ -182,9 +182,9 @@ class _P2PPaymentMethodAddPageState
             if (snapshot.highRiskContractId != null)
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Payment method add state review',
+                title: 'Xem lại thêm phương thức thanh toán',
                 message:
-                    'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
+                    'Loại thanh toán, phương thức đã chọn, xem trước tài khoản đã che, rủi ro sở hữu, thông báo hạn mức, hộp thoại xác nhận và trạng thái đang gửi vẫn hiển thị trước khi lưu.',
                 contractId: snapshot.highRiskContractId,
               ),
             Semantics(

@@ -108,9 +108,9 @@ class _P2PPaymentMethodOwnershipPageState
             if (snapshot.highRiskContractId != null)
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Payment ownership submission review',
+                title: 'Xem lại gửi xác minh sở hữu',
                 message:
-                    'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
+                    'Tài liệu bắt buộc, bằng chứng tùy chọn, trạng thái tải/xóa, hộp thoại xác nhận, trạng thái đang gửi và đường quay lại đã được xem trước khi phê duyệt sở hữu phương thức thanh toán.',
                 contractId: snapshot.highRiskContractId,
               ),
             VitCtaButton(

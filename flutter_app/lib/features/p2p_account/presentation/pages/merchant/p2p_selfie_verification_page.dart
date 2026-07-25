@@ -197,9 +197,9 @@ class _P2PSelfieVerificationPageState
               padding: P2PSpacingTokens.p2pSelfieReviewPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Selfie verification review',
+                title: 'Xem lại xác minh selfie',
                 message:
-                    'Guide, capture, liveness progress, biometric handling, result state and support next step are reviewed before P2P verification completes.',
+                    'Hướng dẫn, chụp ảnh, tiến trình liveness, xử lý sinh trắc học, trạng thái kết quả và bước hỗ trợ tiếp theo đã được xem trước khi hoàn tất xác minh P2P.',
                 contractId: 'p2p-selfie-verification-review',
               ),
             ),

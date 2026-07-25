@@ -143,9 +143,9 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                             _QuickActions(actions: snapshot.quickActions),
                             const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'P2P order state review',
+                              title: 'Xem lại trạng thái đơn P2P',
                               message:
-                                  'Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.',
+                                  'Bộ đếm trạng thái, số tiền escrow, chi tiết thanh toán, tải bằng chứng, timeline, cảnh báo, trò chuyện, trạng thái đã trả, lộ trình hủy và thao tác nhanh vẫn hiển thị trước khi đơn chuyển bước.',
                               contractId: 'SC-216',
                             ),
                           ],
@@ -515,8 +515,11 @@ class _OrderInfoCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _InfoLine(
             label: 'Giao dịch',
-            value:
-                '${order.typeLabel} ${_formatCrypto(order.amount)} ${order.asset}',
+            value: [
+              order.typeLabel,
+              _formatCrypto(order.amount),
+              order.asset,
+            ].join(' '),
             emphasis: true,
           ),
           _InfoLine(
