@@ -180,5 +180,21 @@ void main() {
         expect(draft.errorMessage, isNotNull);
       },
     );
+
+    test('refreshSession returns rotated demo token pair', () async {
+      final pair = await repository.refreshSession(
+        refreshToken: 'demo-refresh.user@vittrade.vn',
+      );
+
+      expect(pair.accessToken, 'demo.user@vittrade.vn.refreshed');
+      expect(pair.refreshToken, 'demo-refresh.user@vittrade.vn');
+    });
+
+    test('refreshSession rejects invalid refresh token', () async {
+      await expectLater(
+        repository.refreshSession(refreshToken: 'not-a-demo-refresh'),
+        throwsA(isA<StateError>()),
+      );
+    });
   });
 }

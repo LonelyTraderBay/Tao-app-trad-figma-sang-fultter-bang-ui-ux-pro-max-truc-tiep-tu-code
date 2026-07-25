@@ -60,4 +60,9 @@ final class FailClosedAuthRepository implements AuthRepository {
   }) {
     return _missingContract();
   }
+
+  @override
+  Future<AuthTokenPair> refreshSession({required String refreshToken}) {
+    return _missingContract();
+  }
 }

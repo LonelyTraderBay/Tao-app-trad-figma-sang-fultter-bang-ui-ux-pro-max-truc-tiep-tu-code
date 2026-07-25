@@ -6,11 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/session_bootstrap.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 
 class VitTradeApp extends StatelessWidget {
   const VitTradeApp({
@@ -32,7 +33,7 @@ class VitTradeApp extends StatelessWidget {
     final resolvedShellRenderMode = shellRenderMode ?? defaultShellRenderMode();
 
     return ProviderScope(
-      overrides: overrides,
+      overrides: [...authSessionNetworkOverrides(), ...overrides],
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarColor: AppColors.transparent,

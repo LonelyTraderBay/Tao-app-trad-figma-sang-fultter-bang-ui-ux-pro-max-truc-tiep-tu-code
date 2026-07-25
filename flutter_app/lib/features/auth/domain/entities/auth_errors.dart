@@ -7,7 +7,7 @@ final class AuthBackendContractMissingException implements Exception {
       'Auth remote repository is required when mock data is disabled.';
 
   String get userMessage =>
-      'Authentication service is unavailable because the production backend is not configured yet.';
+      'Dịch vụ xác thực chưa sẵn sàng vì backend production chưa được cấu hình.';
 
   @override
   String toString() => 'AuthBackendContractMissingException: $message';

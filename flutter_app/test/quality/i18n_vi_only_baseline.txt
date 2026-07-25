@@ -14,7 +14,6 @@ lib/features/arena/presentation/controllers/arena_controller.dart|No local repor
 lib/features/arena/presentation/controllers/arena_controller.dart|Report case is unavailable for review.
 lib/features/arena/presentation/controllers/arena_controller.dart|Report handling stays limited to safety, rule clarity, and fair-play review.
 lib/features/arena/presentation/pages/hub/arena_production_ready_page_flows_registry_handoff.dart|Clear labels: Live = implemented local UI, Release-gated = not user-available, QA = internal only.
-lib/features/auth/presentation/controllers/auth_controller.dart|Authentication service is temporarily unavailable. Please try again.
 lib/features/cross_module/presentation/pages/tax_report_center_generate_tab.dart|Export request queued locally. Production wiring will post to /exports with the selected period and format.
 lib/features/cross_module/presentation/pages/tax_report_center_generate_tab.dart|Tax reports are for reference only. Consult a tax professional for accurate filing. We are not tax advisors.
 lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart|Form 8949 - Sales and Dispositions of Capital Assets

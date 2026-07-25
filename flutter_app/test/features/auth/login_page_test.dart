@@ -187,7 +187,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.textContaining('Authentication service is unavailable'),
+      find.textContaining('Dịch vụ xác thực chưa sẵn sàng'),
       findsOneWidget,
     );
     expect(find.byType(LoginPage), findsOneWidget);
@@ -245,9 +245,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text(
-        'Authentication service is temporarily unavailable. Please try again.',
-      ),
+      find.text('Dịch vụ xác thực tạm thời không khả dụng. Vui lòng thử lại.'),
       findsOneWidget,
     );
     expect(find.byType(LoginPage), findsOneWidget);
@@ -343,5 +341,10 @@ final class _FlakyAuthLoginRepository implements AuthRepository {
       otp: otp,
       newPassword: newPassword,
     );
+  }
+
+  @override
+  Future<AuthTokenPair> refreshSession({required String refreshToken}) {
+    return _delegate.refreshSession(refreshToken: refreshToken);
   }
 }

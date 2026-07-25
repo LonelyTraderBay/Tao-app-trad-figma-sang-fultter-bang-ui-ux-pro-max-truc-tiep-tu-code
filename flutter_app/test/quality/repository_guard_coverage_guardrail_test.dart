@@ -43,4 +43,49 @@ void main() {
           'serving mock data instead of failing closed: $unguarded',
     );
   });
+
+  test(
+    'P0 repository providers fail closed without invented remote backends',
+    () {
+      // Production-critical domains — must not silent-fallback to mock when
+      // enableMockData=false and no real remote: backend is wired yet.
+      const p0Providers = [
+        'lib/features/auth/data/providers/auth_repository_provider.dart',
+        'lib/features/wallet/data/providers/wallet_repository_provider.dart',
+        'lib/features/trade/data/providers/trade_repository_provider.dart',
+        'lib/features/p2p_core/data/providers/p2p_repository_provider.dart',
+        'lib/features/markets/data/providers/market_repository_provider.dart',
+        'lib/features/profile/data/providers/profile_repository_provider.dart',
+      ];
+
+      final violations = <String>[];
+      for (final path in p0Providers) {
+        final file = File(path);
+        if (!file.existsSync()) {
+          violations.add('$path: file missing');
+          continue;
+        }
+        final source = file.readAsStringSync();
+        if (!source.contains('guardedRepository')) {
+          violations.add('$path: missing guardedRepository');
+        }
+        if (!source.contains('failClosed:')) {
+          violations.add('$path: missing failClosed:');
+        }
+        if (source.contains('remote:')) {
+          violations.add(
+            '$path: must not pass remote: until a real backend exists',
+          );
+        }
+      }
+
+      expect(
+        violations,
+        isEmpty,
+        reason:
+            'P0 providers must use guardedRepository + failClosed and must '
+            'not wire an invented remote: backend:\n${violations.join('\n')}',
+      );
+    },
+  );
 }
