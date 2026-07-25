@@ -188,9 +188,9 @@ class _P2PIdentityVerificationPageState
                               padding: EdgeInsetsDirectional.all(AppSpacing.x3),
                               child: VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'Identity document review',
+                                title: 'Xem lại giấy tờ định danh',
                                 message:
-                                    'Document type, front/back upload status, security notice, KYC route and next verification step are reviewed before continuing.',
+                                    'Loại giấy tờ, trạng thái tải mặt trước/sau, cảnh báo bảo mật, lộ trình KYC và bước xác minh tiếp theo đã được xem trước khi tiếp tục.',
                                 contractId: 'p2p-identity-verification-review',
                               ),
                             ),

@@ -98,9 +98,9 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                             ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Payment method history review',
+                            title: 'Xem lại lịch sử phương thức thanh toán',
                             message:
-                                'P2P payment history keeps order direction, cancelled status, total volume, success rate, and next review context visible before users reuse or change a payment method.',
+                                'Lịch sử thanh toán P2P giữ hướng lệnh, trạng thái đã hủy, tổng khối lượng, tỷ lệ thành công và ngữ cảnh xem lại tiếp theo hiển thị trước khi người dùng tái sử dụng hoặc đổi phương thức.',
                             contractId: 'SC-236',
                           ),
                         ],

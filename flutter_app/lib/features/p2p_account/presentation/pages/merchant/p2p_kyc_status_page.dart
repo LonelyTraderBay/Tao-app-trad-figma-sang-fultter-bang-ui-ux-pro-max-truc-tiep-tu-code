@@ -138,9 +138,9 @@ class P2PKycStatusPage extends ConsumerWidget {
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
-                                  title: 'KYC status state review',
+                                  title: 'Xem lại trạng thái KYC',
                                   message:
-                                      'Overall status, refresh state, timeline actions, support path, and P2P trading impact remain visible while verification is reviewed.',
+                                      'Trạng thái tổng, trạng thái làm mới, thao tác timeline, đường hỗ trợ và ảnh hưởng giao dịch P2P vẫn hiển thị trong khi xác minh được xem xét.',
                                   contractId: 'SC-248',
                                 ),
                               ],

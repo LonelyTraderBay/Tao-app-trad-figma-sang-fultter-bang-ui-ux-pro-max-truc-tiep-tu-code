@@ -148,9 +148,9 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                             children: [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'KYC requirement state review',
+                                title: 'Xem lại yêu cầu KYC',
                                 message:
-                                    'Current tier, locked requirements, available upgrade action, support path, and P2P limit impact remain visible before starting verification.',
+                                    'Hạng hiện tại, yêu cầu bị khóa, hành động nâng cấp khả dụng, đường hỗ trợ và ảnh hưởng hạn mức P2P vẫn hiển thị trước khi bắt đầu xác minh.',
                                 contractId: 'SC-247',
                                 density: VitDensity.compact,
                               ),

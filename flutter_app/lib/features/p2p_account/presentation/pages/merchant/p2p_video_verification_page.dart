@@ -103,9 +103,9 @@ class _P2PVideoVerificationPageState
             padding: P2PSpacingTokens.p2pVideoCompactCardPadding,
             child: VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
-              title: 'Video verification review',
+              title: 'Xem lại xác minh video',
               message:
-                  'Preparation checklist, slot availability, selected time, verification status route and next KYC step are reviewed before booking.',
+                  'Danh sách chuẩn bị, khung giờ trống, thời gian đã chọn, lộ trình trạng thái xác minh và bước KYC tiếp theo đã được xem trước khi đặt lịch.',
               contractId: 'p2p-video-verification-review',
             ),
           ),
