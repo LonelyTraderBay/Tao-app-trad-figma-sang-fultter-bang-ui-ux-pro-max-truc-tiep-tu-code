@@ -120,9 +120,9 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
                           ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Order cancellation state review',
+                            title: 'Xem lại trạng thái hủy đơn',
                             message:
-                                'Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.',
+                                'Tóm tắt đơn, lý do hủy, cảnh báo uy tín, xác nhận bị vô hiệu hóa, trạng thái đang gửi và đường quay lại vẫn hiển thị trước khi hủy đơn P2P.',
                             contractId: 'SC-214',
                           ),
                         ],
@@ -224,8 +224,11 @@ class _OrderSummary extends StatelessWidget {
       _SummaryRowDraft(label: 'Mã đơn', value: order.orderNumber),
       _SummaryRowDraft(
         label: 'Giao dịch',
-        value:
-            '${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset}',
+        value: [
+          order.typeLabel,
+          _formatAmount(order.amount),
+          order.asset,
+        ].join(' '),
       ),
       _SummaryRowDraft(
         label: 'Tổng tiền',

@@ -146,9 +146,9 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
                                 ),
                                 const VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
-                                  title: 'Order rating state review',
+                                  title: 'Xem lại trạng thái đánh giá đơn',
                                   message:
-                                      'Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.',
+                                      'Tóm tắt merchant, lựa chọn đánh giá, thẻ nhanh, nội dung nhận xét, đường bỏ qua, gửi bị vô hiệu hóa, trạng thái đang gửi và màn hình thành công vẫn hiển thị trước khi đóng phản hồi.',
                                   contractId: 'SC-213',
                                 ),
                               ],

@@ -179,9 +179,9 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                           _RecentTransactions(snapshot: snapshot),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'P2P wallet state review',
+                            title: 'Xem lại trạng thái ví P2P',
                             message:
-                                'Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.',
+                                'Số dư đã che, hướng chuyển, số dư escrow, thao tác tài sản mở rộng, giao dịch gần đây và lộ trình lịch sử vẫn hiển thị trước khi chuyển tiền.',
                             contractId: 'SC-264',
                             density: VitDensity.compact,
                           ),
