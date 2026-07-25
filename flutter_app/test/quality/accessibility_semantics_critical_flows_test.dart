@@ -141,10 +141,7 @@ void main() {
   ) async {
     await pumpRoute(tester, AppRoutePaths.walletTransfer);
 
-    expect(
-      semanticsLabel(RegExp(r'Số tiền chuyển nội bộ')),
-      findsOneWidget,
-    );
+    expect(semanticsLabel(RegExp(r'Số tiền chuyển nội bộ')), findsOneWidget);
     expect(
       semanticsLabel(RegExp(r'Chuyển khoản nội bộ đã tắt')),
       findsOneWidget,

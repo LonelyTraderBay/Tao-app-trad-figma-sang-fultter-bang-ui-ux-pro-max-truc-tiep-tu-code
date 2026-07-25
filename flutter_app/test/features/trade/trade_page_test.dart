@@ -162,7 +162,10 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Đánh giá rủi ro'), findsOneWidget);
-    expect(find.textContaining('Không hoàn tác sau khi xác nhận gửi'), findsWidgets);
+    expect(
+      find.textContaining('Không hoàn tác sau khi xác nhận gửi'),
+      findsWidgets,
+    );
   });
 
   testWidgets('SC-048 first viewport reaches order side switch', (

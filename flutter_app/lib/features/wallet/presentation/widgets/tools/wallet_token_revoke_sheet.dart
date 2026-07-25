@@ -93,7 +93,9 @@ class WalletTokenRevokeSheet extends StatelessWidget {
                     color: AppColors.border,
                   ),
                 ],
-                const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
+                const SizedBox(
+                  height: WalletSpacingTokens.walletTokenNoticeGap,
+                ),
                 VitCard(
                   density: confirmDensity,
                   variant: VitCardVariant.inner,
@@ -111,7 +113,9 @@ class WalletTokenRevokeSheet extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
+                const SizedBox(
+                  height: WalletSpacingTokens.walletTokenNoticeGap,
+                ),
                 VitCard(
                   variant: VitCardVariant.inner,
                   density: confirmDensity,

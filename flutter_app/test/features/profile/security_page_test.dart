@@ -99,7 +99,10 @@ void main() {
     expect(find.text('Nhập mã 4–8 ký tự'), findsOneWidget);
     expect(find.text('Lưu'), findsOneWidget);
     expect(find.textContaining('Cần rà soát bảo mật'), findsOneWidget);
-    expect(find.textContaining('Không hoàn tác sau khi xác nhận'), findsOneWidget);
+    expect(
+      find.textContaining('Không hoàn tác sau khi xác nhận'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('SC-158 first viewport reaches security action list', (
