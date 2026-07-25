@@ -174,3 +174,34 @@ Skeletons sẵn: `docs/02_FLUTTER_MIGRATION/*-Backend-Contract-Skeleton.md`.
 
 Auto only · không commit trừ user yêu cầu · batch ≤10 file ·
 `flutter analyze` + focused tests mỗi task · ADR-010 giữ nguyên.
+
+---
+
+## Execution result (2026-07-25)
+
+DOCUMENTER close-out for this plan. **No Dart production changes** in the
+documenter pass. Evidence:
+
+- Cancel pack: `flutter_app/run-artifacts/sdd/task-1.3-cancelled.md`
+- Blocked pack: `flutter_app/run-artifacts/sdd/wave-2-4-blocked.md`
+- Ledger: `.superpowers/sdd/progress-hoan-thien-tiep.md`
+
+### Final status table
+
+| ID | Task | Result |
+| --- | --- | --- |
+| 0.1 | `dart format` | **Approved** |
+| 0.2 | Refresh audit artifacts | **Approved** |
+| 0.3 | Update goldens Trade/Wallet/P2P | **Approved** |
+| 0.4 | Verify + push Enterprise | **Push done** — CI pending / merge pending ([PR #82](https://github.com/LonelyTraderBay/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/pull/82)) |
+| 1.1 | Nits Trust (Danh sách trắng) | **Approved** |
+| 1.2 | i18n vi-VN ratchet theo file chạm | **Process rule** (no batch) |
+| 1.3 | Hub offline-with-cache | **Cancelled** — no live `currentState`; needs product decision (C1 + GD4 explore) |
+| 1.4 | A11y TalkBack smoke checklist | **Approved** |
+| 2.x | Production remote | **Blocked** — signed OpenAPI/contracts |
+| 3.x | Ops / secrets / device smoke | **Blocked** — `VITTRADE_KEYSTORE_*`, staging URL, device lab |
+| 4.x | Money / identity / perf / E2E | **Blocked** — ADR + beta+ backlog |
+
+**Định nghĩa “hoàn thiện ngay” (W0 + W1 FE unblocked):** met except 0.4
+merge still waiting on Gates. **Production-ready thật** still requires W2+W3
+unlocks — not claimed Done.
