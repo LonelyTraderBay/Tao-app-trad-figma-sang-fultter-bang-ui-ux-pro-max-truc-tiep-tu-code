@@ -72,7 +72,9 @@ void main() {
       2,
     );
     expect(
-      withRefresh.dio.interceptors.whereType<QueuedInterceptorsWrapper>().length,
+      withRefresh.dio.interceptors
+          .whereType<QueuedInterceptorsWrapper>()
+          .length,
       1,
     );
   });
