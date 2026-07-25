@@ -80,7 +80,7 @@ void main() {
     expect(find.byType(P2PExpressPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Express Trade'), findsOneWidget);
+    expect(find.text('Giao dịch Express'), findsOneWidget);
     expect(find.text('Mua bán nhanh'), findsOneWidget);
     expect(find.text('MUA NHANH'), findsOneWidget);
     expect(find.text('BÁN NHANH'), findsOneWidget);
