@@ -179,9 +179,9 @@ class _P2PPaymentMethodVerificationPageState
                             ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Payment method verification review',
+                            title: 'Xem lại xác minh phương thức thanh toán',
                             message:
-                                'Micro-deposit confirmation, ownership check, warning note, and return path are reviewed before enabling a P2P payment method for escrow trades.',
+                                'Xác nhận micro-deposit, kiểm tra sở hữu, ghi chú cảnh báo và đường quay lại đã được xem trước khi bật phương thức thanh toán P2P cho giao dịch escrow.',
                             contractId: 'SC-233',
                           ),
                         ],
