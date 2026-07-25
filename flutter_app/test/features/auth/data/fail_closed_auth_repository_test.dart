@@ -26,8 +26,7 @@ void main() {
       );
       expect(
         exception.userMessage,
-        'Authentication service is unavailable because the production '
-        'backend is not configured yet.',
+        'Dịch vụ xác thực chưa sẵn sàng vì backend production chưa được cấu hình.',
       );
       expect(
         exception.toString(),
@@ -101,6 +100,16 @@ void main() {
             otp: '123456',
             newPassword: 'brand-new-password',
           ),
+          throwsA(isA<AuthBackendContractMissingException>()),
+        );
+      },
+    );
+
+    test(
+      'refreshSession rejects with AuthBackendContractMissingException',
+      () async {
+        await expectLater(
+          repository.refreshSession(refreshToken: 'demo-refresh.user'),
           throwsA(isA<AuthBackendContractMissingException>()),
         );
       },

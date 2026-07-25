@@ -8,7 +8,7 @@ export 'package:vit_trade_flutter/features/auth/domain/repositories/auth_reposit
 
 String authOperationErrorMessage(Object error) {
   if (error is AuthBackendContractMissingException) return error.userMessage;
-  return 'Authentication service is temporarily unavailable. Please try again.';
+  return 'Dịch vụ xác thực tạm thời không khả dụng. Vui lòng thử lại.';
 }
 
 final class AuthController {
@@ -83,5 +83,9 @@ final class AuthController {
       otp: otp.trim(),
       newPassword: newPassword,
     );
+  }
+
+  Future<AuthTokenPair> refreshSession({required String refreshToken}) {
+    return _repository.refreshSession(refreshToken: refreshToken.trim());
   }
 }

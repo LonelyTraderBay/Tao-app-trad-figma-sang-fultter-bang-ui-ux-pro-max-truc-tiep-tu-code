@@ -46,6 +46,8 @@ void main() {
 
     final savedToken = await store.read(SecureStoreKeys.authToken);
     expect(savedToken, 'demo.user@vittrade.vn');
+    final savedRefresh = await store.read(SecureStoreKeys.authRefreshToken);
+    expect(savedRefresh, 'demo-refresh.user@vittrade.vn');
   });
 
   test('restore đọc phiên đã lưu từ SecureStore', () async {
@@ -72,7 +74,11 @@ void main() {
 
   test('restore với JSON hỏng xóa khóa và giữ state null', () async {
     final store = InMemorySecureStore(
-      seed: {SecureStoreKeys.authSession: 'khong-phai-json'},
+      seed: {
+        SecureStoreKeys.authSession: 'khong-phai-json',
+        SecureStoreKeys.authToken: 'orphan-token',
+        SecureStoreKeys.authRefreshToken: 'orphan-refresh',
+      },
     );
     final container = buildContainer(store: store);
 
@@ -80,9 +86,11 @@ void main() {
 
     expect(container.read(authSessionControllerProvider), isNull);
     expect(await store.read(SecureStoreKeys.authSession), isNull);
+    expect(await store.read(SecureStoreKeys.authToken), isNull);
+    expect(await store.read(SecureStoreKeys.authRefreshToken), isNull);
   });
 
-  test('logout xóa cả hai khóa và đưa state về null', () async {
+  test('logout xóa cả ba khóa và đưa state về null', () async {
     final store = InMemorySecureStore();
     final container = buildContainer(store: store);
     final notifier = container.read(authSessionControllerProvider.notifier);
@@ -95,6 +103,46 @@ void main() {
     expect(container.read(authSessionControllerProvider), isNull);
     expect(await store.read(SecureStoreKeys.authSession), isNull);
     expect(await store.read(SecureStoreKeys.authToken), isNull);
+    expect(await store.read(SecureStoreKeys.authRefreshToken), isNull);
+  });
+
+  test('tryRefreshAccessToken quay access token mới qua mock repo', () async {
+    final store = InMemorySecureStore();
+    final container = buildContainer(store: store);
+    final notifier = container.read(authSessionControllerProvider.notifier);
+
+    await notifier.login(identifier: 'user@vittrade.vn', password: 'secret');
+    final refreshed = await notifier.tryRefreshAccessToken();
+
+    expect(refreshed, 'demo.user@vittrade.vn.refreshed');
+    expect(
+      await store.read(SecureStoreKeys.authToken),
+      'demo.user@vittrade.vn.refreshed',
+    );
+    expect(
+      await store.read(SecureStoreKeys.authRefreshToken),
+      'demo-refresh.user@vittrade.vn',
+    );
+  });
+
+  test('tryRefreshAccessToken trả null khi fail-closed', () async {
+    final store = InMemorySecureStore(
+      seed: {SecureStoreKeys.authRefreshToken: 'demo-refresh.user@vittrade.vn'},
+    );
+    final container = buildContainer(
+      store: store,
+      repository: const FailClosedAuthRepository(),
+    );
+
+    final refreshed = await container
+        .read(authSessionControllerProvider.notifier)
+        .tryRefreshAccessToken();
+
+    expect(refreshed, isNull);
+    expect(
+      await store.read(SecureStoreKeys.authRefreshToken),
+      'demo-refresh.user@vittrade.vn',
+    );
   });
 
   test('login lỗi từ repository không ghi gì vào SecureStore', () async {
@@ -113,5 +161,6 @@ void main() {
     expect(container.read(authSessionControllerProvider), isNull);
     expect(await store.read(SecureStoreKeys.authSession), isNull);
     expect(await store.read(SecureStoreKeys.authToken), isNull);
+    expect(await store.read(SecureStoreKeys.authRefreshToken), isNull);
   });
 }

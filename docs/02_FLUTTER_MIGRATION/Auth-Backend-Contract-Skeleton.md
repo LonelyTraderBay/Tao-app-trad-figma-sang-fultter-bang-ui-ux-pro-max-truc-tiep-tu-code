@@ -16,6 +16,7 @@ this document until the backend contract is confirmed by the API owner.
 | Setup 2FA | `POST` | `/auth/2fa/setup` | Must require backup-code acknowledgement and audit metadata. |
 | Request password reset | `POST` | `/auth/password-reset/request` | Must not leak account existence. |
 | Confirm password reset | `POST` | `/auth/password-reset/confirm` | Must require OTP/challenge binding and new password policy validation. |
+| Refresh session | `POST` | `/auth/refresh` | Must accept refresh token and return a new access (+ optional rotated refresh) pair. FE already wires SecureStore + Dio 401 retry via `sessionRefreshInterceptor`; do not invent response shape until this row is signed. |
 
 ## DTOs To Confirm
 

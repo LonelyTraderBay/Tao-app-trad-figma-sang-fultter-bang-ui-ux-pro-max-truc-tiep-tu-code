@@ -36,4 +36,10 @@ abstract interface class AuthRepository {
     required String otp,
     required String newPassword,
   });
+
+  /// Làm mới access token từ [refreshToken] (P0.4).
+  ///
+  /// Endpoint thật chờ contract BE ký; mock trả cặp demo, fail-closed ném
+  /// [AuthBackendContractMissingException].
+  Future<AuthTokenPair> refreshSession({required String refreshToken});
 }

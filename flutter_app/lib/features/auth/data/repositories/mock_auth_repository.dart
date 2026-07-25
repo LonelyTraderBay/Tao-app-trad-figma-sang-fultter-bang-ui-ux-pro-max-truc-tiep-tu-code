@@ -218,4 +218,22 @@ final class MockAuthRepository implements AuthRepository {
           : 'Không thể đặt lại mật khẩu. Vui lòng kiểm tra mã OTP.',
     );
   }
+
+  @override
+  Future<AuthTokenPair> refreshSession({required String refreshToken}) async {
+    if (delay > Duration.zero) {
+      await Future<void>.delayed(delay);
+    }
+
+    const prefix = 'demo-refresh.';
+    if (!refreshToken.startsWith(prefix) ||
+        refreshToken.length <= prefix.length) {
+      throw StateError('Refresh token không hợp lệ.');
+    }
+    final identifier = refreshToken.substring(prefix.length);
+    return AuthTokenPair(
+      accessToken: 'demo.$identifier.refreshed',
+      refreshToken: '$prefix$identifier',
+    );
+  }
 }

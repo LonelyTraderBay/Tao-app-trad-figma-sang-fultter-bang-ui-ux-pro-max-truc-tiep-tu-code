@@ -17,6 +17,17 @@ final class AuthSession {
   final DateTime issuedAt;
 }
 
+/// Cặp access/refresh token sau login hoặc refresh (P0.4).
+///
+/// Token sống trong [SecureStore], không serialize vào [AuthSession] JSON
+/// để tránh lẫn metadata phiên với bí mật phiên.
+final class AuthTokenPair {
+  const AuthTokenPair({required this.accessToken, this.refreshToken});
+
+  final String accessToken;
+  final String? refreshToken;
+}
+
 /// Result of a registration attempt: the new [authSession] plus the
 /// credentials, OTP challenge, and device-trust state that produced it.
 final class AuthRegistrationDraft {

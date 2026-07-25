@@ -69,6 +69,10 @@ abstract final class SecureStoreKeys {
   /// Phiên đăng nhập đã serialize (JSON) để khôi phục khi khởi động.
   static const String authSession = 'auth.session';
 
-  /// Token phiên cho `AuthTokenProvider` của ApiClient (SEC-S46).
+  /// Access token cho `AuthTokenProvider` của ApiClient (SEC-S46 / P0.4).
   static const String authToken = 'auth.token';
+
+  /// Refresh token — chỉ dùng bởi session-refresh interceptor / AuthSession.
+  /// Không log, không đưa ra UI.
+  static const String authRefreshToken = 'auth.refresh_token';
 }

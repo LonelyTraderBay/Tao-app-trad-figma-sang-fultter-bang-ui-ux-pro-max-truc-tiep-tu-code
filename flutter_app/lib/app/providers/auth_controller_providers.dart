@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// Riverpod 3 giấu type `Override` khỏi export chính — misc.dart là nơi chuẩn.
+import 'package:flutter_riverpod/misc.dart';
 
+import 'package:vit_trade_flutter/core/network/session_refresh.dart';
 import 'package:vit_trade_flutter/core/storage/secure_store.dart';
 import 'package:vit_trade_flutter/features/auth/data/dto/auth_dto_mappers.dart';
 import 'package:vit_trade_flutter/features/auth/data/dto/auth_session_dto.dart';
@@ -43,15 +46,15 @@ final class AuthSessionController extends Notifier<AuthSession?> {
       final json = jsonDecode(raw) as Map<String, dynamic>;
       state = AuthSessionDto.fromJson(json).toEntity();
     } catch (_) {
-      await store.delete(SecureStoreKeys.authSession);
+      await _clearStoredSession(store);
       state = null;
     }
   }
 
-  /// Đăng nhập qua [AuthController], rồi lưu phiên + token vào
-  /// [SecureStore]. Token hiện là `'demo.<identifier>'` (SEC-S46 bật một
-  /// nửa GĐ4-F1) — backend thật sẽ thay bằng token server cấp, không đổi
-  /// cơ chế truyền. Lỗi từ repository ném nguyên, KHÔNG ghi gì vào store.
+  /// Đăng nhập qua [AuthController], rồi lưu phiên + access/refresh token vào
+  /// [SecureStore]. Token demo hiện là `'demo.<identifier>'` /
+  /// `'demo-refresh.<identifier>'` (P0.4) — backend thật thay giá trị, không
+  /// đổi cơ chế truyền. Lỗi từ repository ném nguyên, KHÔNG ghi gì vào store.
   ///
   /// Mã hóa qua [AuthSessionDto] (GĐ4-F8, ADR-010) — cùng shape JSON
   /// (`identifier`/`demo`/`issuedAt` ISO-8601) như trước, tương thích ngược
@@ -71,16 +74,50 @@ final class AuthSessionController extends Notifier<AuthSession?> {
       jsonEncode(session.toDto().toJson()),
     );
     await store.write(SecureStoreKeys.authToken, 'demo.${session.identifier}');
+    await store.write(
+      SecureStoreKeys.authRefreshToken,
+      'demo-refresh.${session.identifier}',
+    );
     state = session;
     return session;
+  }
+
+  /// Làm mới access token từ refresh token trong SecureStore (P0.4).
+  ///
+  /// Trả access token mới hoặc `null` khi thiếu refresh / repo lỗi — caller
+  /// (session-refresh interceptor) sẽ gọi [logout].
+  Future<String?> tryRefreshAccessToken() async {
+    final store = ref.read(secureStoreProvider);
+    final refreshToken = await store.read(SecureStoreKeys.authRefreshToken);
+    if (refreshToken == null || refreshToken.isEmpty) {
+      return null;
+    }
+
+    try {
+      final pair = await ref
+          .read(authControllerProvider)
+          .refreshSession(refreshToken: refreshToken);
+      await store.write(SecureStoreKeys.authToken, pair.accessToken);
+      if (pair.refreshToken != null && pair.refreshToken!.isNotEmpty) {
+        await store.write(SecureStoreKeys.authRefreshToken, pair.refreshToken!);
+      }
+      return pair.accessToken;
+    } catch (_) {
+      return null;
+    }
   }
 
   /// Đăng xuất: xóa phiên + token đã lưu, đưa state về `null`.
   Future<void> logout() async {
     final store = ref.read(secureStoreProvider);
+    await _clearStoredSession(store);
+    state = null;
+  }
+
+  Future<void> _clearStoredSession(SecureStore store) async {
     await store.delete(SecureStoreKeys.authSession);
     await store.delete(SecureStoreKeys.authToken);
-    state = null;
+    await store.delete(SecureStoreKeys.authRefreshToken);
   }
 }
 
@@ -90,3 +127,16 @@ final authSessionControllerProvider =
     NotifierProvider<AuthSessionController, AuthSession?>(
       AuthSessionController.new,
     );
+
+/// Nối AuthSession ↔ ApiClient refresh mà `core/` không import `app/`.
+/// Gắn vào [VitTradeApp.overrides] (và test ProviderContainer khi cần).
+List<Override> authSessionNetworkOverrides() => [
+  sessionAccessTokenRefresherProvider.overrideWith((ref) {
+    return () => ref
+        .read(authSessionControllerProvider.notifier)
+        .tryRefreshAccessToken();
+  }),
+  sessionInvalidatedHandlerProvider.overrideWith((ref) {
+    return () => ref.read(authSessionControllerProvider.notifier).logout();
+  }),
+];
