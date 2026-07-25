@@ -43,7 +43,7 @@ void main() {
     expect(snapshot.availableAt, '2026-03-12 10:00');
     expect(snapshot.hoursRemaining, 168);
     expect(snapshot.reasons, hasLength(4));
-    expect(snapshot.contractNotes, contains('High-risk action'));
+    expect(snapshot.contractNotes, contains('Hành động rủi ro cao'));
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -63,7 +63,7 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Thời gian chờ'), findsOneWidget);
     expect(find.text('Thanh toán · P2P'), findsOneWidget);
-    expect(find.text('Đang cooling period'), findsOneWidget);
+    expect(find.text('Đang trong thời gian chờ'), findsOneWidget);
     expect(
       find.text('Phương thức thanh toán mới cần chờ 7 ngày'),
       findsOneWidget,
@@ -74,8 +74,8 @@ void main() {
     expect(find.text('2026-03-05 10:00'), findsOneWidget);
     expect(find.text('Sẵn sàng lúc'), findsOneWidget);
     expect(find.text('2026-03-12 10:00'), findsOneWidget);
-    expect(find.text('Tại sao có cooling period?'), findsOneWidget);
-    expect(find.text('Bảo vệ khỏi fraud và scam'), findsOneWidget);
+    expect(find.text('Tại sao có thời gian chờ?'), findsOneWidget);
+    expect(find.text('Bảo vệ khỏi gian lận và lừa đảo'), findsOneWidget);
     expect(find.text('Trong thời gian chờ'), findsOneWidget);
   });
 

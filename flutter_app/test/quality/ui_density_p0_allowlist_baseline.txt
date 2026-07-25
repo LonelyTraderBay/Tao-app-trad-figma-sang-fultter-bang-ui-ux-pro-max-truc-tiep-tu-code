@@ -1,0 +1,15 @@
+# VitTrade SDD Task B1 — P0 density allowlist ratchet
+# Format: route_key,max_density_score
+# Scores are live-computed by tool/ui_fullscreen_density_audit.dart
+# (--check-allowlist). Raise a max only when intentionally accepting
+# denser debt; prefer fixing the page. Do not delete rows.
+#
+# Captured 2026-07-25 from current inventory (body CSV + source scan).
+AppRoutePaths.home,8
+AppRoutePaths.trade,12
+AppRoutePaths.markets,0
+AppRoutePaths.marketsOverview,0
+AppRoutePaths.wallet,9
+AppRoutePaths.walletWithdraw,0
+AppRoutePaths.p2p,0
+AppRoutePaths.profileSecurity,9

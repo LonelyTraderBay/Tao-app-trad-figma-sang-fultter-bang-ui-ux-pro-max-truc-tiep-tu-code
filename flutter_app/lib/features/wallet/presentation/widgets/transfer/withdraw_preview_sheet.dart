@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -18,47 +19,79 @@ class WithdrawPreviewSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Confirm sheets prefer calmer density than the compact form (craft #6).
+    const confirmDensity = VitDensity.standard;
+
     return VitSheetPanel(
       title: 'Xác nhận rút tiền',
       child: ListView(
-        shrinkWrap: true,
         children: [
-          VitInfoRow(
-            label: 'Số lượng',
-            value: preview.amountLabel,
-            density: VitDensity.compact,
-            showDivider: true,
+          Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x4,
+              vertical: AppSpacing.x3,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Số lượng',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    preview.amountLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: AppTextStyles.amountSm.copyWith(
+                      color: AppColors.text1,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.border,
           ),
           VitInfoRow(
             label: 'Mạng lưới',
             value: preview.networkName,
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           VitInfoRow(
             label: 'Phí mạng',
             value: preview.feeLabel,
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           VitInfoRow(
             label: 'Nhận dự kiến',
             value: preview.receivedLabel,
-            density: VitDensity.compact,
+            density: confirmDensity,
             showDivider: true,
           ),
           VitInfoRow(
             label: 'Địa chỉ nhận',
             value: preview.maskedAddress,
-            density: VitDensity.compact,
+            density: confirmDensity,
           ),
           const SizedBox(height: WalletSpacingTokens.transferInfoGap),
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            density: confirmDensity,
             borderColor: withdrawAmber.withValues(alpha: .24),
             child: Text(
-              'High-risk action: preview + confirm + audit trail required.',
+              'Không hoàn tác sau khi xác nhận. Bước tiếp theo: mạng xử lý giao dịch rút tiền và ghi nhật ký kiểm toán.',
               style: AppTextStyles.caption.copyWith(color: withdrawAmber),
             ),
           ),

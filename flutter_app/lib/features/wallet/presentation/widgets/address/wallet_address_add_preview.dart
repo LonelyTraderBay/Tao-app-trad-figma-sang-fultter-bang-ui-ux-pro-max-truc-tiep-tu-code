@@ -31,11 +31,12 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Confirm sheets prefer calmer density than the compact form (craft #6).
+    const confirmDensity = VitDensity.standard;
+
     return VitSheetPanel(
       title: 'Xác nhận lưu địa chỉ',
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ListView(
         children: [
           Text(
             preview.auditTrailNote,
@@ -43,13 +44,14 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           AddressPreviewPanel(
+            density: confirmDensity,
             rows: [
               ('Tên', preview.label),
               ('Mạng', preview.networkLabel),
               ('Tài sản', preview.asset),
               ('Địa chỉ', preview.maskedAddress),
               if (preview.memo != null) ('Memo', preview.memo!),
-              ('Whitelist', preview.whitelistLabel),
+              ('Danh sách trắng', preview.whitelistLabel),
             ],
           ),
           const SizedBox(height: WalletSpacingTokens.walletAddressFilterGap),
@@ -67,29 +69,34 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
 }
 
 class AddressPreviewPanel extends StatelessWidget {
-  const AddressPreviewPanel({super.key, required this.rows});
+  const AddressPreviewPanel({
+    super.key,
+    required this.rows,
+    this.density = VitDensity.compact,
+  });
 
   final List<(String, String)> rows;
+  final VitDensity density;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: density,
       borderColor: AppColors.overlayStroke,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VitSectionHeader(
+          VitSectionHeader(
             title: 'Xem trước',
             bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             icon: Icons.receipt_long_outlined,
-            density: VitDensity.compact,
+            density: density,
           ),
           for (var i = 0; i < rows.length; i++)
             VitInfoRow(
               label: rows[i].$1,
               value: rows[i].$2,
-              density: VitDensity.compact,
+              density: density,
               showDivider: i != rows.length - 1,
               valueColor: rows[i].$1 == 'Địa chỉ'
                   ? AppColors.primary
@@ -146,10 +153,10 @@ class AddressSavedState extends StatelessWidget {
                     density: VitDensity.compact,
                     borderColor: AppColors.buy20,
                     child: VitInfoRow(
-                      label: 'Whitelist',
+                      label: 'Danh sách trắng',
                       value: whitelist
-                          ? 'Đã thêm vào whitelist'
-                          : 'Chưa whitelist - có thể bật sau',
+                          ? 'Đã thêm vào danh sách trắng'
+                          : 'Chưa vào danh sách trắng - có thể bật sau',
                       leading: const Icon(Icons.shield_outlined),
                       valueColor: addressAddGreen,
                       density: VitDensity.compact,

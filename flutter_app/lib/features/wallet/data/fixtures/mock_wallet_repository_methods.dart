@@ -127,7 +127,9 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
         WalletScreenState.offline,
       ],
       auditTrailNote:
-          'High-risk action: preview + confirm + audit trail required.',
+          'Rủi ro cao: cần xem trước, xác nhận và ghi nhật ký kiểm toán. '
+          'Không hoàn tác sau khi lưu. Bước tiếp theo: địa chỉ có thể dùng '
+          'để rút tiền theo mạng đã chọn.',
       highRiskContractId: HighRiskFlowContractIds.walletMoneyMovement,
     );
   }

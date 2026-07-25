@@ -7,10 +7,15 @@ screen) and `tool/visual_density_risk_audit.dart` (cross-route visual-density
 risk score) — not new policy.  
 **Enforcement:** `dart run tool/ui_fullscreen_density_audit.dart --check` ·
 `dart run tool/visual_density_risk_audit.dart --check` — both flags are real
-(verified against arg parsing), but **no `test/quality/*_guardrail_test.dart`
-exists for either domain and neither runs as a named CI step** (`.github/`
-contains no reference to either tool). Audit-only today, exactly as recorded in
-[Flutter-Design-System-Reference.md](../Flutter-Design-System-Reference.md) §2.  
+(verified against arg parsing). Whole-app `--check` stays artifact-staleness
+only and is **not** a day-1 CI fail gate while inventory is dirty.
+**P0 ratchet (SDD B1):** guardrail
+`test/quality/ui_density_p0_allowlist_guardrail_test.dart` runs
+`dart run tool/ui_fullscreen_density_audit.dart --check-allowlist
+--baseline=test/quality/ui_density_p0_allowlist_baseline.txt` and fails only
+when an allowlisted route's live `density_score` exceeds its baseline max.
+`visual_density_risk_audit.dart` remains audit-only (no allowlist gate yet).
+See [Flutter-Design-System-Reference.md](../Flutter-Design-System-Reference.md) §2.  
 **Reference screen(s):** `flutter_app/lib/features/home/presentation/pages/home_page.dart`
 — the risk audit's own `PASS_MONITOR` / `low_signal_monitor` reference row
 (official score 8, visual risk 8).
@@ -68,7 +73,13 @@ density debt per routed screen.
   `Pass_or_low_signal`.
 - **`--check` mode:** regenerates markdown/CSV in memory and byte-compares
   them against the files on disk; fails if either is missing or stale. It does
-  **not** assert a fixed route-count baseline (unlike Tool 2).
+  **not** assert a fixed route-count baseline (unlike Tool 2). Whole-repo
+  staleness is intentionally separate from the P0 ratchet.
+- **`--check-allowlist` mode (P0 ratchet):** live-scores routes listed in
+  `--baseline=route,max_score` (optional `--routes=` subset). Fails only when
+  a listed route is missing or `density_score` exceeds its max. Does **not**
+  require markdown/CSV artifacts to be current — safe for CI before full-app
+  density cleanup.
 
 **Baseline (captured 2026-07-08):**
 
@@ -150,14 +161,17 @@ fires — this is what tags the Home reference row above).
 
 ## Exceptions
 
-Neither tool has an in-code allow-list or `// density: allow-start` comment
-marker convention (unlike `Card-Tile-Standard.md`'s `// card-tile:
-allow-start` — grepped, none exists here). The only structural exception is
-archetype-driven: `fullscreenTool` routes (Tool 2) and `Tool`-grade routes
-(Tool 1) always route to their QA-visual-check priority regardless of score.
-Beyond that, Tool 2's own generated report states the process requirement in
-prose only: "Exceptions require a reason, route, owner feature, and emulator
-or widget-test evidence" — there is no tool-level mechanism that skips a route
+Tool 1 supports a **P0 score baseline file**
+(`test/quality/ui_density_p0_allowlist_baseline.txt`) via `--check-allowlist`
+— that is a ratchet max-score list, not a skip list. Neither tool has a
+`// density: allow-start` comment marker convention (unlike
+`Card-Tile-Standard.md`'s `// card-tile: allow-start` — grepped, none exists
+here). The only structural scoring exception is archetype-driven:
+`fullscreenTool` routes (Tool 2) and `Tool`-grade routes (Tool 1) always
+route to their QA-visual-check priority regardless of score. Beyond that,
+Tool 2's own generated report states the process requirement in prose only:
+"Exceptions require a reason, route, owner feature, and emulator or
+widget-test evidence" — there is no tool-level mechanism that skips a route
 from scoring.
 
 ## Verify
@@ -168,6 +182,9 @@ dart run tool/body_component_consistency_audit.dart           # regenerate input
 dart run tool/body_component_consistency_audit.dart --check   # verify input CSV/markdown are current
 dart run tool/ui_fullscreen_density_audit.dart                # regenerate UI-Fullscreen-Density-Audit.md/.csv
 dart run tool/ui_fullscreen_density_audit.dart --check        # verify fullscreen density artifacts are current
+dart run tool/ui_fullscreen_density_audit.dart --check-allowlist \
+  --baseline=test/quality/ui_density_p0_allowlist_baseline.txt
+flutter test test/quality/ui_density_p0_allowlist_guardrail_test.dart
 dart run tool/visual_density_risk_audit.dart                  # regenerate Visual-Density-Risk-Audit.md/.csv
 dart run tool/visual_density_risk_audit.dart --check          # verify risk artifacts current + total_routed_screens == 414
 ```

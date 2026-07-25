@@ -151,7 +151,7 @@ void main() {
           account: '0071000123456',
           ownerName: 'NGUYEN VAN A',
         ),
-        'Select a payment method before preview.',
+        'Chọn phương thức thanh toán trước khi xem trước.',
       );
       expect(
         P2PPaymentMethodAddController(
@@ -164,7 +164,7 @@ void main() {
           account: '0071000123456',
           ownerName: 'NGUYEN VAN A',
         ),
-        'Offline: reconnect before adding a payment method.',
+        'Mất kết nối: hãy kết nối lại trước khi thêm phương thức thanh toán.',
       );
       expect(P2PHighRiskFlowStatus.confirming.isBusy, isTrue);
       expect(P2PHighRiskFlowStatus.preview.hasPreview, isTrue);
@@ -181,7 +181,7 @@ void main() {
       expect(preview.maskedAccount, '007...3456');
       expect(preview.ownerName, 'NGUYEN VAN A');
       expect(preview.ownershipRiskMessage, contains('Xem xét quyền sở hữu'));
-      expect(preview.limitMessage, contains('Limits:'));
+      expect(preview.limitMessage, contains('Giới hạn:'));
       expect(preview.confirmTitle, 'Xác nhận thêm phương thức?');
       expect(preview.saveRoute, '/p2p/payment-methods');
     },

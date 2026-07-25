@@ -77,6 +77,9 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
     if (!canSubmit || submitting) return;
     onPreviewOpened?.call();
     final sideLabel = side == TradeOrderSide.buy ? 'MUA' : 'BÁN';
+    final availableLabel = side == TradeOrderSide.buy
+        ? '${formatTradeMoney(balances.usdtAvailable)} USDT'
+        : '${formatTradeMoney(balances.baseAvailable)} ${pair.baseAsset}';
     final confirmed = await showVitTradeConfirmSheet(
       context: context,
       title: 'Xem lại lệnh',
@@ -95,11 +98,20 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
           label: 'Phí ước tính',
           value: formatTradeMoney(preview.fee),
         ),
+        const VitTradeConfirmLine(
+          label: 'Trượt giá',
+          value: 'Lệnh thị trường · có thể lệch khi khớp',
+        ),
+        VitTradeConfirmLine(label: 'Số dư khả dụng', value: availableLabel),
         VitTradeConfirmLine(
           label: 'Tổng thanh toán',
           value: '${formatTradeMoney(preview.total)} USDT',
         ),
       ],
+      riskMessage:
+          'Giao dịch tiền mã hoá có rủi ro. Chỉ dùng số tiền bạn chấp nhận mất. '
+          'Không hoàn tác sau khi xác nhận gửi. '
+          'Bước tiếp theo: theo dõi trạng thái lệnh và biên lai.',
     );
     if (!context.mounted) return;
     if (confirmed) {
@@ -129,6 +141,7 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
         VitInput(
           key: amountFieldKey,
           label: 'Số lượng $actionVerb ($baseAsset)',
+          semanticLabel: 'Số lượng $actionVerb $baseAsset',
           controller: amountController,
           onChanged: (_) => onChanged(),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -161,6 +174,25 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitKeyValueRow(
+          label: 'Trượt giá',
+          value: 'Lệnh thị trường · có thể lệch khi khớp',
+          labelStyle: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          valueStyle: AppTextStyles.caption.copyWith(color: AppColors.text1),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        VitKeyValueRow(
+          label: 'Số dư khả dụng',
+          value: side == TradeOrderSide.buy
+              ? '${formatTradeMoney(balances.usdtAvailable)} USDT'
+              : '${formatTradeMoney(balances.baseAvailable)} ${pair.baseAsset}',
+          labelStyle: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          valueStyle: AppTextStyles.caption.copyWith(
+            color: AppColors.text1,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        VitKeyValueRow(
           label: 'Tổng thanh toán',
           value: '${formatTradeMoney(preview.total)} USDT',
           labelStyle: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -172,21 +204,32 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
-          'Giá thị trường có thể thay đổi',
+          'Giá thị trường có thể thay đổi. Không hoàn tác sau khi xác nhận gửi.',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        VitCtaButton(
-          key: submitKey,
-          onPressed: canSubmit && !submitting
-              ? () => _openConfirm(context)
-              : null,
-          loading: submitting,
-          density: VitDensity.tool,
-          variant: side == TradeOrderSide.buy
-              ? VitCtaButtonVariant.success
-              : VitCtaButtonVariant.danger,
-          child: Text(_submitLabel),
+        Semantics(
+          button: true,
+          enabled: canSubmit && !submitting,
+          label: submitting
+              ? 'Đang gửi lệnh giao dịch'
+              : !canSubmit
+              ? 'Nhập số lượng để tiếp tục đặt lệnh'
+              : side == TradeOrderSide.buy
+              ? 'Xác nhận mua lệnh Spot'
+              : 'Đặt lệnh bán Spot',
+          child: VitCtaButton(
+            key: submitKey,
+            onPressed: canSubmit && !submitting
+                ? () => _openConfirm(context)
+                : null,
+            loading: submitting,
+            density: VitDensity.tool,
+            variant: side == TradeOrderSide.buy
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.danger,
+            child: Text(_submitLabel),
+          ),
         ),
       ],
     );

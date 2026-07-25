@@ -64,7 +64,9 @@ void main() {
     );
     expect(
       snapshot.auditTrailNote,
-      'High-risk action: preview + confirm + audit trail required.',
+      'Rủi ro cao: cần xem trước, xác nhận và ghi nhật ký kiểm toán. '
+      'Không hoàn tác sau khi lưu. Bước tiếp theo: địa chỉ có thể dùng '
+      'để rút tiền theo mạng đã chọn.',
     );
     expect(snapshot.networks, hasLength(6));
     expect(snapshot.networks[1].label, 'ETH (ERC20)');
@@ -114,7 +116,7 @@ void main() {
       find.textContaining('Memo / Tag', findRichText: true),
       findsOneWidget,
     );
-    expect(find.text('Thêm vào Whitelist'), findsOneWidget);
+    expect(find.text('Thêm vào danh sách trắng'), findsOneWidget);
     expect(find.text('Lưu địa chỉ'), findsOneWidget);
     expect(find.byKey(AddressAddPage.saveKey).hitTestable(), findsNothing);
   });
@@ -136,10 +138,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Xác nhận lưu địa chỉ'), findsOneWidget);
-    expect(
-      find.text('High-risk action: preview + confirm + audit trail required.'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('Không hoàn tác sau khi lưu'), findsOneWidget);
     expect(find.text('Xác nhận lưu'), findsOneWidget);
   });
 
@@ -186,6 +185,10 @@ void main() {
     expect(find.text('Xác nhận lưu địa chỉ'), findsOneWidget);
     expect(find.text('TQnKxxx4d8eRh9Kf...Np7Yz123'), findsOneWidget);
 
+    await tester.ensureVisible(
+      find.byKey(AddressConfirmPreviewSheet.confirmButtonKey),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(AddressConfirmPreviewSheet.confirmButtonKey));
     await tester.pump();
     expect(find.byType(AddressSavedState), findsOneWidget);

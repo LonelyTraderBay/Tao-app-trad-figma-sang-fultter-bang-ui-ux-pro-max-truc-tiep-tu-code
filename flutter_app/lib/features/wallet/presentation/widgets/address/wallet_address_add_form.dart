@@ -176,7 +176,7 @@ class AddressAddForm {
                 ('Địa chỉ', maskWalletAddress(addressController.text.trim())),
                 if (memoController.text.trim().isNotEmpty)
                   ('Memo', memoController.text.trim()),
-                ('Whitelist', whitelist ? 'Có' : 'Không'),
+                ('Danh sách trắng', whitelist ? 'Có' : 'Không'),
               ],
             ),
         ],

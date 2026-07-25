@@ -35,10 +35,10 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
           'Thông tin thanh toán được mã hóa và chỉ hiển thị cho đối tác khi đơn P2P được tạo.',
       confirmTitle: 'Xác nhận thêm phương thức?',
       confirmMessage:
-          'Kiểm tra đúng ngân hàng, số tài khoản và tên chủ tài khoản trước khi lưu. Thay đổi phương thức thanh toán cần audit trail.',
+          'Kiểm tra đúng ngân hàng, số tài khoản đã che và tên chủ tài khoản trước khi lưu.',
       emptyTitle: 'Chưa có phương thức thanh toán',
       contractNotes:
-          'High-risk action: preview + confirm + audit trail required. P2P requires escrow, fraud, KYC, payment-state clarity.',
+          'Hành động rủi ro cao: cần xem trước, xác nhận và nhật ký kiểm toán. P2P yêu cầu escrow, chống gian lận, KYC và trạng thái thanh toán rõ ràng.',
       highRiskContractId: _p2pPaymentMethodContractId,
     );
   }
@@ -98,10 +98,10 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
       saveRoute: '/p2p/payment-methods',
       confirmTitle: 'Gửi xác minh sở hữu?',
       confirmMessage:
-          'Tài liệu sẽ được lưu vào audit trail và đối chiếu với hồ sơ KYC trước khi mở giới hạn P2P.',
+          'Tài liệu sẽ được lưu vào nhật ký kiểm toán và đối chiếu với hồ sơ KYC trước khi mở giới hạn P2P.',
       emptyTitle: 'Chưa có tài liệu xác minh',
       contractNotes:
-          'High-risk action: preview + confirm + audit trail required. P2P requires escrow, fraud, KYC, payment-state clarity.',
+          'Hành động rủi ro cao: cần xem trước, xác nhận và nhật ký kiểm toán. P2P yêu cầu escrow, chống gian lận, KYC và trạng thái thanh toán rõ ràng.',
       highRiskContractId: _p2pPaymentMethodContractId,
     );
   }
@@ -123,19 +123,19 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
       addedAt: '2026-03-05 10:00',
       availableAt: '2026-03-12 10:00',
       hoursRemaining: 168,
-      reason: 'New payment method',
+      reason: 'Phương thức thanh toán mới',
       reasons: [
-        'Bảo vệ khỏi fraud và scam',
-        'Thời gian xác minh ownership',
+        'Bảo vệ khỏi gian lận và lừa đảo',
+        'Thời gian xác minh quyền sở hữu',
         'Tuân thủ quy định AML/CTF',
-        'Giảm thiểu dispute',
+        'Giảm thiểu tranh chấp',
       ],
       waitTitle: 'Trong thời gian chờ',
       waitMessage:
-          'Bạn vẫn có thể dùng các phương thức khác đã verify. Phương thức này sẽ tự động khả dụng sau 7 ngày.',
+          'Bạn vẫn có thể dùng các phương thức khác đã xác minh. Phương thức này sẽ tự động khả dụng sau 7 ngày.',
       emptyTitle: 'Không có phương thức đang chờ',
       contractNotes:
-          'High-risk action: preview + confirm + audit trail required. P2P requires escrow, fraud, KYC, payment-state clarity.',
+          'Hành động rủi ro cao: cần xem trước, xác nhận và nhật ký kiểm toán. P2P yêu cầu escrow, chống gian lận, KYC và trạng thái thanh toán rõ ràng.',
       highRiskContractId: _p2pPaymentMethodContractId,
     );
   }

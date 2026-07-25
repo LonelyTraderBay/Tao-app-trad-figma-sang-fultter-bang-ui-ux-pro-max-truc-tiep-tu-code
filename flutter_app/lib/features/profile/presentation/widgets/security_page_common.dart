@@ -39,9 +39,12 @@ class _AntiPhishingCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             '\u0110\u1EB7t m\u00E3 c\u00E1 nh\u00E2n. Email t\u1EEB VitTrade s\u1EBD lu\u00F4n hi\u1EC3n th\u1ECB m\u00E3 n\u00E0y.',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.numericMicro.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          Text(
+            'Tr\u01B0\u1EDBc khi L\u01B0u: xem tr\u01B0\u1EDBc m\u00E3 \u00B7 ch\u1EC9 d\u00F9ng email VitTrade th\u1EADt \u00B7 kh\u00F4ng ho\u00E0n t\u00E1c ngay sau x\u00E1c nh\u1EADn.',
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitInput(
@@ -52,13 +55,20 @@ class _AntiPhishingCard extends StatelessWidget {
             inputFormatters: [LengthLimitingTextInputFormatter(8)],
             suffix: SizedBox(
               width: ProfileSpacingTokens.securitySaveButtonWidth,
-              child: VitCtaButton(
-                key: SecurityPage.antiPhishingSaveKey,
-                onPressed: saving ? null : onSave,
-                loading: saving,
-                density: VitDensity.compact,
-                padding: EdgeInsets.zero,
-                child: Text(saving ? '...' : 'L\u01B0u'),
+              child: Semantics(
+                button: true,
+                enabled: !saving,
+                label: saving
+                    ? 'Đang lưu mã chống lừa đảo'
+                    : 'Lưu mã chống lừa đảo',
+                child: VitCtaButton(
+                  key: SecurityPage.antiPhishingSaveKey,
+                  onPressed: saving ? null : onSave,
+                  loading: saving,
+                  density: VitDensity.compact,
+                  padding: EdgeInsets.zero,
+                  child: Text(saving ? '...' : 'L\u01B0u'),
+                ),
               ),
             ),
           ),

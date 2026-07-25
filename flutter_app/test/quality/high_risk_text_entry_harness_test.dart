@@ -52,8 +52,12 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(AddressConfirmPreviewSheet.confirmButtonKey.finder, findsOneWidget);
-    expect(find.textContaining('High-risk action'), findsOneWidget);
+    expect(find.textContaining('Rủi ro cao: cần xem trước'), findsOneWidget);
 
+    await tester.ensureVisible(
+      AddressConfirmPreviewSheet.confirmButtonKey.finder,
+    );
+    await tester.pumpAndSettle();
     await tester.tap(AddressConfirmPreviewSheet.confirmButtonKey.finder);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
@@ -82,7 +86,7 @@ void main() {
 
     expect(P2PPaymentMethodAddPage.previewKey.finder, findsOneWidget);
     expect(find.textContaining('Xem xét quyền sở hữu'), findsOneWidget);
-    expect(find.textContaining('Limits:'), findsOneWidget);
+    expect(find.textContaining('Giới hạn:'), findsOneWidget);
 
     await tester.ensureVisible(P2PPaymentMethodAddPage.saveButtonKey.finder);
     await tester.pumpAndSettle();

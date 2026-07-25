@@ -256,7 +256,6 @@ lib/features/trade_terminal/presentation/widgets/tools/execution_quality_tabs.da
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_tabs.dart|Modify open order price or quantity
 lib/features/trade_terminal/presentation/widgets/tools/execution_quality_tabs.dart|View detailed execution breakdown after order fills
 lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart|$label is not connected yet.
-lib/features/wallet/presentation/pages/transfer/withdraw_page.dart|Address, network, amount, fee, and confirmation are tracked as one wallet money-movement contract.
 lib/features/wallet/presentation/widgets/tools/network_status_summary.dart|Refresh network status
 lib/features/wallet/presentation/widgets/tools/wallet_gas_optimizer_trends.dart|Historically, fees have often been lower between 2 AM - 6 AM UTC. Confirm live fees before signing.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|42% of your portfolio is in BTC. Consider rebalancing to reduce single-asset risk.
@@ -270,7 +269,6 @@ lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.da
 lib/features/wallet/presentation/widgets/tools/wallet_manager_all_wallets_tab.dart|Hide ${wallet.name} address
 lib/features/wallet/presentation/widgets/tools/wallet_token_active_approvals_tab.dart|You have $count approval(s) to unverified contracts. Revoke immediately to protect your funds.
 lib/features/wallet/presentation/widgets/tools/wallet_token_approval_common.dart|Token approvals allow smart contracts to spend your tokens. Revoke unused or suspicious approvals to protect your assets.
-lib/features/wallet/presentation/widgets/transfer/withdraw_preview_sheet.dart|High-risk action: preview + confirm + audit trail required.
 lib/shared/layout/vit_header.dart|VitHeader.actions supports up to 3 actions. Use more overflow.
 lib/shared/layout/vit_header.dart|VitHeader.showBack requires onBack so visible back buttons are actionable.
 lib/shared/layout/vit_top_chrome.dart|VitTopChrome.actions supports up to 3 actions. Use more overflow.

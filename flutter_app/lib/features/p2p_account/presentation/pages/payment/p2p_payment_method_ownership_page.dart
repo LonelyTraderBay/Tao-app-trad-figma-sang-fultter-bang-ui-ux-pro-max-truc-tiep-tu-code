@@ -108,19 +108,26 @@ class _P2PPaymentMethodOwnershipPageState
             if (snapshot.highRiskContractId != null)
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Xem lại gửi xác minh sở hữu',
+                title: 'Cần xem trước gửi xác minh sở hữu',
                 message:
-                    'Tài liệu bắt buộc, bằng chứng tùy chọn, trạng thái tải/xóa, hộp thoại xác nhận, trạng thái đang gửi và đường quay lại đã được xem trước khi phê duyệt sở hữu phương thức thanh toán.',
+                    'Tài liệu bắt buộc, bằng chứng tùy chọn và trạng thái tải lên phải đủ trước khi gửi. '
+                    'Không hoàn tác sau khi xác nhận gửi. '
+                    'Bước tiếp theo: đối chiếu KYC và mở hạn mức khi được duyệt.',
                 contractId: snapshot.highRiskContractId,
               ),
-            VitCtaButton(
-              key: P2PPaymentMethodOwnershipPage.submitButtonKey,
-              loading: _submitting,
-              onPressed: canSubmit
-                  ? () => _confirmSubmit(context, controller)
-                  : null,
-              trailing: const Icon(Icons.chevron_right_rounded),
-              child: const Text('Gửi xác minh'),
+            Semantics(
+              label: 'Gửi xác minh sở hữu phương thức thanh toán P2P',
+              button: true,
+              enabled: canSubmit,
+              child: VitCtaButton(
+                key: P2PPaymentMethodOwnershipPage.submitButtonKey,
+                loading: _submitting,
+                onPressed: canSubmit
+                    ? () => _confirmSubmit(context, controller)
+                    : null,
+                trailing: const Icon(Icons.chevron_right_rounded),
+                child: const Text('Gửi xác minh'),
+              ),
             ),
           ],
         );
@@ -146,7 +153,10 @@ class _P2PPaymentMethodOwnershipPageState
     final confirmed = await showVitConfirmDialog(
       context: context,
       title: preview.confirmTitle,
-      message: preview.confirmMessage,
+      message:
+          '${preview.confirmMessage}\n'
+          'Không hoàn tác sau khi xác nhận. '
+          'Bước tiếp theo: hệ thống đối chiếu hồ sơ KYC trước khi mở hạn mức.',
       confirmLabel: 'Xác nhận',
       confirmKey: P2PPaymentMethodOwnershipPage.confirmSubmitKey,
     );
@@ -206,7 +216,7 @@ class _OwnershipHero extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Upload tài liệu chứng minh tài khoản thuộc sở hữu của bạn',
+                  'Tải lên tài liệu chứng minh tài khoản thuộc sở hữu của bạn',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
@@ -270,7 +280,7 @@ class _OwnershipDocumentCard extends StatelessWidget {
                 if (uploaded) ...[
                   const SizedBox(height: AppSpacing.x1),
                   Text(
-                    'Đã upload',
+                    'Đã tải lên',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.buy,
                       fontWeight: AppTextStyles.bold,

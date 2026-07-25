@@ -84,7 +84,7 @@ const List<P2POwnershipDocumentDraft> _p2pOwnershipDocuments = [
   P2POwnershipDocumentDraft(id: 'selfie_card', label: 'Selfie với thẻ'),
   P2POwnershipDocumentDraft(
     id: 'statement',
-    label: 'Bank statement (optional)',
+    label: 'Sao kê ngân hàng (tùy chọn)',
     optional: true,
   ),
 ];

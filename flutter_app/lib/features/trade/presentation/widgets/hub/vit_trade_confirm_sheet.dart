@@ -97,21 +97,31 @@ class VitTradeConfirmSheet extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: VitCtaButton(
-                  key: cancelKey,
-                  variant: VitCtaButtonVariant.secondary,
-                  density: VitDensity.tool,
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('Huỷ'),
+                child: Semantics(
+                  button: true,
+                  enabled: true,
+                  label: 'Huỷ xem trước lệnh giao dịch',
+                  child: VitCtaButton(
+                    key: cancelKey,
+                    variant: VitCtaButtonVariant.secondary,
+                    density: VitDensity.tool,
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Huỷ'),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: VitCtaButton(
-                  key: confirmKey,
-                  density: VitDensity.tool,
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('Xác nhận gửi'),
+                child: Semantics(
+                  button: true,
+                  enabled: true,
+                  label: 'Xác nhận gửi lệnh giao dịch',
+                  child: VitCtaButton(
+                    key: confirmKey,
+                    density: VitDensity.tool,
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('Xác nhận gửi'),
+                  ),
                 ),
               ),
             ],
