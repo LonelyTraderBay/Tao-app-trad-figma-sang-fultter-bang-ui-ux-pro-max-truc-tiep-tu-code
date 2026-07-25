@@ -61,7 +61,7 @@ class AddressWhitelistCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Thêm vào Whitelist',
+                    'Thêm vào danh sách trắng',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
@@ -70,7 +70,7 @@ class AddressWhitelistCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.x1),
                   Text(
-                    'Chỉ rút tiền đến địa chỉ whitelist',
+                    'Chỉ rút tiền đến địa chỉ danh sách trắng',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),

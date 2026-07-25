@@ -153,10 +153,10 @@ class AddressSavedState extends StatelessWidget {
                     density: VitDensity.compact,
                     borderColor: AppColors.buy20,
                     child: VitInfoRow(
-                      label: 'Whitelist',
+                      label: 'Danh sách trắng',
                       value: whitelist
-                          ? 'Đã thêm vào whitelist'
-                          : 'Chưa whitelist - có thể bật sau',
+                          ? 'Đã thêm vào danh sách trắng'
+                          : 'Chưa vào danh sách trắng - có thể bật sau',
                       leading: const Icon(Icons.shield_outlined),
                       valueColor: addressAddGreen,
                       density: VitDensity.compact,

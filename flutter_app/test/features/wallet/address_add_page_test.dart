@@ -116,7 +116,7 @@ void main() {
       find.textContaining('Memo / Tag', findRichText: true),
       findsOneWidget,
     );
-    expect(find.text('Thêm vào Whitelist'), findsOneWidget);
+    expect(find.text('Thêm vào danh sách trắng'), findsOneWidget);
     expect(find.text('Lưu địa chỉ'), findsOneWidget);
     expect(find.byKey(AddressAddPage.saveKey).hitTestable(), findsNothing);
   });
