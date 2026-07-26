@@ -40,8 +40,8 @@ const _dcaRebalanceToggleHeight = DcaSpacingTokens.dcaRebalanceToggleHeight;
 const _dcaRebalanceHeroPadding = EdgeInsetsDirectional.all(AppSpacing.x4);
 const _dcaRebalanceCardPadding = EdgeInsetsDirectional.all(AppSpacing.x3);
 
-class DCARebalanceConfig extends ConsumerStatefulWidget {
-  const DCARebalanceConfig({super.key, this.shellRenderMode});
+class DCARebalanceConfigPage extends ConsumerStatefulWidget {
+  const DCARebalanceConfigPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc170_rebalance_content');
   static const addTargetKey = Key('sc170_add_target');
@@ -62,10 +62,12 @@ class DCARebalanceConfig extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<DCARebalanceConfig> createState() => _DCARebalanceConfigState();
+  ConsumerState<DCARebalanceConfigPage> createState() =>
+      _DCARebalanceConfigPageState();
 }
 
-class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
+class _DCARebalanceConfigPageState
+    extends ConsumerState<DCARebalanceConfigPage> {
   bool _autoExecute = false;
   bool _showAdvanced = false;
   bool _showPreview = false;
@@ -122,7 +124,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
         ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: VitInsetScrollView(
-            key: DCARebalanceConfig.contentKey,
+            key: DCARebalanceConfigPage.contentKey,
             physics: const ClampingScrollPhysics(),
             bottomInset: scrollEndPadding,
             child: VitPageContent(

@@ -1,4 +1,4 @@
-part of '../pages/funnel_dashboard.dart';
+part of '../pages/funnel_dashboard_page.dart';
 
 class _WaterfallCard extends StatelessWidget {
   const _WaterfallCard({required this.funnel});

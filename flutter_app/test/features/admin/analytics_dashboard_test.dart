@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/analytics_dashboard.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/analytics_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -56,7 +56,7 @@ void main() {
   testWidgets('SC-181 renders analytics dashboard baseline', (tester) async {
     await pumpAnalytics(tester);
 
-    expect(find.byType(AnalyticsDashboard), findsOneWidget);
+    expect(find.byType(AnalyticsDashboardPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Analytics Dashboard'), findsOneWidget);
@@ -78,7 +78,7 @@ void main() {
   ) async {
     await pumpAnalytics(tester);
 
-    await tester.tap(find.byKey(AnalyticsDashboard.refreshKey));
+    await tester.tap(find.byKey(AnalyticsDashboardPage.refreshKey));
     await tester.pumpAndSettle();
     expect(find.text('Làm mới phân tích sẽ sớm ra mắt'), findsOneWidget);
   });
@@ -88,7 +88,7 @@ void main() {
   ) async {
     await pumpAnalytics(tester);
 
-    await tester.tap(find.byKey(AnalyticsDashboard.exportKey));
+    await tester.tap(find.byKey(AnalyticsDashboardPage.exportKey));
     await tester.pumpAndSettle();
     expect(find.text('Xuất phân tích sẽ sớm ra mắt'), findsOneWidget);
   });
@@ -97,13 +97,15 @@ void main() {
     await pumpAnalytics(tester);
 
     await tester.tap(
-      find.byKey(AnalyticsDashboard.rangeKey(AdminAnalyticsRange.thirtyDays)),
+      find.byKey(
+        AnalyticsDashboardPage.rangeKey(AdminAnalyticsRange.thirtyDays),
+      ),
     );
     await tester.pumpAndSettle();
     expect(find.text('30 ngày'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsOneWidget);
+    expect(find.byType(AdminHomePage), findsOneWidget);
   });
 }

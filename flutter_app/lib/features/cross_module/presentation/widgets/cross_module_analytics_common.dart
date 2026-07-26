@@ -1,4 +1,4 @@
-part of '../pages/cross_module_analytics.dart';
+part of '../pages/cross_module_analytics_page.dart';
 
 class _ArenaAnalyticsDisclosure extends StatelessWidget {
   const _ArenaAnalyticsDisclosure();

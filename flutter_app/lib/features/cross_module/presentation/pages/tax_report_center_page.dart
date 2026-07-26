@@ -38,8 +38,8 @@ part 'tax_report_center_generate_and_reports_tabs.dart';
 
 part 'tax_report_center_settings_tab.dart';
 
-class TaxReportCenter extends ConsumerStatefulWidget {
-  const TaxReportCenter({super.key, this.shellRenderMode});
+class TaxReportCenterPage extends ConsumerStatefulWidget {
+  const TaxReportCenterPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc324_tax_report_center_content');
 
@@ -55,5 +55,6 @@ class TaxReportCenter extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<TaxReportCenter> createState() => _TaxReportCenterState();
+  ConsumerState<TaxReportCenterPage> createState() =>
+      _TaxReportCenterPageState();
 }

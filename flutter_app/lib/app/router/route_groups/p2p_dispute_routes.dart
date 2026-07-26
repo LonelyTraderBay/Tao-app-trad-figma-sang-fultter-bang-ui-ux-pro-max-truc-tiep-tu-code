@@ -63,7 +63,7 @@ List<RouteBase> p2pDisputeRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.p2pInsuranceFundAlias,
       name: AppRouteNames.sc244P2PInsuranceFundAlias,
-      builder: (_, _) => P2PInsuranceFundPage(shellRenderMode: shellRenderMode),
+      redirect: (_, _) => AppRoutePaths.p2pInsurance,
     ),
     GoRoute(
       path: AppRoutePaths.p2pInsuranceCertificate,

@@ -1,4 +1,4 @@
-part of '../pages/onboarding_flow.dart';
+part of '../pages/onboarding_flow_page.dart';
 
 class _ProgressHeader extends StatelessWidget {
   const _ProgressHeader({required this.currentIndex, required this.total});
@@ -96,7 +96,7 @@ class _FeatureRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final visual = _visualForId(feature.id);
     return Row(
-      key: OnboardingFlow.featureKey(feature.id),
+      key: OnboardingFlowPage.featureKey(feature.id),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VitAccentIconBox(icon: visual.icon, color: visual.accent),
@@ -141,7 +141,7 @@ class _BoundaryCard extends StatelessWidget {
     final accent = visual.accent;
 
     return VitCard(
-      key: OnboardingFlow.boundaryKey(boundary.id),
+      key: OnboardingFlowPage.boundaryKey(boundary.id),
       padding: OnboardingSpacingTokens.onboardingCardPadding,
       radius: VitCardRadius.standard,
       borderColor: expanded ? accent : AppColors.cardBorder,
@@ -392,7 +392,7 @@ class _BackControl extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      key: OnboardingFlow.backButtonKey,
+      key: OnboardingFlowPage.backButtonKey,
       width: AppSpacing.ctaHeight,
       height: AppSpacing.ctaHeight,
       onTap: onPressed,

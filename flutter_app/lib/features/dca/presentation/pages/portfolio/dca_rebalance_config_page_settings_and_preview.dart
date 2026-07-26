@@ -236,7 +236,7 @@ class _AdvancedToggleHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      key: DCARebalanceConfig.advancedToggleKey,
+      key: DCARebalanceConfigPage.advancedToggleKey,
       onTap: onToggleExpanded,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
@@ -526,7 +526,7 @@ class _InlineRebalanceActions extends StatelessWidget {
             children: [
               Expanded(
                 child: VitCtaButton(
-                  key: DCARebalanceConfig.previewKey,
+                  key: DCARebalanceConfigPage.previewKey,
                   onPressed: valid ? onPreview : null,
                   fullWidth: true,
                   density: VitDensity.compact,
@@ -537,7 +537,7 @@ class _InlineRebalanceActions extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: VitCtaButton(
-                  key: DCARebalanceConfig.saveKey,
+                  key: DCARebalanceConfigPage.saveKey,
                   onPressed: valid ? onSave : null,
                   fullWidth: true,
                   variant: VitCtaButtonVariant.secondary,
@@ -583,7 +583,7 @@ class _PreviewSheet extends StatelessWidget {
                   MediaQuery.paddingOf(context).bottom,
             ),
             child: Column(
-              key: DCARebalanceConfig.previewSheetKey,
+              key: DCARebalanceConfigPage.previewSheetKey,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -657,7 +657,7 @@ class _PreviewSheet extends StatelessWidget {
                         ),
                         const Divider(color: AppColors.borderSolid),
                         VitCtaButton(
-                          key: DCARebalanceConfig.confirmSaveKey,
+                          key: DCARebalanceConfigPage.confirmSaveKey,
                           onPressed: onConfirm,
                           density: VitDensity.compact,
                           leading: const Icon(Icons.check_rounded),

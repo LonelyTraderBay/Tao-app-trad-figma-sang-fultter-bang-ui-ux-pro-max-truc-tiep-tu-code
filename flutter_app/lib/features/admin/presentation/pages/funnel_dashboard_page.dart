@@ -15,7 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_metric_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
@@ -24,8 +24,8 @@ part '../widgets/funnel_dashboard_selector_metrics.dart';
 part '../widgets/funnel_dashboard_waterfall_details.dart';
 part '../widgets/funnel_dashboard_common_painter.dart';
 
-class FunnelDashboard extends ConsumerStatefulWidget {
-  const FunnelDashboard({super.key, this.shellRenderMode});
+class FunnelDashboardPage extends ConsumerStatefulWidget {
+  const FunnelDashboardPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc183_funnel_content');
 
@@ -34,10 +34,11 @@ class FunnelDashboard extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<FunnelDashboard> createState() => _FunnelDashboardState();
+  ConsumerState<FunnelDashboardPage> createState() =>
+      _FunnelDashboardPageState();
 }
 
-class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
+class _FunnelDashboardPageState extends ConsumerState<FunnelDashboardPage> {
   String? _selectedFunnelId;
 
   @override
@@ -53,7 +54,7 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
     return AdminDashboardPageShell(
       semanticLabel: 'Bảng phân tích phễu chuyển đổi',
       semanticIdentifier: 'SC-183',
-      scrollKey: FunnelDashboard.contentKey,
+      scrollKey: FunnelDashboardPage.contentKey,
       scrollBottom: scrollEndClearance,
       header: VitHeader(
         title: 'Funnel Analytics',

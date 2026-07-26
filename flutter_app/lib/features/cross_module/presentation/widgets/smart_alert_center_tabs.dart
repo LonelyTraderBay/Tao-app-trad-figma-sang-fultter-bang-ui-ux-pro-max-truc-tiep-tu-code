@@ -1,4 +1,4 @@
-part of '../pages/smart_alert_center.dart';
+part of '../pages/smart_alert_center_page.dart';
 
 class _SmartAlertTabs extends StatelessWidget {
   const _SmartAlertTabs({
@@ -18,7 +18,7 @@ class _SmartAlertTabs extends StatelessWidget {
         VitTabItem(
           key: tab.tab.name,
           label: tab.label,
-          widgetKey: SmartAlertCenter.tabKey(tab.tab),
+          widgetKey: SmartAlertCenterPage.tabKey(tab.tab),
         ),
     ];
 

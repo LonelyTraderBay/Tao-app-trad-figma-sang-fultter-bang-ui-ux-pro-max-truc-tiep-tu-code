@@ -70,7 +70,7 @@ void main() {
   testWidgets('SC-174 renders portfolio optimizer overview', (tester) async {
     await pumpPortfolioOptimizer(tester);
 
-    expect(find.byType(DCAPortfolioOptimizer), findsOneWidget);
+    expect(find.byType(DCAPortfolioOptimizerPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Portfolio Optimizer'), findsOneWidget);
@@ -78,7 +78,7 @@ void main() {
     expect(find.text('Hiện tại vs Tối ưu'), findsOneWidget);
     expect(find.text('Efficient Frontier'), findsOneWidget);
     expect(find.text('Optimal (Max Sharpe)'), findsWidgets);
-    expect(find.byKey(DCAPortfolioOptimizer.applyKey), findsOneWidget);
+    expect(find.byKey(DCAPortfolioOptimizerPage.applyKey), findsOneWidget);
   });
 
   testWidgets('SC-174 first viewport reaches optimizer tabs', (tester) async {
@@ -86,13 +86,13 @@ void main() {
 
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-174 DCAPortfolioOptimizer',
+      routeName: 'SC-174 DCAPortfolioOptimizerPage',
       semanticLabel: 'Tối ưu hóa phân bổ danh mục đầu tư DCA',
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(DCAPortfolioOptimizer.tabKey('frontier')),
-      routeName: 'SC-174 DCAPortfolioOptimizer',
+      find.byKey(DCAPortfolioOptimizerPage.tabKey('frontier')),
+      routeName: 'SC-174 DCAPortfolioOptimizerPage',
       actionLabel: 'the optimizer tab strip',
     );
   });
@@ -231,16 +231,18 @@ void main() {
     await pumpPortfolioOptimizer(tester);
 
     await tester.ensureVisible(
-      find.byKey(DCAPortfolioOptimizer.tabKey('correlation')),
+      find.byKey(DCAPortfolioOptimizerPage.tabKey('correlation')),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCAPortfolioOptimizer.tabKey('correlation')));
+    await tester.tap(
+      find.byKey(DCAPortfolioOptimizerPage.tabKey('correlation')),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Ma trận tương quan'), findsOneWidget);
 
-    await tester.ensureVisible(find.byKey(DCAPortfolioOptimizer.applyKey));
+    await tester.ensureVisible(find.byKey(DCAPortfolioOptimizerPage.applyKey));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCAPortfolioOptimizer.applyKey));
+    await tester.tap(find.byKey(DCAPortfolioOptimizerPage.applyKey));
     await tester.pumpAndSettle();
 
     expect(find.text('Auto-Rebalance'), findsOneWidget);

@@ -27,12 +27,12 @@ List<RouteBase> dcaRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.dcaPortfolioOptimizer,
       name: AppRouteNames.sc174DcaPortfolioOptimizer,
       builder: (_, _) =>
-          DCAPortfolioOptimizer(shellRenderMode: shellRenderMode),
+          DCAPortfolioOptimizerPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.dcaDynamicAmount,
       name: AppRouteNames.sc175DcaDynamicAmount,
-      builder: (_, _) => DCADynamicAmount(shellRenderMode: shellRenderMode),
+      builder: (_, _) => DCADynamicAmountPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.dcaBacktester,
@@ -58,12 +58,13 @@ List<RouteBase> dcaRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.dcaRebalanceConfig,
       name: AppRouteNames.sc170DcaRebalanceConfig,
-      builder: (_, _) => DCARebalanceConfig(shellRenderMode: shellRenderMode),
+      builder: (_, _) =>
+          DCARebalanceConfigPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.dcaRebalanceDashboard,
       name: AppRouteNames.sc171DcaRebalanceDashboard,
-      builder: (_, _) => DCARebalanceDashboard(
+      builder: (_, _) => DCARebalanceDashboardPage(
         configId: 'config001',
         shellRenderMode: shellRenderMode,
       ),
@@ -71,12 +72,13 @@ List<RouteBase> dcaRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.dcaScheduleConfig,
       name: AppRouteNames.sc172DcaScheduleConfig,
-      builder: (_, _) => DCAScheduleConfig(shellRenderMode: shellRenderMode),
+      builder: (_, _) =>
+          DCAScheduleConfigPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.dcaScheduleAnalytics,
       name: AppRouteNames.sc173DcaScheduleAnalytics,
-      builder: (_, _) => DCAScheduleAnalytics(
+      builder: (_, _) => DCAScheduleAnalyticsPage(
         configId: 'config001',
         shellRenderMode: shellRenderMode,
       ),
@@ -84,12 +86,13 @@ List<RouteBase> dcaRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: '/dca/rebalance/:configId/edit',
       name: AppRouteNames.sc408DcaRebalanceEdit,
-      builder: (_, _) => DCARebalanceConfig(shellRenderMode: shellRenderMode),
+      builder: (_, _) =>
+          DCARebalanceConfigPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: '/dca/rebalance/:configId/history',
       name: AppRouteNames.sc409DcaRebalanceHistory,
-      builder: (_, state) => DCARebalanceDashboard(
+      builder: (_, state) => DCARebalanceDashboardPage(
         configId: requireRouteParam(state, 'configId'),
         shellRenderMode: shellRenderMode,
       ),

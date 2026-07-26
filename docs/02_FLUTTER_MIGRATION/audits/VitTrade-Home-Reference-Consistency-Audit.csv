@@ -1,9 +1,9 @@
 module,scope,path,container,boxDecoration,borderRadiusCircular,radiusCircular,edgeInsets,fixedWidth,fixedHeight,totalDivergence,exception,exceptionReason
-admin,root_page,flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard.dart,0,0,0,0,0,0,0,0,no,-
-admin,root_page,flutter_app/lib/features/admin/presentation/pages/admin_home.dart,0,0,0,0,0,0,0,0,no,-
+admin,root_page,flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard_page.dart,0,0,0,0,0,0,0,0,no,-
+admin,root_page,flutter_app/lib/features/admin/presentation/pages/admin_home_page.dart,0,0,0,0,0,0,0,0,no,-
 admin,root_page,flutter_app/lib/features/admin/presentation/pages/admin_settings_page.dart,0,0,0,0,0,0,0,0,no,-
-admin,root_page,flutter_app/lib/features/admin/presentation/pages/analytics_dashboard.dart,0,0,0,0,0,0,0,0,no,-
-admin,root_page,flutter_app/lib/features/admin/presentation/pages/funnel_dashboard.dart,0,0,0,0,0,0,0,0,no,-
+admin,root_page,flutter_app/lib/features/admin/presentation/pages/analytics_dashboard_page.dart,0,0,0,0,0,0,0,0,no,-
+admin,root_page,flutter_app/lib/features/admin/presentation/pages/funnel_dashboard_page.dart,0,0,0,0,0,0,0,0,no,-
 admin,root_page,flutter_app/lib/features/admin/presentation/widgets/ab_test_dashboard_common.dart,0,0,0,0,0,0,0,0,no,-
 admin,root_page,flutter_app/lib/features/admin/presentation/widgets/ab_test_dashboard_sections.dart,0,0,0,0,0,0,0,0,no,-
 admin,feature_widget,flutter_app/lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart,0,0,0,0,0,0,0,0,no,-
@@ -132,13 +132,13 @@ auth,root_page,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_b
 auth,root_page,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_qr.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 auth,root_page,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_steps.dart,0,0,0,0,0,0,0,0,no,-
 auth,root_page,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_verify.dart,0,0,0,0,0,0,0,0,no,-
-cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/cross_module_analytics.dart,0,0,0,0,0,0,0,0,no,-
-cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/smart_alert_center.dart,0,0,0,0,0,0,0,0,no,-
-cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/tax_report_center.dart,0,0,0,0,0,0,0,0,no,-
+cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/cross_module_analytics_page.dart,0,0,0,0,0,0,0,0,no,-
+cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/smart_alert_center_page.dart,0,0,0,0,0,0,0,0,no,-
 cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/tax_report_center_generate_and_reports_tabs.dart,0,0,0,0,0,0,0,0,no,-
 cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/tax_report_center_generate_tab.dart,0,0,0,0,0,0,0,0,no,-
+cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/tax_report_center_page.dart,0,0,0,0,0,0,0,0,no,-
 cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart,0,0,0,0,0,0,0,0,no,-
-cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart,0,0,0,0,0,0,0,0,no,-
+cross_module,root_page,flutter_app/lib/features/cross_module/presentation/pages/unified_portfolio_dashboard_page.dart,0,0,0,0,0,0,0,0,no,-
 cross_module,root_page,flutter_app/lib/features/cross_module/presentation/widgets/cross_module_analytics_cards.dart,0,0,0,0,0,0,0,0,no,-
 cross_module,root_page,flutter_app/lib/features/cross_module/presentation/widgets/cross_module_analytics_common.dart,0,0,0,0,0,0,0,0,no,-
 cross_module,root_page,flutter_app/lib/features/cross_module/presentation/widgets/cross_module_analytics_painters.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
@@ -796,8 +796,8 @@ news,root_page,flutter_app/lib/features/news/presentation/widgets/news_page_sect
 notifications,root_page,flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart,0,0,0,0,1,0,0,1,no,-
 notifications,root_page,flutter_app/lib/features/notifications/presentation/widgets/notifications_page_common.dart,0,0,0,0,0,0,0,0,no,-
 notifications,root_page,flutter_app/lib/features/notifications/presentation/widgets/notifications_page_sections.dart,0,0,0,0,0,0,0,0,no,-
-onboarding,root_page,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow.dart,0,0,0,0,0,0,0,0,no,-
-onboarding,root_page,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_state.dart,0,0,0,0,0,0,0,0,no,-
+onboarding,root_page,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_page.dart,0,0,0,0,0,0,0,0,no,-
+onboarding,root_page,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_page_state.dart,0,0,0,0,0,0,0,0,no,-
 onboarding,root_page,flutter_app/lib/features/onboarding/presentation/widgets/onboarding_shared_components.dart,0,0,0,0,0,0,0,0,no,-
 onboarding,root_page,flutter_app/lib/features/onboarding/presentation/widgets/onboarding_step_screens.dart,0,0,0,0,0,0,0,0,no,-
 p2p_account,root_page,flutter_app/lib/features/p2p_account/presentation/pages/merchant/p2p_address_proof_page.dart,0,0,0,0,0,0,0,0,no,-

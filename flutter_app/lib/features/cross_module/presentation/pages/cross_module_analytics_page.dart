@@ -24,8 +24,8 @@ part '../widgets/cross_module_analytics_cards.dart';
 part '../widgets/cross_module_analytics_common.dart';
 part '../widgets/cross_module_analytics_painters.dart';
 
-class CrossModuleAnalytics extends ConsumerStatefulWidget {
-  const CrossModuleAnalytics({super.key, this.shellRenderMode});
+class CrossModuleAnalyticsPage extends ConsumerStatefulWidget {
+  const CrossModuleAnalyticsPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc322_cross_module_analytics_content');
   static Key tabKey(CrossModuleAnalyticsTab tab) =>
@@ -34,11 +34,12 @@ class CrossModuleAnalytics extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<CrossModuleAnalytics> createState() =>
-      _CrossModuleAnalyticsState();
+  ConsumerState<CrossModuleAnalyticsPage> createState() =>
+      _CrossModuleAnalyticsPageState();
 }
 
-class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
+class _CrossModuleAnalyticsPageState
+    extends ConsumerState<CrossModuleAnalyticsPage> {
   CrossModuleAnalyticsTab _activeTab = CrossModuleAnalyticsTab.performance;
 
   @override
@@ -55,7 +56,7 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
       loading: () => CrossModuleTabbedPageShell(
         semanticLabel: 'Phân tích liên module',
         semanticIdentifier: 'SC-322',
-        contentKey: CrossModuleAnalytics.contentKey,
+        contentKey: CrossModuleAnalyticsPage.contentKey,
         title: 'Cross-Module Analytics',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: scrollEndClearance,
@@ -66,7 +67,7 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
       error: (error, stackTrace) => CrossModuleTabbedPageShell(
         semanticLabel: 'Phân tích liên module',
         semanticIdentifier: 'SC-322',
-        contentKey: CrossModuleAnalytics.contentKey,
+        contentKey: CrossModuleAnalyticsPage.contentKey,
         title: 'Cross-Module Analytics',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: scrollEndClearance,
@@ -84,7 +85,7 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
         return CrossModuleTabbedPageShell(
           semanticLabel: 'Phân tích liên module',
           semanticIdentifier: 'SC-322',
-          contentKey: CrossModuleAnalytics.contentKey,
+          contentKey: CrossModuleAnalyticsPage.contentKey,
           title: snapshot.title,
           onBack: () => context.go(snapshot.backRoute),
           scrollEndClearance: scrollEndClearance,

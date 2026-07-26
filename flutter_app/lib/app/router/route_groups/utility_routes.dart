@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/enterprise_states_page.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/cross_module_analytics.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/smart_alert_center.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unified_portfolio_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/cross_module_analytics_page.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/smart_alert_center_page.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center_page.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/pages/route_checker_page.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/pages/performance_monitor.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/pages/missing_screens_showcase_page.dart';
@@ -44,22 +44,23 @@ List<RouteBase> utilityRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.unifiedPortfolio,
       name: AppRouteNames.sc321UnifiedPortfolio,
       builder: (_, _) =>
-          UnifiedPortfolioDashboard(shellRenderMode: shellRenderMode),
+          UnifiedPortfolioDashboardPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.crossModuleAnalytics,
       name: AppRouteNames.sc322CrossModuleAnalytics,
-      builder: (_, _) => CrossModuleAnalytics(shellRenderMode: shellRenderMode),
+      builder: (_, _) =>
+          CrossModuleAnalyticsPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.smartAlerts,
       name: AppRouteNames.sc323SmartAlertCenter,
-      builder: (_, _) => SmartAlertCenter(shellRenderMode: shellRenderMode),
+      builder: (_, _) => SmartAlertCenterPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.taxReports,
       name: AppRouteNames.sc324TaxReportCenter,
-      builder: (_, _) => TaxReportCenter(shellRenderMode: shellRenderMode),
+      builder: (_, _) => TaxReportCenterPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.routeChecker,

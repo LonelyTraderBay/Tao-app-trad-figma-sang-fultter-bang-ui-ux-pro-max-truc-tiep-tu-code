@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/cross_module/data/smart_alerts_repository.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/smart_alert_center.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/smart_alert_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -55,7 +55,7 @@ void main() {
   testWidgets('SC-323 renders active smart alert baseline', (tester) async {
     await pumpSmartAlerts(tester);
 
-    expect(find.byType(SmartAlertCenter), findsOneWidget);
+    expect(find.byType(SmartAlertCenterPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Smart Alerts'), findsWidgets);
@@ -66,14 +66,14 @@ void main() {
     expect(find.text('Price Alert'), findsOneWidget);
     expect(find.text('Order Status'), findsOneWidget);
     expect(find.text('Create Alert'), findsOneWidget);
-    expect(find.byKey(SmartAlertCenter.createButtonKey), findsOneWidget);
+    expect(find.byKey(SmartAlertCenterPage.createButtonKey), findsOneWidget);
   });
 
   testWidgets('SC-323 switches history and settings locally', (tester) async {
     await pumpSmartAlerts(tester);
 
     await tester.tap(
-      find.byKey(SmartAlertCenter.tabKey(SmartAlertTab.history)),
+      find.byKey(SmartAlertCenterPage.tabKey(SmartAlertTab.history)),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
@@ -82,7 +82,7 @@ void main() {
     expect(find.text('Alert Statistics (30 days)'), findsOneWidget);
 
     await tester.tap(
-      find.byKey(SmartAlertCenter.tabKey(SmartAlertTab.settings)),
+      find.byKey(SmartAlertCenterPage.tabKey(SmartAlertTab.settings)),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
@@ -90,7 +90,7 @@ void main() {
     expect(find.text('SMS Alerts'), findsOneWidget);
     expect(find.text('Alert Templates'), findsOneWidget);
 
-    await tester.tap(find.byKey(SmartAlertCenter.channelKey('sms')));
+    await tester.tap(find.byKey(SmartAlertCenterPage.channelKey('sms')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
     expect(find.text('Disabled'), findsNothing);

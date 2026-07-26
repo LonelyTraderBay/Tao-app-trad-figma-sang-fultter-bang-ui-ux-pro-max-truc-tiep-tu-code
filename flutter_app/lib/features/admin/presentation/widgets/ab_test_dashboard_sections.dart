@@ -1,4 +1,4 @@
-part of '../pages/ab_test_dashboard.dart';
+part of '../pages/ab_test_dashboard_page.dart';
 
 class _SummaryGrid extends StatelessWidget {
   const _SummaryGrid({required this.snapshot});
@@ -93,7 +93,7 @@ class _ABTestCard extends StatelessWidget {
       selected: selected,
       label: 'Bài test A/B ${test.name}',
       child: VitCard(
-        key: ABTestDashboard.testKey(test.id),
+        key: ABTestDashboardPage.testKey(test.id),
         onTap: onTap,
         padding: AdminSpacingTokens.adminCardPadding,
         borderColor: selected ? AppColors.accent30 : AppColors.cardBorder,

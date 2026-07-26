@@ -1,6 +1,6 @@
-part of 'tax_report_center.dart';
+part of 'tax_report_center_page.dart';
 
-class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
+class _TaxReportCenterPageState extends ConsumerState<TaxReportCenterPage> {
   TaxReportTab _activeTab = TaxReportTab.generate;
   TaxExportFormat _format = TaxExportFormat.pdf;
   String _jurisdictionId = 'us';
@@ -23,7 +23,7 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
       loading: () => CrossModuleTabbedPageShell(
         semanticLabel: 'Trung tâm báo cáo thuế',
         semanticIdentifier: 'SC-324',
-        contentKey: TaxReportCenter.contentKey,
+        contentKey: TaxReportCenterPage.contentKey,
         title: 'Tax Report Center',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: scrollEndClearance,
@@ -34,7 +34,7 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
       error: (error, stackTrace) => CrossModuleTabbedPageShell(
         semanticLabel: 'Trung tâm báo cáo thuế',
         semanticIdentifier: 'SC-324',
-        contentKey: TaxReportCenter.contentKey,
+        contentKey: TaxReportCenterPage.contentKey,
         title: 'Tax Report Center',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: scrollEndClearance,
@@ -52,7 +52,7 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
         return CrossModuleTabbedPageShell(
           semanticLabel: 'Trung tâm báo cáo thuế',
           semanticIdentifier: 'SC-324',
-          contentKey: TaxReportCenter.contentKey,
+          contentKey: TaxReportCenterPage.contentKey,
           title: snapshot.title,
           onBack: () => context.go(snapshot.backRoute),
           scrollEndClearance: scrollEndClearance,
@@ -126,7 +126,7 @@ class _TaxTabs extends StatelessWidget {
         VitTabItem(
           key: tab.tab.name,
           label: tab.label,
-          widgetKey: TaxReportCenter.tabKey(tab.tab),
+          widgetKey: TaxReportCenterPage.tabKey(tab.tab),
         ),
     ];
 

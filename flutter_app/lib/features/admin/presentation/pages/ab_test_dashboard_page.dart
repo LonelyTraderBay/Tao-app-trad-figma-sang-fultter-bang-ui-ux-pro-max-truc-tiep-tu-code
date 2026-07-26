@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_metric_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
@@ -22,8 +22,8 @@ import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 part '../widgets/ab_test_dashboard_sections.dart';
 part '../widgets/ab_test_dashboard_common.dart';
 
-class ABTestDashboard extends ConsumerStatefulWidget {
-  const ABTestDashboard({super.key, this.shellRenderMode});
+class ABTestDashboardPage extends ConsumerStatefulWidget {
+  const ABTestDashboardPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc182_abtests_content');
 
@@ -32,10 +32,11 @@ class ABTestDashboard extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<ABTestDashboard> createState() => _ABTestDashboardState();
+  ConsumerState<ABTestDashboardPage> createState() =>
+      _ABTestDashboardPageState();
 }
 
-class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
+class _ABTestDashboardPageState extends ConsumerState<ABTestDashboardPage> {
   String? _selectedTestId;
 
   @override
@@ -52,7 +53,7 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
     return AdminDashboardPageShell(
       semanticLabel: 'Bảng điều khiển thử nghiệm A/B',
       semanticIdentifier: 'SC-182',
-      scrollKey: ABTestDashboard.contentKey,
+      scrollKey: ABTestDashboardPage.contentKey,
       scrollBottom: scrollBottom,
       header: VitHeader(
         title: 'A/B Test Dashboard',

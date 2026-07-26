@@ -36,7 +36,7 @@ class _OptimizerApplyAction extends StatelessWidget {
         ),
         const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         VitCtaButton(
-          key: DCAPortfolioOptimizer.applyKey,
+          key: DCAPortfolioOptimizerPage.applyKey,
           onPressed: onApply,
           leading: const Icon(Icons.arrow_outward_rounded),
           child: const Text('Xem cấu hình tái cân bằng'),

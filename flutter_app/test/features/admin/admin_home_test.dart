@@ -4,13 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/ab_test_dashboard.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/funnel_dashboard.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/ab_test_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/funnel_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpAdminHome(WidgetTester tester) async {
+  Future<void> pumpAdminHomePage(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -52,9 +52,9 @@ void main() {
   });
 
   testWidgets('SC-180 renders admin dashboard baseline', (tester) async {
-    await pumpAdminHome(tester);
+    await pumpAdminHomePage(tester);
 
-    expect(find.byType(AdminHome), findsOneWidget);
+    expect(find.byType(AdminHomePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Admin Dashboard'), findsOneWidget);
@@ -73,9 +73,9 @@ void main() {
   });
 
   testWidgets('SC-180 supports live pause state', (tester) async {
-    await pumpAdminHome(tester);
+    await pumpAdminHomePage(tester);
 
-    await tester.tap(find.byKey(AdminHome.pauseKey));
+    await tester.tap(find.byKey(AdminHomePage.pauseKey));
     await tester.pumpAndSettle();
 
     expect(find.text('PAUSED'), findsOneWidget);
@@ -83,37 +83,43 @@ void main() {
   });
 
   testWidgets('SC-180 navigation edges open safe placeholders', (tester) async {
-    await pumpAdminHome(tester);
+    await pumpAdminHomePage(tester);
 
-    await tester.tap(find.byKey(AdminHome.settingsKey));
+    await tester.tap(find.byKey(AdminHomePage.settingsKey));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsNothing);
+    expect(find.byType(AdminHomePage), findsNothing);
     expect(find.text('Admin Settings'), findsOneWidget);
 
-    await pumpAdminHome(tester);
-    await tester.ensureVisible(find.byKey(AdminHome.dashboardKey('analytics')));
+    await pumpAdminHomePage(tester);
+    await tester.ensureVisible(
+      find.byKey(AdminHomePage.dashboardKey('analytics')),
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(AdminHome.dashboardKey('analytics')));
+    await tester.tap(find.byKey(AdminHomePage.dashboardKey('analytics')));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsNothing);
+    expect(find.byType(AdminHomePage), findsNothing);
     expect(find.text('Analytics Dashboard'), findsOneWidget);
 
-    await pumpAdminHome(tester);
-    await tester.ensureVisible(find.byKey(AdminHome.dashboardKey('abtests')));
+    await pumpAdminHomePage(tester);
+    await tester.ensureVisible(
+      find.byKey(AdminHomePage.dashboardKey('abtests')),
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(AdminHome.dashboardKey('abtests')));
+    await tester.tap(find.byKey(AdminHomePage.dashboardKey('abtests')));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsNothing);
-    expect(find.byType(ABTestDashboard), findsOneWidget);
+    expect(find.byType(AdminHomePage), findsNothing);
+    expect(find.byType(ABTestDashboardPage), findsOneWidget);
     expect(find.text('A/B Test Dashboard'), findsOneWidget);
 
-    await pumpAdminHome(tester);
-    await tester.ensureVisible(find.byKey(AdminHome.dashboardKey('funnels')));
+    await pumpAdminHomePage(tester);
+    await tester.ensureVisible(
+      find.byKey(AdminHomePage.dashboardKey('funnels')),
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(AdminHome.dashboardKey('funnels')));
+    await tester.tap(find.byKey(AdminHomePage.dashboardKey('funnels')));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsNothing);
-    expect(find.byType(FunnelDashboard), findsOneWidget);
+    expect(find.byType(AdminHomePage), findsNothing);
+    expect(find.byType(FunnelDashboardPage), findsOneWidget);
     expect(find.text('Funnel Analytics'), findsOneWidget);
   });
 }

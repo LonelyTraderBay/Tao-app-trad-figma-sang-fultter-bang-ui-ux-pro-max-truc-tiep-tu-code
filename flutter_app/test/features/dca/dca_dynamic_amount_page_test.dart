@@ -92,7 +92,7 @@ void main() {
   ) async {
     await pumpDynamicAmount(tester);
 
-    expect(find.byType(DCADynamicAmount), findsOneWidget);
+    expect(find.byType(DCADynamicAmountPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Dynamic Amount'), findsOneWidget);
@@ -101,7 +101,7 @@ void main() {
     expect(find.text('Biến động & Hệ số'), findsOneWidget);
     expect(find.text('Lịch sử điều chỉnh'), findsOneWidget);
     expect(find.text('Cấu hình Volatility'), findsOneWidget);
-    expect(find.byKey(DCADynamicAmount.applyKey), findsOneWidget);
+    expect(find.byKey(DCADynamicAmountPage.applyKey), findsOneWidget);
   });
 
   testWidgets('SC-175 switches strategy and apply returns to DCA dashboard', (
@@ -110,20 +110,24 @@ void main() {
     await pumpDynamicAmount(tester);
 
     await tester.ensureVisible(
-      find.byKey(DCADynamicAmount.strategyKey(DcaDynamicStrategy.performance)),
+      find.byKey(
+        DCADynamicAmountPage.strategyKey(DcaDynamicStrategy.performance),
+      ),
     );
     await tester.pumpAndSettle();
     await tester.tap(
-      find.byKey(DCADynamicAmount.strategyKey(DcaDynamicStrategy.performance)),
+      find.byKey(
+        DCADynamicAmountPage.strategyKey(DcaDynamicStrategy.performance),
+      ),
       warnIfMissed: false,
     );
     await tester.pumpAndSettle();
     expect(find.text('Cấu hình Hiệu suất'), findsOneWidget);
     expect(find.text('600K'), findsWidgets);
 
-    await tester.ensureVisible(find.byKey(DCADynamicAmount.applyKey));
+    await tester.ensureVisible(find.byKey(DCADynamicAmountPage.applyKey));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCADynamicAmount.applyKey));
+    await tester.tap(find.byKey(DCADynamicAmountPage.applyKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(DCAPage), findsOneWidget);
@@ -136,20 +140,22 @@ void main() {
 
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-175 DCADynamicAmount',
+      routeName: 'SC-175 DCADynamicAmountPage',
       semanticLabel:
           'Điều chỉnh số tiền DCA linh hoạt theo biến động thị trường',
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(DCADynamicAmount.settingsKey),
-      routeName: 'SC-175 DCADynamicAmount',
+      find.byKey(DCADynamicAmountPage.settingsKey),
+      routeName: 'SC-175 DCADynamicAmountPage',
       actionLabel: 'dynamic amount settings action',
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(DCADynamicAmount.strategyKey(DcaDynamicStrategy.volatility)),
-      routeName: 'SC-175 DCADynamicAmount',
+      find.byKey(
+        DCADynamicAmountPage.strategyKey(DcaDynamicStrategy.volatility),
+      ),
+      routeName: 'SC-175 DCADynamicAmountPage',
       actionLabel: 'active volatility strategy chip',
     );
   });
@@ -162,7 +168,7 @@ void main() {
     final strategyTop = tester
         .getTopLeft(
           find.byKey(
-            DCADynamicAmount.strategyKey(DcaDynamicStrategy.volatility),
+            DCADynamicAmountPage.strategyKey(DcaDynamicStrategy.volatility),
           ),
         )
         .dy;

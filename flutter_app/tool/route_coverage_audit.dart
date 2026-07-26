@@ -53,6 +53,11 @@ void main(List<String> args) {
 
   outputFile.writeAsStringSync(content);
   stdout.writeln('Wrote ${outputFile.path}');
+
+  final csvPaths = _writeRouteCsvArtifacts(repoRoot, entries);
+  for (final path in csvPaths) {
+    stdout.writeln('Wrote $path');
+  }
 }
 
 Directory _findAppRoot() {
@@ -185,6 +190,8 @@ String _classifyDirectRoute(String block) {
   return 'real_page';
 }
 
+const _wrapperBuilders = {'InternalSurfaceGate', 'AuthRouteShell'};
+
 String _directRouteEvidence(String block, String classification) {
   if (classification == 'redirect_alias') {
     return _extractRedirectTarget(block) ?? 'redirect';
@@ -193,12 +200,32 @@ String _directRouteEvidence(String block, String classification) {
   final widget = RegExp(
     r'=>\s*(?:const\s+)?([A-Za-z_]\w*)\s*\(',
   ).firstMatch(block);
-  if (widget != null) return widget.group(1)!;
+  if (widget != null) {
+    return _evidenceForBuilder(widget.group(1)!, block);
+  }
 
   final constructor = RegExp(r'return\s+([A-Za-z_]\w*)\s*\(').firstMatch(block);
-  if (constructor != null) return constructor.group(1)!;
+  if (constructor != null) {
+    return _evidenceForBuilder(constructor.group(1)!, block);
+  }
 
   return classification;
+}
+
+/// Gate/shell wrappers report `Wrapper>Child` so audits see the real page.
+String _evidenceForBuilder(String builder, String block) {
+  if (!_wrapperBuilders.contains(builder)) return builder;
+  final child = _extractWrapperChild(block);
+  if (child == null) return builder;
+  return '$builder>$child';
+}
+
+/// Parses `child: Foo(` / `child: const Foo(` / `child: buildOtpPage(state)`.
+String? _extractWrapperChild(String block) {
+  final match = RegExp(
+    r'child:\s*(?:const\s+)?([A-Za-z_]\w*)\s*\(',
+  ).firstMatch(block);
+  return match?.group(1);
 }
 
 String? _extractRedirectTarget(String block) {
@@ -367,6 +394,12 @@ String _renderMarkdown(
   buffer
     ..writeln('| `total` | ${entries.length} |')
     ..writeln()
+    ..writeln(
+      'Evidence for `InternalSurfaceGate` / `AuthRouteShell` builders uses '
+      '`Wrapper>Child` (e.g. `InternalSurfaceGate>AdminHomePage`, '
+      '`AuthRouteShell>LoginPage`).',
+    )
+    ..writeln()
     ..writeln('## Classification Rules')
     ..writeln()
     ..writeln('| Classification | Meaning |')
@@ -405,4 +438,142 @@ String _renderMarkdown(
 
 String _escape(String value) {
   return value.replaceAll('|', r'\|').replaceAll('\n', ' ');
+}
+
+List<String> _writeRouteCsvArtifacts(
+  String repoRoot,
+  List<RouteEntry> entries,
+) {
+  final auditsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION/audits');
+  final byModuleDir = Directory('${auditsDir.path}/route-paths-by-module');
+  byModuleDir.createSync(recursive: true);
+
+  final rows = entries.map(_toCsvRow).toList()
+    ..sort((a, b) {
+      final moduleCompare = a.module.compareTo(b.module);
+      if (moduleCompare != 0) return moduleCompare;
+      return a.routePathSymbol.compareTo(b.routePathSymbol);
+    });
+
+  final header =
+      'module,classification,route_path_symbol,route_path_token,'
+      'route_name_symbol,route_name_token,builder_evidence,source_file,'
+      'source_line';
+
+  final allPathsFile = File(
+    '${auditsDir.path}/VitTrade-Route-Paths-By-Module.csv',
+  );
+  final realPagesFile = File(
+    '${auditsDir.path}/VitTrade-Route-Real-Pages-By-Module.csv',
+  );
+
+  allPathsFile.writeAsStringSync(_renderCsv(header, rows));
+  realPagesFile.writeAsStringSync(
+    _renderCsv(
+      header,
+      rows.where((row) => row.classification == 'real_page').toList(),
+    ),
+  );
+
+  final written = <String>[allPathsFile.path, realPagesFile.path];
+
+  final byModule = <String, List<_CsvRow>>{};
+  for (final row in rows) {
+    if (row.classification != 'real_page') continue;
+    byModule.putIfAbsent(row.module, () => []).add(row);
+  }
+
+  final modules = byModule.keys.toList()..sort();
+  for (final module in modules) {
+    final file = File('${byModuleDir.path}/$module.csv');
+    file.writeAsStringSync(_renderCsv(header, byModule[module]!));
+    written.add(file.path);
+  }
+
+  return written;
+}
+
+final class _CsvRow {
+  const _CsvRow({
+    required this.module,
+    required this.classification,
+    required this.routePathSymbol,
+    required this.routePathToken,
+    required this.routeNameSymbol,
+    required this.routeNameToken,
+    required this.builderEvidence,
+    required this.sourceFile,
+    required this.sourceLine,
+  });
+
+  final String module;
+  final String classification;
+  final String routePathSymbol;
+  final String routePathToken;
+  final String routeNameSymbol;
+  final String routeNameToken;
+  final String builderEvidence;
+  final String sourceFile;
+  final int sourceLine;
+}
+
+_CsvRow _toCsvRow(RouteEntry entry) {
+  return _CsvRow(
+    module: _moduleFromRouteFile(entry.file),
+    classification: entry.classification,
+    routePathSymbol: entry.path,
+    routePathToken: _symbolToken(entry.path, 'AppRoutePaths.'),
+    routeNameSymbol: entry.name,
+    routeNameToken: _symbolToken(entry.name, 'AppRouteNames.'),
+    builderEvidence: entry.evidence,
+    sourceFile: entry.file,
+    sourceLine: entry.line,
+  );
+}
+
+String _moduleFromRouteFile(String file) {
+  final base = file.split('/').last;
+  const suffix = '_routes.dart';
+  if (base.endsWith(suffix)) {
+    return base.substring(0, base.length - suffix.length);
+  }
+  return base.replaceFirst(RegExp(r'\.dart$'), '');
+}
+
+String _symbolToken(String symbol, String prefix) {
+  if (symbol == '-') return '-';
+  if (symbol.startsWith(prefix)) {
+    return symbol.substring(prefix.length);
+  }
+  return symbol;
+}
+
+String _renderCsv(String header, List<_CsvRow> rows) {
+  final buffer = StringBuffer()..writeln(header);
+  for (final row in rows) {
+    buffer.writeln(
+      [
+        row.module,
+        row.classification,
+        row.routePathSymbol,
+        row.routePathToken,
+        row.routeNameSymbol,
+        row.routeNameToken,
+        row.builderEvidence,
+        row.sourceFile,
+        row.sourceLine.toString(),
+      ].map(_csvEscape).join(','),
+    );
+  }
+  return buffer.toString();
+}
+
+String _csvEscape(String value) {
+  if (value.contains(',') ||
+      value.contains('"') ||
+      value.contains('\n') ||
+      value.contains('\r')) {
+    return '"${value.replaceAll('"', '""')}"';
+  }
+  return value;
 }

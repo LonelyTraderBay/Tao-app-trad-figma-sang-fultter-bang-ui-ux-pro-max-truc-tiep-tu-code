@@ -86,7 +86,7 @@ void main() {
   ) async {
     await pumpRebalanceConfig(tester);
 
-    expect(find.byType(DCARebalanceConfig), findsOneWidget);
+    expect(find.byType(DCARebalanceConfigPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Auto-Rebalance'), findsOneWidget);
@@ -94,8 +94,8 @@ void main() {
     expect(find.text('Phân bổ mục tiêu'), findsOneWidget);
     expect(find.text('BTC'), findsWidgets);
     expect(find.text('Chiến lược'), findsOneWidget);
-    expect(find.byKey(DCARebalanceConfig.previewKey), findsOneWidget);
-    expect(find.byKey(DCARebalanceConfig.saveKey), findsOneWidget);
+    expect(find.byKey(DCARebalanceConfigPage.previewKey), findsOneWidget);
+    expect(find.byKey(DCARebalanceConfigPage.saveKey), findsOneWidget);
   });
 
   testWidgets('SC-170 first viewport reaches first allocation slider', (
@@ -105,13 +105,13 @@ void main() {
 
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-170 DCARebalanceConfig',
+      routeName: 'SC-170 DCARebalanceConfigPage',
       semanticLabel: 'Cấu hình tự động cân bằng lại danh mục DCA',
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(DCARebalanceConfig.targetSliderKey('target-btc')),
-      routeName: 'SC-170 DCARebalanceConfig',
+      find.byKey(DCARebalanceConfigPage.targetSliderKey('target-btc')),
+      routeName: 'SC-170 DCARebalanceConfigPage',
       actionLabel: 'the first target allocation slider',
     );
   });
@@ -123,7 +123,7 @@ void main() {
     final heroRect = tester.getRect(find.byType(VitCard).first);
     final firstSliderBottom = tester
         .getBottomLeft(
-          find.byKey(DCARebalanceConfig.targetSliderKey('target-btc')),
+          find.byKey(DCARebalanceConfigPage.targetSliderKey('target-btc')),
         )
         .dy;
     final toleranceTop = tester.getTopLeft(find.text('Dung sai').first).dy;
@@ -140,20 +140,24 @@ void main() {
     await pumpRebalanceConfig(tester);
 
     await tester.ensureVisible(
-      find.byKey(DCARebalanceConfig.strategyKey(DcaRebalanceStrategy.periodic)),
+      find.byKey(
+        DCARebalanceConfigPage.strategyKey(DcaRebalanceStrategy.periodic),
+      ),
     );
     await tester.pumpAndSettle();
     await tester.tap(
-      find.byKey(DCARebalanceConfig.strategyKey(DcaRebalanceStrategy.periodic)),
+      find.byKey(
+        DCARebalanceConfigPage.strategyKey(DcaRebalanceStrategy.periodic),
+      ),
     );
     await tester.pumpAndSettle();
     expect(find.text('Tần suất'), findsOneWidget);
 
     await tester.ensureVisible(
-      find.byKey(DCARebalanceConfig.advancedToggleKey),
+      find.byKey(DCARebalanceConfigPage.advancedToggleKey),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCARebalanceConfig.advancedToggleKey));
+    await tester.tap(find.byKey(DCARebalanceConfigPage.advancedToggleKey));
     await tester.pumpAndSettle();
     expect(find.text('Giao dịch tối thiểu'), findsOneWidget);
     expect(find.text('Tự động thực thi'), findsOneWidget);
@@ -164,17 +168,17 @@ void main() {
   ) async {
     await pumpRebalanceConfig(tester);
 
-    await tester.ensureVisible(find.byKey(DCARebalanceConfig.previewKey));
+    await tester.ensureVisible(find.byKey(DCARebalanceConfigPage.previewKey));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCARebalanceConfig.previewKey));
+    await tester.tap(find.byKey(DCARebalanceConfigPage.previewKey));
     await tester.pumpAndSettle();
-    expect(find.byKey(DCARebalanceConfig.previewSheetKey), findsOneWidget);
+    expect(find.byKey(DCARebalanceConfigPage.previewSheetKey), findsOneWidget);
     expect(find.text('Preview Simulation'), findsOneWidget);
     expect(find.text('Rebalance execution preview'), findsOneWidget);
     expect(find.text('Estimated fees'), findsOneWidget);
     expect(find.text('Risk check'), findsOneWidget);
 
-    await tester.tap(find.byKey(DCARebalanceConfig.confirmSaveKey));
+    await tester.tap(find.byKey(DCARebalanceConfigPage.confirmSaveKey));
     await tester.pumpAndSettle();
     expect(find.text('Configuration not found'), findsOneWidget);
   });
@@ -226,10 +230,14 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.ensureVisible(
-        find.byKey(DCARebalanceConfig.strategyKey(DcaRebalanceStrategy.hybrid)),
+        find.byKey(
+          DCARebalanceConfigPage.strategyKey(DcaRebalanceStrategy.hybrid),
+        ),
       );
       await tester.tap(
-        find.byKey(DCARebalanceConfig.strategyKey(DcaRebalanceStrategy.hybrid)),
+        find.byKey(
+          DCARebalanceConfigPage.strategyKey(DcaRebalanceStrategy.hybrid),
+        ),
       );
       await tester.pumpAndSettle();
 
@@ -237,11 +245,14 @@ void main() {
       expect(find.text('Tần suất'), findsOneWidget);
       expect(find.text('Ngưỡng drift'), findsOneWidget);
 
-      await tester.ensureVisible(find.byKey(DCARebalanceConfig.previewKey));
-      await tester.tap(find.byKey(DCARebalanceConfig.previewKey));
+      await tester.ensureVisible(find.byKey(DCARebalanceConfigPage.previewKey));
+      await tester.tap(find.byKey(DCARebalanceConfigPage.previewKey));
       await tester.pumpAndSettle();
 
-      expect(find.byKey(DCARebalanceConfig.previewSheetKey), findsOneWidget);
+      expect(
+        find.byKey(DCARebalanceConfigPage.previewSheetKey),
+        findsOneWidget,
+      );
       expect(find.textContaining('Mua \$'), findsWidgets);
 
       final exceptions = <Object?>[];

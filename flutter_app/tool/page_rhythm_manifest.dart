@@ -216,7 +216,8 @@ _Tier _suggestTier(String relative) {
     return _Tier.compact;
   }
 
-  if (relative.contains('onboarding_flow') && relative.contains('part_01')) {
+  if (relative.contains('onboarding_flow_page') &&
+      relative.contains('part_01')) {
     return _Tier.relaxed;
   }
 

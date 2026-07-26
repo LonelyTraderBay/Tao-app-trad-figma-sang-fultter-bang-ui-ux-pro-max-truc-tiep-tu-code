@@ -122,12 +122,12 @@ const _noHeaderDecisions = <String, _NoHeaderDecision>{
     'fullscreenTool',
     'Bot workspace; navigation must be provided in the workspace UI.',
   ),
-  'DCARebalanceDashboard': _NoHeaderDecision(
+  'DCARebalanceDashboardPage': _NoHeaderDecision(
     'detail',
     'Needs migration decision: dashboard should use detail/rootModule chrome unless proven fullscreen.',
     issue: 'no_header_needs_migration_decision',
   ),
-  'DCAScheduleAnalytics': _NoHeaderDecision(
+  'DCAScheduleAnalyticsPage': _NoHeaderDecision(
     'detail',
     'Needs migration decision: analytics screen should use detail chrome unless proven fullscreen.',
     issue: 'no_header_needs_migration_decision',

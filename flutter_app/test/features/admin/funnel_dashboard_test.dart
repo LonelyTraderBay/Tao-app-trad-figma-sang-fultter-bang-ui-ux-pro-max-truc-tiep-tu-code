@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/funnel_dashboard.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/funnel_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -55,7 +55,7 @@ void main() {
   testWidgets('SC-183 renders funnel dashboard baseline', (tester) async {
     await pumpFunnels(tester);
 
-    expect(find.byType(FunnelDashboard), findsOneWidget);
+    expect(find.byType(FunnelDashboardPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Funnel Analytics'), findsOneWidget);
@@ -74,13 +74,13 @@ void main() {
 
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-183 FunnelDashboard',
+      routeName: 'SC-183 FunnelDashboardPage',
       semanticLabel: 'Bảng phân tích phễu chuyển đổi',
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(FunnelDashboard.selectorKey('wallet_to_creation')),
-      routeName: 'SC-183 FunnelDashboard',
+      find.byKey(FunnelDashboardPage.selectorKey('wallet_to_creation')),
+      routeName: 'SC-183 FunnelDashboardPage',
       actionLabel: 'the primary funnel selector',
     );
   });
@@ -89,7 +89,7 @@ void main() {
     await pumpFunnels(tester);
 
     await tester.tap(
-      find.byKey(FunnelDashboard.selectorKey('plan_activation')),
+      find.byKey(FunnelDashboardPage.selectorKey('plan_activation')),
     );
     await tester.pumpAndSettle();
 
@@ -97,6 +97,6 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsOneWidget);
+    expect(find.byType(AdminHomePage), findsOneWidget);
   });
 }

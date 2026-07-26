@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/ab_test_dashboard.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/ab_test_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -54,7 +54,7 @@ void main() {
   testWidgets('SC-182 renders A/B test dashboard baseline', (tester) async {
     await pumpAbTests(tester);
 
-    expect(find.byType(ABTestDashboard), findsOneWidget);
+    expect(find.byType(ABTestDashboardPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('A/B Test Dashboard'), findsOneWidget);
@@ -72,7 +72,7 @@ void main() {
     await pumpAbTests(tester);
 
     await tester.tap(
-      find.byKey(ABTestDashboard.testKey('dca_wallet_shortcut_v1')),
+      find.byKey(ABTestDashboardPage.testKey('dca_wallet_shortcut_v1')),
     );
     await tester.pumpAndSettle();
 
@@ -82,6 +82,6 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
-    expect(find.byType(AdminHome), findsOneWidget);
+    expect(find.byType(AdminHomePage), findsOneWidget);
   });
 }

@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/cross_module/data/cross_module_analytics_repository.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/cross_module_analytics.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/cross_module_analytics_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -64,7 +64,7 @@ void main() {
   testWidgets('SC-322 renders performance analytics baseline', (tester) async {
     await pumpAnalytics(tester);
 
-    expect(find.byType(CrossModuleAnalytics), findsOneWidget);
+    expect(find.byType(CrossModuleAnalyticsPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Cross-Module Analytics'), findsOneWidget);
@@ -89,7 +89,7 @@ void main() {
     expectActionableInFirstViewport(
       tester,
       find.byKey(
-        CrossModuleAnalytics.tabKey(CrossModuleAnalyticsTab.performance),
+        CrossModuleAnalyticsPage.tabKey(CrossModuleAnalyticsTab.performance),
       ),
       routeName: 'SC-322 CrossModuleAnalytics',
       actionLabel: 'the performance analytics tab',
@@ -102,7 +102,9 @@ void main() {
     await pumpAnalytics(tester);
 
     await tester.tap(
-      find.byKey(CrossModuleAnalytics.tabKey(CrossModuleAnalyticsTab.metrics)),
+      find.byKey(
+        CrossModuleAnalyticsPage.tabKey(CrossModuleAnalyticsTab.metrics),
+      ),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
@@ -112,7 +114,7 @@ void main() {
 
     await tester.tap(
       find.byKey(
-        CrossModuleAnalytics.tabKey(CrossModuleAnalyticsTab.comparison),
+        CrossModuleAnalyticsPage.tabKey(CrossModuleAnalyticsTab.comparison),
       ),
     );
     await tester.pump();

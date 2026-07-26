@@ -85,13 +85,13 @@ const authRouteNameToPage = <String, String>{
 /// [InternalSurfaceGate] routes → gated child page (rollup / audit target).
 const gateRouteNameToPage = <String, String>{
   'AppRouteNames.sc180AdminHome':
-      'features/admin/presentation/pages/admin_home.dart',
+      'features/admin/presentation/pages/admin_home_page.dart',
   'AppRouteNames.sc181AnalyticsDashboard':
-      'features/admin/presentation/pages/analytics_dashboard.dart',
+      'features/admin/presentation/pages/analytics_dashboard_page.dart',
   'AppRouteNames.sc182AbTestDashboard':
-      'features/admin/presentation/pages/ab_test_dashboard.dart',
+      'features/admin/presentation/pages/ab_test_dashboard_page.dart',
   'AppRouteNames.sc183FunnelDashboard':
-      'features/admin/presentation/pages/funnel_dashboard.dart',
+      'features/admin/presentation/pages/funnel_dashboard_page.dart',
   'AppRouteNames.sc410AdminSettings':
       'features/admin/presentation/pages/admin_settings_page.dart',
   'AppRouteNames.sc325RouteChecker':

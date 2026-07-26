@@ -1,6 +1,6 @@
-part of 'onboarding_flow.dart';
+part of 'onboarding_flow_page.dart';
 
-class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
+class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   OnboardingStepDraft _step = OnboardingStepDraft.welcome;
   int _moduleIndex = 0;
   String? _expandedBoundaryId;
@@ -45,7 +45,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                   children: [
                     if (snapshot.screenState == OnboardingScreenState.offline)
                       const Padding(
-                        key: OnboardingFlow.offlineKey,
+                        key: OnboardingFlowPage.offlineKey,
                         padding: OnboardingSpacingTokens
                             .onboardingHeaderProgressPadding,
                         child: VitOfflineBanner(
@@ -66,7 +66,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     return SafeArea(
       child: switch (snapshot.screenState) {
         OnboardingScreenState.loading => LayoutBuilder(
-          key: OnboardingFlow.loadingKey,
+          key: OnboardingFlowPage.loadingKey,
           builder: (context, constraints) {
             return SingleChildScrollView(
               padding: const EdgeInsetsDirectional.only(
@@ -92,14 +92,14 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
           },
         ),
         OnboardingScreenState.empty => VitEmptyState(
-          key: OnboardingFlow.emptyKey,
+          key: OnboardingFlowPage.emptyKey,
           title: 'Chưa có nội dung onboarding',
           message: 'Quay lại sau hoặc vào trang chủ để bắt đầu.',
           actionLabel: 'Về trang chủ',
           onAction: () => context.go(snapshot.homeRoute),
         ),
         OnboardingScreenState.error => VitErrorState(
-          key: OnboardingFlow.errorKey,
+          key: OnboardingFlowPage.errorKey,
           title: 'Không tải được onboarding',
           message: 'Vui lòng thử lại hoặc bỏ qua bước này.',
           actionLabel: 'Thử lại',
@@ -125,7 +125,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
             child: Align(
               alignment: Alignment.centerRight,
               child: VitCtaButton(
-                key: OnboardingFlow.skipButtonKey,
+                key: OnboardingFlowPage.skipButtonKey,
                 onPressed: () => _skip(snapshot),
                 variant: VitCtaButtonVariant.ghost,
                 fullWidth: false,
@@ -159,11 +159,11 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   Widget _buildBody(OnboardingSnapshot snapshot) {
     final content = switch (_step) {
       OnboardingStepDraft.welcome => _WelcomeStep(
-        key: OnboardingFlow.welcomeKey,
+        key: OnboardingFlowPage.welcomeKey,
         welcome: snapshot.welcome,
       ),
       OnboardingStepDraft.modules => _ModulesStep(
-        key: OnboardingFlow.modulesKey,
+        key: OnboardingFlowPage.modulesKey,
         modules: snapshot.modules,
         currentIndex: _moduleIndex,
         onSelect: (index) {
@@ -172,7 +172,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         },
       ),
       OnboardingStepDraft.boundaries => _BoundariesStep(
-        key: OnboardingFlow.boundariesKey,
+        key: OnboardingFlowPage.boundariesKey,
         boundaries: snapshot.boundaries,
         separationRules: snapshot.separationRules,
         expandedBoundaryId: _expandedBoundaryId,
@@ -184,12 +184,12 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         },
       ),
       OnboardingStepDraft.trust => _TrustStep(
-        key: OnboardingFlow.trustKey,
+        key: OnboardingFlowPage.trustKey,
         pillars: snapshot.trustPillars,
         commitments: snapshot.commitments,
       ),
       OnboardingStepDraft.goals => _GoalsStep(
-        key: OnboardingFlow.goalsKey,
+        key: OnboardingFlowPage.goalsKey,
         goals: snapshot.goals,
         selectedGoals: _selectedGoals,
         onToggle: (goal) {
@@ -204,7 +204,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         },
       ),
       OnboardingStepDraft.complete => _CompleteStep(
-        key: OnboardingFlow.completeKey,
+        key: OnboardingFlowPage.completeKey,
         selectedGoals: _selectedGoals.toList(growable: false),
         recommendations: snapshot.recommendations,
         onOpenRoute: _openRoute,
@@ -226,7 +226,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
           mainAxisSize: MainAxisSize.min,
           children: [
             VitCtaButton(
-              key: OnboardingFlow.startButtonKey,
+              key: OnboardingFlowPage.startButtonKey,
               onPressed: () => _advance(snapshot),
               child: Text(snapshot.welcome.ctaLabel),
             ),
@@ -242,13 +242,13 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
           mainAxisSize: MainAxisSize.min,
           children: [
             VitCtaButton(
-              key: OnboardingFlow.nextButtonKey,
+              key: OnboardingFlowPage.nextButtonKey,
               onPressed: () => _finishWithPrimary(snapshot),
               trailing: const Icon(Icons.arrow_forward_rounded),
               child: const Text('Bắt đầu sử dụng'),
             ),
             VitCtaButton(
-              key: OnboardingFlow.homeButtonKey,
+              key: OnboardingFlowPage.homeButtonKey,
               onPressed: () => _openRoute(snapshot.homeRoute),
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
@@ -266,7 +266,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: VitCtaButton(
-                key: OnboardingFlow.nextButtonKey,
+                key: OnboardingFlowPage.nextButtonKey,
                 onPressed: () => _advance(snapshot),
                 trailing:
                     _step == OnboardingStepDraft.modules &&

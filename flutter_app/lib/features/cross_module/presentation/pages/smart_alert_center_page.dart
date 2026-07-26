@@ -25,8 +25,8 @@ part '../widgets/smart_alert_center_cards.dart';
 part '../widgets/smart_alert_center_history_settings.dart';
 part '../widgets/smart_alert_center_common.dart';
 
-class SmartAlertCenter extends ConsumerStatefulWidget {
-  const SmartAlertCenter({super.key, this.shellRenderMode});
+class SmartAlertCenterPage extends ConsumerStatefulWidget {
+  const SmartAlertCenterPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc323_smart_alert_center_content');
   static const createButtonKey = Key('sc323_create_alert_button');
@@ -36,10 +36,11 @@ class SmartAlertCenter extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<SmartAlertCenter> createState() => _SmartAlertCenterState();
+  ConsumerState<SmartAlertCenterPage> createState() =>
+      _SmartAlertCenterPageState();
 }
 
-class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
+class _SmartAlertCenterPageState extends ConsumerState<SmartAlertCenterPage> {
   SmartAlertTab _activeTab = SmartAlertTab.active;
   final Map<String, bool> _channelOverrides = {};
 
@@ -57,7 +58,7 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
       loading: () => CrossModuleTabbedPageShell(
         semanticLabel: 'Trung tâm cảnh báo thông minh',
         semanticIdentifier: 'SC-323',
-        contentKey: SmartAlertCenter.contentKey,
+        contentKey: SmartAlertCenterPage.contentKey,
         title: 'Smart Alerts',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: bottomInset,
@@ -67,7 +68,7 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
       error: (error, stackTrace) => CrossModuleTabbedPageShell(
         semanticLabel: 'Trung tâm cảnh báo thông minh',
         semanticIdentifier: 'SC-323',
-        contentKey: SmartAlertCenter.contentKey,
+        contentKey: SmartAlertCenterPage.contentKey,
         title: 'Smart Alerts',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: bottomInset,
@@ -84,7 +85,7 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
         return CrossModuleTabbedPageShell(
           semanticLabel: 'Trung tâm cảnh báo thông minh',
           semanticIdentifier: 'SC-323',
-          contentKey: SmartAlertCenter.contentKey,
+          contentKey: SmartAlertCenterPage.contentKey,
           title: snapshot.title,
           onBack: () => context.go(snapshot.backRoute),
           scrollEndClearance: bottomInset,

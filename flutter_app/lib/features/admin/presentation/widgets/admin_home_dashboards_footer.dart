@@ -1,4 +1,4 @@
-part of '../pages/admin_home.dart';
+part of '../pages/admin_home_page.dart';
 
 class _DashboardsSection extends StatelessWidget {
   const _DashboardsSection({required this.dashboards});
@@ -35,7 +35,7 @@ class _DashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = _accentColor(dashboard.accent);
     return VitCard(
-      key: AdminHome.dashboardKey(dashboard.id),
+      key: AdminHomePage.dashboardKey(dashboard.id),
       onTap: () => context.go(dashboard.route),
       padding: AdminSpacingTokens.adminCardPadding,
       child: Row(

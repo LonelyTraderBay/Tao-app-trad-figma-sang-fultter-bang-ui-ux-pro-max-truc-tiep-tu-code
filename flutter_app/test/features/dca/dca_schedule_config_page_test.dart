@@ -93,7 +93,7 @@ void main() {
   ) async {
     await pumpScheduleConfig(tester);
 
-    expect(find.byType(DCAScheduleConfig), findsOneWidget);
+    expect(find.byType(DCAScheduleConfigPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Smart Scheduling'), findsOneWidget);
@@ -101,7 +101,7 @@ void main() {
     expect(find.text('Chiến lược'), findsOneWidget);
     expect(find.text('Hybrid'), findsOneWidget);
     expect(find.text('Khung giờ ưu tiên'), findsOneWidget);
-    expect(find.byKey(DCAScheduleConfig.saveKey), findsOneWidget);
+    expect(find.byKey(DCAScheduleConfigPage.saveKey), findsOneWidget);
   });
 
   testWidgets('SC-172 strategy, time preference and switch update state', (
@@ -110,30 +110,32 @@ void main() {
     await pumpScheduleConfig(tester);
 
     await tester.tap(
-      find.byKey(DCAScheduleConfig.strategyKey(DcaScheduleStrategy.fixed)),
+      find.byKey(DCAScheduleConfigPage.strategyKey(DcaScheduleStrategy.fixed)),
     );
     await tester.pumpAndSettle();
     expect(find.textContaining('Cố định'), findsWidgets);
     expect(find.textContaining('không tối ưu'), findsWidgets);
 
     await tester.tap(
-      find.byKey(DCAScheduleConfig.timeKey(DcaScheduleTimePreference.morning)),
+      find.byKey(
+        DCAScheduleConfigPage.timeKey(DcaScheduleTimePreference.morning),
+      ),
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.byKey(DCAScheduleConfig.enabledKey));
+    await tester.ensureVisible(find.byKey(DCAScheduleConfigPage.enabledKey));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCAScheduleConfig.enabledKey));
+    await tester.tap(find.byKey(DCAScheduleConfigPage.enabledKey));
     await tester.pumpAndSettle();
-    expect(find.byKey(DCAScheduleConfig.enabledKey), findsOneWidget);
+    expect(find.byKey(DCAScheduleConfigPage.enabledKey), findsOneWidget);
   });
 
   testWidgets('SC-172 save routes to schedule analytics route', (tester) async {
     await pumpScheduleConfig(tester);
 
-    await tester.ensureVisible(find.byKey(DCAScheduleConfig.saveKey));
+    await tester.ensureVisible(find.byKey(DCAScheduleConfigPage.saveKey));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(DCAScheduleConfig.saveKey));
+    await tester.tap(find.byKey(DCAScheduleConfigPage.saveKey));
     await tester.pumpAndSettle();
 
     expect(find.text('Configuration not found'), findsOneWidget);
@@ -146,7 +148,9 @@ void main() {
     final heroRect = tester.getRect(find.byType(VitCard).first);
     final strategyTop = tester
         .getTopLeft(
-          find.byKey(DCAScheduleConfig.strategyKey(DcaScheduleStrategy.hybrid)),
+          find.byKey(
+            DCAScheduleConfigPage.strategyKey(DcaScheduleStrategy.hybrid),
+          ),
         )
         .dy;
     final timeHeaderTop = tester.getTopLeft(find.text('Khung giờ ưu tiên')).dy;

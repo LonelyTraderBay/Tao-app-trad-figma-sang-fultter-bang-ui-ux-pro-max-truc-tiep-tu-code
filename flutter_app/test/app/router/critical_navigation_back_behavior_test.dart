@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
 import 'package:vit_trade_flutter/features/p2p_account/presentation/pages/payment/p2p_payment_methods_page.dart';
 import 'package:vit_trade_flutter/features/p2p_orders/presentation/pages/wallet/p2p_wallet_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
@@ -61,17 +61,17 @@ void main() {
     const _BackCase(
       id: 'SC-181 admin analytics',
       path: AppRoutePaths.adminAnalytics,
-      expectedParent: AdminHome,
+      expectedParent: AdminHomePage,
     ),
     const _BackCase(
       id: 'SC-182 admin A/B tests',
       path: AppRoutePaths.adminAbtests,
-      expectedParent: AdminHome,
+      expectedParent: AdminHomePage,
     ),
     const _BackCase(
       id: 'SC-183 admin funnels',
       path: AppRoutePaths.adminFunnels,
-      expectedParent: AdminHome,
+      expectedParent: AdminHomePage,
     ),
   ];
 

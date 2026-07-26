@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center_page.dart';
 import 'package:vit_trade_flutter/features/earn_core/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn_staking/presentation/pages/staking/staking_earn_page.dart';
 import 'package:vit_trade_flutter/features/earn_staking/presentation/pages/staking/staking_history_page.dart';
@@ -142,7 +142,7 @@ void main() {
     await tester.tap(taxReportsTool);
     await tester.pumpAndSettle();
 
-    expect(find.byType(TaxReportCenter), findsOneWidget);
+    expect(find.byType(TaxReportCenterPage), findsOneWidget);
   });
 
   testWidgets('SC-356 header back returns to staking route', (tester) async {

@@ -17,8 +17,8 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/uni
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
-  const UnifiedPortfolioDashboard({super.key, this.shellRenderMode});
+class UnifiedPortfolioDashboardPage extends ConsumerStatefulWidget {
+  const UnifiedPortfolioDashboardPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc321_unified_portfolio_content');
   static const refreshKey = Key('sc321_refresh_data');
@@ -29,12 +29,12 @@ class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<UnifiedPortfolioDashboard> createState() =>
-      _UnifiedPortfolioDashboardState();
+  ConsumerState<UnifiedPortfolioDashboardPage> createState() =>
+      _UnifiedPortfolioDashboardPageState();
 }
 
-class _UnifiedPortfolioDashboardState
-    extends ConsumerState<UnifiedPortfolioDashboard> {
+class _UnifiedPortfolioDashboardPageState
+    extends ConsumerState<UnifiedPortfolioDashboardPage> {
   UnifiedPortfolioTab _activeTab = UnifiedPortfolioTab.overview;
 
   @override
@@ -51,7 +51,7 @@ class _UnifiedPortfolioDashboardState
       loading: () => CrossModuleTabbedPageShell(
         semanticLabel: 'Danh mục đầu tư hợp nhất',
         semanticIdentifier: 'SC-321',
-        contentKey: UnifiedPortfolioDashboard.contentKey,
+        contentKey: UnifiedPortfolioDashboardPage.contentKey,
         title: 'Unified Portfolio',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: bottomInset,
@@ -61,7 +61,7 @@ class _UnifiedPortfolioDashboardState
       error: (error, stackTrace) => CrossModuleTabbedPageShell(
         semanticLabel: 'Danh mục đầu tư hợp nhất',
         semanticIdentifier: 'SC-321',
-        contentKey: UnifiedPortfolioDashboard.contentKey,
+        contentKey: UnifiedPortfolioDashboardPage.contentKey,
         title: 'Unified Portfolio',
         onBack: () => context.go(AppRoutePaths.home),
         scrollEndClearance: bottomInset,
@@ -78,21 +78,21 @@ class _UnifiedPortfolioDashboardState
         return CrossModuleTabbedPageShell(
           semanticLabel: 'Danh mục đầu tư hợp nhất',
           semanticIdentifier: 'SC-321',
-          contentKey: UnifiedPortfolioDashboard.contentKey,
+          contentKey: UnifiedPortfolioDashboardPage.contentKey,
           title: snapshot.title,
           onBack: () => context.go(snapshot.backRoute),
           scrollEndClearance: bottomInset,
           tabs: UnifiedPortfolioTabs(
             tabs: snapshot.tabs,
             active: _activeTab,
-            tabKey: UnifiedPortfolioDashboard.tabKey,
+            tabKey: UnifiedPortfolioDashboardPage.tabKey,
             onChanged: _changeTab,
           ),
           body: _activeTab == UnifiedPortfolioTab.overview
               ? UnifiedPortfolioOverview(
                   snapshot: snapshot,
-                  refreshKey: UnifiedPortfolioDashboard.refreshKey,
-                  moduleKey: UnifiedPortfolioDashboard.moduleKey,
+                  refreshKey: UnifiedPortfolioDashboardPage.refreshKey,
+                  moduleKey: UnifiedPortfolioDashboardPage.moduleKey,
                   onRefresh: () => HapticFeedback.lightImpact(),
                   onOpenRoute: (route) => context.go(route),
                 )

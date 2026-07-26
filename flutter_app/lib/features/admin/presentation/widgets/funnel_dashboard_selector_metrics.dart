@@ -1,4 +1,4 @@
-part of '../pages/funnel_dashboard.dart';
+part of '../pages/funnel_dashboard_page.dart';
 
 class _FunnelSelector extends StatelessWidget {
   const _FunnelSelector({
@@ -39,7 +39,7 @@ class _FunnelSelector extends StatelessWidget {
               selected: selected,
               label: 'Chọn funnel ${funnel.name}',
               child: VitCard(
-                key: FunnelDashboard.selectorKey(funnel.id),
+                key: FunnelDashboardPage.selectorKey(funnel.id),
                 onTap: () => onChanged(funnel.id),
                 padding: AdminSpacingTokens.adminCardPadding,
                 borderColor: selected

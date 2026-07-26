@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_home_page.dart';
 import 'package:vit_trade_flutter/features/cross_module/data/unified_portfolio_repository.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unified_portfolio_dashboard_page.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/hub/dca_page.dart';
 import 'package:vit_trade_flutter/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
@@ -70,7 +70,7 @@ void main() {
   ) async {
     await pumpUnifiedPortfolio(tester);
 
-    expect(find.byType(UnifiedPortfolioDashboard), findsOneWidget);
+    expect(find.byType(UnifiedPortfolioDashboardPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Unified Portfolio'), findsOneWidget);
@@ -90,7 +90,7 @@ void main() {
 
     await tester.tap(
       find.byKey(
-        UnifiedPortfolioDashboard.tabKey(UnifiedPortfolioTab.analysis),
+        UnifiedPortfolioDashboardPage.tabKey(UnifiedPortfolioTab.analysis),
       ),
     );
     await pumpRoute(tester);
@@ -98,7 +98,9 @@ void main() {
     expect(find.text('Performance Ranking'), findsOneWidget);
 
     await tester.tap(
-      find.byKey(UnifiedPortfolioDashboard.tabKey(UnifiedPortfolioTab.history)),
+      find.byKey(
+        UnifiedPortfolioDashboardPage.tabKey(UnifiedPortfolioTab.history),
+      ),
     );
     await pumpRoute(tester);
     expect(find.text('Portfolio Growth History'), findsOneWidget);
@@ -114,7 +116,7 @@ void main() {
     ) async {
       await pumpUnifiedPortfolio(tester);
       final moduleFinder = find.byKey(
-        UnifiedPortfolioDashboard.moduleKey(moduleId),
+        UnifiedPortfolioDashboardPage.moduleKey(moduleId),
       );
       await tester.ensureVisible(moduleFinder);
       await tester.tap(moduleFinder);

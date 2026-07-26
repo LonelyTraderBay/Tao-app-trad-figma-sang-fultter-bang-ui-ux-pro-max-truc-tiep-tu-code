@@ -1,4 +1,4 @@
-part of '../pages/funnel_dashboard.dart';
+part of '../pages/funnel_dashboard_page.dart';
 
 class _CardTitle extends StatelessWidget {
   const _CardTitle({required this.icon, required this.title});

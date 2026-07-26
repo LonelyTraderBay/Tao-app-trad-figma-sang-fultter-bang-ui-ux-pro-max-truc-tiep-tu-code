@@ -18,7 +18,7 @@ class _OptimizerTabs extends StatelessWidget {
             key: tab.name,
             label: _tabLabel(tab),
             icon: _tabIcon(tab),
-            widgetKey: DCAPortfolioOptimizer.tabKey(tab.name),
+            widgetKey: DCAPortfolioOptimizerPage.tabKey(tab.name),
           ),
       ],
     );

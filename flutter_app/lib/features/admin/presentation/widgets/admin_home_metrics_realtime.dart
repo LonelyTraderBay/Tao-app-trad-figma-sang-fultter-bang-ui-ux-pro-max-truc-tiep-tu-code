@@ -1,4 +1,4 @@
-part of '../pages/admin_home.dart';
+part of '../pages/admin_home_page.dart';
 
 class _MetricGrid extends StatelessWidget {
   const _MetricGrid({required this.metrics});
@@ -222,7 +222,7 @@ class _PauseButton extends StatelessWidget {
           ? 'Tạm dừng cập nhật trực tiếp quản trị'
           : 'Tiếp tục cập nhật trực tiếp quản trị',
       child: Material(
-        key: AdminHome.pauseKey,
+        key: AdminHomePage.pauseKey,
         color: AppColors.surface3,
         borderRadius: AppRadii.inputRadius,
         child: InkWell(

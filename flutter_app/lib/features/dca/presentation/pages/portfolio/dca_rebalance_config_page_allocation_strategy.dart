@@ -25,7 +25,7 @@ class _AllocationSummary extends StatelessWidget {
             icon: Icons.bar_chart_rounded,
             title: 'Phân bổ mục tiêu',
             trailing: VitChoicePill(
-              key: DCARebalanceConfig.addTargetKey,
+              key: DCARebalanceConfigPage.addTargetKey,
               label: 'Thêm',
               selected: true,
               onTap: onAdd,
@@ -278,7 +278,7 @@ class _TargetCard extends StatelessWidget {
                   ),
                 ),
                 _TokenSlider(
-                  key: DCARebalanceConfig.targetSliderKey(target.id),
+                  key: DCARebalanceConfigPage.targetSliderKey(target.id),
                   value: target.targetPercent,
                   min: 0,
                   max: 100,
@@ -404,7 +404,7 @@ class _StrategyOptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitChoicePill(
-      key: DCARebalanceConfig.strategyKey(option.strategy),
+      key: DCARebalanceConfigPage.strategyKey(option.strategy),
       label: _strategyChoiceLabel(option),
       selected: selected,
       onTap: onTap,
