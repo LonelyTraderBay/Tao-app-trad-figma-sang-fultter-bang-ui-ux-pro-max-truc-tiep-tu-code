@@ -3,9 +3,9 @@
 Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 
 ```text
-total_routed_screens=413
+total_routed_screens=412
 fixed_vit_header_remaining=22
-auto_hide_header=379
+auto_hide_header=378
 custom_scroll_header=1
 no_top_header=11
 unresolved=0
@@ -26,10 +26,10 @@ unresolved=0
 
 | Feature | Route | Page | Header behavior | Variant | Page file |
 | --- | --- | --- | --- | --- | --- |
-| admin | `AppRoutePaths.admin` | `AdminHome` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/admin/presentation/pages/admin_home.dart` |
-| admin | `AppRoutePaths.adminAbtests` | `ABTestDashboard` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard.dart` |
-| admin | `AppRoutePaths.adminAnalytics` | `AnalyticsDashboard` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/admin/presentation/pages/analytics_dashboard.dart` |
-| admin | `AppRoutePaths.adminFunnels` | `FunnelDashboard` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/admin/presentation/pages/funnel_dashboard.dart` |
+| admin | `AppRoutePaths.admin` | `AdminHomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/admin/presentation/pages/admin_home_page.dart` |
+| admin | `AppRoutePaths.adminAbtests` | `ABTestDashboardPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard_page.dart` |
+| admin | `AppRoutePaths.adminAnalytics` | `AnalyticsDashboardPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/admin/presentation/pages/analytics_dashboard_page.dart` |
+| admin | `AppRoutePaths.adminFunnels` | `FunnelDashboardPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/admin/presentation/pages/funnel_dashboard_page.dart` |
 | admin | `AppRoutePaths.adminSettings` | `AdminSettingsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/admin/presentation/pages/admin_settings_page.dart` |
 | arena | `'/arena/challenge/:challengeId'` | `ArenaChallengeDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/arena/presentation/pages/challenge/arena_challenge_detail_page.dart` |
 | arena | `'/arena/creator/:creatorId'` | `ArenaCreatorPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/arena/presentation/pages/studio/arena_creator_page.dart` |
@@ -62,22 +62,22 @@ unresolved=0
 | auth | `AppRoutePaths.authOtp` | `OTPPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/otp_page.dart` |
 | auth | `AppRoutePaths.authRegister` | `RegisterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/register_page.dart` |
 | auth | `AppRoutePaths.authResetPassword` | `ResetPasswordPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/reset_password_page.dart` |
-| cross_module | `AppRoutePaths.crossModuleAnalytics` | `CrossModuleAnalytics` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/cross_module_analytics.dart` |
-| cross_module | `AppRoutePaths.smartAlerts` | `SmartAlertCenter` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/smart_alert_center.dart` |
-| cross_module | `AppRoutePaths.taxReports` | `TaxReportCenter` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/tax_report_center.dart` |
-| cross_module | `AppRoutePaths.unifiedPortfolio` | `UnifiedPortfolioDashboard` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart` |
-| dca | `'/dca/rebalance/:configId/edit'` | `DCARebalanceConfig` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart` |
-| dca | `'/dca/rebalance/:configId/history'` | `DCARebalanceDashboard` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart` |
+| cross_module | `AppRoutePaths.crossModuleAnalytics` | `CrossModuleAnalyticsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/cross_module_analytics_page.dart` |
+| cross_module | `AppRoutePaths.smartAlerts` | `SmartAlertCenterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/smart_alert_center_page.dart` |
+| cross_module | `AppRoutePaths.taxReports` | `TaxReportCenterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/tax_report_center_page.dart` |
+| cross_module | `AppRoutePaths.unifiedPortfolio` | `UnifiedPortfolioDashboardPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/unified_portfolio_dashboard_page.dart` |
+| dca | `'/dca/rebalance/:configId/edit'` | `DCARebalanceConfigPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart` |
+| dca | `'/dca/rebalance/:configId/history'` | `DCARebalanceDashboardPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart` |
 | dca | `AppRoutePaths.dca` | `DCAPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/hub/dca_page.dart` |
 | dca | `AppRoutePaths.dcaBacktester` | `DCABacktesterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/research/dca_backtester_page.dart` |
-| dca | `AppRoutePaths.dcaDynamicAmount` | `DCADynamicAmount` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/research/dca_dynamic_amount_page.dart` |
+| dca | `AppRoutePaths.dcaDynamicAmount` | `DCADynamicAmountPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/research/dca_dynamic_amount_page.dart` |
 | dca | `AppRoutePaths.dcaMultiAsset` | `DCAMultiAssetPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_multi_asset_page.dart` |
 | dca | `AppRoutePaths.dcaPerformanceCompare` | `DCAPerformanceComparePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_performance_compare_page.dart` |
-| dca | `AppRoutePaths.dcaPortfolioOptimizer` | `DCAPortfolioOptimizer` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_portfolio_optimizer_page.dart` |
-| dca | `AppRoutePaths.dcaRebalanceConfig` | `DCARebalanceConfig` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart` |
-| dca | `AppRoutePaths.dcaRebalanceDashboard` | `DCARebalanceDashboard` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart` |
-| dca | `AppRoutePaths.dcaScheduleAnalytics` | `DCAScheduleAnalytics` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_analytics_page.dart` |
-| dca | `AppRoutePaths.dcaScheduleConfig` | `DCAScheduleConfig` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_config_page.dart` |
+| dca | `AppRoutePaths.dcaPortfolioOptimizer` | `DCAPortfolioOptimizerPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_portfolio_optimizer_page.dart` |
+| dca | `AppRoutePaths.dcaRebalanceConfig` | `DCARebalanceConfigPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart` |
+| dca | `AppRoutePaths.dcaRebalanceDashboard` | `DCARebalanceDashboardPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart` |
+| dca | `AppRoutePaths.dcaScheduleAnalytics` | `DCAScheduleAnalyticsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_analytics_page.dart` |
+| dca | `AppRoutePaths.dcaScheduleConfig` | `DCAScheduleConfigPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_config_page.dart` |
 | dca | `AppRoutePaths.dcaSmartRules` | `DCASmartRulesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_smart_rules_page.dart` |
 | dca | `AppRoutePaths.devDcaOverview` | `DCAOverviewDemo` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/hub/dca_overview_demo.dart` |
 | dev | `AppRoutePaths.devDesignSystem` | `DesignSystemPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dev/presentation/pages/design_system_page.dart` |
@@ -209,7 +209,7 @@ unresolved=0
 | markets | `AppRoutePaths.marketsWatchlist` | `WatchlistPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart` |
 | news | `AppRoutePaths.news` | `NewsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/news/presentation/pages/news_page.dart` |
 | notifications | `AppRoutePaths.notifications` | `NotificationsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` |
-| onboarding | `AppRoutePaths.onboarding` | `OnboardingFlow` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow.dart` |
+| onboarding | `AppRoutePaths.onboarding` | `OnboardingFlowPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_page.dart` |
 | p2p_account | `'/p2p/merchant/:merchantId'` | `P2PMerchantProfilePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_account/presentation/pages/merchant/p2p_merchant_profile_page.dart` |
 | p2p_account | `'/p2p/payment-method/ownership/:methodId'` | `P2PPaymentMethodOwnershipPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_ownership_page.dart` |
 | p2p_account | `'/p2p/payment-method/verification/:methodId'` | `P2PPaymentMethodVerificationPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_verification_page.dart` |
@@ -234,7 +234,6 @@ unresolved=0
 | p2p_dispute | `AppRoutePaths.p2pDisputes` | `P2PDisputesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_disputes_page.dart` |
 | p2p_dispute | `AppRoutePaths.p2pInsurance` | `P2PInsuranceFundPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_insurance_fund_page.dart` |
 | p2p_dispute | `AppRoutePaths.p2pInsuranceCertificate` | `P2PInsuranceCertificatePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_insurance_certificate_page.dart` |
-| p2p_dispute | `AppRoutePaths.p2pInsuranceFundAlias` | `P2PInsuranceFundPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_insurance_fund_page.dart` |
 | p2p_dispute | `AppRoutePaths.p2pInsurancePolicy` | `P2PInsurancePolicyPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_insurance_policy_page.dart` |
 | p2p_dispute | `AppRoutePaths.p2pInsuranceScore` | `P2PInsuranceScorePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_insurance_score_page.dart` |
 | p2p_marketplace | `'/p2p/ad-analytics/:adId'` | `P2PAdAnalyticsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p_marketplace/presentation/pages/ads/p2p_ad_analytics_page.dart` |
