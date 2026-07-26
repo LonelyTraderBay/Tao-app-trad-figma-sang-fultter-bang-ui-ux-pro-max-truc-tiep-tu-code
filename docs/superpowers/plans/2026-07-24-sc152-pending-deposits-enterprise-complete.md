@@ -8,7 +8,7 @@
 
 **Tech Stack:** Flutter, Riverpod `FutureProvider`, GoRouter, Vit* shared widgets, `showVitNoticeSheet`, `maskAddress`.
 
-**Audit nguồn:** canvas IDE [SC-152 Enterprise UI audit](C:/Users/C-PC/.cursor/projects/c-Users-C-PC-Documents-Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/canvases/sc152-pending-deposits-enterprise-ui-audit.canvas.tsx).
+**Audit nguồn:** canvas IDE `sc152-pending-deposits-enterprise-ui-audit` (local Cursor canvas — không commit; không dùng absolute path máy).
 
 ## Global Constraints
 
