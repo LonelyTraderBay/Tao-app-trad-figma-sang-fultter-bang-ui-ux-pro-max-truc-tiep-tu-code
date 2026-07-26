@@ -55,10 +55,13 @@ void main() {
   testWidgets('SC-173 renders Flutter missing config state', (tester) async {
     await pumpScheduleAnalytics(tester);
 
-    expect(find.byType(DCAScheduleAnalytics), findsOneWidget);
+    expect(find.byType(DCAScheduleAnalyticsPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.byKey(DCAScheduleAnalytics.missingConfigKey), findsOneWidget);
+    expect(
+      find.byKey(DCAScheduleAnalyticsPage.missingConfigKey),
+      findsOneWidget,
+    );
     expect(find.text('Configuration not found'), findsOneWidget);
   });
 }

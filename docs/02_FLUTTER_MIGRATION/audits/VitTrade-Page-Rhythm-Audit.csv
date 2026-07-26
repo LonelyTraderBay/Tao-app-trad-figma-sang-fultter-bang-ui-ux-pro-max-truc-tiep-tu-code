@@ -1,9 +1,9 @@
 feature,file,suggested_tier,declared_tier,wiring_count,wiring_violations,structural_count,structural_violations,inner_gap_count,inner_gap_violations,status
-admin,flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard.dart,standard,standard,0,,0,,1,0,pass
-admin,flutter_app/lib/features/admin/presentation/pages/admin_home.dart,standard,standard,0,,0,,0,0,pass
+admin,flutter_app/lib/features/admin/presentation/pages/ab_test_dashboard_page.dart,standard,standard,0,,0,,1,0,pass
+admin,flutter_app/lib/features/admin/presentation/pages/admin_home_page.dart,standard,standard,0,,0,,0,0,pass
 admin,flutter_app/lib/features/admin/presentation/pages/admin_settings_page.dart,standard,standard,0,,0,,0,0,pass
-admin,flutter_app/lib/features/admin/presentation/pages/analytics_dashboard.dart,standard,standard,0,,0,,0,0,pass
-admin,flutter_app/lib/features/admin/presentation/pages/funnel_dashboard.dart,standard,standard,0,,0,,0,0,pass
+admin,flutter_app/lib/features/admin/presentation/pages/analytics_dashboard_page.dart,standard,standard,0,,0,,0,0,pass
+admin,flutter_app/lib/features/admin/presentation/pages/funnel_dashboard_page.dart,standard,standard,0,,0,,0,0,pass
 admin,flutter_app/lib/features/admin/presentation/widgets/ab_test_dashboard_common.dart,standard,,0,,0,,0,0,pass
 admin,flutter_app/lib/features/admin/presentation/widgets/ab_test_dashboard_sections.dart,standard,,0,,0,,0,0,pass
 admin,flutter_app/lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart,standard,,0,,0,,0,0,pass

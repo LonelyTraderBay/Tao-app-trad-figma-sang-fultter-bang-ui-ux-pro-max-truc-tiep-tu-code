@@ -34,8 +34,8 @@ const EdgeInsetsDirectional _dcaScheduleCardPadding = EdgeInsetsDirectional.all(
   AppSpacing.x3,
 );
 
-class DCAScheduleConfig extends ConsumerStatefulWidget {
-  const DCAScheduleConfig({super.key, this.shellRenderMode});
+class DCAScheduleConfigPage extends ConsumerStatefulWidget {
+  const DCAScheduleConfigPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc172_schedule_content');
   static const saveKey = Key('sc172_schedule_save');
@@ -56,10 +56,11 @@ class DCAScheduleConfig extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<DCAScheduleConfig> createState() => _DCAScheduleConfigState();
+  ConsumerState<DCAScheduleConfigPage> createState() =>
+      _DCAScheduleConfigPageState();
 }
 
-class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
+class _DCAScheduleConfigPageState extends ConsumerState<DCAScheduleConfigPage> {
   late DcaScheduleStrategy _strategy;
   late DcaScheduleTimePreference _timePreference;
   late double _maxDelayHours;
@@ -115,7 +116,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: VitInsetScrollView(
-        key: DCAScheduleConfig.contentKey,
+        key: DCAScheduleConfigPage.contentKey,
         physics: const ClampingScrollPhysics(),
         bottomInset: scrollEndPadding,
         child: VitPageContent(
@@ -156,7 +157,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
             if (_strategy == DcaScheduleStrategy.volatility ||
                 _strategy == DcaScheduleStrategy.hybrid)
               _ThresholdCard(
-                key: DCAScheduleConfig.volatilityKey,
+                key: DCAScheduleConfigPage.volatilityKey,
                 title: 'Volatility Settings',
                 icon: Icons.trending_down,
                 accent: AppColors.accent,
@@ -175,7 +176,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
             if (_strategy == DcaScheduleStrategy.gasOptimized ||
                 _strategy == DcaScheduleStrategy.hybrid)
               _ThresholdCard(
-                key: DCAScheduleConfig.gasKey,
+                key: DCAScheduleConfigPage.gasKey,
                 title: 'Gas Settings',
                 icon: Icons.bolt_outlined,
                 accent: AppColors.warn,
@@ -208,7 +209,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
               contractId: 'SC-172',
             ),
             VitCtaButton(
-              key: DCAScheduleConfig.saveKey,
+              key: DCAScheduleConfigPage.saveKey,
               onPressed: _save,
               leading: const Icon(Icons.save_outlined),
               child: const Text('Lưu cấu hình'),

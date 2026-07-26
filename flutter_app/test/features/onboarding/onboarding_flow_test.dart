@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/core/storage/key_value_store.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/onboarding/data/onboarding_repository.dart';
-import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow.dart';
+import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -65,28 +65,28 @@ void main() {
   ) async {
     await pumpOnboarding(tester);
 
-    expect(find.byType(OnboardingFlow), findsOneWidget);
+    expect(find.byType(OnboardingFlowPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsNothing);
-    expect(find.byKey(OnboardingFlow.welcomeKey), findsOneWidget);
+    expect(find.byKey(OnboardingFlowPage.welcomeKey), findsOneWidget);
     expect(find.text('Bỏ qua'), findsOneWidget);
     expect(find.text('Chào mừng đến với\nTrading App'), findsOneWidget);
     expect(find.text('Giao dịch đa dạng'), findsOneWidget);
     expect(find.text('An toàn & Minh bạch'), findsOneWidget);
     expect(find.text('Tính năng thông minh'), findsOneWidget);
-    expect(find.byKey(OnboardingFlow.startButtonKey), findsOneWidget);
+    expect(find.byKey(OnboardingFlowPage.startButtonKey), findsOneWidget);
   });
 
   testWidgets('SC-397 advances module carousel state', (tester) async {
     await pumpOnboarding(tester);
 
-    await tester.tap(find.byKey(OnboardingFlow.startButtonKey));
+    await tester.tap(find.byKey(OnboardingFlowPage.startButtonKey));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(OnboardingFlow.modulesKey), findsOneWidget);
+    expect(find.byKey(OnboardingFlowPage.modulesKey), findsOneWidget);
     expect(find.text('Khám phá 5 modules'), findsOneWidget);
     expect(find.text('Trading'), findsOneWidget);
 
-    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.tap(find.byKey(OnboardingFlowPage.nextButtonKey));
     await tester.pumpAndSettle();
 
     expect(find.text('Wallet'), findsOneWidget);
@@ -96,7 +96,7 @@ void main() {
   testWidgets('SC-397 skip navigates to Home', (tester) async {
     await pumpOnboarding(tester);
 
-    await tester.tap(find.byKey(OnboardingFlow.skipButtonKey));
+    await tester.tap(find.byKey(OnboardingFlowPage.skipButtonKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(HomePage), findsOneWidget);
@@ -110,7 +110,7 @@ void main() {
     await pumpOnboarding(tester, store: store);
 
     expect(store.getBool(KeyValueStoreKeys.onboardingSeen), isNull);
-    await tester.tap(find.byKey(OnboardingFlow.skipButtonKey));
+    await tester.tap(find.byKey(OnboardingFlowPage.skipButtonKey));
     await tester.pumpAndSettle();
 
     expect(store.getBool(KeyValueStoreKeys.onboardingSeen), isTrue);
@@ -121,32 +121,34 @@ void main() {
   ) async {
     await pumpOnboarding(tester);
 
-    await tester.tap(find.byKey(OnboardingFlow.startButtonKey));
+    await tester.tap(find.byKey(OnboardingFlowPage.startButtonKey));
     await tester.pumpAndSettle();
 
     for (var i = 0; i < 5; i++) {
-      await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+      await tester.tap(find.byKey(OnboardingFlowPage.nextButtonKey));
       await tester.pumpAndSettle();
     }
 
-    expect(find.byKey(OnboardingFlow.boundariesKey), findsOneWidget);
-    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    expect(find.byKey(OnboardingFlowPage.boundariesKey), findsOneWidget);
+    await tester.tap(find.byKey(OnboardingFlowPage.nextButtonKey));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(OnboardingFlow.trustKey), findsOneWidget);
-    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    expect(find.byKey(OnboardingFlowPage.trustKey), findsOneWidget);
+    await tester.tap(find.byKey(OnboardingFlowPage.nextButtonKey));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(OnboardingFlow.goalsKey), findsOneWidget);
+    expect(find.byKey(OnboardingFlowPage.goalsKey), findsOneWidget);
     await tester.tap(
-      find.byKey(OnboardingFlow.goalKey(OnboardingUserGoalDraft.tradeCrypto)),
+      find.byKey(
+        OnboardingFlowPage.goalKey(OnboardingUserGoalDraft.tradeCrypto),
+      ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.tap(find.byKey(OnboardingFlowPage.nextButtonKey));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(OnboardingFlow.completeKey), findsOneWidget);
-    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    expect(find.byKey(OnboardingFlowPage.completeKey), findsOneWidget);
+    await tester.tap(find.byKey(OnboardingFlowPage.nextButtonKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(TradePage), findsOneWidget);

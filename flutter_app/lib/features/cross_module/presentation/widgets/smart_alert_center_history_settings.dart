@@ -1,4 +1,4 @@
-part of '../pages/smart_alert_center.dart';
+part of '../pages/smart_alert_center_page.dart';
 
 class _AlertHistoryTab extends StatelessWidget {
   const _AlertHistoryTab({required this.snapshot});
@@ -219,7 +219,7 @@ class _ChannelCard extends StatelessWidget {
             ),
           ),
           _ToggleSwitch(
-            key: SmartAlertCenter.channelKey(channel.id),
+            key: SmartAlertCenterPage.channelKey(channel.id),
             enabled: enabled,
             onTap: onTap,
           ),

@@ -430,7 +430,7 @@ class _ApplyStrategyAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
-      key: DCADynamicAmount.applyKey,
+      key: DCADynamicAmountPage.applyKey,
       onPressed: onApply,
       leading: const Icon(
         Icons.arrow_upward_rounded,

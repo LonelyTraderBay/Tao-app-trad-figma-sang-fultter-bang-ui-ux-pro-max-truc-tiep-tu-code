@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/cross_module/data/tax_report_repository.dart';
-import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -59,7 +59,7 @@ void main() {
   testWidgets('SC-324 renders generate tax report baseline', (tester) async {
     await pumpTaxReports(tester);
 
-    expect(find.byType(TaxReportCenter), findsOneWidget);
+    expect(find.byType(TaxReportCenterPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Tax Report Center'), findsOneWidget);
@@ -73,7 +73,7 @@ void main() {
     expect(find.text('Spot Trading'), findsOneWidget);
     expect(find.text('Arena Points (Non-taxable)'), findsOneWidget);
     expect(find.text('Export Format'), findsOneWidget);
-    expect(find.byKey(TaxReportCenter.generateButtonKey), findsOneWidget);
+    expect(find.byKey(TaxReportCenterPage.generateButtonKey), findsOneWidget);
   });
 
   testWidgets('SC-324 first viewport reaches tax report tabs', (tester) async {
@@ -86,7 +86,7 @@ void main() {
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(TaxReportCenter.tabKey(TaxReportTab.generate)),
+      find.byKey(TaxReportCenterPage.tabKey(TaxReportTab.generate)),
       routeName: 'SC-324 TaxReportCenter',
       actionLabel: 'the generate report tab',
     );
@@ -98,33 +98,39 @@ void main() {
     await pumpTaxReports(tester);
 
     final csvFormat = find.byKey(
-      TaxReportCenter.formatKey(TaxExportFormat.csv),
+      TaxReportCenterPage.formatKey(TaxExportFormat.csv),
     );
     await tester.ensureVisible(csvFormat);
     await tester.pump();
     await tester.tap(csvFormat);
     await tester.pump();
-    await tester.ensureVisible(find.byKey(TaxReportCenter.generateButtonKey));
+    await tester.ensureVisible(
+      find.byKey(TaxReportCenterPage.generateButtonKey),
+    );
     await tester.pump();
-    await tester.tap(find.byKey(TaxReportCenter.generateButtonKey));
+    await tester.tap(find.byKey(TaxReportCenterPage.generateButtonKey));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
     expect(find.text('CSV Export Queued'), findsOneWidget);
 
-    await tester.tap(find.byKey(TaxReportCenter.tabKey(TaxReportTab.reports)));
+    await tester.tap(
+      find.byKey(TaxReportCenterPage.tabKey(TaxReportTab.reports)),
+    );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
     expect(find.text('Generated Reports'), findsOneWidget);
     expect(find.text('2024 Tax Year'), findsOneWidget);
     expect(find.text('Q4 2024'), findsOneWidget);
 
-    await tester.tap(find.byKey(TaxReportCenter.tabKey(TaxReportTab.settings)));
+    await tester.tap(
+      find.byKey(TaxReportCenterPage.tabKey(TaxReportTab.settings)),
+    );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 220));
     expect(find.text('Report Settings'), findsOneWidget);
     expect(find.text('Include Arena Points'), findsOneWidget);
-    expect(find.byKey(TaxReportCenter.includeArenaKey), findsOneWidget);
-    await tester.tap(find.byKey(TaxReportCenter.includeArenaKey));
+    expect(find.byKey(TaxReportCenterPage.includeArenaKey), findsOneWidget);
+    await tester.tap(find.byKey(TaxReportCenterPage.includeArenaKey));
     await tester.pump();
   });
 }

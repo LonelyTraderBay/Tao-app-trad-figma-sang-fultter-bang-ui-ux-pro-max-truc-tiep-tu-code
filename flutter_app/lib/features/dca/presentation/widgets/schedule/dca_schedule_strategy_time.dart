@@ -61,7 +61,7 @@ class _StrategyTile extends StatelessWidget {
     return SizedBox(
       width: _dcaScheduleStrategyChipWidth,
       child: VitChoicePill(
-        key: DCAScheduleConfig.strategyKey(option.strategy),
+        key: DCAScheduleConfigPage.strategyKey(option.strategy),
         label: option.title,
         selected: selected,
         onTap: onTap,
@@ -148,7 +148,7 @@ class _TimeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      key: DCAScheduleConfig.timeKey(option.preference),
+      key: DCAScheduleConfigPage.timeKey(option.preference),
       variant: VitCardVariant.inner,
       borderColor: selected ? accent.withValues(alpha: .72) : null,
       onTap: onTap,

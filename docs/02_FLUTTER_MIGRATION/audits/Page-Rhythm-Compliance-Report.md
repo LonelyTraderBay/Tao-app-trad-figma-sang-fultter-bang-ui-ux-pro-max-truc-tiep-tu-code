@@ -1,12 +1,12 @@
 # Page Rhythm Compliance Report
 
-Generated: 2026-07-24
+Generated: 2026-07-27
 
 Source: `VitTrade-Page-Rhythm-Screen-Compliance.csv`
 
 ## Summary
 
-Screen rollup: 413 real_page routes, L1 pass 413, L2 pass 413 warn 0, unknown 0, documented exceptions 1.
+Screen rollup: 412 real_page routes, L1 pass 412, L2 pass 412 warn 0, unknown 0, documented exceptions 1.
 | Level | Meaning |
 | --- | --- |
 | L1 | Wiring: rhythm, orphan gaps, nested VPC |
@@ -70,7 +70,7 @@ Screen rollup: 413 real_page routes, L1 pass 413, L2 pass 413 warn 0, unknown 0,
 
 ### p2p_account (16 routes, L2 warn 0, unknown 0)
 
-### p2p_dispute (11 routes, L2 warn 0, unknown 0)
+### p2p_dispute (10 routes, L2 warn 0, unknown 0)
 
 ### p2p_marketplace (13 routes, L2 warn 0, unknown 0)
 

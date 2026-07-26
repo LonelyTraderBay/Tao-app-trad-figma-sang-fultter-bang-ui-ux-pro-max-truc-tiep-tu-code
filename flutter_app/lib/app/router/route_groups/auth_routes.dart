@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/auth/presentation/pages/reset_passwor
 import 'package:vit_trade_flutter/features/auth/presentation/pages/two_fa_setup_page.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/force_update_gate_page.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/maintenance_gate_page.dart';
-import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow.dart';
+import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -64,7 +64,7 @@ List<RouteBase> topLevelRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.onboarding,
       name: AppRouteNames.sc397Onboarding,
-      builder: (_, _) => const OnboardingFlow(),
+      builder: (_, _) => const OnboardingFlowPage(),
     ),
     // GĐ4-F1 kill-switch: 2 trang gate toàn cục, ngoài shell — redirect từ
     // root_routes.dart khi AppConfig.maintenanceMode / forceUpdateRequired

@@ -18,8 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_missing_config_panel.dart';
 
-class DCAScheduleAnalytics extends ConsumerWidget {
-  const DCAScheduleAnalytics({
+class DCAScheduleAnalyticsPage extends ConsumerWidget {
+  const DCAScheduleAnalyticsPage({
     super.key,
     required this.configId,
     this.shellRenderMode,
@@ -84,12 +84,12 @@ class DCAScheduleAnalytics extends ConsumerWidget {
                       DcaMissingConfigPanel(
                         icon: Icons.event_busy_outlined,
                         title: snapshot.message,
-                        titleKey: DCAScheduleAnalytics.missingConfigKey,
+                        titleKey: DCAScheduleAnalyticsPage.missingConfigKey,
                         subtitle:
                             'Chưa có cấu hình lịch mua để phân tích. Thiết lập lịch trình trước khi xem cadence và chất lượng thực thi.',
                         ctaLabel: 'Thiết lập lịch mua',
                         ctaIcon: Icons.schedule_outlined,
-                        ctaKey: DCAScheduleAnalytics.configureKey,
+                        ctaKey: DCAScheduleAnalyticsPage.configureKey,
                         onConfigure: () =>
                             context.go(AppRoutePaths.dcaScheduleConfig),
                       )

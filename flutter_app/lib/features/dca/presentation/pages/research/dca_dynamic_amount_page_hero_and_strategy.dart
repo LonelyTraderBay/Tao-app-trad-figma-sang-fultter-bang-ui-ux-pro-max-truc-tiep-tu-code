@@ -301,7 +301,7 @@ class _StrategyChip extends StatelessWidget {
     final accent = _accentColor(option.accent);
 
     return VitChoicePill(
-      key: DCADynamicAmount.strategyKey(option.strategy),
+      key: DCADynamicAmountPage.strategyKey(option.strategy),
       label: option.title,
       selected: selected,
       onTap: onTap,

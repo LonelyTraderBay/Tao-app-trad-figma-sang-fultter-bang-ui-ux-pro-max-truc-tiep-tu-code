@@ -1,4 +1,4 @@
-part of '../pages/analytics_dashboard.dart';
+part of '../pages/analytics_dashboard_page.dart';
 
 class _Controls extends StatelessWidget {
   const _Controls({
@@ -22,7 +22,7 @@ class _Controls extends StatelessWidget {
             options: [
               for (final option in ranges)
                 VitSegmentedChoiceOption(
-                  key: AnalyticsDashboard.rangeKey(option.range),
+                  key: AnalyticsDashboardPage.rangeKey(option.range),
                   value: option.range,
                   label: option.label,
                   accentColor: AppModuleAccents.admin,
@@ -33,7 +33,7 @@ class _Controls extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x5),
         VitIconButton(
-          key: AnalyticsDashboard.refreshKey,
+          key: AnalyticsDashboardPage.refreshKey,
           icon: Icons.refresh_rounded,
           tooltip: 'Refresh analytics',
           onPressed: () =>
@@ -42,7 +42,7 @@ class _Controls extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x3),
         VitIconButton(
-          key: AnalyticsDashboard.exportKey,
+          key: AnalyticsDashboardPage.exportKey,
           icon: Icons.download_rounded,
           tooltip: 'Export analytics',
           onPressed: () =>

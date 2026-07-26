@@ -53,8 +53,8 @@ const EdgeInsetsDirectional _dcaPortfolioCardPadding =
 const EdgeInsetsDirectional _dcaPortfolioHeroPadding =
     EdgeInsetsDirectional.all(AppSpacing.x4);
 
-class DCAPortfolioOptimizer extends ConsumerStatefulWidget {
-  const DCAPortfolioOptimizer({super.key, this.shellRenderMode});
+class DCAPortfolioOptimizerPage extends ConsumerStatefulWidget {
+  const DCAPortfolioOptimizerPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc174_portfolio_optimizer_content');
   static const applyKey = Key('sc174_apply_allocation');
@@ -65,11 +65,12 @@ class DCAPortfolioOptimizer extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<DCAPortfolioOptimizer> createState() =>
-      _DCAPortfolioOptimizerState();
+  ConsumerState<DCAPortfolioOptimizerPage> createState() =>
+      _DCAPortfolioOptimizerPageState();
 }
 
-class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
+class _DCAPortfolioOptimizerPageState
+    extends ConsumerState<DCAPortfolioOptimizerPage> {
   _OptimizerTab _activeTab = _OptimizerTab.frontier;
   bool _showSuggestions = true;
   bool _showCompareHint = false;
@@ -104,7 +105,7 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: VitInsetScrollView(
-            key: DCAPortfolioOptimizer.contentKey,
+            key: DCAPortfolioOptimizerPage.contentKey,
             physics: const ClampingScrollPhysics(),
             bottomInset: scrollEndPadding,
             child: VitPageContent(

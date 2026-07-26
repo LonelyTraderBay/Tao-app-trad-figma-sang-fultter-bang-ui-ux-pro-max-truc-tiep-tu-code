@@ -1,4 +1,4 @@
-part of '../pages/cross_module_analytics.dart';
+part of '../pages/cross_module_analytics_page.dart';
 
 class _AnalyticsTabs extends StatelessWidget {
   const _AnalyticsTabs({
@@ -18,7 +18,7 @@ class _AnalyticsTabs extends StatelessWidget {
         VitTabItem(
           key: tab.tab.name,
           label: tab.label,
-          widgetKey: CrossModuleAnalytics.tabKey(tab.tab),
+          widgetKey: CrossModuleAnalyticsPage.tabKey(tab.tab),
         ),
     ];
 

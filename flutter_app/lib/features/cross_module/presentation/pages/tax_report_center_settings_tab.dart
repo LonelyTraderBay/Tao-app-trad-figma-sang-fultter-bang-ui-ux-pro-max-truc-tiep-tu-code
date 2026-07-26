@@ -1,4 +1,4 @@
-part of 'tax_report_center.dart';
+part of 'tax_report_center_page.dart';
 
 class _ReportStatusBadge extends StatelessWidget {
   const _ReportStatusBadge({required this.status});
@@ -79,7 +79,7 @@ class _TaxSettingsTab extends StatelessWidget {
                     ),
                   ),
                   _ToggleSwitch(
-                    key: TaxReportCenter.includeArenaKey,
+                    key: TaxReportCenterPage.includeArenaKey,
                     enabled: includeArena,
                     onTap: onToggleArena,
                   ),

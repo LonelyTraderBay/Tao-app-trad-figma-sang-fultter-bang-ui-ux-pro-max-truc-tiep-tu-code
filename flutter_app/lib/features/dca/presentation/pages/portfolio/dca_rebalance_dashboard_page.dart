@@ -18,8 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_missing_config_panel.dart';
 
-class DCARebalanceDashboard extends ConsumerWidget {
-  const DCARebalanceDashboard({
+class DCARebalanceDashboardPage extends ConsumerWidget {
+  const DCARebalanceDashboardPage({
     super.key,
     required this.configId,
     this.shellRenderMode,
@@ -84,12 +84,12 @@ class DCARebalanceDashboard extends ConsumerWidget {
                       DcaMissingConfigPanel(
                         icon: Icons.pie_chart_outline_rounded,
                         title: snapshot.message,
-                        titleKey: DCARebalanceDashboard.missingConfigKey,
+                        titleKey: DCARebalanceDashboardPage.missingConfigKey,
                         subtitle:
                             'Chưa có cấu hình cân bằng danh mục. Thiết lập tỷ lệ mục tiêu và ngưỡng drift trước khi xem lịch sử thực thi.',
                         ctaLabel: 'Thiết lập cân bằng',
                         ctaIcon: Icons.tune_rounded,
-                        ctaKey: DCARebalanceDashboard.configureKey,
+                        ctaKey: DCARebalanceDashboardPage.configureKey,
                         onConfigure: () =>
                             context.go(AppRoutePaths.dcaRebalanceConfig),
                       )

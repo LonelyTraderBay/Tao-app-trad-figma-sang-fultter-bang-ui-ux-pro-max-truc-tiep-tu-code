@@ -24,8 +24,8 @@ export 'admin_settings_page.dart';
 part '../widgets/admin_home_metrics_realtime.dart';
 part '../widgets/admin_home_dashboards_footer.dart';
 
-class AdminHome extends ConsumerStatefulWidget {
-  const AdminHome({super.key, this.shellRenderMode});
+class AdminHomePage extends ConsumerStatefulWidget {
+  const AdminHomePage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc180_admin_home_content');
   static const settingsKey = Key('sc180_admin_settings');
@@ -36,10 +36,10 @@ class AdminHome extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<AdminHome> createState() => _AdminHomeState();
+  ConsumerState<AdminHomePage> createState() => _AdminHomePageState();
 }
 
-class _AdminHomeState extends ConsumerState<AdminHome> {
+class _AdminHomePageState extends ConsumerState<AdminHomePage> {
   bool _isLive = true;
 
   @override
@@ -56,14 +56,14 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
     return AdminDashboardPageShell(
       semanticLabel: 'Trang tổng quan quản trị',
       semanticIdentifier: 'SC-180',
-      scrollKey: AdminHome.contentKey,
+      scrollKey: AdminHomePage.contentKey,
       scrollBottom: scrollBottom,
       header: VitHeader(
         title: 'Admin Dashboard',
         subtitle: 'DCA Analytics & Monitoring',
         actions: [
           VitHeaderActionItem(
-            key: AdminHome.settingsKey,
+            key: AdminHomePage.settingsKey,
             type: VitHeaderActionType.settings,
             onPressed: () => context.go(AppRoutePaths.adminSettings),
           ),

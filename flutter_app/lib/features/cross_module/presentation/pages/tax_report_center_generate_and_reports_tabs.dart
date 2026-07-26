@@ -1,4 +1,4 @@
-part of 'tax_report_center.dart';
+part of 'tax_report_center_page.dart';
 
 class _PresetButton extends StatelessWidget {
   const _PresetButton({required this.label, required this.onTap});
@@ -191,7 +191,7 @@ class _FormatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitChoicePill(
-      key: TaxReportCenter.formatKey(format),
+      key: TaxReportCenterPage.formatKey(format),
       label: _formatLabel(format),
       selected: selected,
       onTap: onTap,
@@ -292,7 +292,7 @@ class _GenerateReportButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
-      key: TaxReportCenter.generateButtonKey,
+      key: TaxReportCenterPage.generateButtonKey,
       onPressed: onTap,
       variant: queued
           ? VitCtaButtonVariant.success

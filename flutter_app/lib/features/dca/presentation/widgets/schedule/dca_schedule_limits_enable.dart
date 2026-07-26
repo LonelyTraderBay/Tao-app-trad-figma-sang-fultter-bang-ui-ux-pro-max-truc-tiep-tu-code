@@ -29,7 +29,7 @@ class _LimitsCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SliderField(
-            key: DCAScheduleConfig.maxDelayKey,
+            key: DCAScheduleConfigPage.maxDelayKey,
             label: 'Trễ tối đa',
             valueLabel: '${maxDelayHours.round()}h',
             helper:
@@ -42,7 +42,7 @@ class _LimitsCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _SliderField(
-            key: DCAScheduleConfig.maxAdvanceKey,
+            key: DCAScheduleConfigPage.maxAdvanceKey,
             label: 'Sớm tối đa',
             valueLabel: '${maxAdvanceHours.round()}h',
             helper:
@@ -235,7 +235,7 @@ class _EnableCard extends StatelessWidget {
             ),
           ),
           Switch(
-            key: DCAScheduleConfig.enabledKey,
+            key: DCAScheduleConfigPage.enabledKey,
             value: enabled,
             activeThumbColor: AppColors.navCenterIcon,
             activeTrackColor: AppColors.primary,

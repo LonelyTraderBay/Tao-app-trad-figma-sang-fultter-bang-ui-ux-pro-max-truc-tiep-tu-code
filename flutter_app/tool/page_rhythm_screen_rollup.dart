@@ -399,7 +399,9 @@ List<_RouteRow> _parseRealPageRoutes(String markdown) {
     if (classification != '`real_page`') continue;
     final path = parts[3].replaceAll('`', '');
     final name = parts[4].replaceAll('`', '');
-    final widget = parts[6].replaceAll('`', '');
+    // Truth Table may emit Wrapper>Child (B0); rollup resolves the leaf page.
+    final evidence = parts[6].replaceAll('`', '');
+    final widget = evidence.contains('>') ? evidence.split('>').last : evidence;
     if (widget == '-' || widget.isEmpty) continue;
     routes.add(_RouteRow(path: path, name: name, widgetClass: widget));
   }

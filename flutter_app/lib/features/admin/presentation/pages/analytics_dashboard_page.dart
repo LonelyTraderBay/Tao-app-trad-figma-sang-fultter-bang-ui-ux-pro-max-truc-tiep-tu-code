@@ -18,7 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
-import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home_page.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_metric_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
@@ -26,8 +26,8 @@ import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 part '../widgets/analytics_dashboard_sections.dart';
 part '../widgets/analytics_dashboard_common.dart';
 
-class AnalyticsDashboard extends ConsumerStatefulWidget {
-  const AnalyticsDashboard({super.key, this.shellRenderMode});
+class AnalyticsDashboardPage extends ConsumerStatefulWidget {
+  const AnalyticsDashboardPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc181_analytics_content');
   static const refreshKey = Key('sc181_refresh');
@@ -39,10 +39,12 @@ class AnalyticsDashboard extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<AnalyticsDashboard> createState() => _AnalyticsDashboardState();
+  ConsumerState<AnalyticsDashboardPage> createState() =>
+      _AnalyticsDashboardPageState();
 }
 
-class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
+class _AnalyticsDashboardPageState
+    extends ConsumerState<AnalyticsDashboardPage> {
   AdminAnalyticsRange _activeRange = AdminAnalyticsRange.sevenDays;
 
   @override
@@ -59,7 +61,7 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
     return AdminDashboardPageShell(
       semanticLabel: 'Bảng phân tích dữ liệu',
       semanticIdentifier: 'SC-181',
-      scrollKey: AnalyticsDashboard.contentKey,
+      scrollKey: AnalyticsDashboardPage.contentKey,
       scrollBottom: scrollBottom,
       header: VitHeader(
         title: 'Analytics Dashboard',

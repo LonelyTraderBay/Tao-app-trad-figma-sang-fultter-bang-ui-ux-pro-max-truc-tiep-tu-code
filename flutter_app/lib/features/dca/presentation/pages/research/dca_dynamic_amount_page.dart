@@ -35,8 +35,8 @@ const EdgeInsetsDirectional _dcaDynamicCardPadding = EdgeInsetsDirectional.all(
   AppSpacing.x3,
 );
 
-class DCADynamicAmount extends ConsumerStatefulWidget {
-  const DCADynamicAmount({super.key, this.shellRenderMode});
+class DCADynamicAmountPage extends ConsumerStatefulWidget {
+  const DCADynamicAmountPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc175_dynamic_amount_content');
   static const applyKey = Key('sc175_apply_strategy');
@@ -49,10 +49,11 @@ class DCADynamicAmount extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<DCADynamicAmount> createState() => _DCADynamicAmountState();
+  ConsumerState<DCADynamicAmountPage> createState() =>
+      _DCADynamicAmountPageState();
 }
 
-class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
+class _DCADynamicAmountPageState extends ConsumerState<DCADynamicAmountPage> {
   DcaDynamicStrategy _activeStrategy = DcaDynamicStrategy.volatility;
 
   @override
@@ -77,7 +78,7 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
           onBack: _close,
           actions: [
             VitHeaderActionItem(
-              key: DCADynamicAmount.settingsKey,
+              key: DCADynamicAmountPage.settingsKey,
               type: VitHeaderActionType.settings,
               onPressed: _showSettingsNotice,
             ),
@@ -86,7 +87,7 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: VitInsetScrollView(
-            key: DCADynamicAmount.contentKey,
+            key: DCADynamicAmountPage.contentKey,
             physics: const ClampingScrollPhysics(),
             bottomInset: scrollEndPadding,
             child: VitPageContent(

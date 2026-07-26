@@ -1,4 +1,4 @@
-part of '../pages/smart_alert_center.dart';
+part of '../pages/smart_alert_center_page.dart';
 
 class _SmartAlertCard extends StatelessWidget {
   const _SmartAlertCard({required this.alert});
@@ -192,7 +192,7 @@ class _CreateAlertButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitCtaButton(
-      key: SmartAlertCenter.createButtonKey,
+      key: SmartAlertCenterPage.createButtonKey,
       onPressed: HapticFeedback.selectionClick,
       leading: Icon(Icons.add_rounded),
       child: Text('Create Alert'),

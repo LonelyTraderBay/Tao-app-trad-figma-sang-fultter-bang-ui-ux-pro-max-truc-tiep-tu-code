@@ -21,12 +21,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/onboarding_spacing_tokens.dart';
 
-part 'onboarding_flow_state.dart';
+part 'onboarding_flow_page_state.dart';
 part '../widgets/onboarding_step_screens.dart';
 part '../widgets/onboarding_shared_components.dart';
 
-class OnboardingFlow extends ConsumerStatefulWidget {
-  const OnboardingFlow({super.key});
+class OnboardingFlowPage extends ConsumerStatefulWidget {
+  const OnboardingFlowPage({super.key});
 
   static const welcomeKey = Key('sc397_onboarding_welcome');
   static const modulesKey = Key('sc397_onboarding_modules');
@@ -49,5 +49,5 @@ class OnboardingFlow extends ConsumerStatefulWidget {
   static Key goalKey(OnboardingUserGoalDraft id) => Key('sc397_goal_$id');
 
   @override
-  ConsumerState<OnboardingFlow> createState() => _OnboardingFlowState();
+  ConsumerState<OnboardingFlowPage> createState() => _OnboardingFlowPageState();
 }

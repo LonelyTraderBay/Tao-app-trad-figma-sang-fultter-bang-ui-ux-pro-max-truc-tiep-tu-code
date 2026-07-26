@@ -18,7 +18,7 @@ final onboardingSnapshotProvider = FutureProvider<OnboardingSnapshot>(
 
 /// GĐ4-F1: cờ user đã đi qua (hoặc bỏ qua) onboarding lần đầu — đọc-lúc-dựng
 /// cho router/nhánh khởi động dùng sau (ví dụ quyết định route ban đầu).
-/// KHÔNG reactive theo write (`OnboardingFlow` ghi cờ trực tiếp qua
+/// KHÔNG reactive theo write (`OnboardingFlowPage` ghi cờ trực tiếp qua
 /// [keyValueStoreProvider], không qua provider này) — chấp nhận được vì đây
 /// là cờ một-chiều, không cần cập nhật UI ngay khi ghi.
 final onboardingSeenProvider = Provider<bool>((ref) {

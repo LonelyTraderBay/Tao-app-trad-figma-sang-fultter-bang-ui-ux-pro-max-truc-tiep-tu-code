@@ -3,16 +3,16 @@ import 'dart:io';
 const String _generatedDate = '2026-06-12';
 
 const Set<String> _additionalRootPagePaths = <String>{
-  'lib/features/admin/presentation/pages/ab_test_dashboard.dart',
-  'lib/features/admin/presentation/pages/admin_home.dart',
-  'lib/features/admin/presentation/pages/analytics_dashboard.dart',
-  'lib/features/admin/presentation/pages/funnel_dashboard.dart',
+  'lib/features/admin/presentation/pages/ab_test_dashboard_page.dart',
+  'lib/features/admin/presentation/pages/admin_home_page.dart',
+  'lib/features/admin/presentation/pages/analytics_dashboard_page.dart',
+  'lib/features/admin/presentation/pages/funnel_dashboard_page.dart',
   'lib/features/dev/presentation/pages/performance_monitor.dart',
-  'lib/features/cross_module/presentation/pages/cross_module_analytics.dart',
-  'lib/features/cross_module/presentation/pages/smart_alert_center.dart',
-  'lib/features/cross_module/presentation/pages/tax_report_center.dart',
-  'lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart',
-  'lib/features/onboarding/presentation/pages/onboarding_flow.dart',
+  'lib/features/cross_module/presentation/pages/cross_module_analytics_page.dart',
+  'lib/features/cross_module/presentation/pages/smart_alert_center_page.dart',
+  'lib/features/cross_module/presentation/pages/tax_report_center_page.dart',
+  'lib/features/cross_module/presentation/pages/unified_portfolio_dashboard_page.dart',
+  'lib/features/onboarding/presentation/pages/onboarding_flow_page.dart',
   'lib/features/trade_copy/presentation/pages/hub/copy_trading_card_demo.dart',
 };
 

@@ -69,13 +69,16 @@ void main() {
   testWidgets('SC-171 renders Flutter missing config state', (tester) async {
     await pumpRebalanceDashboard(tester);
 
-    expect(find.byType(DCARebalanceDashboard), findsOneWidget);
+    expect(find.byType(DCARebalanceDashboardPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.byKey(DCARebalanceDashboard.missingConfigKey), findsOneWidget);
+    expect(
+      find.byKey(DCARebalanceDashboardPage.missingConfigKey),
+      findsOneWidget,
+    );
     expect(find.text('Configuration not found'), findsOneWidget);
     expect(find.text('Thiết lập cân bằng'), findsOneWidget);
-    expect(find.byKey(DCARebalanceDashboard.configureKey), findsOneWidget);
+    expect(find.byKey(DCARebalanceDashboardPage.configureKey), findsOneWidget);
   });
 
   testWidgets('SC-171 configure CTA opens rebalance config edge', (
@@ -83,9 +86,9 @@ void main() {
   ) async {
     await pumpRebalanceDashboard(tester);
 
-    await tester.tap(find.byKey(DCARebalanceDashboard.configureKey));
+    await tester.tap(find.byKey(DCARebalanceDashboardPage.configureKey));
     await tester.pumpAndSettle();
-    expect(find.byType(DCARebalanceConfig), findsOneWidget);
+    expect(find.byType(DCARebalanceConfigPage), findsOneWidget);
     expect(find.text('Auto-Rebalance'), findsOneWidget);
   });
 
@@ -107,7 +110,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.byType(DCARebalanceConfig), findsOneWidget);
+    expect(find.byType(DCARebalanceConfigPage), findsOneWidget);
     expect(find.text('Auto-Rebalance'), findsOneWidget);
 
     await tester.pumpWidget(
@@ -120,7 +123,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.byType(DCARebalanceDashboard), findsOneWidget);
+    expect(find.byType(DCARebalanceDashboardPage), findsOneWidget);
     expect(find.text('Configuration not found'), findsOneWidget);
   });
 }

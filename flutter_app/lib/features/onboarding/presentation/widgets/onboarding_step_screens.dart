@@ -1,4 +1,4 @@
-part of '../pages/onboarding_flow.dart';
+part of '../pages/onboarding_flow_page.dart';
 
 class _WelcomeStep extends StatelessWidget {
   const _WelcomeStep({super.key, required this.welcome});
@@ -108,7 +108,7 @@ class _ModulesStep extends StatelessWidget {
           activeIndex: currentIndex,
           activeColor: accent,
           dotKeyBuilder: (index) =>
-              OnboardingFlow.moduleDotKey(modules[index].id),
+              OnboardingFlowPage.moduleDotKey(modules[index].id),
           onDotTap: onSelect,
         ),
       ],
@@ -271,7 +271,7 @@ class _GoalsStep extends StatelessWidget {
           children: [
             for (final goal in goals)
               _GoalTile(
-                key: OnboardingFlow.goalKey(goal.id),
+                key: OnboardingFlowPage.goalKey(goal.id),
                 goal: goal,
                 selected: selectedGoals.contains(goal.id),
                 onTap: () => onToggle(goal.id),
