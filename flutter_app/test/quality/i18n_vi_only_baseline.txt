@@ -260,13 +260,11 @@ lib/features/wallet/presentation/widgets/tools/network_status_summary.dart|Refre
 lib/features/wallet/presentation/widgets/tools/wallet_gas_optimizer_trends.dart|Historically, fees have often been lower between 2 AM - 6 AM UTC. Confirm live fees before signing.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|42% of your portfolio is in BTC. Consider rebalancing to reduce single-asset risk.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Advisory snapshot only. Your wallet is ${snapshot.overallMessage}
-lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Backup your seed phrase and enable withdrawal whitelist to improve security score.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Diversification reduces portfolio volatility. Aim for balance across asset types and risk levels.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Limit single asset to max 30% of portfolio
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|The highest-priority advisory action is shown above.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart|This is an advisory health signal, not financial advice. Review account settings and live risk before taking action.
 lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart|Wallet health actions will appear here when needed.
-lib/features/wallet/presentation/widgets/tools/wallet_manager_all_wallets_tab.dart|Hide ${wallet.name} address
 lib/features/wallet/presentation/widgets/tools/wallet_token_active_approvals_tab.dart|You have $count approval(s) to unverified contracts. Revoke immediately to protect your funds.
 lib/features/wallet/presentation/widgets/tools/wallet_token_approval_common.dart|Token approvals allow smart contracts to spend your tokens. Revoke unused or suspicious approvals to protect your assets.
 lib/shared/layout/vit_header.dart|VitHeader.actions supports up to 3 actions. Use more overflow.

@@ -50,7 +50,7 @@ class _WhitelistModeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Chế độ Whitelist',
+                    'Chế độ danh sách trắng',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
@@ -62,7 +62,7 @@ class _WhitelistModeCard extends StatelessWidget {
                   ),
                   Text(
                     enabled
-                        ? 'Chỉ rút tới địa chỉ whitelist'
+                        ? 'Chỉ rút tới địa chỉ danh sách trắng'
                         : 'Cho phép rút tới mọi địa chỉ',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -103,7 +103,7 @@ class _SecurityTip extends StatelessWidget {
             ),
             const TextSpan(
               text:
-                  'Địa chỉ whitelist được bảo vệ bởi 2FA. Chỉ có thể rút tới địa chỉ đã được xác minh.',
+                  'Địa chỉ danh sách trắng được bảo vệ bởi 2FA. Chỉ có thể rút tới địa chỉ đã được xác minh.',
             ),
           ],
         ),

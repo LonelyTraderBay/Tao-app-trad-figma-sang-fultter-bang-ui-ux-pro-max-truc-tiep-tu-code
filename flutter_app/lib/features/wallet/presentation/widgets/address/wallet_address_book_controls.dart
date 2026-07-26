@@ -73,7 +73,7 @@ class _AddressStats extends StatelessWidget {
       ),
       (
         addresses.where((address) => address.isWhitelisted).length.toString(),
-        'Whitelist',
+        'Danh sách trắng',
         AppColors.buy,
       ),
     ];

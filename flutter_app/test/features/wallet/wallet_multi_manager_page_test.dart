@@ -128,8 +128,8 @@ void main() {
     await pumpMultiManager(tester);
 
     expect(find.text('0x742d...0bEb'), findsOneWidget);
-    expect(find.byTooltip('Reveal Main Wallet address'), findsOneWidget);
-    expect(find.byTooltip('Copy Main Wallet address'), findsOneWidget);
+    expect(find.byTooltip('Hiện địa chỉ Main Wallet'), findsOneWidget);
+    expect(find.byTooltip('Sao chép địa chỉ Main Wallet'), findsOneWidget);
 
     await tester.tap(find.byKey(WalletMultiManagerPage.copyKey('w1')));
     await tester.pumpAndSettle();
@@ -144,7 +144,7 @@ void main() {
       find.text('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'),
       findsOneWidget,
     );
-    expect(find.byTooltip('Hide Main Wallet address'), findsOneWidget);
+    expect(find.byTooltip('Ẩn địa chỉ Main Wallet'), findsOneWidget);
 
     await tester.tap(find.byKey(WalletMultiManagerPage.tabKey('Nh\u00F3m')));
     await tester.pumpAndSettle();

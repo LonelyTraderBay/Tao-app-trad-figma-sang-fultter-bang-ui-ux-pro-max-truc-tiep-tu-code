@@ -172,7 +172,7 @@ class _WhitelistBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitStatusPill(
-      label: 'Whitelist',
+      label: 'Danh sách trắng',
       icon: Icons.check_rounded,
       status: VitStatusPillStatus.success,
       size: VitStatusPillSize.sm,
