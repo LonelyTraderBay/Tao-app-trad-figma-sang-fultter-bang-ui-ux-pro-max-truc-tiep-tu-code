@@ -290,23 +290,47 @@ String? resolvePageFilePath({
   required String routeName,
   required Map<String, String> widgetToPage,
 }) {
-  if (pageWidget == 'InternalSurfaceGate') {
+  // Support Truth Table `Wrapper>Child` evidence (route_coverage B0) as well
+  // as legacy bare wrapper / bare page names.
+  final leaf = pageWidget.contains('>')
+      ? pageWidget.split('>').last
+      : pageWidget;
+  final outer = pageWidget.contains('>')
+      ? pageWidget.split('>').first
+      : pageWidget;
+
+  final override = widgetClassPageOverrides[leaf];
+  if (override != null) {
+    return '${appRoot.path}/lib/$override'.replaceAll('\\', '/');
+  }
+  final mapped = widgetToPage[leaf];
+  if (mapped != null) {
+    return mapped;
+  }
+
+  if (outer == 'InternalSurfaceGate' || leaf == 'InternalSurfaceGate') {
     final gated = gateRouteNameToPage[routeName];
     if (gated != null) {
       return '${appRoot.path}/lib/$gated'.replaceAll('\\', '/');
     }
   }
-  if (pageWidget == 'AuthRouteShell') {
+  if (outer == 'AuthRouteShell' || leaf == 'AuthRouteShell') {
     final rel = authRouteNameToPage[routeName];
     if (rel != null) {
       return '${appRoot.path}/lib/$rel'.replaceAll('\\', '/');
     }
   }
-  final override = widgetClassPageOverrides[pageWidget];
-  if (override != null) {
-    return '${appRoot.path}/lib/$override'.replaceAll('\\', '/');
+
+  // Builder functions (e.g. buildOtpPage) are not classes — fall back by name.
+  final gatedByName = gateRouteNameToPage[routeName];
+  if (gatedByName != null) {
+    return '${appRoot.path}/lib/$gatedByName'.replaceAll('\\', '/');
   }
-  return widgetToPage[pageWidget];
+  final authByName = authRouteNameToPage[routeName];
+  if (authByName != null) {
+    return '${appRoot.path}/lib/$authByName'.replaceAll('\\', '/');
+  }
+  return null;
 }
 
 LayoutPattern classifyLayoutPattern({

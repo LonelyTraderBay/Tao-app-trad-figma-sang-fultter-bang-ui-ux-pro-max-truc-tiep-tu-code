@@ -6,7 +6,7 @@ Source: `VitTrade-Page-Rhythm-Screen-Compliance.csv`
 
 ## Summary
 
-Screen rollup: 412 real_page routes, L1 pass 395, L2 pass 395 warn 0, unknown 17, documented exceptions 1.
+Screen rollup: 412 real_page routes, L1 pass 412, L2 pass 412 warn 0, unknown 0, documented exceptions 1.
 | Level | Meaning |
 | --- | --- |
 | L1 | Wiring: rhythm, orphan gaps, nested VPC |
@@ -33,33 +33,20 @@ Screen rollup: 412 real_page routes, L1 pass 395, L2 pass 395 warn 0, unknown 17
 
 | Screen | Page | Pattern |
 | --- | --- | --- |
-| AppRouteNames.sc180AdminHome | `InternalSurfaceGate>AdminHomePage` | unmapped |
-| AppRouteNames.sc182AbTestDashboard | `InternalSurfaceGate>ABTestDashboardPage` | unmapped |
-| AppRouteNames.sc181AnalyticsDashboard | `InternalSurfaceGate>AnalyticsDashboardPage` | unmapped |
-| AppRouteNames.sc183FunnelDashboard | `InternalSurfaceGate>FunnelDashboardPage` | unmapped |
-| AppRouteNames.sc410AdminSettings | `InternalSurfaceGate>AdminSettingsPage` | unmapped |
-| AppRouteNames.sc004TwoFaSetup | `AuthRouteShell>TwoFASetupPage` | unmapped |
-| AppRouteNames.sc005ForgotPassword | `AuthRouteShell>ForgotPasswordPage` | unmapped |
-| AppRouteNames.sc001Login | `AuthRouteShell>LoginPage` | unmapped |
-| AppRouteNames.sc003Otp | `AuthRouteShell>buildOtpPage` | unmapped |
-| AppRouteNames.sc002Register | `AuthRouteShell>RegisterPage` | unmapped |
-| AppRouteNames.sc006ResetPassword | `AuthRouteShell>ResetPasswordPage` | unmapped |
-| AppRouteNames.sc401CopyTradingCardDemo | `InternalSurfaceGate>CopyTradingCardDemo` | unmapped |
-| AppRouteNames.sc400DcaOverviewDemo | `InternalSurfaceGate>DCAOverviewDemo` | unmapped |
-| AppRouteNames.sc399DesignSystem | `InternalSurfaceGate>DesignSystemPage` | unmapped |
-| AppRouteNames.sc398MissingScreensShowcase | `InternalSurfaceGate>MissingScreensShowcasePage` | unmapped |
-| AppRouteNames.sc326PerformanceMonitor | `InternalSurfaceGate>PerformanceMonitor` | unmapped |
-| AppRouteNames.sc325RouteChecker | `InternalSurfaceGate>RouteChecker` | unmapped |
 
 ## By module
 
-### app (17 routes, L2 warn 0, unknown 17)
+### admin (5 routes, L2 warn 0, unknown 0)
 
 ### arena (25 routes, L2 warn 0, unknown 0)
 
+### auth (6 routes, L2 warn 0, unknown 0)
+
 ### cross_module (4 routes, L2 warn 0, unknown 0)
 
-### dca (13 routes, L2 warn 0, unknown 0)
+### dca (14 routes, L2 warn 0, unknown 0)
+
+### dev (4 routes, L2 warn 0, unknown 0)
 
 ### discovery (3 routes, L2 warn 0, unknown 0)
 
@@ -107,7 +94,7 @@ Screen rollup: 412 real_page routes, L1 pass 395, L2 pass 395 warn 0, unknown 17
 
 ### trade_compliance (30 routes, L2 warn 0, unknown 0)
 
-### trade_copy (21 routes, L2 warn 0, unknown 0)
+### trade_copy (22 routes, L2 warn 0, unknown 0)
 
 ### trade_terminal (6 routes, L2 warn 0, unknown 0)
 
