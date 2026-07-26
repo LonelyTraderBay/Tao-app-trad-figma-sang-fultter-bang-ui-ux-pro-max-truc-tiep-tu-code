@@ -136,7 +136,7 @@ void main() {
       expect(find.text('Security Checklist'), findsOneWidget);
       expect(find.text('2FA Enabled'), findsOneWidget);
       expect(find.text('Seed Phrase Backup'), findsOneWidget);
-      expect(find.text('Action Required'), findsOneWidget);
+      expect(find.text('Cần xử lý'), findsOneWidget);
 
       await tester.tap(
         find.byKey(WalletHealthScorePage.tabKey('\u0110a d\u1EA1ng h\u00F3a')),

@@ -308,8 +308,8 @@ class _WalletCard extends StatelessWidget {
                               : Icons.visibility_outlined,
                           color: AppColors.text3,
                           tooltip: revealed
-                              ? 'Hide ${wallet.name} address'
-                              : 'Reveal ${wallet.name} address',
+                              ? 'Ẩn địa chỉ ${wallet.name}'
+                              : 'Hiện địa chỉ ${wallet.name}',
                           onTap: onReveal,
                         ),
                         const SizedBox(
@@ -324,7 +324,7 @@ class _WalletCard extends StatelessWidget {
                               ? Icons.check_circle_outline_rounded
                               : Icons.copy_rounded,
                           color: copied ? walletManagerGreen : AppColors.text3,
-                          tooltip: 'Copy ${wallet.name} address',
+                          tooltip: 'Sao chép địa chỉ ${wallet.name}',
                           onTap: onCopy,
                         ),
                       ],

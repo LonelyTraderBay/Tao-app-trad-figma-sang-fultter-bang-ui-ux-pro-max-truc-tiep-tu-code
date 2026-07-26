@@ -563,7 +563,7 @@ class _ActionRequiredCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Action Required',
+                  'Cần xử lý',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
@@ -571,7 +571,7 @@ class _ActionRequiredCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Backup your seed phrase and enable withdrawal whitelist to improve security score.',
+                  'Sao lưu cụm từ khôi phục và bật danh sách trắng rút tiền để cải thiện điểm bảo mật.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     height: 1.28,

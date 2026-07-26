@@ -68,7 +68,7 @@ void main() {
     );
     expect(find.text('Sổ địa chỉ'), findsOneWidget);
     expect(find.text('Quản lý · Wallet'), findsOneWidget);
-    expect(find.text('Chế độ Whitelist'), findsOneWidget);
+    expect(find.text('Chế độ danh sách trắng'), findsOneWidget);
     expect(find.text('5'), findsOneWidget);
     expect(find.text('Ví lạnh cá nhân'), findsOneWidget);
     expect(find.text('Binance Exchange'), findsOneWidget);

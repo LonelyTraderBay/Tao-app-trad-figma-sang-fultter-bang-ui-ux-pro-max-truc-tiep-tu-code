@@ -409,9 +409,9 @@ const List<WalletSecurityChecklistItem> _walletSecurityChecklist = [
     description: 'Set: XK89',
   ),
   WalletSecurityChecklistItem(
-    item: 'Withdrawal Whitelist',
+    item: 'Danh sách trắng rút tiền',
     enabled: false,
-    description: 'Not configured',
+    description: 'Chưa cấu hình',
   ),
   WalletSecurityChecklistItem(
     item: 'Session Timeout',
