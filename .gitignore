@@ -54,3 +54,8 @@ dist/
 .vite/
 output/
 *.log
+
+# AgentsRoom — machine-local MCP + caches (absolute paths; never commit)
+# Home MCP stays in ~/.cursor/mcp.json; workspace .cursor/mcp.json stays empty.
+.mcp.json
+.agentsroom/
