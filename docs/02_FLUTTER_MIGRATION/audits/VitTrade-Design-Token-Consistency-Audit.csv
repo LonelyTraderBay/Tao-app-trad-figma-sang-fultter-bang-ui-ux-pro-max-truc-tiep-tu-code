@@ -624,9 +624,11 @@ feature_widget,flutter_app/lib/features/enterprise_states/presentation/pages/ent
 feature_widget,,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_announcement_banner.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_discovery_panel.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_formatters.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_header.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_market_ticker_section.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_market_watchlist_panel.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: candlestick
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_more_products_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_next_action_section.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2122,6 +2124,7 @@ root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutte
 root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutter_app/lib/features/home/presentation/pages/home_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: candlestick
 root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutter_app/lib/features/home/presentation/pages/home_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_compare_page.dart,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_compare_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2459,6 +2462,7 @@ root_page_bundle_summary,flutter_app/lib/features/earn_staking/presentation/page
 root_page_bundle_summary,flutter_app/lib/features/earn_staking/presentation/pages/staking/staking_webhooks_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_contract_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_detail_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2815,6 +2819,7 @@ shared_layout,,flutter_app/lib/shared/layout/vit_auto_hide_page_scaffold.dart,pa
 shared_layout,,flutter_app/lib/shared/layout/vit_bottom_nav.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_header.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_header_action_button.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+shared_layout,,flutter_app/lib/shared/layout/vit_navigation_rail.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_page_content.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_page_layout.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_phone_frame.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-

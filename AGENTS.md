@@ -144,6 +144,11 @@ Chuẩn chốt tại GĐ2 · I18N-1 (DEC-i18n Nhánh A, 2026-07-16):
   and the exact command to check it locally — see
   `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md` before
   creating a new page.
+- Phone-first at 360px is the baseline; `VitAppShell` is tablet-adaptive
+  app-wide from `AppBreakpoints.tablet` (600px, nav rail instead of bottom
+  nav). Per-screen tablet layout rolls out module by module, starting with
+  Home (SC-007, `HomeTabletPage`) — a module without its own tablet layout
+  yet still renders its existing phone content inside the tablet shell.
 - Detailed per-component standards (page rhythm, content width, card tiles,
   segment pills, scroll auto-hide, notice acknowledgements, service tile
   badges, task cards, accent icon boxes, radius tokens) live in

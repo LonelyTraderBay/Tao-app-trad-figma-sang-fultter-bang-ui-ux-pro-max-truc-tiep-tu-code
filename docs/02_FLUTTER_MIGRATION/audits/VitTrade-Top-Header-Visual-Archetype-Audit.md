@@ -37,7 +37,7 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 179 |
+| L2_detail | 180 |
 | L2_utilityDetail | 69 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
@@ -49,19 +49,17 @@ hard_coded_offline_banner=0
 | L1_primaryTabRoot | 3 |
 | L3_fullscreenTool | 2 |
 | L0_authEntry | 1 |
-| L0_homeRoot | 1 |
 | L2_instrumentDetail | 1 |
 
 ## Archetype Counts
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 391 |
+| detail | 392 |
 | rootModule | 11 |
 | instrument | 6 |
 | fullscreenTool | 2 |
 | authOnboarding | 1 |
-| rootBrand | 1 |
 
 ## Strict Issue Counts
 
@@ -213,7 +211,7 @@ hard_coded_offline_banner=0
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | content | state_driven | offlineNoCache | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
 | enterprise_states | `AppRoutePaths.forceUpdateGate` | `ForceUpdateGatePage` | fixed_vit_header | vit_header_default_title_only | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart` |
 | enterprise_states | `AppRoutePaths.maintenanceGate` | `MaintenanceGatePage` | fixed_vit_header | vit_header_default_title_only | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart` |
-| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | rootBrand | L0_homeRoot | rootBrand | no | no | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| home | `AppRoutePaths.home` | `HomeResponsiveEntry` | no_top_header | no_top_header | detail | L2_detail | detail | no | no | no | `-` | Thin width-based dispatcher for SC-007 Home — delegates to HomePage (phone) or HomeTabletPage (tablet), each of which owns its own header chrome (VitAutoHidePageScaffold / HomeHeader). | none | none | none | 0 | - | - | `flutter_app/lib/features/home/presentation/pages/home_responsive_entry.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 3 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_abi_diff_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAddressBook` | `LaunchpadAddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_address_book_page.dart` |

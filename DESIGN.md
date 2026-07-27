@@ -119,7 +119,8 @@ identity is dense but readable: deep ink backgrounds, warm amber primary actions
 semantic green/red for buy/sell, and layered surfaces for cards and terminals.
 
 - **Baseline:** dark theme only for new work.
-- **Layout:** phone-first from **360px** width upward.
+- **Layout:** phone-first from **360px** width upward; tablet-adaptive shell
+  (nav rail) from **600px** (`AppBreakpoints.tablet`) — see AGENTS.md UI Rules.
 - **Architecture:** reuse shared `Vit*` widgets before local scaffolds.
 - **Authority:** `AGENTS.md` overrides this file for product boundaries, financial
   safety, and required migration scope.

@@ -115,6 +115,7 @@ void main() {
   testWidgets('VitAppShell native bottom nav hides and restores on scroll', (
     WidgetTester tester,
   ) async {
+    await _setPhoneViewport(tester);
     await tester.pumpWidget(_shellWithScrollableContent());
 
     expect(_nativeBottomNavOffset(tester), Offset.zero);
@@ -133,6 +134,7 @@ void main() {
   testWidgets('VitAppShell restores native bottom nav on route change', (
     WidgetTester tester,
   ) async {
+    await _setPhoneViewport(tester);
     await tester.pumpWidget(_shellWithScrollableContent(currentPath: '/home'));
 
     await tester.drag(find.byKey(_shellScrollKey), const Offset(0, -320));
@@ -151,6 +153,7 @@ void main() {
   testWidgets('VitAppShell visual QA bottom nav does not auto-hide', (
     WidgetTester tester,
   ) async {
+    await _setPhoneViewport(tester);
     await tester.pumpWidget(
       _shellWithScrollableContent(renderMode: ShellRenderMode.visualQa),
     );
@@ -172,6 +175,18 @@ void main() {
 const _shellScrollKey = Key('vit_app_shell_scroll_test');
 
 void _noop() {}
+
+/// These bottom-nav-specific assertions need `VitAppShell` below
+/// `AppBreakpoints.tablet` (600) — Flutter's default test viewport
+/// (800x600 logical) is at/above that, which would otherwise silently
+/// render the tablet nav rail instead of the bottom nav these tests assert
+/// on.
+Future<void> _setPhoneViewport(WidgetTester tester) async {
+  tester.view.devicePixelRatio = 1;
+  tester.view.physicalSize = const Size(440, 956);
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
 
 Offset _nativeBottomNavOffset(WidgetTester tester) {
   return tester

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_breakpoints.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_navigation_rail.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
 /// Top-level app chrome: hosts the page [child] plus the status bar and
@@ -94,7 +96,25 @@ class _VitAppShellState extends State<VitAppShell> {
 
   @override
   Widget build(BuildContext context) {
-    final body = Stack(
+    final isTablet = AppBreakpoints.isTablet(MediaQuery.sizeOf(context).width);
+    final body = isTablet ? _tabletBody() : _phoneBody();
+
+    if (!widget.renderMode.usesVisualQaFrame) {
+      return SafeArea(top: true, bottom: false, child: body);
+    }
+
+    return Column(
+      children: [
+        VitStatusBar(time: widget.statusBarTime),
+        Expanded(child: body),
+      ],
+    );
+  }
+
+  /// Bottom-nav-over-content — unchanged phone layout (auto-hide capsule
+  /// floating over the scrollable child).
+  Widget _phoneBody() {
+    return Stack(
       clipBehavior: Clip.none,
       children: [
         Positioned.fill(
@@ -107,15 +127,18 @@ class _VitAppShellState extends State<VitAppShell> {
           Positioned(left: 0, right: 0, bottom: 0, child: _bottomNavHost()),
       ],
     );
+  }
 
-    if (!widget.renderMode.usesVisualQaFrame) {
-      return SafeArea(top: true, bottom: false, child: body);
-    }
-
-    return Column(
+  /// Persistent left rail beside the content — tablet layout. No
+  /// scroll-to-hide (the rail is not a floating overlay, it doesn't need to
+  /// get out of the way), so [_handleScrollNotification] does not apply
+  /// here.
+  Widget _tabletBody() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitStatusBar(time: widget.statusBarTime),
-        Expanded(child: body),
+        if (widget.showBottomNav) _navigationRail(),
+        Expanded(child: widget.child),
       ],
     );
   }
@@ -159,5 +182,17 @@ class _VitAppShellState extends State<VitAppShell> {
 
     if (widget.renderMode.usesVisualQaFrame) return nav;
     return SafeArea(top: false, child: nav);
+  }
+
+  Widget _navigationRail() {
+    final rail = VitNavigationRail(
+      activeDestination: widget.activeDestination,
+      onDestinationSelected: widget.onDestinationSelected,
+      homeNotificationBadgeCount:
+          widget.notificationBadgeCount ?? widget.homeBadgeCount,
+    );
+
+    if (widget.renderMode.usesVisualQaFrame) return rail;
+    return SafeArea(top: false, right: false, bottom: false, child: rail);
   }
 }
