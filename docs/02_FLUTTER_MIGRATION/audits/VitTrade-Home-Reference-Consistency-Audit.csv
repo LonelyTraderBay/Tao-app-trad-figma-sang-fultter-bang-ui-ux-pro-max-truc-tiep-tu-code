@@ -555,10 +555,13 @@ home,root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,0
 home,root_page,flutter_app/lib/features/home/presentation/pages/home_page_common.dart,0,0,0,0,0,0,0,0,no,-
 home,root_page,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: candlestick
 home,root_page,flutter_app/lib/features/home/presentation/pages/home_page_state.dart,0,0,0,0,0,0,0,0,no,-
+home,root_page,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,0,0,0,0,0,0,0,0,no,-
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_announcement_banner.dart,0,0,0,0,0,0,0,0,no,-
+home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_discovery_panel.dart,0,0,0,0,0,0,0,0,no,-
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_formatters.dart,0,0,0,0,0,0,0,0,no,-
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_header.dart,0,0,0,0,0,0,0,0,no,-
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_market_ticker_section.dart,0,0,0,0,0,0,0,0,no,-
+home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_market_watchlist_panel.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: candlestick
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_more_products_sheet.dart,0,0,0,0,0,0,0,0,no,-
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_next_action_section.dart,0,0,0,0,0,0,0,0,no,-
 home,feature_widget,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,0,0,0,0,0,0,0,0,no,-

@@ -1,6 +1,6 @@
 # Page Rhythm Compliance Report
 
-Generated: 2026-07-27
+Generated: 2026-07-28
 
 Source: `VitTrade-Page-Rhythm-Screen-Compliance.csv`
 
@@ -18,7 +18,6 @@ Screen rollup: 412 real_page routes, L1 pass 412, L2 pass 412 warn 0, unknown 0,
 | Screen | Route | L1 | L2 | L3 |
 | --- | --- | --- | --- | --- |
 | AppRouteNames.sc049TradePair | `'/trade/:pairId'` | pass | pass | pass |
-| AppRouteNames.sc007Home | `AppRoutePaths.home` | pass | pass | pass |
 | AppRouteNames.sc027PredictionsHome | `AppRoutePaths.marketsPredictions` | pass | pass | pass |
 | AppRouteNames.sc156Profile | `AppRoutePaths.profile` | pass | pass | pass |
 | AppRouteNames.sc048Trade | `AppRoutePaths.trade` | pass | pass | pass |

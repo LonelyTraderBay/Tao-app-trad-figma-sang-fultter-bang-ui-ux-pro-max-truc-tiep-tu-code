@@ -29,6 +29,42 @@ extension VitBottomNavDestinationRoute on VitBottomNavDestination {
   }
 }
 
+/// Shared icon/label pairing for a [VitBottomNavDestination] — the single
+/// source of truth both [VitBottomNav] (bottom capsule) and
+/// `VitNavigationRail` (tablet side rail) render from, so the two nav chrome
+/// variants can never drift apart on icon/label.
+extension VitBottomNavDestinationVisuals on VitBottomNavDestination {
+  IconData get navIcon {
+    switch (this) {
+      case VitBottomNavDestination.home:
+        return Icons.home_rounded;
+      case VitBottomNavDestination.markets:
+        return Icons.bar_chart_rounded;
+      case VitBottomNavDestination.trade:
+        return Icons.swap_horiz_rounded;
+      case VitBottomNavDestination.wallet:
+        return Icons.account_balance_wallet_rounded;
+      case VitBottomNavDestination.profile:
+        return Icons.person_rounded;
+    }
+  }
+
+  String get navLabel {
+    switch (this) {
+      case VitBottomNavDestination.home:
+        return 'Trang chủ';
+      case VitBottomNavDestination.markets:
+        return 'Thị trường';
+      case VitBottomNavDestination.trade:
+        return 'Giao dịch';
+      case VitBottomNavDestination.wallet:
+        return 'Ví';
+      case VitBottomNavDestination.profile:
+        return 'Tôi';
+    }
+  }
+}
+
 /// The app's bottom navigation capsule: five tappable destinations with a
 /// raised center Trade button, active-state dot, and unread badge.
 class VitBottomNav extends StatelessWidget {
@@ -47,33 +83,14 @@ class VitBottomNav extends StatelessWidget {
   final int homeBadgeCount;
   final ShellRenderMode renderMode;
 
-  static const List<_VitBottomNavItem> _items = [
-    _VitBottomNavItem(
-      destination: VitBottomNavDestination.home,
-      icon: Icons.home_rounded,
-      label: 'Trang chủ',
-    ),
-    _VitBottomNavItem(
-      destination: VitBottomNavDestination.markets,
-      icon: Icons.bar_chart_rounded,
-      label: 'Thị trường',
-    ),
-    _VitBottomNavItem(
-      destination: VitBottomNavDestination.trade,
-      icon: Icons.swap_horiz_rounded,
-      label: 'Giao dịch',
-      isCenter: true,
-    ),
-    _VitBottomNavItem(
-      destination: VitBottomNavDestination.wallet,
-      icon: Icons.account_balance_wallet_rounded,
-      label: 'Ví',
-    ),
-    _VitBottomNavItem(
-      destination: VitBottomNavDestination.profile,
-      icon: Icons.person_rounded,
-      label: 'Tôi',
-    ),
+  static List<_VitBottomNavItem> get _items => [
+    for (final destination in VitBottomNavDestination.values)
+      _VitBottomNavItem(
+        destination: destination,
+        icon: destination.navIcon,
+        label: destination.navLabel,
+        isCenter: destination == VitBottomNavDestination.trade,
+      ),
   ];
 
   @override

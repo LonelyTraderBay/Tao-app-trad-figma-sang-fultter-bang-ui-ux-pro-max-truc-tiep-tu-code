@@ -146,6 +146,12 @@ const _noHeaderDecisions = <String, _NoHeaderDecision>{
     'Profile root module must move page identity into VitTopChrome.',
     issue: 'root_title_in_content',
   ),
+  'HomeResponsiveEntry': _NoHeaderDecision(
+    'detail',
+    'Thin width-based dispatcher for SC-007 Home — delegates to HomePage '
+        '(phone) or HomeTabletPage (tablet), each of which owns its own '
+        'header chrome (VitAutoHidePageScaffold / HomeHeader).',
+  ),
 };
 
 void main(List<String> args) {

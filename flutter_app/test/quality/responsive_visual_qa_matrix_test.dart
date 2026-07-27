@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_breakpoints.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_navigation_rail.dart';
 
 void main() {
   for (final viewport in _responsiveViewports) {
@@ -70,19 +72,26 @@ Future<void> _scanRoute(
       );
     }
 
-    final bottomNav = find.byType(VitBottomNav);
-    if (bottomNav.evaluate().length != 1) {
+    // Above the tablet breakpoint, VitAppShell renders VitNavigationRail
+    // instead of VitBottomNav — check whichever chrome this viewport should
+    // produce, not both at once.
+    final isTabletViewport = AppBreakpoints.isTablet(viewport.width.toDouble());
+    final navChrome = isTabletViewport
+        ? find.byType(VitNavigationRail)
+        : find.byType(VitBottomNav);
+    final navChromeName = isTabletViewport ? 'navigation rail' : 'bottom nav';
+    if (navChrome.evaluate().length != 1) {
       failures.add(
-        '- ${route.name} ${viewport.label}: expected one bottom nav, found '
-        '${bottomNav.evaluate().length}',
+        '- ${route.name} ${viewport.label}: expected one $navChromeName, '
+        'found ${navChrome.evaluate().length}',
       );
     } else {
-      final navRect = tester.getRect(bottomNav);
+      final navRect = tester.getRect(navChrome);
       if (navRect.left < -0.5 ||
           navRect.right > viewport.width + 0.5 ||
           navRect.bottom > viewport.height + 0.5) {
         failures.add(
-          '- ${route.name} ${viewport.label}: bottom nav clipped '
+          '- ${route.name} ${viewport.label}: $navChromeName clipped '
           '(${navRect.left.toStringAsFixed(1)}, '
           '${navRect.top.toStringAsFixed(1)}, '
           '${navRect.right.toStringAsFixed(1)}, '
@@ -120,6 +129,7 @@ const _responsiveViewports = [
   _ResponsiveViewport('360x800 minimum phone', 360, 800),
   _ResponsiveViewport('440x956 QA phone', 440, 956),
   _ResponsiveViewport('480x1040 large phone', 480, 1040),
+  _ResponsiveViewport('768x1024 minimum tablet', 768, 1024),
 ];
 
 final _priorityRoutes = [

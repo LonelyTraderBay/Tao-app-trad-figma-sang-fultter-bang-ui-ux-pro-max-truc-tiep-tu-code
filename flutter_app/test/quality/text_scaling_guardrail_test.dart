@@ -14,6 +14,14 @@ void main() {
   testWidgets('VitTradeApp clamps extreme OS text scaling to at most 1.3x', (
     tester,
   ) async {
+    // Below AppBreakpoints.tablet (600) — this asserts on VitBottomNav
+    // specifically; Flutter's default test viewport (800x600 logical) is
+    // at/above that and would otherwise render the tablet nav rail instead.
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     tester.platformDispatcher.textScaleFactorTestValue = 3.0;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
 

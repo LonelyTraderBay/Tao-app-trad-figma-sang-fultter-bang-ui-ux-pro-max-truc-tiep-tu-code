@@ -152,7 +152,7 @@ Evidence for `InternalSurfaceGate` / `AuthRouteShell` builders uses `Wrapper>Chi
 | `lib/app/router/route_groups/earn_staking_routes.dart` | 305 | `AppRoutePaths.earnDataExport` | `AppRouteNames.sc394StakingDataExport` | `real_page` | `StakingDataExportPage` |
 | `lib/app/router/route_groups/earn_staking_routes.dart` | 311 | `AppRoutePaths.earnThirdPartyIntegrations` | `AppRouteNames.sc395StakingThirdPartyIntegrations` | `real_page` | `StakingThirdPartyIntegrationsPage` |
 | `lib/app/router/route_groups/earn_staking_routes.dart` | 317 | `AppRoutePaths.earnDeveloperConsole` | `AppRouteNames.sc396StakingDeveloperConsole` | `real_page` | `StakingDeveloperConsolePage` |
-| `lib/app/router/route_groups/home_routes.dart` | 11 | `AppRoutePaths.home` | `AppRouteNames.sc007Home` | `real_page` | `HomePage` |
+| `lib/app/router/route_groups/home_routes.dart` | 11 | `AppRoutePaths.home` | `AppRouteNames.sc007Home` | `real_page` | `HomeResponsiveEntry` |
 | `lib/app/router/route_groups/home_routes.dart` | 16 | `AppRoutePaths.news` | `AppRouteNames.sc047News` | `real_page` | `NewsPage` |
 | `lib/app/router/route_groups/launchpad_routes.dart` | 34 | `AppRoutePaths.launchpad` | `AppRouteNames.sc295Launchpad` | `real_page` | `LaunchpadPage` |
 | `lib/app/router/route_groups/launchpad_routes.dart` | 39 | `AppRoutePaths.launchpadPortfolio` | `AppRouteNames.sc296LaunchpadPortfolio` | `real_page` | `LaunchpadPortfolioPage` |

@@ -121,7 +121,7 @@ earn_staking,real_page,AppRoutePaths.earnValidatorSelection,earnValidatorSelecti
 earn_staking,real_page,AppRoutePaths.earnVoting,earnVoting,AppRouteNames.sc391StakingVoting,sc391StakingVoting,StakingVotingPage,lib/app/router/route_groups/earn_staking_routes.dart,290
 earn_staking,real_page,AppRoutePaths.earnVotingProposalRoute,earnVotingProposalRoute,AppRouteNames.sc390StakingVotingDetail,sc390StakingVotingDetail,StakingVotingPage,lib/app/router/route_groups/earn_staking_routes.dart,282
 earn_staking,real_page,AppRoutePaths.earnWebhooks,earnWebhooks,AppRouteNames.sc393StakingWebhooks,sc393StakingWebhooks,StakingWebhooksPage,lib/app/router/route_groups/earn_staking_routes.dart,300
-home,real_page,AppRoutePaths.home,home,AppRouteNames.sc007Home,sc007Home,HomePage,lib/app/router/route_groups/home_routes.dart,11
+home,real_page,AppRoutePaths.home,home,AppRouteNames.sc007Home,sc007Home,HomeResponsiveEntry,lib/app/router/route_groups/home_routes.dart,11
 home,real_page,AppRoutePaths.news,news,AppRouteNames.sc047News,sc047News,NewsPage,lib/app/router/route_groups/home_routes.dart,16
 launchpad,real_page,AppRoutePaths.launchpad,launchpad,AppRouteNames.sc295Launchpad,sc295Launchpad,LaunchpadPage,lib/app/router/route_groups/launchpad_routes.dart,34
 launchpad,real_page,AppRoutePaths.launchpadAbiDiff,launchpadAbiDiff,AppRouteNames.sc308LaunchpadAbiDiff,sc308LaunchpadAbiDiff,LaunchpadAbiDiffPage,lib/app/router/route_groups/launchpad_routes.dart,103

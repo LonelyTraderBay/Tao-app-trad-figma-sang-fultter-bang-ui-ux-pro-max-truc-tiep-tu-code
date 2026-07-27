@@ -14,12 +14,13 @@ product/financial rules.
 ## Reuse ladder
 
 Shared primitives before any local widget: `VitAppShell`, `VitPageLayout`,
-`VitPageContent`, `VitHeader`, `VitBottomNav`, `VitCard`, `VitCtaButton`,
-`VitInput`, `VitTabBar`, `VitSegmentedChoice`, `VitPresetChipRow`,
-`VitSectionHeader`, `VitTaskCard`, `VitServiceTile`, `VitAccentIconBox`,
-`VitCommunityRulesLink`, `VitStatusPill`. Theme tokens only
-(`AppColors`, `AppSpacing`, `AppRadii`, `AppTextStyles`); dark theme is the
-baseline; phone-first at 360 px.
+`VitPageContent`, `VitHeader`, `VitBottomNav`, `VitNavigationRail`, `VitCard`,
+`VitCtaButton`, `VitInput`, `VitTabBar`, `VitSegmentedChoice`,
+`VitPresetChipRow`, `VitSectionHeader`, `VitTaskCard`, `VitServiceTile`,
+`VitAccentIconBox`, `VitCommunityRulesLink`, `VitStatusPill`. Theme tokens
+only (`AppColors`, `AppSpacing`, `AppRadii`, `AppTextStyles`); dark theme is
+the baseline; phone-first at 360 px, tablet-adaptive shell from
+`AppBreakpoints.tablet` (600px, see `AGENTS.md` UI Rules).
 
 ## Domain contracts (standard doc → verify command, run from flutter_app/)
 

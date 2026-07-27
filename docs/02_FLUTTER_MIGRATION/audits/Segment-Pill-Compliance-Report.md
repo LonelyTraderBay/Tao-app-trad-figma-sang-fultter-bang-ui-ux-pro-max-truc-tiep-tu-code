@@ -6,11 +6,11 @@
 
 | Metric | Count |
 | --- | ---: |
-| Audit rows | 316 |
-| Files with shared widgets | 283 |
+| Audit rows | 317 |
+| Files with shared widgets | 284 |
 | Compliance pass | 219 |
 | Compliance warn | 0 |
-| Compliance review | 97 |
+| Compliance review | 98 |
 | Interactive local classes | 0 |
 | P0 local classes | 0 |
 
@@ -18,7 +18,7 @@
 
 | Family | Call sites |
 | --- | ---: |
-| VitTabBar | 116 |
+| VitTabBar | 117 |
 | VitChoicePill | 118 |
 | VitSegmentedChoice | 80 |
 | VitSegmentedTabBar | 26 |
@@ -39,7 +39,7 @@
 | earn_savings | 26 |
 | earn_staking | 25 |
 | enterprise_states | 2 |
-| home | 1 |
+| home | 2 |
 | launchpad | 24 |
 | markets | 34 |
 | news | 1 |

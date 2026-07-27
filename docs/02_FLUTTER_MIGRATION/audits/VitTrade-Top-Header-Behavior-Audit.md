@@ -5,9 +5,9 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 ```text
 total_routed_screens=412
 fixed_vit_header_remaining=22
-auto_hide_header=378
+auto_hide_header=377
 custom_scroll_header=1
-no_top_header=11
+no_top_header=12
 unresolved=0
 ```
 
@@ -160,7 +160,7 @@ unresolved=0
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
 | enterprise_states | `AppRoutePaths.forceUpdateGate` | `ForceUpdateGatePage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart` |
 | enterprise_states | `AppRoutePaths.maintenanceGate` | `MaintenanceGatePage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart` |
-| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| home | `AppRoutePaths.home` | `HomeResponsiveEntry` | no_top_header | no_top_header | `flutter_app/lib/features/home/presentation/pages/home_responsive_entry.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_abi_diff_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAddressBook` | `LaunchpadAddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_address_book_page.dart` |
