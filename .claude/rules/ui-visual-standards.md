@@ -41,17 +41,40 @@ baseline; phone-first at 360 px.
 
 - Tab roots use `VitPageRhythm.compact`; major sections are direct
   `VitPageContent` children; no `SizedBox(height: AppSpacing.x*)` rhythm gaps.
+- Page content width: horizontal `contentPad` (20px) applies once on the
+  scroll → `VitPageContent` chain — Recipe A (`VitInsetScrollView` + default
+  VPC padding) or Recipe B (scroll token with horizontal pad +
+  `fullBleed: true`).
 - Never wrap `VitTabBar`/`VitSegmentedTabBar` in `VitCard`/`DecoratedBox` —
   pills draw their own outline. Binary/2–4-option toggles use
   `VitSegmentedChoice`; preset rows use `VitPresetChipRow`.
 - No local `_SegmentButton` / `_FilterButton` / `_AccentIcon` /
-  `_CommunityRules*` duplicates — delete after migrating to shared widgets.
-- Radius: only `AppRadii` tokens (`inputRadius` 14 controls, `cardRadius` 16,
-  `cardLargeRadius` 24 hero, `smRadius` 8 micro, `pillRadius` 999). No
-  `BorderRadius.circular()` outside `app_radii.dart`; `mdRadius` /
-  `headerActionRadius` are legacy — do not use for new UI.
+  `_CommunityRules*` duplicates — delete after migrating to shared widgets
+  (`VitCommunityRulesLink` for the Open Arena rules footer chip).
+- Scroll-to-hide headers use `VitAutoHideHeaderScaffold` /
+  `VitAutoHidePageScaffold` only — the shared scaffold keeps a
+  collapse-budget gate so short lists don't snap scroll offset back to the
+  top. Do not hand-roll `_headerVisible` + `heightFactor` collapse.
 - Include loading / empty / error / offline / submitting / success states where
   the flow needs them.
 - Post-action acknowledgements use `showVitNoticeSheet` only — not `SnackBar`,
   not `Positioned` success toasts, not sticky Share+Continue. Sticky footers
   stay valid only for in-progress form/wizard CTAs.
+
+## Radius tokens (`AppRadii` in `app_radii.dart`)
+
+| Role | Token | px |
+| --- | --- | --- |
+| Interactive controls (CTA, input, tab, chip, segmented choice, preset row, section link, header icon buttons) | `AppRadii.inputRadius` | 14 |
+| Standard cards | `AppRadii.cardRadius` (`VitCardRadius.standard`) | 16 |
+| Large / hero cards | `AppRadii.cardLargeRadius` (`VitCardRadius.large`) | 24 |
+| Micro surfaces (avatars, delta chips, icon backgrounds) | `AppRadii.smRadius` | 8 |
+| Status pills (`VitStatusPill` / `VitAccentPill`) | `AppRadii.pillRadius` | 999 |
+
+- Fixed-height tile cards (horizontal strips, product tiles): set
+  `VitCard.height` (or `constraints.minHeight`) with
+  `contentAlign: VitCardContentAlign.center`; use `AppSpacing.cardTilePadding`
+  and `AppSpacing.cardTileInnerGap` for row gaps — don't hand-roll Column
+  centering per page.
+- No `BorderRadius.circular()` outside `app_radii.dart`. `AppRadii.mdRadius` /
+  `headerActionRadius` are legacy chart/chrome values — do not use for new UI.

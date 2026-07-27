@@ -144,96 +144,16 @@ Chuẩn chốt tại GĐ2 · I18N-1 (DEC-i18n Nhánh A, 2026-07-16):
   and the exact command to check it locally — see
   `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md` before
   creating a new page.
-- Use shared layout primitives before creating local scaffolds:
-  `VitAppShell`, `VitPageLayout`, `VitPageContent`, `VitHeader`,
-  `VitBottomNav`, `VitCard`, `VitCtaButton`, `VitInput`, and `VitTabBar`.
-- Use theme tokens from `flutter_app/lib/app/theme/`.
-- Keep dark theme as the active baseline.
-- Support phone-first layouts at 360 px and up.
-- Include loading, empty, error, offline, submitting, and success states where
-  the flow needs them.
-- Do not wrap `VitTabBar` / `VitSegmentedTabBar` in `VitCard` or `DecoratedBox`
-  with a border — segment tabs render their own pill outline.
-- Binary or semantic 2–4 option toggles (MUA/BÁN, Long/Short) use
-  `VitSegmentedChoice`, not `VitCard` + `Row` + full-width `VitChoicePill`.
-- Preset amount/% shortcut rows use `VitPresetChipRow`; do not wrap
-  `VitCard(inner + border)` around pill rows.
-- Delete local `_SegmentButton` duplicates after migration; use shared primitives.
-- Open Arena community rules footer chip uses `VitCommunityRulesLink`; do not
-  duplicate local `_CommunityRules*` widgets.
-- **Page rhythm:** new/changed presentation pages must pass
-  `page_rhythm_audit.dart --check` and `page_rhythm_guardrail_test.dart`.
-  Phone-first layout @ 360×800: `page_rhythm_phone_visual_qa_test.dart`.
-  Tab roots use `VitPageRhythm.compact` with major sections as direct
-  `VitPageContent` children — see
-  `docs/02_FLUTTER_MIGRATION/standards/Page-Rhythm-Standard.md`.
-- **Page content width:** horizontal `contentPad` (20px) applies once on the
-  scroll → `VitPageContent` chain — Recipe A (`VitInsetScrollView` + default
-  VPC padding) or Recipe B (scroll token with horizontal pad + `fullBleed: true`);
-  see `docs/02_FLUTTER_MIGRATION/standards/Page-Content-Width-Standard.md` and
-  `page_content_width_audit.dart --check`.
-- **Scroll auto-hide:** scroll-to-hide headers must use `VitAutoHideHeaderScaffold`
-  / `VitAutoHidePageScaffold` only — the shared scaffold keeps a collapse-budget
-  gate so short lists do not snap scroll offset back to the top. Do not hand-roll
-  `_headerVisible` + `heightFactor` collapse; see
-  `docs/02_FLUTTER_MIGRATION/standards/Scroll-Auto-Hide-Standard.md` and
-  `flutter test test/quality/scroll_auto_hide_guardrail_test.dart`.
-- **Notice acknowledgements:** success / error / “sẽ sớm ra mắt” / must-ack UI
-  must use `showVitNoticeSheet` (not `SnackBar`, not `Positioned` success
-  toasts, not sticky Share+Continue footers). `VitStickyFooter` / scaffold
-  `footer:` stay valid only for in-progress form/wizard CTAs. See
-  `docs/02_FLUTTER_MIGRATION/standards/Notice-Acknowledgement-Standard.md` and
-  `flutter test test/quality/notice_acknowledgement_guardrail_test.dart`.
-- **Card tiles:** Tier A strip tiles use `VitCard.height` / `minHeight` with
-  `contentAlign: VitCardContentAlign.center`, `cardTilePadding`, and
-  `cardTileInnerGap` — see
-  `docs/02_FLUTTER_MIGRATION/standards/Card-Tile-Standard.md` and
-  `card_tile_audit.dart --check --strict-full`.
-- **Service tile badges:** Tier B `VitServiceTile` corner badges (`badgeLabel`,
-  `riskBadgeLabel`) must use the shared safe-inset contract — see
-  `docs/02_FLUTTER_MIGRATION/standards/Service-Tile-Badge-Standard.md` and
-  `flutter test test/quality/service_tile_badge_guardrail_test.dart`.
-- **Task cards:** Tier E mission rows use `VitTaskCard` with intrinsic height —
-  no `buttonHero + x7 + x5` minHeight — see
-  `docs/02_FLUTTER_MIGRATION/standards/Task-Card-Standard.md` and
-  `flutter test test/quality/task_card_guardrail_test.dart`.
-- **Accent icon boxes:** module row icons use `VitAccentIconBox` (34px, shared
-  fill/border) — no page-local `_AccentIcon` — see
-  `docs/02_FLUTTER_MIGRATION/standards/Accent-Icon-Box-Standard.md` and
-  `flutter test test/quality/accent_icon_box_guardrail_test.dart`.
-- **Segment pills:** view tabs, binary toggles, preset rows, and filter chips
-  use the tier decision tree — no P0 local `_FilterButton` / `_FilterTabs` /
-  `_SegmentedTabs` — see
-  `docs/02_FLUTTER_MIGRATION/standards/Segment-Pill-Standard.md` and
-  `dart run tool/segment_pill_audit.dart --check --strict-full` +
-  `flutter test test/quality/segment_pill_guardrail_test.dart`.
-
-### Radius rules
-
-Canonical tiers (see `AppRadii` in `app_radii.dart`):
-
-| Role | Token | px |
-| --- | --- | --- |
-| Interactive controls | `AppRadii.inputRadius` | 14 |
-| Standard cards | `AppRadii.cardRadius` | 16 |
-| Large / hero cards | `AppRadii.cardLargeRadius` | 24 |
-| Micro surfaces | `AppRadii.smRadius` | 8 |
-| Status pills | `AppRadii.pillRadius` | 999 |
-
-- CTA, input, tab, chip, segmented choice, preset row, section link, and header
-  icon buttons use `inputRadius` only.
-- `VitCard` uses `VitCardRadius.standard` (16) by default and
-  `VitCardRadius.large` (24) for hero/large surfaces.
-- **Fixed-height tile cards** (horizontal strips, product tiles): set
-  `VitCard.height` (or `constraints.minHeight`) with
-  `contentAlign: VitCardContentAlign.center`; use `AppSpacing.cardTilePadding`
-  and `AppSpacing.cardTileInnerGap` for row gaps. Do not hand-roll Column
-  centering on individual pages.
-- Avatars, delta chips, and icon backgrounds use `smRadius` (micro).
-- `VitStatusPill` / `VitAccentPill` use `pillRadius` only.
-- Do not use `BorderRadius.circular()` outside `app_radii.dart`.
-- Do not use `AppRadii.mdRadius` or `AppRadii.headerActionRadius` for new UI;
-  they are legacy chart/chrome values.
+- Detailed per-component standards (page rhythm, content width, card tiles,
+  segment pills, scroll auto-hide, notice acknowledgements, service tile
+  badges, task cards, accent icon boxes, radius tokens) live in
+  `.claude/rules/ui-visual-standards.md` (Claude Code, lazy-loaded for
+  presentation/shared-widget/theme work) and the matching `.cursor/rules/
+  vittrade-*.mdc` files (Cursor) — read the one your tool loads before
+  touching presentation code; do not duplicate their content here.
+- Never wrap `VitTabBar` / `VitSegmentedTabBar` in `VitCard` or `DecoratedBox`
+  with a border — segment tabs render their own pill outline. Never use
+  `BorderRadius.circular()` outside `app_radii.dart`.
 
 ## Financial Safety
 
