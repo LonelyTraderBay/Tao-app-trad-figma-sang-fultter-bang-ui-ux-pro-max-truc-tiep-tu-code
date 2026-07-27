@@ -4,13 +4,21 @@
 // business logic worth testing directly: `getHome` and `getSearch` each
 // sort their event list by one of 6 different criteria via a switch
 // statement (see `_applyFilter` / `_sortSearchEvents` in
-// mock_predictions_repository_fixtures_events_and_positions.dart), and several methods
-// filter/aggregate over the fixture data (category & status filters, up/down
-// counts, portfolio totals, leaderboard re-ranking, activity feed counts).
-// This file exercises every method on the PredictionsRepository interface,
-// with focused assertions on the real sort/filter/aggregate behavior where
-// it exists, and compact isA<>/non-empty checks for the remaining
-// largely-static getters.
+// mock_predictions_repository_fixtures_events_and_positions.dart). This
+// file covers those two methods (the sort/filter-heavy surface) with
+// focused assertions on the real sort/filter behavior.
+//
+// Split 2026-07-27 (400-line test file size gate,
+// Future-Feature-Onboarding-Checklist), by repository-method section —
+// mirroring the section naming already used to split the mock repository's
+// own fixtures under lib/features/predictions/data/fixtures/. Remaining
+// methods moved to:
+// - mock_predictions_repository_breaking_and_portfolio_test.dart
+//   (getBreaking, getEventDetail, getPortfolio)
+// - mock_predictions_repository_leaderboard_and_activity_test.dart
+//   (getLeaderboard, getGlobalActivity)
+// - mock_predictions_repository_receipts_calendar_and_static_test.dart
+//   (getOrderReceipt, getEventCalendar, remaining largely-static getters)
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 
@@ -236,201 +244,6 @@ void main() {
         )).results;
         expect(results, hasLength(1));
         expect(results.single.id, 'pred-1');
-      });
-    });
-
-    group('getBreaking - active movers, up/down counts, category scope', () {
-      test(
-        'default returns all 12 active movers sorted by |change24h|',
-        () async {
-          final snapshot = await repository.getBreaking();
-          expect(snapshot.movers, hasLength(12));
-          expect(snapshot.movers.first.id, 'pred-5');
-          expect(snapshot.upCount, 9);
-          expect(snapshot.downCount, 3);
-        },
-      );
-
-      test(
-        'category filter scopes movers and recomputes up/down counts',
-        () async {
-          final snapshot = await repository.getBreaking(
-            category: 'Live Crypto',
-          );
-          expect(snapshot.movers, hasLength(4));
-          expect(snapshot.movers.first.id, 'pred-1');
-          expect(snapshot.upCount, 3);
-          expect(snapshot.downCount, 1);
-        },
-      );
-    });
-
-    group('getEventDetail - lookup, position enrichment, related events', () {
-      test(
-        'known id returns event, open position, and related events',
-        () async {
-          final snapshot = await repository.getEventDetail('pred-1');
-          expect(snapshot.event.id, 'pred-1');
-          expect(snapshot.position, isNotNull);
-          expect(snapshot.position!.outcome, 'Yes');
-          expect(snapshot.position!.shares, 500);
-          expect(snapshot.position!.avgPrice, .28);
-          expect(snapshot.relatedEvents.map((e) => e.id).toList(), [
-            'pred-2',
-            'pred-9',
-          ]);
-        },
-      );
-
-      test('unknown id falls back to the first fixture event', () async {
-        final snapshot = await repository.getEventDetail('does-not-exist');
-        expect(snapshot.event.id, 'pred-1');
-      });
-    });
-
-    group('getPortfolio - aggregate totals summed from positions', () {
-      test('totals match the sum/percent of the fixture positions', () async {
-        final snapshot = await repository.getPortfolio();
-        const invested = 140 + 195 + 76 + 168 + 550 + 112.5 + 105;
-        const current = 170 + 216 + 64 + 220 + 1000 + 0 + 117;
-        const pnl = 30 + 21 - 12 + 52 + 450 - 112.5 + 12;
-        expect(snapshot.totalInvested, closeTo(invested, .001));
-        expect(snapshot.totalCurrentValue, closeTo(current, .001));
-        expect(snapshot.totalPnl, closeTo(pnl, .001));
-        expect(snapshot.totalPnlPct, closeTo(pnl / invested * 100, .001));
-      });
-    });
-
-    group('getLeaderboard - metric-driven sort and rank reassignment', () {
-      test(
-        'pnl metric (default) keeps the weekly data in its base order',
-        () async {
-          final snapshot = await repository.getLeaderboard();
-          expect(snapshot.traders.first.user, 'WhaleAlpha');
-          expect(snapshot.traders.first.rank, 1);
-          expect(snapshot.traders[1].user, 'CryptoKing');
-          expect(snapshot.biggestWins, hasLength(4));
-        },
-      );
-
-      test(
-        'volume metric re-sorts traders by volume and reassigns rank',
-        () async {
-          final snapshot = await repository.getLeaderboard(
-            metric: PredictionLeaderboardMetric.volume,
-          );
-          _expectNonIncreasing(snapshot.traders.map((t) => t.volume).toList());
-          expect(snapshot.traders.first.user, 'AlgoTrader');
-          expect(snapshot.traders.first.rank, 1);
-          expect(snapshot.traders.first.volume, 320000);
-        },
-      );
-    });
-
-    group('getGlobalActivity - generated feed counts and minAmount filter', () {
-      test(
-        'default returns 30 activities with a fixed 20/10 buy/sell split',
-        () async {
-          final snapshot = await repository.getGlobalActivity();
-          expect(snapshot.activities, hasLength(30));
-          expect(snapshot.buyCount, 20);
-          expect(snapshot.sellCount, 10);
-          final recomputedTotal = snapshot.activities.fold<double>(
-            0,
-            (sum, activity) => sum + activity.amount,
-          );
-          expect(snapshot.totalVolume, closeTo(recomputedTotal, .01));
-        },
-      );
-
-      test('minAmount filters the feed but not the buy/sell counts', () async {
-        final snapshot = await repository.getGlobalActivity(minAmount: 100);
-        expect(snapshot.activities, isNotEmpty);
-        expect(snapshot.activities.length, lessThan(30));
-        expect(snapshot.activities.every((a) => a.amount >= 100), isTrue);
-        // buyCount/sellCount are computed from the unfiltered feed.
-        expect(snapshot.buyCount, 20);
-        expect(snapshot.sellCount, 10);
-      });
-    });
-
-    group('getOrderReceipt - id lookup, found and not-found', () {
-      test('known receipt id returns the matching receipt', () async {
-        final snapshot = await repository.getOrderReceipt('po-1');
-        expect(snapshot.found, isTrue);
-        expect(snapshot.receipt, isNotNull);
-        expect(snapshot.receipt!.id, 'po-1');
-      });
-
-      test(
-        'unknown receipt id returns a null receipt without throwing',
-        () async {
-          final snapshot = await repository.getOrderReceipt('does-not-exist');
-          expect(snapshot.found, isFalse);
-          expect(snapshot.receipt, isNull);
-        },
-      );
-    });
-
-    group('getEventCalendar - category filter', () {
-      test(
-        'no category returns all events; category scopes the list',
-        () async {
-          expect((await repository.getEventCalendar()).events, hasLength(6));
-          final crypto = (await repository.getEventCalendar(
-            category: 'Crypto',
-          )).events;
-          expect(crypto, hasLength(2));
-          expect(crypto.every((e) => e.category == 'Crypto'), isTrue);
-        },
-      );
-    });
-
-    group('remaining largely-static getters', () {
-      test('getRewards / getRiskCalculator / getMarketMaker / '
-          'getPortfolioAnalyzer return populated snapshots', () async {
-        final rewards = await repository.getRewards();
-        expect(rewards, isA<PredictionRewardsSnapshot>());
-        expect(rewards.rewards, isNotEmpty);
-        expect(rewards.totalDailyPool, greaterThan(0));
-
-        expect(
-          await repository.getRiskCalculator(),
-          isA<PredictionRiskCalculatorSnapshot>(),
-        );
-
-        final marketMaker = await repository.getMarketMaker();
-        expect(marketMaker, isA<PredictionMarketMakerSnapshot>());
-        expect(marketMaker.positions, isNotEmpty);
-        expect(marketMaker.earningsHistory, isNotEmpty);
-
-        final analyzer = await repository.getPortfolioAnalyzer();
-        expect(analyzer, isA<PredictionPortfolioAnalyzerSnapshot>());
-        expect(analyzer.positions, isNotEmpty);
-      });
-
-      test('getSocial / getAdvancedChart / getTournaments / '
-          'getDataIntegration return populated snapshots', () async {
-        final social = await repository.getSocial();
-        expect(social, isA<PredictionSocialSnapshot>());
-        expect(social.comments, isNotEmpty);
-        expect(social.sentiment, isNotEmpty);
-
-        final chart = await repository.getAdvancedChart('pred-1');
-        expect(chart, isA<PredictionAdvancedChartSnapshot>());
-        expect(chart.eventId, 'pred-1');
-        expect(chart.priceHistory, isNotEmpty);
-
-        final tournaments = await repository.getTournaments();
-        expect(tournaments, isA<PredictionTournamentsSnapshot>());
-        expect(tournaments.tournaments, isNotEmpty);
-        expect(tournaments.leaderboard, isNotEmpty);
-
-        final dataIntegration = await repository.getDataIntegration();
-        expect(dataIntegration, isA<PredictionDataIntegrationSnapshot>());
-        expect(dataIntegration.sources, isNotEmpty);
-        expect(dataIntegration.apiKeys, isNotEmpty);
-        expect(dataIntegration.webhooks, isNotEmpty);
       });
     });
   });

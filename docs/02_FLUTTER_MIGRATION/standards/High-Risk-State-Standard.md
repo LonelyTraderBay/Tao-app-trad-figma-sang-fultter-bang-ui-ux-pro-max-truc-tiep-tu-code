@@ -15,27 +15,33 @@ This keeps risk copy, iconography, and contract-id disclosure consistent
 across every high-risk flow instead of each module inventing its own warning
 chrome.
 
-## The 13 pages the guardrail checks
+## The 16 pages the guardrail checks
 
 `high_risk_state_primitives_guardrail_test.dart` hard-codes a fixed set of
 representative target files and fails if any of them is missing either the
-`VitHighRiskStatePanel` symbol or the `highRiskContractId` symbol:
+`VitHighRiskStatePanel` symbol or the `highRiskContractId` symbol. Table
+regenerated 2026-07-27 (QA audit) from the guardrail's live `targets` set —
+8 of the 13 previously-documented paths had drifted from the actual files on
+disk (module rename / subfolder move); this table now matches the source:
 
 | File | Module | Panel state used | What it tracks |
 | --- | --- | --- | --- |
 | `lib/features/trade/presentation/widgets/hub/trade_page_state.dart` | Trade | `riskReview` | Spot order risk (fees, slippage, balance) |
-| `lib/features/wallet/presentation/pages/withdraw_page.dart` | Wallet | `riskReview` | Withdrawal preview (address, network, amount, fee) |
-| `lib/features/p2p_marketplace/presentation/pages/hub/p2p_home_page.dart` | P2P | `riskReview` | Offer → order → payment proof → dispute escrow contract |
-| `lib/features/earn/presentation/pages/staking_earn_page.dart` | Earn | `riskReview` | Terms, validator setup, risk preview, confirmation, receipt |
-| `lib/features/launchpad/presentation/pages/launchpad_bridge_order_page.dart` | Launchpad | `success` | Bridge order status tracking |
-| `lib/features/predictions/presentation/pages/predictions_home_page.dart` | Predictions | `riskReview` | Event setup, risk preview, confirmation, receipt |
-| `lib/features/predictions/presentation/pages/prediction_event_detail_page.dart` | Predictions | `riskReview` | Rules, amount setup, probability preview, confirmation |
-| `lib/features/predictions/presentation/widgets/prediction_order_receipt_page_sections.dart` | Predictions | `success` | Submitted receipt / recovery state |
-| `lib/features/wallet/presentation/widgets/wallet_address_add_agreement.dart` | Wallet | `riskReview` | Withdrawal-address addition preview |
+| `lib/features/wallet/presentation/pages/transfer/withdraw_page.dart` | Wallet | `riskReview` | Withdrawal preview (address, network, amount, fee) |
+| `lib/features/p2p_marketplace/presentation/widgets/hub/p2p_home_page_state.dart` | P2P | `riskReview` | Offer → order → payment proof → dispute escrow contract |
+| `lib/features/earn_staking/presentation/pages/staking/staking_earn_page.dart` | Earn | `riskReview` | Terms, validator setup, risk preview, confirmation, receipt |
+| `lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart` | Launchpad | `success` | Bridge order status tracking |
+| `lib/features/predictions/presentation/pages/hub/predictions_home_page.dart` | Predictions | `riskReview` | Event setup, risk preview, confirmation, receipt |
+| `lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart` | Predictions | `riskReview` | Rules, amount setup, probability preview, confirmation |
+| `lib/features/predictions/presentation/widgets/event/prediction_order_receipt_page_sections.dart` | Predictions | `success` | Submitted receipt / recovery state |
+| `lib/features/wallet/presentation/widgets/address/wallet_address_add_agreement.dart` | Wallet | `riskReview` | Withdrawal-address addition preview |
 | `lib/features/profile/presentation/pages/security_page.dart` | Profile | `riskReview` | Account security review |
 | `lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_add_page.dart` | P2P | `riskReview` | Payment-method addition preview |
 | `lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_ownership_page.dart` | P2P | `riskReview` | Payment-method ownership verification |
 | `lib/features/p2p_account/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart` | P2P | `riskReview` | Payment-method cooling-period restriction |
+| `lib/features/trade/presentation/widgets/futures/futures_page_state.dart` | Trade | dynamic (`submitting`/`success`/`error`/`offline`) | Futures order submit/receipt risk state |
+| `lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` | Trade Bots | `riskReview` | No-profit-guarantee disclosure before activating a bot |
+| `lib/features/trade_copy/presentation/pages/hub/copy_trading_page.dart` | Trade Copy | `riskReview` | Drawdown/concentration/fee/stop-loss review before copying a strategy |
 
 ## Rules
 
@@ -128,7 +134,7 @@ if (snapshot.highRiskContractId != null)
   `highRiskContractId`. A file could in theory contain both tokens
   unconnected and still pass; in practice every target file today wires
   `contractId: snapshot.highRiskContractId` directly (see table above).
-- The test checks a **fixed 13-file allowlist**, still not a directory scan.
+- The test checks a **fixed 16-file allowlist**, still not a directory scan.
   A whole-app audit on 2026-07-11
   (`flutter_app/run-artifacts/enterprise-grade-whole-app-review-2026-07-11.md`)
   found and fixed the 5 gaps AGENTS.md's Financial Safety section implied but
