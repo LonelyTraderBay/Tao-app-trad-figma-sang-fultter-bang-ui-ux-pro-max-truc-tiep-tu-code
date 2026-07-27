@@ -260,6 +260,10 @@ discipline: `.claude/rules/session-discipline.md`. Descendant notes:
 | Write unit/controller/widget tests | `.claude/agents/flutter-test-writer.md` |
 | Check structural test-coverage gaps | `.claude/agents/flutter-test-coverage-auditor.md` |
 | Full PR merge-readiness gate | `.claude/agents/flutter-pr-gate.md` |
+| Whole-app sweep of high-risk financial flows | `.claude/agents/flutter-financial-safety-sweeper.md` |
+| Pay down vi-VN-only English copy debt | `.claude/agents/flutter-i18n-debt-sweeper.md` |
+| Review Riverpod controller/provider pattern (ADR-001) | `.claude/agents/flutter-provider-pattern-auditor.md` |
+| Check a11y/perf guardrail coverage gaps | `.claude/agents/flutter-a11y-perf-coverage-auditor.md` |
 
 `flutter-architecture-sweep` is the Claude Code-native counterpart to the
 `ponytail-audit` skill above — same ledger format/location

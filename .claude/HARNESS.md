@@ -34,6 +34,8 @@ Cursor/Codex continues to use `.codex/skills/` — discovery is not shared.
 - `flutter-batch-planner` ← design-domain
 - `flutter-pr-gate` ← code-review, product-verify, design-domain
 - `flutter-screen-designer` ← ui-checklists, product-verify, design-domain
+- `flutter-financial-safety-sweeper` ← product-verify
+- `flutter-a11y-perf-coverage-auditor` ← ui-checklists
 
 ## Parallel batches
 
