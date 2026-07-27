@@ -1,3 +1,15 @@
+// Size-gate note (QA audit 2026-07-27, Future-Feature-Onboarding-Checklist
+// "data fixture files above 500 lines"): this file is intentionally long
+// because it is a single homogeneous data table — one `HighRiskFlowBinding`
+// entry per high-risk contract, each holding a fixed-shape list of
+// `HighRiskFlowScreenBinding` stage rows for that flow. The ~80 lines of
+// model/lookup code at the top (`HighRiskFlowScreenBinding`,
+// `HighRiskFlowBinding`, `findByContractId`/`findByRoute`) is shared
+// plumbing for every entry in `HighRiskFlowBindings.bindings` below it —
+// there is no mixed responsibility to split out, only more per-flow rows.
+// Consumers include every `test/features/**` mock-repository lifecycle test
+// and `test/core/product_flow/high_risk_flow_binding_test.dart` /
+// `high_risk_flow_route_pump_test.dart`.
 import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart';
 
 final class HighRiskFlowScreenBinding {

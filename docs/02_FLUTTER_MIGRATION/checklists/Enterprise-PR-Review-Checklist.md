@@ -122,6 +122,16 @@ check the full domain map in
 
 ## Required Commands
 
+Note: `architecture_baseline_guardrails_test.dart` was split into the three
+`architecture_*_debt_guardrails_test.dart` files below (2026-07); the product
+copy guardrail set is 5 files, not 1 — `product_copy_guardrails_test.dart`
+plus the per-module `money_copy_guardrail_test.dart`,
+`p2p_wallet_product_copy_guardrails_test.dart`,
+`prediction_product_copy_guardrails_test.dart`, and
+`trade_product_copy_guardrails_test.dart`. Both corrected below
+(2026-07-27 QA audit); code/tests remain the source of truth per
+`docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`.
+
 Run from `flutter_app/` before merge:
 
 ```bash
@@ -132,8 +142,8 @@ dart run tool/navigation_edge_audit.dart --check
 flutter analyze
 flutter test test/app/router --reporter=compact
 flutter test test/quality/navigation_route_guardrails_test.dart --reporter=compact
-flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
-flutter test test/quality/product_copy_guardrails_test.dart --reporter=compact
+flutter test test/quality/architecture_import_debt_guardrails_test.dart test/quality/architecture_layer_boundary_guardrails_test.dart test/quality/architecture_size_style_debt_guardrails_test.dart --reporter=compact
+flutter test test/quality/product_copy_guardrails_test.dart test/quality/money_copy_guardrail_test.dart test/quality/p2p_wallet_product_copy_guardrails_test.dart test/quality/prediction_product_copy_guardrails_test.dart test/quality/trade_product_copy_guardrails_test.dart --reporter=compact
 flutter test --reporter=compact
 ``` 
 

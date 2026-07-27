@@ -1,3 +1,16 @@
+// Size-gate note (QA audit 2026-07-27, Future-Feature-Onboarding-Checklist
+// "data fixture files above 500 lines"): this file is intentionally long
+// because it is a single homogeneous data table — one `_intent(...)` entry
+// per route contract, grouped only by product module
+// (`_p2pContracts`/`_earnContracts`/`_launchpadContracts`/
+// `_discoveryContracts`/`_crossModuleContracts`). There is no mixed
+// responsibility to split out: the ~30 lines of type/model/lookup code at
+// the top (`RouteContractIntent`, `DynamicNavigationIntentContracts`,
+// `_RoutePattern`) is shared plumbing for every entry below it, and
+// splitting the per-route list itself would just scatter one flat table
+// across files without improving readability. Consumers:
+// `test/app/router/dynamic_navigation_route_contract_test.dart` and
+// `test/core/navigation/navigation_intent_test.dart`.
 import 'package:vit_trade_flutter/core/navigation/navigation_intent.dart';
 
 enum NavigationIntentModule {
