@@ -67,6 +67,8 @@ const widgetClassPageOverrides = <String, String>{
   'HomeResponsiveEntry': 'features/home/presentation/pages/home_page.dart',
   'WalletResponsiveEntry':
       'features/wallet/presentation/pages/hub/wallet_page.dart',
+  'MarketsResponsiveEntry':
+      'features/markets/presentation/pages/hub/market_list_page.dart',
   'ClientOptUpRequestPage':
       'features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart',
   'PredictionTournamentDetailPage':
