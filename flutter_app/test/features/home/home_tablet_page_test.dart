@@ -13,10 +13,15 @@ import 'package:vit_trade_flutter/shared/layout/vit_navigation_rail.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 void main() {
-  Future<void> pumpTabletHome(WidgetTester tester) async {
-    // iPad Air portrait — above AppBreakpoints.tablet (600).
+  Future<void> pumpTabletHome(
+    WidgetTester tester, {
+    Size size = const Size(820, 1180),
+  }) async {
+    // Default: iPad Air portrait — above AppBreakpoints.tablet (600) but
+    // below the dashboard's own two-column threshold, so this exercises the
+    // single-column tablet fallback.
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(820, 1180);
+    tester.view.physicalSize = size;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -81,4 +86,33 @@ void main() {
 
     expect(find.byType(MarketListPage), findsOneWidget);
   });
+
+  testWidgets(
+    'SC-007 wide tablet renders the true two-column dashboard without '
+    'overflow, secondary column framed as a distinct panel',
+    (tester) async {
+      // Landscape tablet, above HomeTabletPage's own two-column threshold
+      // (900) — the width-capped Align+ConstrainedBox+VitCard layout added
+      // for the redesign only engages at/above this width.
+      await pumpTabletHome(tester, size: const Size(1180, 820));
+
+      expect(tester.takeException(), isNull);
+      expect(
+        find.descendant(
+          of: find.byType(VitSectionHeader),
+          matching: find.text('Thị trường'),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Dự đoán & Thách đấu'), findsOneWidget);
+      // Secondary column's distinct panel surface.
+      expect(
+        find.ancestor(
+          of: find.text('Dự đoán & Thách đấu'),
+          matching: find.byType(VitCard),
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 }
