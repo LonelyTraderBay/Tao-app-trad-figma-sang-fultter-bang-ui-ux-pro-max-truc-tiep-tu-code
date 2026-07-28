@@ -16,7 +16,7 @@ import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/tr
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_health_score_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_multi_manager_page.dart';
-import 'package:vit_trade_flutter/features/wallet/presentation/pages/hub/wallet_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/hub/wallet_responsive_entry.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/withdraw_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/withdraw_limits_page.dart';
@@ -30,7 +30,8 @@ List<RouteBase> walletRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.wallet,
       name: AppRouteNames.sc135Wallet,
-      builder: (_, _) => WalletPage(shellRenderMode: shellRenderMode),
+      builder: (_, _) =>
+          WalletResponsiveEntry(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.walletHistory,

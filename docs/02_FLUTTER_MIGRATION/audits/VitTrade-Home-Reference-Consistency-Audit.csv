@@ -1511,6 +1511,7 @@ wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/assets/dust_
 wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/history/transaction_detail_page.dart,0,0,0,0,0,0,0,0,no,-
 wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart,0,0,0,0,0,0,0,0,no,-
 wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart,0,0,0,0,0,0,0,0,no,-
+wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart,0,0,0,0,0,0,0,0,no,-
 wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart,0,0,0,0,0,0,0,0,no,-
 wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart,0,0,0,0,0,0,0,0,no,-
 wallet,root_page,flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart,0,0,0,0,0,0,0,0,no,-

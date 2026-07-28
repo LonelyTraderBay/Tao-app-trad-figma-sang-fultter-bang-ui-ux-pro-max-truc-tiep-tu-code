@@ -6,7 +6,7 @@ Generated from `flutter_app/tool/top_header_visual_archetype_audit.dart`.
 total_routed_screens=412
 strict_visual_issues=0
 screen_level_mismatches=0
-uses_vit_top_chrome=63
+uses_vit_top_chrome=62
 status_banner_in_header=0
 hard_coded_offline_banner=0
 ```
@@ -37,7 +37,7 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 180 |
+| L2_detail | 181 |
 | L2_utilityDetail | 69 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
@@ -46,7 +46,7 @@ hard_coded_offline_banner=0
 | L1_productModuleHub | 8 |
 | L1_authFlow | 5 |
 | L1_instrumentWorkspace | 5 |
-| L1_primaryTabRoot | 3 |
+| L1_primaryTabRoot | 2 |
 | L3_fullscreenTool | 2 |
 | L0_authEntry | 1 |
 | L2_instrumentDetail | 1 |
@@ -55,8 +55,8 @@ hard_coded_offline_banner=0
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 392 |
-| rootModule | 11 |
+| detail | 393 |
+| rootModule | 10 |
 | instrument | 6 |
 | fullscreenTool | 2 |
 | authOnboarding | 1 |
@@ -472,7 +472,7 @@ hard_coded_offline_banner=0
 | wallet | `'${AppRoutePaths.walletWithdraw}/:asset'` | `WithdrawPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/transfer/withdraw_page.dart` |
 | wallet | `'/wallet/asset/:assetId'` | `AssetDetailPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_entityDetail | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` |
 | wallet | `'/wallet/transaction/:txId'` | `TransactionDetailPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_detail_page.dart` |
-| wallet | `AppRoutePaths.wallet` | `WalletPage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_primaryTabRoot | rootModule | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` |
+| wallet | `AppRoutePaths.wallet` | `WalletResponsiveEntry` | no_top_header | no_top_header | detail | L2_detail | detail | no | no | no | `-` | Thin width-based dispatcher for SC-135 Wallet — delegates to WalletPage (phone) or WalletTabletPage (tablet), each of which owns its own header chrome (VitAutoHidePageScaffold / VitTopChrome). | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_responsive_entry.dart` |
 | wallet | `AppRoutePaths.walletAddressBook` | `AddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBookAdd` | `AddressAddPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` |
 | wallet | `AppRoutePaths.walletBuyCrypto` | `BuyCryptoPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L1_utilityHub | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/wallet/presentation/pages/assets/buy_crypto_page.dart` |

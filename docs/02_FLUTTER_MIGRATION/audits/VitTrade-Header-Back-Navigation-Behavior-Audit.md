@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/back_navigation_behavior_audit.dart`.
 
 ```text
-visible_header_back_entries=528
+visible_header_back_entries=529
 strict_back_issues=0
 high_risk_entries=125
 modal_close_baseline=73
@@ -15,7 +15,7 @@ sheet_result_baseline=9
 | Classification | Count |
 | --- | ---: |
 | parent_route_only | 465 |
-| history_then_fallback | 63 |
+| history_then_fallback | 64 |
 
 ## Strict Issue Counts
 
@@ -552,6 +552,7 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` | 107 | `_AssetDetailPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` | 71 | `_TransactionHistoryPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` | 81 | `_WalletPageState` | `VitTopChrome` | history_then_fallback | history_then_fallback | `AppRoutePaths.home` | no | - | Uses shared back-navigation helper. |
+| `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart` | 130 | `_WalletTabletPageState` | `VitTopChrome` | history_then_fallback | history_then_fallback | `AppRoutePaths.home` | no | - | Uses shared back-navigation helper. |
 | `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` | 136 | `_NetworkStatusPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` | 71 | `_PortfolioAnalyticsPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart` | 81 | `_WalletGasOptimizerPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |

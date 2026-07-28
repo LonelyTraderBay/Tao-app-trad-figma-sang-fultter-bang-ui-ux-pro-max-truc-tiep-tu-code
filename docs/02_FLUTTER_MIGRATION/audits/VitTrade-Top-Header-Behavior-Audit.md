@@ -5,9 +5,9 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 ```text
 total_routed_screens=412
 fixed_vit_header_remaining=22
-auto_hide_header=377
+auto_hide_header=376
 custom_scroll_header=1
-no_top_header=12
+no_top_header=13
 unresolved=0
 ```
 
@@ -421,7 +421,7 @@ unresolved=0
 | wallet | `'${AppRoutePaths.walletWithdraw}/:asset'` | `WithdrawPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/transfer/withdraw_page.dart` |
 | wallet | `'/wallet/asset/:assetId'` | `AssetDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` |
 | wallet | `'/wallet/transaction/:txId'` | `TransactionDetailPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_detail_page.dart` |
-| wallet | `AppRoutePaths.wallet` | `WalletPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` |
+| wallet | `AppRoutePaths.wallet` | `WalletResponsiveEntry` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_responsive_entry.dart` |
 | wallet | `AppRoutePaths.walletAddressBook` | `AddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBookAdd` | `AddressAddPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` |
 | wallet | `AppRoutePaths.walletBuyCrypto` | `BuyCryptoPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/assets/buy_crypto_page.dart` |
