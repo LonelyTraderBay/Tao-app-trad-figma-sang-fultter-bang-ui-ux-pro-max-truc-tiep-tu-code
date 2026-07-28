@@ -286,7 +286,7 @@ handlers actually do anything. Ledger location:
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code** (59889 symbols, 97348 relationships, 36 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **vittrade-flutter** (35032 symbols, 60882 relationships, 102 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > Index stale? Run `.\scripts\gitnexus\Refresh-Index.ps1` or `gitnexus analyze --skip-agents-md --skip-skills`. Local index lives in `.gitnexus/` (gitignored, ~730MB — refresh after clone).
 
@@ -309,10 +309,10 @@ This project is indexed by GitNexus as **Tao-app-trad-figma-sang-fultter-bang-ui
 
 | Resource | Use for |
 |----------|---------|
-| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/context` | Codebase overview, check index freshness |
-| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/clusters` | All functional areas |
-| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/processes` | All execution flows |
-| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/process/{name}` | Step-by-step execution trace |
+| `gitnexus://repo/vittrade-flutter/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/vittrade-flutter/clusters` | All functional areas |
+| `gitnexus://repo/vittrade-flutter/processes` | All execution flows |
+| `gitnexus://repo/vittrade-flutter/process/{name}` | Step-by-step execution trace |
 
 More GitNexus skills: `.codex/skills/gitnexus-exploring/`, `gitnexus-debugging/`,
 `gitnexus-refactoring/`, `gitnexus-guide/`, `gitnexus-cli/`.
