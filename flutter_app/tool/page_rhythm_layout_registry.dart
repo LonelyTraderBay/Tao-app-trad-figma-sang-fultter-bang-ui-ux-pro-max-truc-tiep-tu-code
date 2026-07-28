@@ -57,14 +57,16 @@ const gateShellWidgets = {'InternalSurfaceGate'};
 
 /// Route truth-table widget → page file to actually inspect for VPC
 /// compliance — either because the widget isn't under `presentation/pages/`,
-/// or (like `HomeResponsiveEntry`) the widget is a dispatcher whose own file
-/// has no VitPageContent of its own. `HomeResponsiveEntry` picks between
-/// `HomePage` (phone) and `HomeTabletPage` (tablet) by width; both
-/// independently pass their own file-level page_rhythm_audit, and
-/// `home_page.dart` is the pre-existing canonical SC-007 reference, so it
-/// stays the rollup target here.
+/// or (like `HomeResponsiveEntry`/`WalletResponsiveEntry`) the widget is a
+/// tablet-adaptive dispatcher whose own file has no VitPageContent of its
+/// own (see `Tablet-Adaptive-Standard.md` R1). Each dispatcher picks between
+/// its phone page and tablet page by width; both independently pass their
+/// own file-level page_rhythm_audit, and the phone page is the pre-existing
+/// canonical reference, so it stays the rollup target here.
 const widgetClassPageOverrides = <String, String>{
   'HomeResponsiveEntry': 'features/home/presentation/pages/home_page.dart',
+  'WalletResponsiveEntry':
+      'features/wallet/presentation/pages/hub/wallet_page.dart',
   'ClientOptUpRequestPage':
       'features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart',
   'PredictionTournamentDetailPage':

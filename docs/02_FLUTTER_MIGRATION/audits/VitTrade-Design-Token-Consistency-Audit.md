@@ -16,7 +16,7 @@ generated=2026-06-12
 status_fail=0
 status_warn=52
 status_exception=260
-rows=2893
+rows=2895
 ```
 
 ## CI Baseline Gates
@@ -2616,6 +2616,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_detail_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_detail_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart` | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -2724,6 +2725,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/assets/buy_crypto_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_multi_manager_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/wallet/presentation/pages/transfer/transfer_page.dart` | `1 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |

@@ -152,6 +152,12 @@ const _noHeaderDecisions = <String, _NoHeaderDecision>{
         '(phone) or HomeTabletPage (tablet), each of which owns its own '
         'header chrome (VitAutoHidePageScaffold / HomeHeader).',
   ),
+  'WalletResponsiveEntry': _NoHeaderDecision(
+    'detail',
+    'Thin width-based dispatcher for SC-135 Wallet — delegates to '
+        'WalletPage (phone) or WalletTabletPage (tablet), each of which '
+        'owns its own header chrome (VitAutoHidePageScaffold / VitTopChrome).',
+  ),
 };
 
 void main(List<String> args) {

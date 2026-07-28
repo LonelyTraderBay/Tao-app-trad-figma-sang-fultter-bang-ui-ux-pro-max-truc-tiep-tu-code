@@ -1400,6 +1400,7 @@ wallet,flutter_app/lib/features/wallet/presentation/pages/address/address_book_p
 wallet,flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart,standard,compact,0,,0,,0,0,pass
+wallet,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart,standard,compact,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart,standard,standard,0,,0,,0,0,pass

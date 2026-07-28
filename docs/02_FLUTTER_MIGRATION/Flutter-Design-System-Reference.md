@@ -133,6 +133,8 @@ they're written down in prose.
    dart run tool/design_token_consistency_audit.dart --check
    dart run tool/home_reference_consistency_audit.dart --check
    dart run tool/page_rhythm_audit.dart --check --strict-full
+   dart run tool/page_rhythm_screen_rollup.dart --check --strict-layout
+   dart run tool/page_rhythm_coverage_matrix.dart --check
    dart run tool/page_content_width_audit.dart --check
    flutter test test/quality/page_rhythm_guardrail_test.dart --reporter=compact
    flutter test test/quality/page_content_width_guardrail_test.dart --reporter=compact
@@ -141,7 +143,7 @@ they're written down in prose.
    dart run tool/route_coverage_audit.dart --check
    dart run tool/navigation_edge_audit.dart --check
    ```
-10. If the new route is reachable via a nav call or link, confirm it shows up correctly in `dart run tool/navigation_edge_audit.dart` output — dangling/unlinked routes are a common miss.
+10. If the new route is reachable via a nav call or link, confirm it shows up correctly in `dart run tool/navigation_edge_audit.dart` output — dangling/unlinked routes are a common miss. When a route's builder switches to a new dispatcher widget (e.g. a `<Feature>ResponsiveEntry` from `Tablet-Adaptive-Standard.md`), `page_rhythm_screen_rollup.dart` and `page_rhythm_coverage_matrix.dart` specifically (both listed in step 9, easy to skip since they're siblings of `page_rhythm_audit.dart` with separate `--check` state) re-classify that route's compliance row — CI caught this twice (Home, then Wallet) before it was added here; run both explicitly, don't assume `page_rhythm_audit.dart --check` alone covers them.
 11. For anything not covered above, check §2's domain map.
 
 ## §6 — Where to look next
