@@ -16,7 +16,7 @@
 - Notice success/error/must-ack: **`showVitNoticeSheet`** — không SnackBar.
 - Filter: giữ **`VitFilterChip` S4**; icon: **`VitAccentIconBox`**; trust/footer: **`VitInfoCallout`**.
 - Sensitive: tiếp tục **`maskAddress`** cho `fromAddress` / `txHash`.
-- Trước edit symbol: GitNexus `impact` trên `PendingDepositsPage` / `_refreshDeposits` (repo `Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code`).
+- Trước edit symbol: GitNexus `impact` trên `PendingDepositsPage` / `_refreshDeposits` (repo `vittrade-flutter`).
 - Không commit trực tiếp `main`; branch feature → PR squash merge khi CI xanh.
 - Mỗi batch ≤ ~5–10 file; verify trước khi báo complete; minimal-diff self-check.
 - **Out of scope:** poll Timer 5s, thêm `ContextualSupportFlow.deposit`, đổi router path, redesign layout toàn wallet, BE thật.
@@ -74,7 +74,7 @@ Sau mỗi batch: `flutter analyze` (file đụng) + `flutter test test/features/
 
 ```text
 impact({ target: "_refreshDeposits", direction: "upstream",
-  repo: "Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code" })
+  repo: "vittrade-flutter" })
 ```
 
 Ghi blast radius vào commit/PR body. WARN nếu HIGH/CRITICAL trước khi sửa.
@@ -564,7 +564,7 @@ dart run tool/segment_pill_audit.dart --check --strict-full
 
 ```text
 detect_changes({ scope: "all",
-  repo: "Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code" })
+  repo: "vittrade-flutter" })
 ```
 
 Expected: risk low; chỉ wallet pending deposits + tokens/tests.

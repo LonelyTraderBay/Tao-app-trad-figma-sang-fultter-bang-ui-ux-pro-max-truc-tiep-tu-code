@@ -3,14 +3,14 @@
 **Date:** 2026-07-25  
 **Authority:** `AGENTS.md`, ADR-010, `ke-hoach-san-sang-production.md`  
 **Context:** Network Wave 1 đã merge (#81). UI Trust Polish PR
-[#82](https://github.com/LonelyTraderBay/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/pull/82)
+[#82](https://github.com/LonelyTraderBay/vittrade-flutter/pull/82)
 **MERGED** @ `8b88dd17`. W0+W1 “hoàn thiện ngay” met; W2–4 vẫn BLOCKED.
 
 ## Hiện trạng ngắn
 
 | Hạng mục | Trạng thái |
 | --- | --- |
-| UI system + Trust polish | ✅ `main` — PR [#82](https://github.com/LonelyTraderBay/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/pull/82) MERGED @ `8b88dd17` |
+| UI system + Trust polish | ✅ `main` — PR [#82](https://github.com/LonelyTraderBay/vittrade-flutter/pull/82) MERGED @ `8b88dd17` |
 | Network foundation (mapper, refresh, retry, fail-closed) | ✅ `main` |
 | Remote repositories / OpenAPI | 🔒 BLOCKED (BE) |
 | Release secrets + smoke device dài | 🔒 BLOCKED (Ops) |
@@ -193,7 +193,7 @@ documenter pass. Evidence:
 | 0.1 | `dart format` | **Approved** |
 | 0.2 | Refresh audit artifacts | **Approved** |
 | 0.3 | Update goldens Trade/Wallet/P2P | **Approved** |
-| 0.4 | Verify + merge Enterprise | **MERGED** — [PR #82](https://github.com/LonelyTraderBay/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/pull/82) @ `8b88dd17` (2026-07-25) |
+| 0.4 | Verify + merge Enterprise | **MERGED** — [PR #82](https://github.com/LonelyTraderBay/vittrade-flutter/pull/82) @ `8b88dd17` (2026-07-25) |
 | 1.1 | Nits Trust (Danh sách trắng) | **Approved** |
 | 1.2 | i18n vi-VN ratchet theo file chạm | **Process rule** (no batch) |
 | 1.3 | Hub offline-with-cache | **Cancelled** — no live `currentState`; needs product decision (C1 + GD4 explore) |
