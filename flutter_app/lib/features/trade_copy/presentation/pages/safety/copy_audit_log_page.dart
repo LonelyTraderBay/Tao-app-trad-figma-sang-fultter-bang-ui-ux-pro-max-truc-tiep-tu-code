@@ -75,7 +75,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
 
     return VitTradeDetailScaffold(
       title: 'Nhật ký kiểm toán',
-      semanticLabel: 'Nhật ký kiểm toán copy',
+      semanticLabel: 'Nhật ký kiểm toán sao chép giao dịch',
       semanticIdentifier: 'SC-077',
       contentKey: CopyAuditLogPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
