@@ -522,7 +522,7 @@ home,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,49
 home,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,87,home_page_sections.dart,Hot | Xem tất cả | Thị trường,onNavigate,'/markets',/markets,MarketListPage (/markets),
 home,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,127,home_page_sections.dart,Chưa có cặp nào trong mục này,onNavigate,'/pair/${pairs[i].id}',/pair/${pairs[i].id},PairDetailPage (/pair/:pairId),
 home,flutter_app/lib/features/home/presentation/pages/home_page_state.dart,18,home_page_state.dart,,context.push,path,,,dynamic_route_expression
-home,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,50,home_tablet_page.dart,,context.push,path,,,dynamic_route_expression
+home,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,55,home_tablet_page.dart,,context.push,path,,,dynamic_route_expression
 home,flutter_app/lib/features/home/presentation/widgets/home_announcement_banner.dart,86,home_announcement_banner.dart,,onNavigate,routePath,,,dynamic_route_expression
 home,flutter_app/lib/features/home/presentation/widgets/home_discovery_panel.dart,42,home_discovery_panel.dart,Khám phá thị trường | Vào Arena | Dự đoán & Thách đấu | Thị trường dự đoán,onNavigate,'/markets/predictions',/markets/predictions,PredictionsHomePage (/markets/predictions),
 home,flutter_app/lib/features/home/presentation/widgets/home_discovery_panel.dart,60,home_discovery_panel.dart,"Vào Arena | Arena | Tạo chế độ chơi, mở phòng, dùng điểm Arena",onNavigate,'/arena',/arena,ArenaHomePage (/arena),

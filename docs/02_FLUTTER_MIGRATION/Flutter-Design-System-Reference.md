@@ -62,6 +62,7 @@ table surfaces, since it exists nowhere else in the repo.
 | Accent icon box | `VitAccentIconBox` (34px) instead of local `_AccentIcon` | — | `accent_icon_box_guardrail_test.dart` | `flutter test test/quality/accent_icon_box_guardrail_test.dart` | Named CI step |
 | Service tile badge | Tier B corner badge safe-inset contract | — | `service_tile_badge_guardrail_test.dart` | `flutter test test/quality/service_tile_badge_guardrail_test.dart` | Named CI step |
 | Archetype reference (tab / wizard) | 2 canonical pages (tabbed detail, form wizard) stay divergence-free | — | `home_reference_consistency_guardrail_test.dart` (4th sub-test) | `flutter test test/quality/home_reference_consistency_guardrail_test.dart` | Named CI step (piggybacks on Home reference) |
+| [Tablet-adaptive layout](./standards/Tablet-Adaptive-Standard.md) | Dispatcher pattern, independent-scroll two-column dashboard, per-column width caps, phone reference untouched | — | Each tablet page's own widget test at its two-column width (e.g. `home_tablet_page_test.dart`) | `flutter test <touched tablet page test file> --reporter=compact` | **No dedicated tool yet — single reference screen (Home)** |
 | [Top header behavior](./standards/Top-Header-Standard.md) | Header pin/scroll/collapse classification per route | `tool/top_header_behavior_audit.dart` | `top_header_behavior_guardrail_test.dart` | `dart run tool/top_header_behavior_audit.dart --check --strict` | Named CI step + artifact upload |
 | [Top header actions](./standards/Top-Header-Standard.md) | Trailing action/icon catalogue vs canonical set | `tool/top_header_action_audit.dart` | `top_header_action_guardrail_test.dart` | `dart run tool/top_header_action_audit.dart --check --strict` | Named CI step + artifact upload |
 | [Top header global access policy](./standards/Top-Header-Standard.md) | Which routes may expose notifications/wallet/search icons in header | `tool/top_header_global_access_policy_audit.dart` | `top_header_global_access_policy_guardrail_test.dart` | `dart run tool/top_header_global_access_policy_audit.dart --check --strict` | Named CI step + artifact upload |
@@ -108,6 +109,7 @@ enforcement mechanics.
 - [Spacing-Token-Duplication-Standard.md](./standards/Spacing-Token-Duplication-Standard.md) — Spacing token duplication (per-module literals reinventing a core `AppSpacing` scale step)
 - [Page-Content-Width-Standard.md](./standards/Page-Content-Width-Standard.md) — Horizontal content inset (Recipe A/B, no double `contentPad`)
 - [Trade-Hero-Section-Archetype-Standard.md](./standards/Trade-Hero-Section-Archetype-Standard.md) — Trade hero section archetype (hub/detail/analytics/compliance)
+- [Tablet-Adaptive-Standard.md](./standards/Tablet-Adaptive-Standard.md) — Tablet-adaptive layout (dedicated tablet pages, independent-scroll dashboard pattern)
 
 ## §4 — Domains without a dedicated standard doc
 
@@ -125,7 +127,8 @@ they're written down in prose.
 5. Bottom sheets always go through `showVitBottomSheet` — never `showModalBottomSheet` directly; see [Bottom-Sheet-Standard.md](./standards/Bottom-Sheet-Standard.md). Post-action acknowledgements (success / error / coming-soon / must-ack) use `showVitNoticeSheet` — never `SnackBar` or `Positioned` success toasts; sticky footers are for form CTAs only — see [Notice-Acknowledgement-Standard.md](./standards/Notice-Acknowledgement-Standard.md).
 6. Match one of the existing header archetypes and back-navigation contract — don't hand-roll a custom header or back button without a documented exception; see [Top-Header-Standard.md](./standards/Top-Header-Standard.md) and [Back-Navigation-Standard.md](./standards/Back-Navigation-Standard.md). Scroll-to-hide headers must go through `VitAutoHideHeaderScaffold` (collapse-budget gate) — never a page-local `heightFactor` hide; see [Scroll-Auto-Hide-Standard.md](./standards/Scroll-Auto-Hide-Standard.md).
 7. High-risk flows (withdraw/escrow/security/address/payment-method) use `VitHighRiskStatePanel` with a `highRiskContractId`; see [High-Risk-State-Standard.md](./standards/High-Risk-State-Standard.md).
-8. Run before opening a PR (from `flutter_app/`):
+8. If the page is a dashboard/hub with 2+ independent content groupings, decide whether it needs a dedicated tablet layout (most screens don't — the shared tablet shell's nav rail is enough); see [Tablet-Adaptive-Standard.md](./standards/Tablet-Adaptive-Standard.md).
+9. Run before opening a PR (from `flutter_app/`):
    ```bash
    dart run tool/design_token_consistency_audit.dart --check
    dart run tool/home_reference_consistency_audit.dart --check
@@ -138,8 +141,8 @@ they're written down in prose.
    dart run tool/route_coverage_audit.dart --check
    dart run tool/navigation_edge_audit.dart --check
    ```
-9. If the new route is reachable via a nav call or link, confirm it shows up correctly in `dart run tool/navigation_edge_audit.dart` output — dangling/unlinked routes are a common miss.
-10. For anything not covered above, check §2's domain map.
+10. If the new route is reachable via a nav call or link, confirm it shows up correctly in `dart run tool/navigation_edge_audit.dart` output — dangling/unlinked routes are a common miss.
+11. For anything not covered above, check §2's domain map.
 
 ## §6 — Where to look next
 

@@ -19,6 +19,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 01_shared,flutter_app/lib/shared/widgets/vit_trade_instrument_hero.dart,E,-,done,0,-
 01_shared,flutter_app/lib/shared/widgets/vit_trade_order_list.dart,E,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,E,-,done,0,-
+02_home,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,C,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/widgets/home_market_watchlist_panel.dart,E,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,E,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/widgets/home_status_content.dart,D,-,done,0,-

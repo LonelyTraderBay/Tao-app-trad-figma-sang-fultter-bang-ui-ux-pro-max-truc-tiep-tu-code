@@ -35,6 +35,7 @@ the baseline; phone-first at 360 px, tablet-adaptive shell from
 | Task cards | `standards/Task-Card-Standard.md` | `flutter test test/quality/task_card_guardrail_test.dart` |
 | Accent icon boxes | `standards/Accent-Icon-Box-Standard.md` | `flutter test test/quality/accent_icon_box_guardrail_test.dart` |
 | Notice acknowledgement | `standards/Notice-Acknowledgement-Standard.md` | `flutter test test/quality/notice_acknowledgement_guardrail_test.dart` |
+| Tablet-adaptive layout | `standards/Tablet-Adaptive-Standard.md` | No dedicated tool yet — that page's own widget test at its two-column width |
 
 (`standards/` = `docs/02_FLUTTER_MIGRATION/standards/`.)
 
