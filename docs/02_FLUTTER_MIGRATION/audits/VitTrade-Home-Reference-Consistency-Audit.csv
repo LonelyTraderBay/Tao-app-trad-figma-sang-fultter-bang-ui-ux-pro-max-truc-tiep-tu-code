@@ -696,6 +696,7 @@ markets,root_page,flutter_app/lib/features/markets/presentation/pages/hub/market
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page_hero_stats_widgets.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page_history_tools_widgets.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page_movers_sectors_widgets.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
+markets,root_page,flutter_app/lib/features/markets/presentation/pages/hub/markets_tablet_page.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
 markets,root_page,flutter_app/lib/features/markets/presentation/pages/pair/market_heatmap_page.dart,0,0,0,0,0,0,0,0,no,-
@@ -735,6 +736,7 @@ markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_header.dart,0,0,0,0,0,0,0,0,no,-
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_movers.dart,0,0,0,0,0,0,0,0,no,-
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_pairs.dart,0,0,0,0,0,0,0,0,no,-
+markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_pairs_panel.dart,0,0,0,0,0,0,0,0,no,-
 markets,feature_widget,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_tools.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/widgets/hub/watchlist_cards.dart,0,0,0,0,0,0,0,0,no,-
 markets,root_page,flutter_app/lib/features/markets/presentation/widgets/hub/watchlist_common_painter.dart,0,0,0,0,0,0,0,0,no,-

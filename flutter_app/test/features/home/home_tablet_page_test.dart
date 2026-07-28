@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/home/data/providers/home_repository_p
 import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repository.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_tablet_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/markets_tablet_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_navigation_rail.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -84,7 +84,10 @@ void main() {
     await tester.tap(find.byKey(const Key('vit_navigation_rail_markets')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(MarketListPage), findsOneWidget);
+    // Markets is also tablet-adaptive as of this batch — at this width it
+    // resolves to its own single-column tablet fallback, not the raw phone
+    // page (see markets_tablet_page_test.dart for its own dispatch tests).
+    expect(find.byType(MarketsTabletPage), findsOneWidget);
   });
 
   testWidgets(

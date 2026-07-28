@@ -1,8 +1,8 @@
 # Tablet-Adaptive Standard (mandatory for any screen with a dedicated tablet layout)
 
 **Authority:** [DESIGN.md](../../../DESIGN.md) Layout · `AGENTS.md` UI Rules · Reference screen: Home (SC-007)
-**Enforcement:** No dedicated audit tool yet — single reference implementation. Enforced via (a) the page's own widget test at/above its two-column threshold, (b) the existing whole-repo structural audits (page rhythm, card tile, page content width), which already scan every file under `lib/features/**/presentation` regardless of phone/tablet.
-**Reference screens:** `home_responsive_entry.dart` + `home_tablet_page.dart` (first); `wallet_responsive_entry.dart` + `wallet_tablet_page.dart` (second, confirmed R9's header-promotion pattern generalizes)
+**Enforcement:** No dedicated audit tool yet — three reference implementations. Enforced via (a) the page's own widget test at/above its two-column threshold, (b) the existing whole-repo structural audits (page rhythm, card tile, page content width), which already scan every file under `lib/features/**/presentation` regardless of phone/tablet.
+**Reference screens:** `home_responsive_entry.dart` + `home_tablet_page.dart` (first); `wallet_responsive_entry.dart` + `wallet_tablet_page.dart` (second, confirmed R9's header-promotion pattern generalizes); `markets_responsive_entry.dart` + `markets_tablet_page.dart` (third — confirmed a phone-only content gate, like Markets' `showMarketSummary`, can be safely dropped in the tablet secondary column when the gated widgets' own data doesn't depend on the filter state; see R7)
 
 ## Scope
 
@@ -71,7 +71,7 @@ LayoutBuilder-based responsive entry widget — never a second route/path.
 ## Limitations
 
 - No dedicated audit tool — this is prose plus a required widget-test pattern, not a `tool/*_audit.dart` script. Whether every tablet file actually follows R1–R8 is not automatically checked; review is manual until enough tablet screens exist for a real automatable pattern to emerge.
-- Two reference implementations (`HomeTabletPage`, `WalletTabletPage`) as of writing — enough to confirm R1-R9 generalize, not yet enough to promote pattern deviations into hard rules. R8's safety-margin numbers (640/440 caps, 900 threshold) held unchanged for both; re-validate before assuming they hold for a third screen with different content density.
+- Three reference implementations (`HomeTabletPage`, `WalletTabletPage`, `MarketsTabletPage`) as of writing. R8's safety-margin numbers (640/440 caps, 900 threshold) held unchanged for all three; re-validate before assuming they hold for a screen with meaningfully different content density. Per the Upgrade path below, three is the point at which a dedicated audit tool becomes worth evaluating rather than continuing ad hoc.
 
 ## Upgrade path
 

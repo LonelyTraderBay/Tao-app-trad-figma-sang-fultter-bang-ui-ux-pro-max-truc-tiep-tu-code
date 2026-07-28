@@ -94,6 +94,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 03_tab_roots,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page_hero_stats_widgets.dart,D,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page_history_tools_widgets.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page_movers_sectors_widgets.dart,C,-,done,0,-
+03_tab_roots,flutter_app/lib/features/markets/presentation/pages/hub/markets_tablet_page.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page_indicator_drawing_widgets.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page_signal_widgets.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page_tabs_filters_widgets.dart,D,-,done,0,-

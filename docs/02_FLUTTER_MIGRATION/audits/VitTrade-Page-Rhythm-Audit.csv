@@ -640,6 +640,7 @@ launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpa
 launchpad,flutter_app/lib/features/launchpad/presentation/widgets/tools/launchpad_webhooks_subscription_list.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart,compact,compact,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart,compact,standard,0,,0,,0,0,pass
+markets,flutter_app/lib/features/markets/presentation/pages/hub/markets_tablet_page.dart,compact,compact,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart,compact,compact,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart,flush,flush,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/pages/pair/market_heatmap_page.dart,compact,compact,0,,0,,0,0,pass
@@ -666,6 +667,7 @@ markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_fi
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_header.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_movers.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_pairs.dart,standard,,0,,0,,0,0,pass
+markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_pairs_panel.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/market_list_tools.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/watchlist_cards.dart,standard,,0,,0,,0,0,pass
 markets,flutter_app/lib/features/markets/presentation/widgets/hub/watchlist_common_painter.dart,standard,,0,,0,,0,0,pass

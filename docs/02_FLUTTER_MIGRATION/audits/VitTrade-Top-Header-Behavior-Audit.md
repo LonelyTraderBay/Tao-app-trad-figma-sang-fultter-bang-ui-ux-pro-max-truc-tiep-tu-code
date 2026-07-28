@@ -6,8 +6,8 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 total_routed_screens=412
 fixed_vit_header_remaining=22
 auto_hide_header=376
-custom_scroll_header=1
-no_top_header=13
+custom_scroll_header=0
+no_top_header=14
 unresolved=0
 ```
 
@@ -188,7 +188,7 @@ unresolved=0
 | markets | `'/pair/:pairId'` | `PairDetailPage` | fixed_vit_header | trade_custom_in_scroll | `flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart` |
 | markets | `'/pair/:pairId/depth'` | `MarketDepthPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` |
 | markets | `'/pair/:pairId/info'` | `TokenInfoPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/research/token_info_page.dart` |
-| markets | `AppRoutePaths.markets` | `MarketListPage` | custom_scroll_header | market_custom_in_scroll | `flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart` |
+| markets | `AppRoutePaths.markets` | `MarketsResponsiveEntry` | no_top_header | no_top_header | `flutter_app/lib/features/markets/presentation/pages/hub/markets_responsive_entry.dart` |
 | markets | `AppRoutePaths.marketsAdvancedCharts` | `AdvancedChartsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page.dart` |
 | markets | `AppRoutePaths.marketsAlerts` | `PriceAlertsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart` |
 | markets | `AppRoutePaths.marketsCalendar` | `MarketCalendarPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/tools/market_calendar_page.dart` |

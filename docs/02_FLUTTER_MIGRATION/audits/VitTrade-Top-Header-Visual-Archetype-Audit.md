@@ -6,7 +6,7 @@ Generated from `flutter_app/tool/top_header_visual_archetype_audit.dart`.
 total_routed_screens=412
 strict_visual_issues=0
 screen_level_mismatches=0
-uses_vit_top_chrome=62
+uses_vit_top_chrome=61
 status_banner_in_header=0
 hard_coded_offline_banner=0
 ```
@@ -37,7 +37,7 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 181 |
+| L2_detail | 182 |
 | L2_utilityDetail | 69 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
@@ -46,17 +46,17 @@ hard_coded_offline_banner=0
 | L1_productModuleHub | 8 |
 | L1_authFlow | 5 |
 | L1_instrumentWorkspace | 5 |
-| L1_primaryTabRoot | 2 |
 | L3_fullscreenTool | 2 |
 | L0_authEntry | 1 |
+| L1_primaryTabRoot | 1 |
 | L2_instrumentDetail | 1 |
 
 ## Archetype Counts
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 393 |
-| rootModule | 10 |
+| detail | 394 |
+| rootModule | 9 |
 | instrument | 6 |
 | fullscreenTool | 2 |
 | authOnboarding | 1 |
@@ -239,7 +239,7 @@ hard_coded_offline_banner=0
 | markets | `'/pair/:pairId'` | `PairDetailPage` | fixed_vit_header | vit_top_chrome_instrument | instrument | L2_instrumentDetail | instrument | no | yes | yes | `_PairHeader;_TradeHeader` | - | none | none | none | 3 | - | - | `flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart` |
 | markets | `'/pair/:pairId/depth'` | `MarketDepthPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` |
 | markets | `'/pair/:pairId/info'` | `TokenInfoPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/research/token_info_page.dart` |
-| markets | `AppRoutePaths.markets` | `MarketListPage` | custom_scroll_header | vit_top_chrome_rootModule | rootModule | L1_primaryTabRoot | rootModule | no | no | yes | `MarketListHeader` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart` |
+| markets | `AppRoutePaths.markets` | `MarketsResponsiveEntry` | no_top_header | no_top_header | detail | L2_detail | detail | no | no | no | `-` | Thin width-based dispatcher for SC-008 Markets — delegates to MarketListPage (phone) or MarketsTabletPage (tablet), each of which owns its own header chrome (MarketListHeader / VitTopChrome). | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/hub/markets_responsive_entry.dart` |
 | markets | `AppRoutePaths.marketsAdvancedCharts` | `AdvancedChartsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page.dart` |
 | markets | `AppRoutePaths.marketsAlerts` | `PriceAlertsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart` |
 | markets | `AppRoutePaths.marketsCalendar` | `MarketCalendarPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/markets/presentation/pages/tools/market_calendar_page.dart` |

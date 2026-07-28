@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/mark
 import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_correlations_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/market_depth_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/market_heatmap_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/markets_responsive_entry.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_movers_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/research/market_news_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_overview_page.dart';
@@ -30,7 +30,8 @@ List<RouteBase> marketsRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.markets,
       name: AppRouteNames.sc008MarketList,
-      builder: (_, _) => MarketListPage(shellRenderMode: shellRenderMode),
+      builder: (_, _) =>
+          MarketsResponsiveEntry(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.marketsOverview,
