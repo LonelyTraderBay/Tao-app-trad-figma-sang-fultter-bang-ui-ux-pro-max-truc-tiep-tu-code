@@ -16,7 +16,7 @@ generated=2026-06-12
 status_fail=0
 status_warn=52
 status_exception=260
-rows=2911
+rows=2912
 ```
 
 ## CI Baseline Gates
@@ -134,7 +134,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/earn_staking/presentation/pages/staking/staking_earn_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn_staking/presentation/widgets/staking/staking_dashboard_summary.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `flutter_app/lib/features/p2p_dispute/presentation/pages/dispute/p2p_insurance_certificate_page.dart` | `flutter_app/lib/features/p2p_dispute/presentation/widgets/dispute/p2p_insurance_certificate_page_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/p2p_dispute/presentation/widgets/dispute/p2p_insurance_certificate_page_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_related_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/arena/presentation/pages/governance/arena_report_case_page.dart` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_related_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_summary_timeline.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -3050,6 +3050,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | shared_layout | `` | `flutter_app/lib/shared/layout/vit_phone_frame.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | shared_layout | `` | `flutter_app/lib/shared/layout/vit_status_bar.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | shared_layout | `` | `flutter_app/lib/shared/layout/vit_top_chrome.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| shared_layout | `` | `flutter_app/lib/shared/layout/vit_two_column_tablet_dashboard.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | shared_widget | `` | `flutter_app/lib/shared/widgets/vit_accent_icon_box.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | shared_widget | `` | `flutter_app/lib/shared/widgets/vit_accent_pill.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | shared_widget | `` | `flutter_app/lib/shared/widgets/vit_action_tile_grid.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |

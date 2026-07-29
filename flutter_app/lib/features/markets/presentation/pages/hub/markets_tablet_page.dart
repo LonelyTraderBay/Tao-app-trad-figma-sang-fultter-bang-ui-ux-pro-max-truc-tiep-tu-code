@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/tablet_dashboard_widths.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_list_discover.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_list_filters.dart';
@@ -13,8 +11,8 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/mark
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_list_pairs.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_list_pairs_panel.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_list_tools.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_two_column_tablet_dashboard.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 /// Tablet composition of Markets (SC-008) — same route, same
@@ -144,68 +142,9 @@ class _MarketsTabletPageState extends ConsumerState<MarketsTabletPage> {
       const MarketListDiscoverMoreSection(),
     ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth < TabletDashboardWidths.twoColumnMinWidth) {
-          return SingleChildScrollView(
-            child: VitPageContent(
-              padding: VitContentPadding.compact,
-              rhythm: VitPageRhythm.compact,
-              children: [...primaryChildren, ...secondaryChildren],
-            ),
-          );
-        }
-
-        // See HomeTabletPage's identical Row/Align/ConstrainedBox structure
-        // for the full constraint-safety rationale (R4/R5 in
-        // Tablet-Adaptive-Standard.md).
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: TabletDashboardWidths.primaryColumnMaxWidth,
-                    ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      rhythm: VitPageRhythm.relaxed,
-                      children: primaryChildren,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: TabletDashboardWidths.secondaryColumnMaxWidth,
-                    ),
-                    child: VitCard(
-                      variant: VitCardVariant.inner,
-                      radius: VitCardRadius.standard,
-                      padding: EdgeInsets.zero,
-                      child: VitPageContent(
-                        padding: VitContentPadding.relaxed,
-                        rhythm: VitPageRhythm.relaxed,
-                        children: secondaryChildren,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    return VitTwoColumnTabletDashboard(
+      primaryChildren: primaryChildren,
+      secondaryChildren: secondaryChildren,
     );
   }
 }

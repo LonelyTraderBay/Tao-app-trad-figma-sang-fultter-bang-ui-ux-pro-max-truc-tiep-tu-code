@@ -2843,6 +2843,7 @@ shared_layout,,flutter_app/lib/shared/layout/vit_page_layout.dart,pass,0,0,0,0,0
 shared_layout,,flutter_app/lib/shared/layout/vit_phone_frame.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_status_bar.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_layout,,flutter_app/lib/shared/layout/vit_top_chrome.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+shared_layout,,flutter_app/lib/shared/layout/vit_two_column_tablet_dashboard.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_accent_icon_box.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_accent_pill.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 shared_widget,,flutter_app/lib/shared/widgets/vit_action_tile_grid.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-

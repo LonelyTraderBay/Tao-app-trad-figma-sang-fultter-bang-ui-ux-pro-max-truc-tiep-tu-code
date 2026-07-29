@@ -33,6 +33,34 @@ nhật sau khi batch xanh nếu có bài học mới. Giữ file < 200 dòng.
   dùng `test/quality/page_rhythm_audit_sync_guardrail_test.dart`, không có
   `page_rhythm_guardrail_test.dart`; Glob test trước khi kết luận thiếu.
 
+## Trích shared widget → audit tool fan-out ngoài danh sách verify
+
+- Khi trích 1 block `VitCard`/`VitPageContent`/token khỏi 1 page ra shared
+  widget (vd `VitTwoColumnTabletDashboard`, batch 2026-07-29), full suite có
+  thể lộ ≥2 guardrail KHÔNG nằm trong danh sách lệnh verify của task, dù
+  cause là chính file mới đó:
+  - `tool/card_tile_manifest.dart` ghi `VitTrade-Card-Tile-Migration-
+    Manifest.csv` — KHÁC `card_tile_audit.dart`'s "legacy manifest"
+    (`VitTrade-Card-Tile-Manifest.csv`, tên gần giống nhưng là 2 tool/2 file
+    riêng). Chạy `card_tile_audit.dart --check` xanh KHÔNG có nghĩa
+    manifest này cũng current.
+  - `tool/design_token_consistency_audit.dart` stale ngay khi có file
+    `lib/` mới (kể cả 0 debt) — nó cần 1 dòng cho file đó.
+  - Cả hai có guardrail test riêng trong `test/quality/` → full suite
+    (`flutter test`, bắt buộc khi đụng `shared/layout|widgets`) sẽ bắt được;
+    đây chính là lý do "full suite" không phải tuỳ chọn dù task chỉ liệt kê
+    3 audit tool cụ thể.
+  - `tool/navigation_edge_audit.dart` stale ngay cả khi CHỈ xoá import
+    (dịch số dòng của lệnh `context.go`/`push`, không đổi logic điều
+    hướng) — tool này KHÔNG wire vào bất kỳ `flutter test` guardrail nào
+    (artifact-check only, xem Flutter-Design-System-Reference.md §2), nên
+    full suite xanh KHÔNG đảm bảo nó current — phải tự chạy
+    `dart run tool/navigation_edge_audit.dart --check` riêng.
+  - Xử lý đúng: regenerate (không `--check`) tool bị stale, diff xem đúng
+    là do file mình thêm (không lẫn nội dung của batch khác đang dở trong
+    cùng worktree), rồi `--check` lại + rerun guardrail test — coi đây là
+    hệ quả trong-scope của chính edit, không phải "phát hiện ngoài scope".
+
 ## Copy file số lượng lớn
 
 - Glob `cp` rộng có thể ĐÈ file đã sửa; worktree thấy git HEAD cũ. Khi
@@ -44,6 +72,20 @@ nhật sau khi batch xanh nếu có bài học mới. Giữ file < 200 dòng.
 - PowerShell trong Cursor Cloud win32 có thể không hỗ trợ `&&`; khi chain
   verify, dùng `; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }` để tránh
   fail giả trước khi Dart/Flutter chạy.
+- `flutter test ... | tail -n N` (chạy nền) che exit code thật — `$?` phản
+  ánh `tail`, không phải `flutter test`; exit code 0 dù có test fail. Luôn
+  grep NỘI DUNG log ("Some tests failed" / `[E]`) chứ đừng tin exit code khi
+  có pipe. Compact reporter dùng `\r` dày đặc (ghi đè dòng), `\n` thưa —
+  `tr '\r' '\n' < log > converted` trước khi Grep/Read log nền lớn (Read tool
+  tự chặn file > 256KB kể cả có offset/limit).
+- 2 lệnh `flutter test` (vd 1 targeted + 1 full-suite nền) chạy chồng nhau
+  trên Windows từng để lại `dart.exe` treo, khiến lần chạy SAU đơ vô thời
+  hạn ở đúng 1 test dù code không liên quan (lặp `tasklist //FI "IMAGENAME eq
+  dart.exe"` — RAM giống hệt qua 2 lần đọc = treo thật, không phải chậm).
+  Nếu diff giữa 2 lần chạy chỉ là artifact `docs/` (không đụng `lib/`/`test/`)
+  mà lần chạy trước từng qua được đúng chỗ đó, gần như chắc là treo do
+  resource, không phải bug: `taskkill //F //IM dart.exe` rồi chạy lại sạch
+  trước khi nghi ngờ code.
 
 ## Tablet-Adaptive batch (R1-R9, 5+ lần lặp lại)
 
