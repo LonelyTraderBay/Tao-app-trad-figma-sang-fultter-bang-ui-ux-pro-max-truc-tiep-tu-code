@@ -19,7 +19,6 @@ Screen rollup: 412 real_page routes, L1 pass 412, L2 pass 412 warn 0, unknown 0,
 | --- | --- | --- | --- | --- |
 | AppRouteNames.sc049TradePair | `'/trade/:pairId'` | pass | pass | pass |
 | AppRouteNames.sc027PredictionsHome | `AppRoutePaths.marketsPredictions` | pass | pass | pass |
-| AppRouteNames.sc156Profile | `AppRoutePaths.profile` | pass | pass | pass |
 
 ## L2 warn routes
 
