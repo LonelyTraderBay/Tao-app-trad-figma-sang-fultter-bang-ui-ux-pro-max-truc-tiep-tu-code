@@ -904,7 +904,8 @@ const _rhythmOwnerWidgets = [
 bool _hasTradeRhythmScaffold(String source) {
   return source.contains('VitTradeHubScaffold') ||
       source.contains('VitTradeDetailScaffold') ||
-      source.contains('VitTradeSimpleShell');
+      source.contains('VitTradeSimpleShell') ||
+      source.contains('VitTwoColumnTabletDashboard');
 }
 
 final _orphanPageRhythmSizedBoxLine = RegExp(
