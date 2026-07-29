@@ -44,3 +44,30 @@ nhật sau khi batch xanh nếu có bài học mới. Giữ file < 200 dòng.
 - PowerShell trong Cursor Cloud win32 có thể không hỗ trợ `&&`; khi chain
   verify, dùng `; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }` để tránh
   fail giả trước khi Dart/Flutter chạy.
+
+## Tablet-Adaptive batch (R1-R9, 5+ lần lặp lại)
+
+- Nếu phone page có state switch LỒNG bên trong provider (vd
+  `snapshot.screenState` enum riêng bên trong `FutureProvider<Snapshot>`,
+  ngoài `AsyncValue.when` chuẩn), tablet page cần switch lồng tương tự —
+  đừng chỉ port outer `.when()`. Nếu 1 nhánh lồng (vd `offline`) vừa show
+  banner VỪA render dashboard bên dưới (không phải "thay vì" dashboard),
+  đặt banner làm item ĐẦU của `primaryChildren` (giống
+  `WalletUnavailableBanner` trong `WalletTabletPage`) — đừng bịa thêm một
+  outer-layout branch thứ 3 cho riêng case đó.
+- `if (context.mounted) context.go(...)` sau `await`, khi nằm trong closure
+  async của một METHOD PHỤ của State (không phải trực tiếp `build()`), có
+  thể vẫn bị `use_build_context_synchronously` bắt — dù cùng cú pháp guard
+  chạy sạch khi viết trực tiếp trong `build()` hoặc dạng early-return
+  `if (!mounted) return;`. Fix đã verify: capture
+  `final navContext = context;` đầu closure TRƯỚC await, dùng biến local
+  đó thay vì gọi lại getter `context` — theo đúng tiền lệ
+  `WalletTabletPage._showMoreActions`'s `final rootContext = context;`.
+
+## Copy tiếng Việt — encoding lệch trong cùng 1 file
+
+- Cùng 1 file Dart (vd `profile_page.dart`) có thể trộn chuỗi tiếng Việt
+  literal UTF-8 VÀ chuỗi escape `\uXXXX` cho các string KHÁC NHAU. So chuỗi
+  thô sẽ báo lệch giả dù nội dung giống hệt — decode `\uXXXX` → ký tự thật
+  bằng script (Python `re.sub(r'\\u([0-9A-Fa-f]{4})', ...)` + `chr`) rồi
+  mới so khớp, đừng so chuỗi thô hoặc eyeball dấu tiếng Việt.

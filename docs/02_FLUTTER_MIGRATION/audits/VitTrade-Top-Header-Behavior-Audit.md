@@ -5,9 +5,9 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 ```text
 total_routed_screens=412
 fixed_vit_header_remaining=22
-auto_hide_header=375
+auto_hide_header=374
 custom_scroll_header=0
-no_top_header=15
+no_top_header=16
 unresolved=0
 ```
 
@@ -304,7 +304,7 @@ unresolved=0
 | predictions | `AppRoutePaths.marketsPredictionsSearch` | `PredictionsSearchPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsSocial` | `PredictionSocialPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_social_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsTournaments` | `PredictionTournamentsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_tournaments_page.dart` |
-| profile | `AppRoutePaths.profile` | `ProfilePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
+| profile | `AppRoutePaths.profile` | `ProfileResponsiveEntry` | no_top_header | no_top_header | `flutter_app/lib/features/profile/presentation/pages/profile_responsive_entry.dart` |
 | profile | `AppRoutePaths.profileActivity` | `ActivityLogPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | profile | `AppRoutePaths.profileApi` | `ApiManagementPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/api_management_page.dart` |
 | profile | `AppRoutePaths.profileApiCreate` | `ApiKeyCreatePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/api_key_create_page.dart` |
