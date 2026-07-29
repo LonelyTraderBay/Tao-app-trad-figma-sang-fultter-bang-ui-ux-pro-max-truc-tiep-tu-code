@@ -1057,6 +1057,7 @@ trade,flutter_app/lib/features/trade/presentation/pages/hub/orders_history_page.
 trade,flutter_app/lib/features/trade/presentation/pages/hub/position_dashboard_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,standard,,0,,0,,0,0,pass
+trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,standard,compact,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/convert/convert_page_amount_widgets.dart,standard,,0,,0,,0,0,pass
@@ -1078,6 +1079,7 @@ trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_expo
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,standard,,0,,0,,0,0,pass
+trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_positions_panel.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,standard,,0,,0,,0,0,pass

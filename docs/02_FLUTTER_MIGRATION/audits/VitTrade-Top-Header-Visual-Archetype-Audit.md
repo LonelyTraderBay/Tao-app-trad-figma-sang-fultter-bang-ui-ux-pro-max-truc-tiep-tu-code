@@ -37,7 +37,7 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 182 |
+| L2_detail | 183 |
 | L2_utilityDetail | 69 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
@@ -45,7 +45,7 @@ hard_coded_offline_banner=0
 | L2_sectionHub | 19 |
 | L1_productModuleHub | 8 |
 | L1_authFlow | 5 |
-| L1_instrumentWorkspace | 5 |
+| L1_instrumentWorkspace | 4 |
 | L3_fullscreenTool | 2 |
 | L0_authEntry | 1 |
 | L1_primaryTabRoot | 1 |
@@ -55,9 +55,9 @@ hard_coded_offline_banner=0
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 394 |
+| detail | 395 |
 | rootModule | 9 |
-| instrument | 6 |
+| instrument | 5 |
 | fullscreenTool | 2 |
 | authOnboarding | 1 |
 
@@ -381,7 +381,7 @@ hard_coded_offline_banner=0
 | trade | `'/trade/:pairId'` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
 | trade | `'/trade/:pairId/futures'` | `FuturesPage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/futures/futures_page.dart` |
 | trade | `'/trade/:pairId/futures/leverage'` | `LeveragePage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_entityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/futures/leverage_page.dart` |
-| trade | `AppRoutePaths.trade` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
+| trade | `AppRoutePaths.trade` | `TradeResponsiveEntry` | no_top_header | no_top_header | detail | L2_detail | detail | no | no | no | `-` | Thin width-based dispatcher for SC-048 Trade — delegates to TradePage (phone) or TradeTabletPage (tablet), each of which owns its own header chrome (VitAutoHideHeaderScaffold / VitHeader). | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_responsive_entry.dart` |
 | trade | `AppRoutePaths.tradeConvert` | `ConvertPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | content | state_driven | offlineNoCache | 1 | - | - | `flutter_app/lib/features/trade/presentation/pages/convert/convert_page.dart` |
 | trade | `AppRoutePaths.tradeExport` | `TradeHistoryExportPage` | fixed_vit_header | vit_header_default_title_subtitle | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart` |
 | trade | `AppRoutePaths.tradeMargin` | `MarginTradingPage` | auto_hide_header | shared_auto_hide_scaffold | instrument | L1_instrumentWorkspace | instrument | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart` |

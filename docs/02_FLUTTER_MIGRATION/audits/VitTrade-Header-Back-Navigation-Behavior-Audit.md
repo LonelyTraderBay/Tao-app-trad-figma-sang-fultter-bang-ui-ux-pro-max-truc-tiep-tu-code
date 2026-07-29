@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/back_navigation_behavior_audit.dart`.
 
 ```text
-visible_header_back_entries=529
+visible_header_back_entries=530
 strict_back_issues=0
 high_risk_entries=125
 modal_close_baseline=73
@@ -15,7 +15,7 @@ sheet_result_baseline=9
 | Classification | Count |
 | --- | ---: |
 | parent_route_only | 465 |
-| history_then_fallback | 64 |
+| history_then_fallback | 65 |
 
 ## Strict Issue Counts
 
@@ -542,6 +542,7 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | 74 | `_AnnouncementsPageState` | `VitHeader` | parent_route_only | parent_route_only | `-` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | 91 | `_HelpCenterPageState` | `VitHeader` | parent_route_only | parent_route_only | `helpAsync.value?.backRoute ?? AppRoutePaths.support` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | 83 | `_SupportPageState` | `VitHeader` | parent_route_only | parent_route_only | `-` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart` | 172 | `_TradeTabletPageState` | `VitHeader` | history_then_fallback | history_then_fallback | `AppRoutePaths.trade` | no | - | Uses shared back-navigation helper. |
 | `flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart` | 222 | `VitTradeDetailScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart` | 325 | `VitTradeHubScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/trade_core/presentation/widgets/vit_trade_terminal_header.dart` | 60 | `VitTradeTerminalHeader` | `VitTopChrome` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
