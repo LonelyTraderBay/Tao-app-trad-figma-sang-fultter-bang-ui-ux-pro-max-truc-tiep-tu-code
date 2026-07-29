@@ -20,7 +20,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 01_shared,flutter_app/lib/shared/widgets/vit_trade_instrument_hero.dart,E,-,done,0,-
 01_shared,flutter_app/lib/shared/widgets/vit_trade_order_list.dart,E,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,E,-,done,0,-
-02_home,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,C,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/widgets/home_market_watchlist_panel.dart,E,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,E,-,done,0,-
 02_home,flutter_app/lib/features/home/presentation/widgets/home_status_content.dart,D,-,done,0,-
@@ -205,7 +204,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/trade/presentation/pages/hub/position_dashboard_page.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,C,-,done,0,-
-04_financial,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/convert/convert_page_amount_widgets.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/convert/convert_page_sections.dart,E,-,done,0,-
@@ -229,7 +227,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_hub_widgets.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_shared_helpers.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_simple_form.dart,C,-,done,0,-
-04_financial,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/address/wallet_address_add_agreement.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/address/wallet_address_add_preview.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/address/wallet_address_book_controls.dart,C,-,done,0,-
@@ -799,7 +796,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 06_other,flutter_app/lib/features/p2p_security/presentation/widgets/security/p2p_transaction_limits_page_common.dart,D,-,done,0,-
 06_other,flutter_app/lib/features/p2p_security/presentation/widgets/security/p2p_transaction_limits_page_sections.dart,D,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,C,-,done,0,-
-06_other,flutter_app/lib/features/profile/presentation/pages/profile_tablet_page.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/activity_log_page_common.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/activity_log_page_sections.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/profile/presentation/widgets/api_management_docs.dart,C,-,done,0,-

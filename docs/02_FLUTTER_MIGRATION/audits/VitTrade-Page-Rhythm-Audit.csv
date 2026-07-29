@@ -502,7 +502,7 @@ enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widget
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_preview_kit.dart,standard,,0,,0,,0,0,pass
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,standard,,0,,0,,0,0,pass
 home,flutter_app/lib/features/home/presentation/pages/home_page_state.dart,compact,compact,0,,0,,0,0,pass
-home,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,compact,compact,0,,0,,0,0,pass
+home,flutter_app/lib/features/home/presentation/pages/home_tablet_page.dart,standard,,0,,0,,0,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_announcement_banner.dart,standard,,0,,0,,0,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_discovery_panel.dart,standard,,0,,0,,1,0,pass
 home,flutter_app/lib/features/home/presentation/widgets/home_formatters.dart,standard,,0,,0,,0,0,pass
@@ -991,7 +991,7 @@ profile,flutter_app/lib/features/profile/presentation/pages/device_management_pa
 profile,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,standard,standard,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/pages/kyc_page.dart,form,form,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,compact,compact,0,,0,,0,0,pass
-profile,flutter_app/lib/features/profile/presentation/pages/profile_tablet_page.dart,standard,compact,0,,0,,3,0,pass
+profile,flutter_app/lib/features/profile/presentation/pages/profile_tablet_page.dart,standard,,0,,0,,3,0,pass
 profile,flutter_app/lib/features/profile/presentation/pages/security_page.dart,standard,standard,0,,0,,0,0,pass
 profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,standard,standard,0,,0,,4,0,pass
 profile,flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart,standard,standard,0,,0,,0,0,pass
@@ -1066,7 +1066,7 @@ trade,flutter_app/lib/features/trade/presentation/pages/hub/orders_history_page.
 trade,flutter_app/lib/features/trade/presentation/pages/hub/position_dashboard_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,standard,,0,,0,,0,0,pass
-trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,standard,compact,0,,0,,0,0,pass
+trade,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/convert/convert_page_amount_widgets.dart,standard,,0,,0,,0,0,pass
@@ -1413,7 +1413,7 @@ wallet,flutter_app/lib/features/wallet/presentation/pages/address/address_book_p
 wallet,flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart,standard,compact,0,,0,,0,0,pass
-wallet,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart,standard,compact,0,,0,,0,0,pass
+wallet,flutter_app/lib/features/wallet/presentation/pages/hub/wallet_tablet_page.dart,standard,,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart,standard,standard,0,,0,,0,0,pass
 wallet,flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart,standard,standard,0,,0,,0,0,pass
