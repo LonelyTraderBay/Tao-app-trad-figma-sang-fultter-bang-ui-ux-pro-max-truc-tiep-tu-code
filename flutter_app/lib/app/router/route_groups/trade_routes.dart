@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_responsive_entry.dart';
 import 'package:vit_trade_flutter/features/trade_core/domain/entities/trade_core_entities.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/orders_history_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/order_receipt_page.dart';
@@ -22,7 +23,7 @@ List<RouteBase> tradeRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.trade,
       name: AppRouteNames.sc048Trade,
-      builder: (_, state) => TradePage(
+      builder: (_, state) => TradeResponsiveEntry(
         initialSide: _tradeSideFromQuery(state.uri.queryParameters['side']),
         shellRenderMode: shellRenderMode,
       ),

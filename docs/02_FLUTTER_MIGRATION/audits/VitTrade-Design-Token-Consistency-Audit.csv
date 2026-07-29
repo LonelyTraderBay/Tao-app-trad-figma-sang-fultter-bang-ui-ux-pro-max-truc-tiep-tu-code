@@ -1395,6 +1395,7 @@ feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_hi
 feature_widget,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_positions_panel.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
@@ -2325,6 +2326,7 @@ root_page,flutter_app/lib/features/trade/presentation/pages/hub/position_dashboa
 root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart,flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
+root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart,flutter_app/lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2507,6 +2509,7 @@ root_page_bundle_summary,flutter_app/lib/features/p2p_security/presentation/page
 root_page_bundle_summary,flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/referral/presentation/pages/referral_friend_detail_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade_compliance/presentation/pages/complaints/complaint_tracking_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade_compliance/presentation/pages/disclosures/kid_generator_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-

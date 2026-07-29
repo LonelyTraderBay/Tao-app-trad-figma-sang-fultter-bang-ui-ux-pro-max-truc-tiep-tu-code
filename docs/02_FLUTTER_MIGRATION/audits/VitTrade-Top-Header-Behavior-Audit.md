@@ -5,9 +5,9 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 ```text
 total_routed_screens=412
 fixed_vit_header_remaining=22
-auto_hide_header=376
+auto_hide_header=375
 custom_scroll_header=0
-no_top_header=14
+no_top_header=15
 unresolved=0
 ```
 
@@ -330,7 +330,7 @@ unresolved=0
 | trade | `'/trade/:pairId'` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
 | trade | `'/trade/:pairId/futures'` | `FuturesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/futures/futures_page.dart` |
 | trade | `'/trade/:pairId/futures/leverage'` | `LeveragePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/futures/leverage_page.dart` |
-| trade | `AppRoutePaths.trade` | `TradePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart` |
+| trade | `AppRoutePaths.trade` | `TradeResponsiveEntry` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/hub/trade_responsive_entry.dart` |
 | trade | `AppRoutePaths.tradeConvert` | `ConvertPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/convert/convert_page.dart` |
 | trade | `AppRoutePaths.tradeExport` | `TradeHistoryExportPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart` |
 | trade | `AppRoutePaths.tradeMargin` | `MarginTradingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart` |

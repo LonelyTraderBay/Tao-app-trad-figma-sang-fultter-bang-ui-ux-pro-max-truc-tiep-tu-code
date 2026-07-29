@@ -1165,6 +1165,7 @@ trade,root_page,flutter_app/lib/features/trade/presentation/pages/hub/position_d
 trade,root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
+trade,root_page,flutter_app/lib/features/trade/presentation/pages/hub/trade_tablet_page.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/pages/margin/margin_trading_page.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/convert/convert_page_amount_widgets.dart,0,0,0,0,0,0,0,0,no,-
@@ -1186,6 +1187,7 @@ trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_hi
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,0,0,0,0,0,0,0,0,no,-
+trade,feature_widget,flutter_app/lib/features/trade/presentation/widgets/hub/trade_positions_panel.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
 trade,feature_widget,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,0,0,0,0,0,0,0,0,no,-
