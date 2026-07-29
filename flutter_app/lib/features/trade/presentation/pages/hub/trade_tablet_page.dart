@@ -10,9 +10,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/tablet_dashboard_widths.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/order_receipt_page.dart';
@@ -25,8 +23,8 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_two_column_tablet_dashboard.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 /// Tablet composition of Trade (SC-048) — same route, same
@@ -218,6 +216,14 @@ class _TradeTabletPageState extends ConsumerState<TradeTabletPage> {
     );
   }
 
+  // Two-column threshold and per-column width caps are owned by
+  // [VitTwoColumnTabletDashboard] (`TabletDashboardWidths` defaults) —
+  // Trade's own content confirmed the same values as `HomeTabletPage` hold,
+  // including the primary/secondary VitCard-ancestry split the risk panel
+  // depends on (see the wide-tablet cases in `trade_tablet_page_test.dart`).
+  // Pass constructor overrides on the call below instead of editing the
+  // shared widths if Trade's content ever needs a different number.
+
   Widget _buildDashboard(TradeScreenSnapshot snapshot) {
     final pair = snapshot.pair;
     final amount = double.tryParse(_amountController.text) ?? 0;
@@ -356,68 +362,9 @@ class _TradeTabletPageState extends ConsumerState<TradeTabletPage> {
       ),
     ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth < TabletDashboardWidths.twoColumnMinWidth) {
-          return SingleChildScrollView(
-            child: VitPageContent(
-              padding: VitContentPadding.compact,
-              rhythm: VitPageRhythm.compact,
-              children: [...primaryChildren, ...secondaryChildren],
-            ),
-          );
-        }
-
-        // See HomeTabletPage's identical Row/Align/ConstrainedBox structure
-        // for the full constraint-safety rationale (R4/R5 in
-        // Tablet-Adaptive-Standard.md).
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: TabletDashboardWidths.primaryColumnMaxWidth,
-                    ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      rhythm: VitPageRhythm.relaxed,
-                      children: primaryChildren,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: TabletDashboardWidths.secondaryColumnMaxWidth,
-                    ),
-                    child: VitCard(
-                      variant: VitCardVariant.inner,
-                      radius: VitCardRadius.standard,
-                      padding: EdgeInsets.zero,
-                      child: VitPageContent(
-                        padding: VitContentPadding.relaxed,
-                        rhythm: VitPageRhythm.relaxed,
-                        children: secondaryChildren,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    return VitTwoColumnTabletDashboard(
+      primaryChildren: primaryChildren,
+      secondaryChildren: secondaryChildren,
     );
   }
 }

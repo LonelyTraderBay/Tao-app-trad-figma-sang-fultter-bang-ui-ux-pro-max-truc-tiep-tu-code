@@ -7,8 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/home_controller_providers.dart';
 import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/tablet_dashboard_widths.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_announcement_banner.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_discovery_panel.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_header.dart';
@@ -19,9 +17,8 @@ import 'package:vit_trade_flutter/features/home/presentation/widgets/home_portfo
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_products_section.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_recent_products_section.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_status_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_two_column_tablet_dashboard.dart';
 
 /// Tablet composition of Home (SC-007) — same route, same
 /// [homeSnapshotProvider] data and the same public Home widgets as
@@ -111,11 +108,12 @@ class _HomeTabletPageState extends ConsumerState<HomeTabletPage> {
     );
   }
 
-  // Two-column threshold and per-column width caps live in
-  // [TabletDashboardWidths] — shared with `WalletTabletPage`, which landed
-  // on the same values empirically. See that class's doc comment: override
-  // locally instead of editing the shared constants if this page's content
-  // ever needs a different number.
+  // Two-column threshold and per-column width caps are owned by
+  // [VitTwoColumnTabletDashboard] (`TabletDashboardWidths` defaults) —
+  // Home's own content originally established these values, later confirmed
+  // on independent content by `WalletTabletPage`. Pass constructor overrides
+  // on the call below instead of editing the shared widths if Home's
+  // content ever needs a different number.
 
   Widget _buildDashboard(HomeSnapshot snapshot) {
     final controller = HomeController(state: HomeViewState(snapshot: snapshot));
@@ -173,76 +171,9 @@ class _HomeTabletPageState extends ConsumerState<HomeTabletPage> {
       HomeDiscoveryPanel(onNavigate: _go),
     ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth < TabletDashboardWidths.twoColumnMinWidth) {
-          return SingleChildScrollView(
-            child: VitPageContent(
-              padding: VitContentPadding.compact,
-              rhythm: VitPageRhythm.compact,
-              children: [...primaryChildren, ...secondaryChildren],
-            ),
-          );
-        }
-
-        // Each column scrolls independently inside its own
-        // SingleChildScrollView rather than one scrollview wrapping the
-        // whole Row — a Row of two independently-scrolling, height-bounded
-        // columns is the well-supported shape; a Row of unbounded natural
-        // height inside one outer scrollview is not. Width-capping happens
-        // *inside* each SingleChildScrollView (via Align+ConstrainedBox on
-        // its child), not on the Row itself — SingleChildScrollView is what
-        // gives that inner content loose height / bounded width, which is
-        // exactly the one-axis-only loosening a width cap needs without
-        // disturbing the Row's own tight-height stretch (a ConstrainedBox
-        // directly on a tightly-constrained ancestor cannot narrow it).
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: TabletDashboardWidths.primaryColumnMaxWidth,
-                    ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      rhythm: VitPageRhythm.relaxed,
-                      children: primaryChildren,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: TabletDashboardWidths.secondaryColumnMaxWidth,
-                    ),
-                    child: VitCard(
-                      variant: VitCardVariant.inner,
-                      radius: VitCardRadius.standard,
-                      padding: EdgeInsets.zero,
-                      child: VitPageContent(
-                        padding: VitContentPadding.relaxed,
-                        rhythm: VitPageRhythm.relaxed,
-                        children: secondaryChildren,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    return VitTwoColumnTabletDashboard(
+      primaryChildren: primaryChildren,
+      secondaryChildren: secondaryChildren,
     );
   }
 }
