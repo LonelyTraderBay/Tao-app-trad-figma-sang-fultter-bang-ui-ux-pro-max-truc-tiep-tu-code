@@ -6,7 +6,7 @@ Generated from `flutter_app/tool/top_header_visual_archetype_audit.dart`.
 total_routed_screens=412
 strict_visual_issues=0
 screen_level_mismatches=0
-uses_vit_top_chrome=61
+uses_vit_top_chrome=60
 status_banner_in_header=0
 hard_coded_offline_banner=0
 ```
@@ -37,7 +37,7 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 183 |
+| L2_detail | 184 |
 | L2_utilityDetail | 69 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
@@ -48,15 +48,14 @@ hard_coded_offline_banner=0
 | L1_instrumentWorkspace | 4 |
 | L3_fullscreenTool | 2 |
 | L0_authEntry | 1 |
-| L1_primaryTabRoot | 1 |
 | L2_instrumentDetail | 1 |
 
 ## Archetype Counts
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 395 |
-| rootModule | 9 |
+| detail | 396 |
+| rootModule | 8 |
 | instrument | 5 |
 | fullscreenTool | 2 |
 | authOnboarding | 1 |
@@ -355,7 +354,7 @@ hard_coded_offline_banner=0
 | predictions | `AppRoutePaths.marketsPredictionsSearch` | `PredictionsSearchPage` | auto_hide_header | vit_top_chrome_detail | detail | L1_utilityHub | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsSocial` | `PredictionSocialPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_social_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsTournaments` | `PredictionTournamentsPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/predictions/presentation/pages/social/prediction_tournaments_page.dart` |
-| profile | `AppRoutePaths.profile` | `ProfilePage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_primaryTabRoot | rootModule | no | no | yes | `-` | - | content | state_driven | offlineNoCache | 0 | - | - | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
+| profile | `AppRoutePaths.profile` | `ProfileResponsiveEntry` | no_top_header | no_top_header | detail | L2_detail | detail | no | no | no | `-` | Thin width-based dispatcher for SC-156 Profile — delegates to ProfilePage (phone) or ProfileTabletPage (tablet), each of which owns its own header chrome (VitAutoHidePageScaffold / VitTopChrome). | none | none | none | 0 | - | - | `flutter_app/lib/features/profile/presentation/pages/profile_responsive_entry.dart` |
 | profile | `AppRoutePaths.profileActivity` | `ActivityLogPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | profile | `AppRoutePaths.profileApi` | `ApiManagementPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_utilityDetail | detail | no | yes | no | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/profile/presentation/pages/api_management_page.dart` |
 | profile | `AppRoutePaths.profileApiCreate` | `ApiKeyCreatePage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/profile/presentation/pages/api_key_create_page.dart` |

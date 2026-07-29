@@ -53,6 +53,7 @@ table surfaces, since it exists nowhere else in the repo.
 | --- | --- | --- | --- | --- | --- |
 | Home reference consistency | Structural divergence from Home's own patterns; every module hard-gated, Home locked at `0` | `tool/home_reference_consistency_audit.dart` | `home_reference_consistency_guardrail_test.dart` | `dart run tool/home_reference_consistency_audit.dart --check` | Named CI step + artifact upload |
 | Design token consistency | Local literal `fontSize`/`EdgeInsets`/`BorderRadius.circular` debt; hard baseline on 5 P0 financial modules | `tool/design_token_consistency_audit.dart` | `design_token_consistency_guardrail_test.dart` | `dart run tool/design_token_consistency_audit.dart --check` | Named CI step + artifact upload |
+| Duplicate private widgets | Private (`_Name`) widget class names repeated across ≥3 files — a signal it should be a shared/public widget instead; ratchet, ceiling only goes down | `tool/duplicate_private_widget_audit.dart` | `duplicate_private_widget_guardrail_test.dart` | `dart run tool/duplicate_private_widget_audit.dart --check` | Named CI step + artifact upload |
 | Card tile tiers | Tier A fixed-height strip tiles use `VitCard.height`/`cardTilePadding` | `tool/card_tile_audit.dart` | `card_tile_guardrail_test.dart` | `dart run tool/card_tile_audit.dart --check --strict-full` | Named CI step + artifact upload |
 | Segment pill | Tab/toggle/preset/filter tier decision tree (S1–S4) | `tool/segment_pill_audit.dart` | `segment_pill_guardrail_test.dart` | `dart run tool/segment_pill_audit.dart --check --strict-full` | Named CI step + artifact upload |
 | Page rhythm (layout) | `VitPageContent` wiring, structural nesting, vertical-rhythm tier per page | `tool/page_rhythm_audit.dart` | `page_rhythm_guardrail_test.dart` | `dart run tool/page_rhythm_audit.dart --check --strict-full` | Named CI step + artifact upload |
@@ -142,9 +143,11 @@ they're written down in prose.
    flutter test test/quality/home_reference_consistency_guardrail_test.dart --reporter=compact
    dart run tool/route_coverage_audit.dart --check
    dart run tool/navigation_edge_audit.dart --check
+   dart run tool/duplicate_private_widget_audit.dart --check
    ```
 10. If the new route is reachable via a nav call or link, confirm it shows up correctly in `dart run tool/navigation_edge_audit.dart` output — dangling/unlinked routes are a common miss. When a route's builder switches to a new dispatcher widget (e.g. a `<Feature>ResponsiveEntry` from `Tablet-Adaptive-Standard.md`), `page_rhythm_screen_rollup.dart` and `page_rhythm_coverage_matrix.dart` specifically (both listed in step 9, easy to skip since they're siblings of `page_rhythm_audit.dart` with separate `--check` state) re-classify that route's compliance row — CI caught this twice (Home, then Wallet) before it was added here; run both explicitly, don't assume `page_rhythm_audit.dart --check` alone covers them.
-11. For anything not covered above, check §2's domain map.
+11. If a new page duplicates a small private helper widget (e.g. a footer action button) that a phone reference page already declares privately, check `duplicate_private_widget_audit.dart` before assuming it's fine to just copy — the ratchet only goes down, and a 3rd same-named private occurrence anywhere in the repo fails CI even if your own file is otherwise clean. Port it to a public widget instead (same pattern as any other `<Feature>*Panel` port under `presentation/widgets/`) rather than adding a 2nd/3rd private copy — caught on the Profile tablet batch (SC-156) when `_LogoutButton`/`_ActivityButton` were first duplicated inline.
+12. For anything not covered above, check §2's domain map.
 
 ## §6 — Where to look next
 

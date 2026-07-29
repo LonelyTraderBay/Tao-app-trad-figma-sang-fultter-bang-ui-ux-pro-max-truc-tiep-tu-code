@@ -170,6 +170,12 @@ const _noHeaderDecisions = <String, _NoHeaderDecision>{
         'TradePage (phone) or TradeTabletPage (tablet), each of which '
         'owns its own header chrome (VitAutoHideHeaderScaffold / VitHeader).',
   ),
+  'ProfileResponsiveEntry': _NoHeaderDecision(
+    'detail',
+    'Thin width-based dispatcher for SC-156 Profile — delegates to '
+        'ProfilePage (phone) or ProfileTabletPage (tablet), each of which '
+        'owns its own header chrome (VitAutoHidePageScaffold / VitTopChrome).',
+  ),
 };
 
 void main(List<String> args) {

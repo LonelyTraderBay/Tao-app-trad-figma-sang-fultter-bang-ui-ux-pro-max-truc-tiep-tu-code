@@ -105,19 +105,9 @@ cập nhật khi chẩn đoán ra lớp lỗi mới. Giữ file < 200 dòng.
 
 ## Branch lệch main = rủi ro merge-conflict không thấy qua CI riêng nhánh
 
-- Trước khi kết luận READY, chạy `git log HEAD..main --oneline` để biết
-  main đã tiến xa hơn merge-base bao nhiêu commit, rồi
-  `git show --stat <commit>` từng commit đó để lấy danh sách file. Nếu
-  file trùng với file nhánh đang sửa → rủi ro conflict thật khi mở PR/
-  rebase, dù CI trên HEAD hiện tại của nhánh đang xanh (CI nhánh không
-  biết main đã đổi). Báo cáo rủi ro này tường minh, đừng chỉ dựa
-  `git diff main...HEAD` (three-dot, đúng cho scope PR) mà quên check
-  `HEAD..main` (số commit main đã vượt lên).
-- Lưu ý phụ: `git diff main` (two-dot, so thẳng working tree với main
-  TIP) sẽ lẫn cả những gì main đã đổi mà nhánh chưa có — trông như nhánh
-  "xoá code" nhưng thực ra là nhánh thiếu commit mới của main. Luôn dùng
-  `git diff <merge-base>` hoặc `git diff main...HEAD` (three-dot) để lấy
-  đúng scope diff của PR, không dùng two-dot khi main đã tiến xa hơn.
+Chi tiết + lệnh: [branch-drift-risk.md](branch-drift-risk.md). Chỉ áp
+dụng khi gate một feature branch; bỏ qua khi diff đang gate là
+uncommitted changes trực tiếp trên `main`.
 
 ## Doc–code drift đã gặp
 
@@ -156,3 +146,52 @@ test tụt mạnh mà không giải thích được, nhiều khả năng là m�
 KHÔNG LOAD ĐƯỢC (lỗi import/compile làm cả file bị bỏ qua), chứ không
 phải ai đó xoá bớt test. Đếm test tụt = nghi ngờ trước, đừng mừng vì
 "vẫn xanh".
+
+## "Stale artifact" có thể che một ratchet THẬT — đừng rubber-stamp
+
+- Ít nhất 3 tool (`page_rhythm_audit.dart`, `card_tile_audit.dart`,
+  `duplicate_private_widget_audit.dart`) cùng một shape: nhánh `--check`
+  phát hiện CSV stale thì `return`/`exit(1)` NGAY — các điều kiện
+  `--strict-full`/ratchet phía dưới (`_strictFullBlocks`,
+  `duplicated.length > duplicateNameBaseline`) không bao giờ chạy tới.
+  "Artifact is stale" (vô hại) và "vi phạm ratchet thật" (chặn merge)
+  in ra GIỐNG HỆT nhau (exit 1, cùng gợi ý "chạy lại tool"). Đừng suy ra
+  an toàn chỉ từ chữ "stale" trong message.
+- Xác minh thật: copy file tool sang scratchpad (an toàn vì
+  `_findAppRoot()` = `Directory.current`, không phải `Platform.script`
+  — chạy `dart run <scratch-path>/x.dart --check ...` với CWD vẫn ở
+  `flutter_app/` vẫn đọc đúng `lib/` thật), xoá riêng các `return;` sau
+  `exitCode = 1;` trong nhánh stale (giữ `--check` trong args để không
+  bao giờ chạm nhánh `else` ghi đè file thật), đọc xem message
+  strict-full/ratchet có xuất hiện không. `git status` cuối cùng xác
+  nhận repo thật không bị đụng.
+- Bắt được thật bằng kỹ thuật này (SC-156 Profile tablet gate,
+  2026-07-29): `duplicate_private_widget_audit.dart` báo "stale" y hệt
+  8 tool khác cùng lượt gate, nhưng dry-run lộ
+  `196 ten trung >= 3 file (baseline 195)` — FAIL THẬT (DEBT-86).
+  `_duplicateMin=3`, baseline 195 đã ở đúng mức trần (0 headroom); PR
+  thêm 1 file khai lại private class đã trùng 2 file từ trước, đẩy nó
+  qua ngưỡng 3. Domain này KHÔNG có trong bảng §2 của
+  Flutter-Design-System-Reference.md (doc gap thật, không phải lỗi PR).
+- Shape khác an toàn hơn, khỏi cần dry-run: `top_header_visual_
+  archetype_audit.dart` và `home_reference_consistency_audit.dart` gom
+  hết failure vào 1 list rồi mới in — strict/module-gate check VẪN chạy
+  dù đã stale, nên đọc TOÀN BỘ stderr (không chỉ dòng đầu): nếu message
+  riêng của check đó vắng mặt, đã đủ chứng minh sạch. Đọc source quanh
+  `if (checkOnly) {...}` để biết đang gặp shape nào trước khi kết luận.
+- `top_header_behavior_audit.dart` không hề định nghĩa biến `strict` —
+  cờ `--strict` CI/checklist truyền vào bị lờ hoàn toàn (no-op); tool
+  này vốn đã là pure diff, khỏi cần dry-run.
+
+## Checklist hand-typed từ agent gọi — luôn đối chiếu, đừng tin tay
+
+- Một agent gọi tự nhận một "N-command block" là "checklist chuẩn đã
+  dùng N batch trước" — đối chiếu với checklist doc +
+  `.github/workflows/flutter-ci.yml` job `static` thật thì THIẾU
+  `flutter pub get`, THIẾU HẲN bước codegen (`build_runner build
+  --delete-conflicting-outputs` + `git diff --exit-code`), THIẾU HẲN
+  `duplicate_private_widget_audit.dart --check`, và SAI cờ 2 lệnh
+  (`back_navigation_behavior_audit`/`top_header_behavior_audit` cần
+  `--check --strict`, list chỉ có `--check`). Message nào từ agent gọi
+  cũng không phải bằng chứng đủ — luôn đọc checklist doc + CI YAML
+  sống, kể cả khi message tự nhận "đã dùng nhiều lần trước".
